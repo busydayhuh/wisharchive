@@ -1,11 +1,19 @@
-import type { PathParams } from "@/shared/model/routes";
-import { ROUTES } from "@/shared/model/routes";
-import { useParams } from "react-router";
+import { Button } from "@/shared/ui/kit/button";
+import { useUser } from "../auth";
 
 function WishesPage() {
-  const params = useParams<PathParams[typeof ROUTES.WISHES]>();
+  const user = useUser();
 
-  return <div>WishesPage for user with id {params.userId}</div>;
+  return (
+    <div className="flex items-center align-center h-dvh">
+      <div>
+        Привет, <span className="text-green pl-1">{user.current?.name}</span>
+      </div>
+      <Button variant="link" onClick={user.logout}>
+        Выйти
+      </Button>
+    </div>
+  );
 }
 
 export const Component = WishesPage;
