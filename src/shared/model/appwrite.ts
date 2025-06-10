@@ -9,11 +9,11 @@ function appwriteInit() {
     .setProject(CONFIG.APPWRITE_PROJECT_ID);
 
   const account = new Account(client);
-  const database = new Databases(client);
+  const databases = new Databases(client);
   const storage = new Storage(client);
   const avatars = new Avatars(client);
 
-  return { account, database, storage, avatars };
+  return { account, databases, storage, avatars };
 }
 
 export const appwriteService = appwriteInit();
