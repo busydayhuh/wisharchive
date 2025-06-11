@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { appwriteService } from "@/shared/model/appwrite";
 import { ROUTES } from "@/shared/model/routes";
-import { ID } from "appwrite";
+import { ID, type Models } from "appwrite";
 import {
   createContext,
   useContext,
@@ -31,17 +31,12 @@ type Status = {
   register_error_message?: string | null;
 };
 
-type Current = {
-  $id: string;
-  $createdAt: string;
-  $updatedAt: string;
-  userId?: string;
-  name?: string;
-  password?: string;
-};
+type User = Models.User<{ theme?: "light" | "dark"; avatar?: string }> | null;
+type Session = Models.Session | null;
 
 type UserContextType = {
-  current: Current | null;
+  current: User;
+  session: Session;
   login: (data: FormValues["login"]) => void;
   logout: () => void;
   register: (data: FormValues["register"]) => void;
@@ -56,8 +51,9 @@ export function useUser() {
 
 export function UserProvider(props: { children: ReactNode }) {
   const navigate = useNavigate();
-  const [session, setSession] = useState<Current | null>(null);
 
+  const [session, setSession] = useState<Session>(null);
+  const [user, setUser] = useState<User>(null);
   const [status, setStatus] = useState<Status>({
     status: "success",
     login_error_message: null,
@@ -86,6 +82,7 @@ export function UserProvider(props: { children: ReactNode }) {
     try {
       await appwriteService.account.deleteSession("current");
       setSession(null);
+      setUser(null);
       navigate("/login");
     } catch (error) {
       console.log("Не получилось выйти", error);
@@ -113,9 +110,9 @@ export function UserProvider(props: { children: ReactNode }) {
   async function init() {
     try {
       const loggedIn = await appwriteService.account.get();
-      setSession(loggedIn);
+      setUser(loggedIn);
     } catch {
-      setSession(null);
+      setUser(null);
     }
   }
 
@@ -125,7 +122,7 @@ export function UserProvider(props: { children: ReactNode }) {
 
   return (
     <UserContext.Provider
-      value={{ current: session, login, logout, register, status }}
+      value={{ current: user, login, logout, register, status, session }}
     >
       {props.children}
     </UserContext.Provider>

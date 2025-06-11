@@ -29,7 +29,7 @@ function CollapsibleSbItem({ name, icon }: CollapsibleSbItemProps) {
     <Collapsible
       key={name}
       asChild
-      defaultOpen={false}
+      defaultOpen={true}
       className="group/collapsible"
     >
       <SidebarMenuItem>
@@ -38,8 +38,8 @@ function CollapsibleSbItem({ name, icon }: CollapsibleSbItemProps) {
             {icon}
             {name}
             {documentsList && (
-              <SidebarMenuBadge className="relative bg-muted rounded-full ml-1">
-                {documentsList.total}
+              <SidebarMenuBadge className="relative ml-1">
+                {`( ${documentsList.total} )`}
               </SidebarMenuBadge>
             )}
             <ChevronDown className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-180" />

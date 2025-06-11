@@ -4,8 +4,8 @@ export const ROUTES = {
   HOME: "/",
   LOGIN: "/login",
   SIGNUP: "/signup",
-  WISHES: "/:userId/wishes",
-  WISHLISTS: "/:userId/lists",
+  WISHES: "/wishes/:userId",
+  WISHLISTS: "/lists/:userId",
   WISHLIST: "/lists/:listId",
   WISH: "/wishes/:wishId",
   /* PROTECTED */
