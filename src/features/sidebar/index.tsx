@@ -7,45 +7,63 @@ import {
   SidebarGroupContent,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
   useSidebar,
 } from "@/shared/ui/kit/sidebar";
-import Logo from "@/shared/ui/logo";
+import Logo from "@/shared/ui/Logo";
+import { memo } from "react";
 import {
-  GiChainedHeart,
-  GiDuality,
-  GiFallingStar,
-  GiGems,
+  GiBlackHoleBolas,
   GiOrbital,
+  GiOrbitalRays,
+  GiSpoutnik,
 } from "react-icons/gi";
-import { href } from "react-router-dom";
+import { href, Link } from "react-router-dom";
 import { useUser } from "../auth";
-import CollapsibleSbItem from "./CollapsibleSbItem";
-import SimpleSbItem from "./SimpleSbItem";
 import { UserSb } from "./UserSb";
 
-export function AppSidebar() {
+export const AppSidebar = memo(function AppSidebar() {
   const { current } = useUser();
   const { state: sbState } = useSidebar();
 
-  const simpleItems = [
+  const sidebarItems = [
     {
       name: "Мой дашборд",
       icon: <GiOrbital />,
       href: href(ROUTES.WISHES, { userId: current!.$id }),
+      subItems: [
+        {
+          name: "Мои желания",
+          href: href(ROUTES.WISHES, { userId: current!.$id }),
+        },
+        {
+          name: "Мои вишлисты",
+          href: href(ROUTES.WISHLISTS, { userId: current!.$id }),
+        },
+        {
+          name: "Хочу подарить",
+          href: ROUTES.BOOKED,
+        },
+      ],
     },
     {
-      name: "Хочу подарить",
-      icon: <GiChainedHeart />,
-      href: ROUTES.BOOKED,
-    },
-    {
-      name: "Совместные списки",
-      icon: <GiDuality />,
+      name: "Избранные списки",
+      icon: <GiOrbitalRays />,
       href: ROUTES.SHARED,
     },
     {
-      name: "Архив моих желаний",
-      icon: <GiGems />,
+      name: "Совместные списки",
+      icon: <GiSpoutnik />,
+      href: ROUTES.SHARED,
+    },
+
+    {
+      name: "Архив желаний",
+      icon: <GiBlackHoleBolas />,
       href: ROUTES.ARCHIVED,
     },
   ];
@@ -53,24 +71,38 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader className="mb-2 flex flex-row gap-2 border-b-1 border-muted py-3">
-        <Logo width={6} />
+        <Logo />
         {sbState === "expanded" ? (
-          <div className="font-medium">wisharchive</div>
+          <div className="font-semibold">wisharchive</div>
         ) : null}
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {simpleItems.map((item) => (
-                <SimpleSbItem
-                  name={item.name}
-                  icon={item.icon}
-                  href={item.href}
-                  key={item.name}
-                />
+              {sidebarItems.map(({ name, icon, href, subItems }) => (
+                <SidebarMenuItem key={name}>
+                  <SidebarMenuButton asChild tooltip={name}>
+                    <Link to={href}>
+                      {icon}
+                      {name}
+                    </Link>
+                  </SidebarMenuButton>
+                  {subItems && (
+                    <SidebarMenuSub>
+                      {subItems.map(({ name, href }) => {
+                        return (
+                          <SidebarMenuSubItem key={name}>
+                            <SidebarMenuSubButton asChild>
+                              <Link to={href}>{name}</Link>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        );
+                      })}
+                    </SidebarMenuSub>
+                  )}
+                </SidebarMenuItem>
               ))}
-              <CollapsibleSbItem name="Мои списки" icon={<GiFallingStar />} />
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -80,4 +112,4 @@ export function AppSidebar() {
       </SidebarFooter>
     </Sidebar>
   );
-}
+});

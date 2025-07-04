@@ -34,3 +34,8 @@ export const ERRORS = {
     },
   ],
 };
+
+export type TError = {
+  error: unknown;
+  error_message: string;
+};

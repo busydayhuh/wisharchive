@@ -6,8 +6,8 @@ export const ROUTES = {
   SIGNUP: "/signup",
   WISHES: "/wishes/:userId",
   WISHLISTS: "/lists/:userId",
-  WISHLIST: "/lists/:listId",
-  WISH: "/wishes/:wishId",
+  WISHLIST: "/list/:listId",
+  WISH: "/wish/:wishId",
   /* PROTECTED */
   SHARED: "/lists/shared",
   BOOKED: "/wishes/booked",

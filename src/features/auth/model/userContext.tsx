@@ -1,7 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
 import { appwriteService } from "@/shared/model/appwrite";
+import db from "@/shared/model/databases";
 import { ROUTES } from "@/shared/model/routes";
-import { ID, type Models } from "appwrite";
+import { type Models } from "appwrite";
 import {
   createContext,
   useContext,
@@ -20,6 +21,7 @@ export type FormValues = {
   register: {
     email: string;
     password: string;
+    nickname: string;
     name?: string;
     confirmPassword?: string;
   };
@@ -92,18 +94,25 @@ export function UserProvider(props: { children: ReactNode }) {
   async function register(data: FormValues["register"]) {
     try {
       await appwriteService.account.create(
-        ID.unique(),
+        data.nickname,
         data.email,
         data.password,
         data.name
       );
+
+      await db.users.create({
+        userId: data.nickname,
+        userName: data.name,
+        userEmail: data.email,
+      });
+
       await login(data);
     } catch (error) {
       setStatus({
         status: "error",
         register_error_message: "Не удалось зарегистрироваться",
       });
-      console.log("Не получилось зарегистрироваться", error);
+      console.log("Не удалось зарегистрироваться", error);
     }
   }
 

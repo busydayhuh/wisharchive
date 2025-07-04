@@ -59,7 +59,7 @@ function LoginForm() {
             <FormItem>
               <FormLabel>Пароль</FormLabel>
               <FormControl>
-                <PassWithToggle field={field} />
+                <PassWithToggle {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

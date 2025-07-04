@@ -1,3 +1,4 @@
+import { DashboardLayout } from "@/features/dashboard";
 import { ROUTES } from "@/shared/model/routes.ts";
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
@@ -13,23 +14,56 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        element: <ProtectedRoute />,
+        element: <DashboardLayout />,
         children: [
           {
-            path: ROUTES.SHARED,
-            lazy: () => import("@/features/dashboard/dashboard-shared.page"),
+            path: ROUTES.WISHES,
+            lazy: () => import("@/features/dashboard/dashboard-wishes.page"),
             HydrateFallback: () => null,
           },
           {
-            path: ROUTES.BOOKED,
-            lazy: () => import("@/features/dashboard/dashboard-booked.page"),
+            path: ROUTES.WISHLISTS,
+            lazy: () => import("@/features/dashboard/dashboard-lists.page"),
             HydrateFallback: () => null,
           },
           {
-            path: ROUTES.ARCHIVED,
-            lazy: () => import("@/features/dashboard/dashboard-archived.page"),
-            HydrateFallback: () => null,
+            element: <ProtectedRoute />,
+            children: [
+              {
+                path: ROUTES.SHARED,
+                lazy: () =>
+                  import("@/features/dashboard/dashboard-shared.page"),
+                HydrateFallback: () => null,
+              },
+              {
+                path: ROUTES.BOOKED,
+                lazy: () =>
+                  import("@/features/dashboard/dashboard-booked.page"),
+                HydrateFallback: () => null,
+              },
+              {
+                path: ROUTES.ARCHIVED,
+                lazy: () =>
+                  import("@/features/dashboard/dashboard-archived.page"),
+                HydrateFallback: () => null,
+              },
+            ],
           },
+        ],
+      },
+      {
+        path: ROUTES.WISHLIST,
+        lazy: () => import("@/features/list/list.page"),
+        HydrateFallback: () => null,
+      },
+      {
+        path: ROUTES.WISH,
+        lazy: () => import("@/features/wish/wish.page"),
+        HydrateFallback: () => null,
+      },
+      {
+        element: <ProtectedRoute />,
+        children: [
           {
             path: ROUTES.PROFILE,
             lazy: () => import("@/features/profile/profile.page"),
@@ -66,27 +100,6 @@ export const router = createBrowserRouter([
             HydrateFallback: () => null,
           },
         ],
-      },
-
-      {
-        path: ROUTES.WISHES,
-        lazy: () => import("@/features/dashboard/dashboard-wishes.page"),
-        HydrateFallback: () => null,
-      },
-      {
-        path: ROUTES.WISHLISTS,
-        lazy: () => import("@/features/dashboard/dashboard-lists.page"),
-        HydrateFallback: () => null,
-      },
-      {
-        path: ROUTES.WISHLIST,
-        lazy: () => import("@/features/list/list.page"),
-        HydrateFallback: () => null,
-      },
-      {
-        path: ROUTES.WISH,
-        lazy: () => import("@/features/wish/wish.page"),
-        HydrateFallback: () => null,
       },
     ],
   },

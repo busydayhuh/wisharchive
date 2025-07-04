@@ -2,6 +2,7 @@ import { Button } from "@/shared/ui/kit/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -22,6 +23,9 @@ const formSchema = z
         required_error: "Введите логин",
       })
       .email("Неверный email"),
+    nickname: z.string({
+      required_error: "Это обязательное поле",
+    }),
     name: z
       .string({
         required_error:
@@ -44,6 +48,7 @@ function RegisterForm() {
     defaultValues: {
       email: "",
       name: "",
+      nickname: "",
       password: "",
       confirmPassword: "",
     },
@@ -68,13 +73,32 @@ function RegisterForm() {
         />
         <FormField
           control={form.control}
+          name="nickname"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Никнейм*</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormDescription>
+                Короткое имя, по которому друзья смогут найти ваш аккаунт
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Имя</FormLabel>
+              <FormLabel>Полное имя</FormLabel>
               <FormControl>
                 <Input placeholder="Василиса Премудрая" {...field} />
               </FormControl>
+              <FormDescription>
+                Можно изменить в настройках аккаунта позже
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -86,7 +110,7 @@ function RegisterForm() {
             <FormItem>
               <FormLabel>Пароль*</FormLabel>
               <FormControl>
-                <PassWithToggle field={field} />
+                <PassWithToggle {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -99,7 +123,7 @@ function RegisterForm() {
             <FormItem>
               <FormLabel>Повторите пароль*</FormLabel>
               <FormControl>
-                <PassWithToggle field={field} />
+                <PassWithToggle {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

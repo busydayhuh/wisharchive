@@ -2,25 +2,16 @@ import { Button } from "@/shared/ui/kit/button";
 import { Input } from "@/shared/ui/kit/input";
 import { Eye, EyeClosed } from "lucide-react";
 import { useState } from "react";
-import type { ControllerRenderProps, FieldValues, Path } from "react-hook-form";
-import type { FormValues } from "../model/userContext";
+import type { ControllerRenderProps } from "react-hook-form";
 
-type PassPath = "password" | "confirmPassword";
-
-type PassWithToggleProps<Q extends FieldValues, P extends Path<Q>> = {
-  field: ControllerRenderProps<Q, P>;
-};
-
-export default function PassWithToggle({
-  field,
-}: PassWithToggleProps<FormValues["register"], PassPath>) {
+export default function PassWithToggle(props: ControllerRenderProps) {
   const [passVisible, setPassVisible] = useState(false);
   return (
     <div className="flex relative">
       <Input
         placeholder="**************"
         type={passVisible ? "text" : "password"}
-        {...field}
+        {...props}
       />
       <Button
         type="button"

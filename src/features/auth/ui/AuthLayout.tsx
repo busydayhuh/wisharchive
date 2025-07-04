@@ -1,4 +1,4 @@
-import GradientBg from "@/shared/ui/gradientBg";
+import GradientBg from "@/shared/ui/GradientBg";
 import {
   Card,
   CardContent,

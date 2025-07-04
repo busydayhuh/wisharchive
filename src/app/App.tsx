@@ -1,18 +1,22 @@
 import { useUser } from "@/features/auth";
 import { AppSidebar } from "@/features/sidebar";
 import { SidebarTrigger } from "@/shared/ui/kit/sidebar";
+import MainContainer from "@/shared/ui/MainContainer";
 import { Outlet } from "react-router-dom";
 
 function App() {
-  const user = useUser();
+  const { current } = useUser();
 
   return (
     <>
-      {user.current && <AppSidebar />}
-      <main>
-        {user.current && <SidebarTrigger />}
+      {current && <AppSidebar />}
+
+      <MainContainer>
+        {current && (
+          <SidebarTrigger className="-ml-2 md:-ml-9 hover:bg-transparent" />
+        )}
         <Outlet />
-      </main>
+      </MainContainer>
     </>
   );
 }

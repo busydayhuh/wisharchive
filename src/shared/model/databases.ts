@@ -32,6 +32,11 @@ const collections = [
     id: CONFIG.APPWRITE_COLLECTION_WISHLISTS,
     name: "wishlists",
   },
+  {
+    dbId: CONFIG.APPWRITE_DATABASE,
+    id: CONFIG.APPWRITE_COLLECTION_USERS,
+    name: "users",
+  },
 ];
 
 collections.forEach((col) => {
