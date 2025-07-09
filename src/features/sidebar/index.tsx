@@ -15,13 +15,8 @@ import {
   useSidebar,
 } from "@/shared/ui/kit/sidebar";
 import Logo from "@/shared/ui/Logo";
+import { Archive, Blend, Bookmark, Orbit } from "lucide-react";
 import { memo } from "react";
-import {
-  GiBlackHoleBolas,
-  GiOrbital,
-  GiOrbitalRays,
-  GiSpoutnik,
-} from "react-icons/gi";
 import { href, Link } from "react-router-dom";
 import { useUser } from "../auth";
 import { UserSb } from "./UserSb";
@@ -33,7 +28,7 @@ export const AppSidebar = memo(function AppSidebar() {
   const sidebarItems = [
     {
       name: "Мой дашборд",
-      icon: <GiOrbital />,
+      icon: <Orbit className="stroke-(length:--sidebar-icons-stroke)" />,
       href: href(ROUTES.WISHES, { userId: current!.$id }),
       subItems: [
         {
@@ -52,25 +47,25 @@ export const AppSidebar = memo(function AppSidebar() {
     },
     {
       name: "Избранные списки",
-      icon: <GiOrbitalRays />,
+      icon: <Bookmark className="stroke-(length:--sidebar-icons-stroke)" />,
       href: ROUTES.SHARED,
     },
     {
       name: "Совместные списки",
-      icon: <GiSpoutnik />,
+      icon: <Blend className="stroke-(length:--sidebar-icons-stroke)" />,
       href: ROUTES.SHARED,
     },
 
     {
       name: "Архив желаний",
-      icon: <GiBlackHoleBolas />,
+      icon: <Archive className="stroke-(length:--sidebar-icons-stroke)" />,
       href: ROUTES.ARCHIVED,
     },
   ];
 
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader className="mb-2 flex flex-row gap-2 border-b-1 border-muted py-3">
+      <SidebarHeader className="flex flex-row gap-2 mb-2 py-3 border-muted border-b-1">
         <Logo />
         {sbState === "expanded" ? (
           <div className="font-semibold">wisharchive</div>
