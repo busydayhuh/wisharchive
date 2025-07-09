@@ -23,8 +23,9 @@ type WishcardProps = {
 // TODO переместить WishcardProps, дубль
 
 const DbWishTableItem = memo(function DbWishTableItem({ wish }: WishcardProps) {
+  //TODO адаптировать под мобилку
   return (
-    <div className="relative items-center grid grid-cols-[fit-content(128px)_3fr_1fr_2fr_2fr_1fr] py-2 pl-2 transition">
+    <div className="relative items-center grid grid-cols-[fit-content(128px)_3fr_1fr_1fr_fit-content(80px)_1fr] py-2 pl-2 transition">
       {wish.isBooked && (
         <div className="top-3 left-3 absolute bg-destructive px-1.5 py-1.5 rounded-full text-background">
           <Stars className="size-3" />
@@ -34,7 +35,7 @@ const DbWishTableItem = memo(function DbWishTableItem({ wish }: WishcardProps) {
       <img
         src={wish.imageUrl}
         alt={wish.name}
-        className="w-full max-w-32 object-cover aspect-video"
+        className="rounded-2xl w-full max-w-32 object-cover aspect-[4/3]"
       />
 
       <div className="flex flex-col px-4">
@@ -69,23 +70,18 @@ const DbWishTableItem = memo(function DbWishTableItem({ wish }: WishcardProps) {
       </div>
       <div>
         {wish.url && (
-          <Button
-            variant="link"
-            className="items-baseline gap-1 w-fit font-normal text-base"
-            asChild
-          >
-            <Link to={wish.url}>
+          <Link to={wish.url}>
+            <Button
+              variant="link"
+              className="items-baseline gap-1 w-fit max-w-[20ch] font-normal text-sm"
+            >
               <Globe className="size-3" />
-              <span className="max-w-[10ch] truncate leading-4">ozon.ru</span>
-            </Link>
-          </Button>
+              <span className="truncate leading-4">ozon.ru</span>
+            </Button>
+          </Link>
         )}
       </div>
-      <ActionMenu
-        className="bg-muted hover:bg-muted/60"
-        side="bottom"
-        align="center"
-      />
+      <ActionMenu triggerVariant="table" side="bottom" align="center" />
     </div>
   );
 });

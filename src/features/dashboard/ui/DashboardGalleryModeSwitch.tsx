@@ -2,25 +2,24 @@ import { ToggleGroup, ToggleGroupItem } from "@/shared/ui/kit/toggle-group";
 import { LayoutDashboard, LayoutList } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";
 
-type DashboardGalleryModeSwitchType = {
-  set: Dispatch<SetStateAction<string>>;
-  mode: string;
+export type DashboardGalleryModeSwitchType = {
+  setGalleryMode: Dispatch<SetStateAction<string>>;
+  galleryMode: string;
 };
 
 function DashboardGalleryModeSwitch({
-  set,
-  mode,
+  setGalleryMode,
+  galleryMode,
 }: DashboardGalleryModeSwitchType) {
   const toggleStyles =
     "cursor-pointer rounded-xl first:rounded-l-xl last:rounded-r-xl text-muted-foreground";
   return (
     <ToggleGroup
       type="single"
-      value={mode}
+      value={galleryMode}
       onValueChange={(value) => {
-        if (value) set(value);
+        if (value) setGalleryMode(value);
       }}
-      className="self-end"
     >
       <ToggleGroupItem value="gallery" className={toggleStyles}>
         <LayoutDashboard />

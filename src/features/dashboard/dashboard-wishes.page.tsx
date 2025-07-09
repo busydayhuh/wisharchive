@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { ID } from "appwrite";
 import Masonry from "react-masonry-css";
-import DashboardGalleryModeSwitch from "./ui/DashboardGalleryModeSwitch";
+import { useGalleryMode } from "./ui/DashboardLayout";
 import DbWishGalleryItem from "./ui/DbWishGalleryItem";
 import DbWishTableItem from "./ui/DbWishTableItem";
 
@@ -177,7 +177,7 @@ const wishes = [
   {
     name: "Графический планшет Wacom",
     listId: "list002",
-    listName: "Гаджеты",
+    listName: "Гаджетыbpf[dkhpf[kghpkgkg]]",
     listPrivate: true,
     url: "https://www.ozon.ru/product/graficheskiy-planshet-wacom-556677/",
     price: 12990,
@@ -203,11 +203,10 @@ const wishes = [
 ];
 
 function WishesPage() {
-  const [galleryMode, setGalleryMode] = useState("gallery");
+  const { galleryMode } = useGalleryMode();
 
   return (
     <div className="flex flex-col gap-2">
-      <DashboardGalleryModeSwitch mode={galleryMode} set={setGalleryMode} />
       {galleryMode === "gallery" && (
         <Masonry
           breakpointCols={{ default: 4, 1100: 3, 768: 2 }}
@@ -215,7 +214,7 @@ function WishesPage() {
           columnClassName="my-masonry-grid_column"
         >
           {wishes.map((wish) => (
-            <DbWishGalleryItem wish={wish} key={wish.name} />
+            <DbWishGalleryItem wish={wish} key={ID.unique()} />
           ))}
         </Masonry>
       )}

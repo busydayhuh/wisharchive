@@ -1,17 +1,23 @@
-import { useUser } from "@/features/auth";
+/* eslint-disable react-refresh/only-export-components */
 import StarFrame from "@/shared/ui/StarFrame";
-import { Outlet, useParams } from "react-router";
+import { useState } from "react";
+import { Outlet, useOutletContext, useParams } from "react-router";
 import useFindUser from "../model/useFindUser";
+import useIsDashboardOwner from "../model/useIsDashboardOwner";
+import DashboardGalleryModeSwitch, {
+  type DashboardGalleryModeSwitchType,
+} from "./DashboardGalleryModeSwitch";
 import DashboardNav from "./DbNav";
 import DashboardUser from "./DbUser";
 
+type OutletContextType = DashboardGalleryModeSwitchType & { isOwner: boolean };
+
 export function DashboardLayout() {
-  const { current } = useUser();
+  const dashboardUserId = useParams().userId;
+  const dashboardUser = useFindUser(dashboardUserId);
 
-  const userId = useParams().userId;
-  const foundUser = useFindUser(userId);
-
-  const isOwner = current?.$id === userId;
+  const isOwner = useIsDashboardOwner();
+  const [galleryMode, setGalleryMode] = useState("gallery");
 
   return (
     <div className="flex flex-col gap-11 mt-8">
@@ -21,12 +27,22 @@ export function DashboardLayout() {
             Мой дашборд
           </div>
         )}
-        <DashboardUser {...foundUser} />
+        <DashboardUser {...dashboardUser} />
       </div>
-      <DashboardNav />
+      <div className="flex justify-between items-end -mb-6 pr-8">
+        <DashboardNav />
+        <DashboardGalleryModeSwitch
+          galleryMode={galleryMode}
+          setGalleryMode={setGalleryMode}
+        />
+      </div>
       <StarFrame>
-        <Outlet />
+        <Outlet context={{ galleryMode, setGalleryMode, isOwner }} />
       </StarFrame>
     </div>
   );
+}
+
+export function useGalleryMode() {
+  return useOutletContext<OutletContextType>();
 }

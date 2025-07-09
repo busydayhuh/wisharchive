@@ -24,7 +24,7 @@ const DbWishGalleryItem = memo(function DbWishGalleryItem({
   wish,
 }: WishcardProps) {
   return (
-    <div className="group relative flex flex-col gap-2 mb-6">
+    <div className="group/cover relative flex flex-col gap-2 mb-6">
       {wish.isBooked && (
         <div className="inline-flex top-2 left-2 z-100 absolute items-center gap-1 bg-destructive px-2.5 py-1 rounded-3xl text-background">
           <Stars className="size-3" />
@@ -32,11 +32,11 @@ const DbWishGalleryItem = memo(function DbWishGalleryItem({
         </div>
       )}
       <div className="relative">
-        <ActionMenu className="peer invisible aria-expanded:visible group-hover:visible right-2 -bottom-3 z-100 absolute opacity-0 aria-expanded:opacity-100 group-hover:opacity-100 transition aria-expanded:-translate-y-6 group-hover:-translate-y-6 duration-300" />
+        <ActionMenu triggerVariant="gallery" />
         <img
           src={wish.imageUrl}
           alt={wish.name}
-          className="group-hover:brightness-50 peer-[[aria-expanded='true']]:brightness-50 w-full max-h-[36rem] object-cover transition"
+          className="group-hover/cover:brightness-50 peer-[[aria-expanded='true']]/cover:brightness-50 rounded-2xl w-full max-h-[36rem] object-cover transition"
         />
       </div>
 

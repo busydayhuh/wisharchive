@@ -3,8 +3,8 @@ import { Star } from "./Star";
 
 function StarFrame({ children }: { children: ReactNode }) {
   return (
-    <div className="border-t-1 md:border-r-1 border-foreground relative pt-2 md:pr-8">
-      <div className="w-12 h-12 bg-transparent grid place-content-center absolute -top-6 -right-6">
+    <div className="relative pt-8 md:pr-8 border-foreground border-t-1 md:border-r-1">
+      <div className="-top-6 -right-6 absolute place-content-center grid bg-transparent w-12 h-12">
         <Star />
       </div>
       {children}

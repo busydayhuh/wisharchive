@@ -1,5 +1,5 @@
-import { useState } from "react";
-import DashboardGalleryModeSwitch from "./ui/DashboardGalleryModeSwitch";
+import { ID } from "appwrite";
+import { useGalleryMode } from "./ui/DashboardLayout";
 import DbWishlistGalleryItem from "./ui/DbWishlistGalleryItem";
 import DbWishlistTableItem from "./ui/DbWishlistTableItem";
 
@@ -89,20 +89,23 @@ const lists = [
 ];
 
 function WishlistsPage() {
-  const [galleryMode, setGalleryMode] = useState("gallery");
+  const { galleryMode } = useGalleryMode();
+  //TODO адаптировать под мобилку
+  //TODO заменить ID.unique на id из бд
 
   return (
     <div className="flex flex-col gap-4">
-      <DashboardGalleryModeSwitch mode={galleryMode} set={setGalleryMode} />
       {galleryMode === "gallery" && (
-        <div className="gap-x-2 gap-y-6 grid grid-cols-5">
+        <div className="gap-x-4 gap-y-6 grid grid-cols-5">
           {lists.map((list) => (
-            <DbWishlistGalleryItem list={list} />
+            <DbWishlistGalleryItem list={list} key={ID.unique()} />
           ))}
         </div>
       )}
       {galleryMode === "table" &&
-        lists.map((list) => <DbWishlistTableItem list={list} />)}
+        lists.map((list) => (
+          <DbWishlistTableItem list={list} key={ID.unique()} />
+        ))}
     </div>
   );
 }
