@@ -27,8 +27,8 @@ const DbWishGalleryItem = memo(function DbWishGalleryItem({
   wish,
 }: WishcardProps) {
   return (
-    <Link to={href(ROUTES.WISH, { wishId: wish.$id })}>
-      <div className="group/cover relative flex flex-col gap-2 mb-6">
+    <div className="group/cover relative flex flex-col gap-2 mb-6">
+      <Link to={href(ROUTES.WISH, { wishId: wish.$id })}>
         {wish.isBooked && (
           <div className="inline-flex top-2 left-2 z-100 absolute items-center gap-1 bg-destructive px-2.5 py-1 rounded-3xl text-background">
             <Stars className="size-3" />
@@ -44,27 +44,28 @@ const DbWishGalleryItem = memo(function DbWishGalleryItem({
           />
         </div>
 
-        <div className="flex justify-between px-1">
+        <div className="flex justify-between px-1 pt-2">
           <span className="pr-1 font-medium text-lg truncate">{wish.name}</span>
           <span className="text-lg">
             {wish.price && `${wish.price}${wish.currency}`}
           </span>
         </div>
-        <div className="flex justify-between items-baseline px-1">
-          {wish.listId && (
-            <Button
-              variant="outline"
-              size="sm"
-              className="rounded-full h-6 font-normal text-xs"
-              asChild
-            >
-              <Link to={href(ROUTES.WISHLIST, { listId: wish.listId })}>
-                {wish.listPrivate && <LockIcon className="size-3" />}
-                {wish.listName}
-              </Link>
-            </Button>
-          )}
-          {/* {wish.url && (
+      </Link>
+      <div className="flex justify-between items-baseline px-1">
+        {wish.listId && (
+          <Button
+            variant="outline"
+            size="sm"
+            className="rounded-full h-6 font-normal text-xs"
+            asChild
+          >
+            <Link to={href(ROUTES.WISHLIST, { listId: wish.listId })}>
+              {wish.listPrivate && <LockIcon className="size-3" />}
+              {wish.listName}
+            </Link>
+          </Button>
+        )}
+        {/* {wish.url && (
           <Button
             variant="link"
             className="items-center gap-1 py-0 h-fit font-normal"
@@ -76,9 +77,8 @@ const DbWishGalleryItem = memo(function DbWishGalleryItem({
             </Link>
           </Button>
         )} */}
-        </div>
       </div>
-    </Link>
+    </div>
   );
 });
 

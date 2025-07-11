@@ -59,9 +59,9 @@ export function BookmarkButton({
   return (
     <Toggle
       className={cn(
-        "after:invisible data-[state=on]:after:visible z-10 after:absolute data-[state=on]:bg-transparent hover:bg-transparent data-[state=on]:[&_svg]:fill-destructive px-0 py-0 border-0 after:content-['✨'] data-[state=on]:after:animate-star cursor-pointer",
+        "after:invisible data-[state=on]:after:visible z-10 after:absolute data-[state=on]:bg-transparent hover:bg-muted-foreground/40 data-[state=on]:[&_svg]:fill-destructive px-1 py-1 border-0 after:content-['✨'] data-[state=on]:after:animate-star cursor-pointer",
         variant === "gallery" &&
-          "top-1 right-1 z-10 absolute data-[state=off]:[&_svg]:fill-secondary data-[state=off]:hover:[&_svg]:fill-muted data-[state=on]:[&_svg]:fill-destructive [&_svg]:stroke-0",
+          "top-1 right-1 z-10 absolute data-[state=off]:[&_svg]:fill-secondary data-[state=on]:[&_svg]:fill-destructive [&_svg]:stroke-0 transition rounded-full",
         variant === "table" &&
           "data-[state=off]:[&_svg]:text-foreground [&_svg]:stroke-[1.4px] data-[state=off]:hover:[&_svg]:fill-muted data-[state=on]:[&_svg]:text-destructive [state=on]:[&_svg]:fill-destructive",
         className
@@ -70,7 +70,7 @@ export function BookmarkButton({
       <Bookmark
         className={cn(
           "transition duration-200",
-          variant === "gallery" ? "size-8" : "size-5"
+          variant === "gallery" ? "size-5" : "size-5"
         )}
       />
     </Toggle>

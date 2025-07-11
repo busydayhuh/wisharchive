@@ -8,14 +8,14 @@ function MainContainer({ children }: { children: ReactNode }) {
     location === "/" || location === "/login" || location === "/signup";
 
   return (
-    <div
+    <main
       className={cn(
-        "px-1 pt-2 md:pr-[4.25rem] pb-4 md:pl-9 w-full",
-        isOutside && "py-0"
+        "pr-2 lg:pr-[4.25rem] pb-4 pl-2 lg:pl-6 min-w-0",
+        isOutside && "px-0 py-0"
       )}
     >
       {children}
-    </div>
+    </main>
   );
 }
 

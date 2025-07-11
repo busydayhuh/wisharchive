@@ -20,7 +20,7 @@ export function DashboardLayout() {
   const [galleryMode, setGalleryMode] = useState("gallery");
 
   return (
-    <div className="flex flex-col gap-11 mt-8">
+    <div className="flex flex-col gap-11 mt-4">
       <div className="flex justify-between items-baseline">
         {isOwner && (
           <div className="font-semibold text-5xl leading-tight">

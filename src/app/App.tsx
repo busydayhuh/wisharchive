@@ -12,9 +12,7 @@ function App() {
       {current && <AppSidebar />}
 
       <MainContainer>
-        {current && (
-          <SidebarTrigger className="-ml-2 md:-ml-9 hover:bg-transparent" />
-        )}
+        {current && <SidebarTrigger className="hover:bg-transparent -ml-2" />}
         <Outlet />
       </MainContainer>
     </>
