@@ -5,6 +5,7 @@ import DbWishlistTableItem from "./ui/DbWishlistTableItem";
 
 const lists = [
   {
+    $id: "1",
     name: "Гаджеты",
     imagesUrl: [
       "https://anyplaceholder.com/placeholder?width=800&height=600&bg=0099ff66&color=fff&text=wish+1&fontSize=28&radius=0&format=png&retina=true",
@@ -15,6 +16,7 @@ const lists = [
     wishCount: 10,
   },
   {
+    $id: "2",
     name: "Книги",
     imagesUrl: [
       "https://anyplaceholder.com/placeholder?width=400&height=600&bg=66339966&color=fff&text=wish+4&fontSize=28&radius=0&format=png&retina=true",
@@ -25,6 +27,7 @@ const lists = [
     wishCount: 7,
   },
   {
+    $id: "3",
     name: "Одежда и аксессуары",
     imagesUrl: [
       "https://anyplaceholder.com/placeholder?width=600&height=600&bg=ff336666&color=fff&text=wish+7&fontSize=28&radius=0&format=png&retina=true",
@@ -35,6 +38,7 @@ const lists = [
     wishCount: 15,
   },
   {
+    $id: "4",
     name: "Для дома",
     imagesUrl: [
       "https://anyplaceholder.com/placeholder?width=500&height=500&bg=ffcc3366&color=fff&text=wish+10&fontSize=28&radius=0&format=png&retina=true",
@@ -45,6 +49,7 @@ const lists = [
     wishCount: 5,
   },
   {
+    $id: "5",
     name: "Гаджеты",
     imagesUrl: [
       "https://anyplaceholder.com/placeholder?width=800&height=600&bg=0099ff66&color=fff&text=wish+1&fontSize=28&radius=0&format=png&retina=true",
@@ -55,6 +60,7 @@ const lists = [
     wishCount: 10,
   },
   {
+    $id: "6",
     name: "Книги",
     imagesUrl: [
       "https://anyplaceholder.com/placeholder?width=400&height=600&bg=66339966&color=fff&text=wish+4&fontSize=28&radius=0&format=png&retina=true",
@@ -65,6 +71,7 @@ const lists = [
     wishCount: 7,
   },
   {
+    $id: "7",
     name: "Одежда и аксессуары",
     imagesUrl: [
       "https://anyplaceholder.com/placeholder?width=600&height=600&bg=ff336666&color=fff&text=wish+7&fontSize=28&radius=0&format=png&retina=true",
@@ -75,6 +82,7 @@ const lists = [
     wishCount: 15,
   },
   {
+    $id: "8",
     name: "Для дома",
     imagesUrl: [
       "https://anyplaceholder.com/placeholder?width=500&height=500&bg=ffcc3366&color=fff&text=wish+10&fontSize=28&radius=0&format=png&retina=true",
@@ -91,14 +99,13 @@ const lists = [
 function WishlistsPage() {
   const { galleryMode } = useGalleryMode();
   //TODO адаптировать под мобилку
-  //TODO заменить ID.unique на id из бд
 
   return (
     <div className="flex flex-col gap-4">
       {galleryMode === "gallery" && (
         <div className="gap-x-4 gap-y-6 grid grid-cols-5">
           {lists.map((list) => (
-            <DbWishlistGalleryItem list={list} key={ID.unique()} />
+            <DbWishlistGalleryItem list={list} key={list.$id} />
           ))}
         </div>
       )}

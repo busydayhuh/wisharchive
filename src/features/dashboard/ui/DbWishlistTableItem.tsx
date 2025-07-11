@@ -9,6 +9,7 @@ import SharedAvatars from "./SharedAvatars";
 
 type ListcardProps = {
   list: {
+    $id: string;
     name: string;
     imagesUrl: Array<string | undefined>;
     isPrivate: boolean;
@@ -31,7 +32,7 @@ const DbWishlistTableItem = memo(function DbWishlistTableItem({
   getList();
   return (
     <div className="items-center gap-6 grid grid-cols-[fit-content(128px)_3fr_2fr_2fr_2fr] pt-2 pb-4 pl-3 transition">
-      <Link to={href(ROUTES.WISHLIST, { listId: list.name })}>
+      <Link to={href(ROUTES.WISHLIST, { listId: list.$id })}>
         <div className="relative">
           <div className="bg-muted rounded-2xl w-28 aspect-[4/3] overflow-clip">
             {list.imagesUrl[2] && (
@@ -59,7 +60,7 @@ const DbWishlistTableItem = memo(function DbWishlistTableItem({
           </div>
         </div>
       </Link>
-      <Link to={href(ROUTES.WISHLIST, { listId: list.name })}>
+      <Link to={href(ROUTES.WISHLIST, { listId: list.$id })}>
         <div className="flex flex-col basis-2xs">
           <span className="pr-1 font-medium text-lg truncate">
             {list.name}

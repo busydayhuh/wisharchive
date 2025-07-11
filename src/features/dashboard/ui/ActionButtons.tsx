@@ -37,6 +37,7 @@ export function EditButton({
       size="icon"
       variant="secondary"
       className={cn(
+        "z-10",
         variant === "gallery" &&
           "invisible group-hover:visible right-2 -bottom-3 z-10 absolute opacity-0 group-hover:opacity-100 group-hover:brightness-100 border-0 rounded-full transition group-hover:-translate-y-6 duration-300",
         variant === "table" &&
@@ -58,7 +59,7 @@ export function BookmarkButton({
   return (
     <Toggle
       className={cn(
-        "after:invisible data-[state=on]:after:visible after:absolute data-[state=on]:bg-transparent hover:bg-transparent data-[state=on]:[&_svg]:fill-destructive px-0 py-0 border-0 after:content-['✨'] data-[state=on]:after:animate-star cursor-pointer",
+        "after:invisible data-[state=on]:after:visible z-10 after:absolute data-[state=on]:bg-transparent hover:bg-transparent data-[state=on]:[&_svg]:fill-destructive px-0 py-0 border-0 after:content-['✨'] data-[state=on]:after:animate-star cursor-pointer",
         variant === "gallery" &&
           "top-1 right-1 z-10 absolute data-[state=off]:[&_svg]:fill-secondary data-[state=off]:hover:[&_svg]:fill-muted data-[state=on]:[&_svg]:fill-destructive [&_svg]:stroke-0",
         variant === "table" &&

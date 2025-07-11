@@ -6,6 +6,7 @@ import DbWishTableItem from "./ui/DbWishTableItem";
 
 const wishes = [
   {
+    $id: "1",
     name: "Книга «1984»",
     listId: "list001",
     listName: "Книги",
@@ -19,6 +20,7 @@ const wishes = [
     imageAspectRatio: 400 / 600, // 0.67
   },
   {
+    $id: "2",
     name: "Наушники Sony WH-1000XM5",
     listId: "list002",
     listName: "Гаджеты",
@@ -32,6 +34,7 @@ const wishes = [
     imageAspectRatio: 1,
   },
   {
+    $id: "3",
     name: "Рюкзак Fjällräven Kånken",
     listId: "list003",
     listName: "Одежда и аксессуары",
@@ -45,6 +48,7 @@ const wishes = [
     imageAspectRatio: 600 / 800, // 0.75
   },
   {
+    $id: "4",
     name: "Чайник Xiaomi Mi Electric Kettle",
     listId: "list004",
     listName: "Для дома",
@@ -58,6 +62,7 @@ const wishes = [
     imageAspectRatio: 800 / 500, // 1.6
   },
   {
+    $id: "5",
     name: "Фитнес-браслет Xiaomi Mi Band 7",
     listId: "list002",
     listName: "Гаджеты",
@@ -71,6 +76,7 @@ const wishes = [
     imageAspectRatio: 1,
   },
   {
+    $id: "6",
     name: "Электрическая зубная щётка Oral-B",
     listId: "list004",
     listName: "Для дома",
@@ -84,6 +90,7 @@ const wishes = [
     imageAspectRatio: 400 / 700, // 0.57
   },
   {
+    $id: "7",
     name: "Кофемашина DeLonghi",
     listId: "list004",
     listName: "Для дома",
@@ -97,6 +104,7 @@ const wishes = [
     imageAspectRatio: 800 / 600, // 1.33
   },
   {
+    $id: "8",
     name: "Беспроводная колонка JBL",
     listId: "list002",
     listName: "Гаджеты",
@@ -110,6 +118,7 @@ const wishes = [
     imageAspectRatio: 700 / 500, // 1.4
   },
   {
+    $id: "9",
     name: "Кроссовки Nike Air Force 1",
     listId: "list003",
     listName: "Одежда и аксессуары",
@@ -123,6 +132,7 @@ const wishes = [
     imageAspectRatio: 1.5,
   },
   {
+    $id: "10",
     name: "Плед флисовый",
     listId: "list004",
     listName: "Для дома",
@@ -136,6 +146,7 @@ const wishes = [
     imageAspectRatio: 1,
   },
   {
+    $id: "11",
     name: "Настольная лампа",
     listId: "list004",
     listName: "Для дома",
@@ -149,6 +160,7 @@ const wishes = [
     imageAspectRatio: 500 / 800, // 0.625
   },
   {
+    $id: "12",
     name: "Смартфон Samsung Galaxy S24",
     listId: "list002",
     listName: "Гаджеты",
@@ -162,6 +174,7 @@ const wishes = [
     imageAspectRatio: 0.5,
   },
   {
+    $id: "13",
     name: "Чемодан на колёсах",
     listId: "list003",
     listName: "Одежда и аксессуары",
@@ -175,6 +188,7 @@ const wishes = [
     imageAspectRatio: 500 / 700, // 0.71
   },
   {
+    $id: "15",
     name: "Графический планшет Wacom",
     listId: "list002",
     listName: "Гаджетыbpf[dkhpf[kghpkgkg]]",
@@ -188,6 +202,7 @@ const wishes = [
     imageAspectRatio: 1.33,
   },
   {
+    $id: "16",
     name: "Набор кастрюль",
     listId: "list004",
     listName: "Для дома",
