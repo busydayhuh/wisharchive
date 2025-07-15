@@ -23,12 +23,12 @@ const DbWishlistGalleryItem = memo(function DbWishlistGalleryItem({
   list,
 }: ListcardProps) {
   return (
-    <div className="group flex flex-col gap-1 mb-4">
-      <div className="relative">
+    <div className="group/cover flex flex-col gap-1 mb-4">
+      <div className="relative overflow-hidden">
         <BookmarkButton />
         <EditButton />
         <Link to={href(ROUTES.WISHLIST, { listId: list.$id })}>
-          <div className="gap-0.5 grid grid-cols-[1.5fr_1fr] grid-rows-2 *:first:row-span-2 brightness-100 group-hover:brightness-50 rounded-2xl max-h-36 overflow-hidden transition">
+          <div className="gap-0.5 grid grid-cols-[1.5fr_1fr] grid-rows-2 *:first:row-span-2 brightness-100 group-hover/cover:brightness-50 rounded-2xl h-36 overflow-hidden transition">
             {list.imagesUrl.map((url) => {
               if (url)
                 return (
@@ -44,8 +44,10 @@ const DbWishlistGalleryItem = memo(function DbWishlistGalleryItem({
         </Link>
       </div>
       <Link to={href(ROUTES.WISHLIST, { listId: list.$id })}>
-        <div className="flex justify-between items-baseline px-1">
-          <span className="pr-1 font-medium text-lg truncate">{list.name}</span>
+        <div className="flex justify-between items-baseline px-2">
+          <span className="pr-1 font-medium text-base md:text-lg truncate">
+            {list.name}
+          </span>
           {list.isPrivate && (
             <Badge
               className="ms-1 me-auto px-1 py-1 rounded-full text-foreground"
@@ -54,10 +56,15 @@ const DbWishlistGalleryItem = memo(function DbWishlistGalleryItem({
               <Lock className="size-3" />
             </Badge>
           )}
-          <span className="text-base">{`(${list.wishCount})`}</span>
+          <span className="text-sm md:text-base">{`(${list.wishCount})`}</span>
         </div>
         {list.isPrivate && list.canRead && (
-          <SharedAvatars users={list.canRead} size={5} maxCount={3} />
+          <SharedAvatars
+            users={list.canRead}
+            size={5}
+            maxCount={3}
+            className="px-2"
+          />
         )}
       </Link>
     </div>

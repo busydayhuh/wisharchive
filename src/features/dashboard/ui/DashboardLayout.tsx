@@ -20,16 +20,16 @@ export function DashboardLayout() {
   const [galleryMode, setGalleryMode] = useState("gallery");
 
   return (
-    <div className="flex flex-col gap-11 mt-4">
-      <div className="flex justify-between items-baseline">
+    <div className="flex flex-col gap-6 md:gap-8 mt-2 md:mt-4 px-2 md:px-0">
+      <div className="flex md:flex-row flex-col justify-between items-baseline gap-6">
         {isOwner && (
-          <div className="font-semibold text-5xl leading-tight">
+          <div className="font-semibold text-3xl md:text-4xl leading-tight">
             Мой дашборд
           </div>
         )}
         <DashboardUser {...dashboardUser} />
       </div>
-      <div className="flex justify-between items-end -mb-6 pr-8">
+      <div className="flex justify-between items-end -mb-3 md:-mb-6 pr-1 md:pr-8">
         <DashboardNav />
         <DashboardGalleryModeSwitch
           galleryMode={galleryMode}

@@ -148,6 +148,48 @@ html {
   background-clip: padding-box;
 }
 
+@media screen and (max-width: 768px) {
+  .my-masonry-grid {
+    display: flex;
+    margin-left: -0.5rem; /* gutter size offset */
+    width: auto;
+  }
+
+  .my-masonry-grid_column {
+    padding-left: 0.5rem; /* gutter size */
+    background-clip: padding-box;
+  }
+}
+
+.show-on-hover {
+  position: absolute;
+  right: 0.5rem;
+  z-index: 10;
+}
+
+@media screen and (any-hover: hover) {
+  .show-on-hover {
+    bottom: -0.75rem;
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .show-on-hover:is(:where(.group\/cover):hover *),
+  .show-on-hover[aria-expanded="true"] {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(-1.5rem);
+  }
+}
+
+@media screen and (any-hover: none) {
+  .show-on-hover {
+    bottom: 0.5rem;
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
 @layer base {
   @font-face {
     font-family: "Random Grotesque Standard";
@@ -199,14 +241,5 @@ html {
   }
   body {
     @apply bg-background font-display text-foreground;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
   }
 }

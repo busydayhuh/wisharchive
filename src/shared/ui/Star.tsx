@@ -1,6 +1,6 @@
 export function Star() {
   return (
-    <div className="w-8">
+    <div className="w-6 md:w-8">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 50" fill="none">
         <path
           fill="#000"

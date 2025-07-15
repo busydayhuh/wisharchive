@@ -101,9 +101,9 @@ function WishlistsPage() {
   //TODO адаптировать под мобилку
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-0 md:gap-4">
       {galleryMode === "gallery" && (
-        <div className="gap-x-4 gap-y-6 grid grid-cols-5">
+        <div className="gap-x-4 gap-y-3 md:gap-y-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           {lists.map((list) => (
             <DbWishlistGalleryItem list={list} key={list.$id} />
           ))}

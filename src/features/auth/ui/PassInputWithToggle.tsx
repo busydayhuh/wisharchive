@@ -7,7 +7,7 @@ import type { ControllerRenderProps } from "react-hook-form";
 export default function PassWithToggle(props: ControllerRenderProps) {
   const [passVisible, setPassVisible] = useState(false);
   return (
-    <div className="flex relative">
+    <div className="relative flex overflow-hidden">
       <Input
         placeholder="**************"
         type={passVisible ? "text" : "password"}
@@ -15,7 +15,7 @@ export default function PassWithToggle(props: ControllerRenderProps) {
       />
       <Button
         type="button"
-        className="absolute right-1 top-1.5 text-muted-foreground hover:bg-transparent"
+        className="top-1.5 right-1 absolute hover:bg-transparent text-muted-foreground"
         variant="ghost"
         onClick={() => setPassVisible((prev) => !prev)}
       >

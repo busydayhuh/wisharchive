@@ -221,7 +221,7 @@ function WishesPage() {
   const { galleryMode } = useGalleryMode();
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-1 md:gap-2">
       {galleryMode === "gallery" && (
         <Masonry
           breakpointCols={{ default: 4, 1100: 3, 768: 2 }}

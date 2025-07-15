@@ -31,10 +31,10 @@ const DbWishlistTableItem = memo(function DbWishlistTableItem({
 
   getList();
   return (
-    <div className="items-center gap-6 grid grid-cols-[fit-content(128px)_3fr_2fr_2fr_2fr] pt-2 pb-4 pl-3 transition">
+    <div className="items-center gap-3 md:gap-4 lg:gap-6 grid grid-cols-[5rem_10rem_1fr] md:grid-cols-[5rem_2fr_1fr] lg:grid-cols-[fit-content(128px)_3fr_2fr_2fr_2fr] pt-2 pb-4 md:pb-2 lg:pb-0 pl-2 md:pl-3 transition">
       <Link to={href(ROUTES.WISHLIST, { listId: list.$id })}>
-        <div className="relative">
-          <div className="bg-muted rounded-2xl w-28 aspect-[4/3] overflow-clip">
+        <div className="relative pr-1">
+          <div className="bg-muted rounded-2xl w-20 lg:w-28 aspect-[4/3] overflow-clip">
             {list.imagesUrl[2] && (
               <img
                 src={list.imagesUrl[2]}
@@ -42,7 +42,7 @@ const DbWishlistTableItem = memo(function DbWishlistTableItem({
               />
             )}
           </div>
-          <div className="top-1 -left-1 absolute bg-muted border-1 border-background rounded-2xl w-28 aspect-[4/3] overflow-clip">
+          <div className="top-1 -left-1 absolute bg-muted border-1 border-background rounded-2xl w-20 lg:w-28 aspect-[4/3] overflow-clip">
             {list.imagesUrl[1] && (
               <img
                 src={list.imagesUrl[1]}
@@ -50,7 +50,7 @@ const DbWishlistTableItem = memo(function DbWishlistTableItem({
               />
             )}
           </div>
-          <div className="top-2 -left-2 absolute bg-muted border-1 border-background rounded-2xl w-28 aspect-[4/3] overflow-clip">
+          <div className="top-2 -left-2 absolute bg-muted border-1 border-background rounded-2xl w-20 lg:w-28 aspect-[4/3] overflow-clip">
             {list.imagesUrl[0] && (
               <img
                 src={list.imagesUrl[0]}
@@ -61,8 +61,8 @@ const DbWishlistTableItem = memo(function DbWishlistTableItem({
         </div>
       </Link>
       <Link to={href(ROUTES.WISHLIST, { listId: list.$id })}>
-        <div className="flex flex-col basis-2xs">
-          <span className="pr-1 font-medium text-lg truncate">
+        <div className="flex flex-col lg:basis-2xs">
+          <span className="pr-1 font-medium text-base md:text-lg truncate">
             {list.name}
             {list.isPrivate && (
               <Badge className="bg-transparent ms-2 px-1 py-1 rounded-full text-foreground">
@@ -71,16 +71,29 @@ const DbWishlistTableItem = memo(function DbWishlistTableItem({
             )}
           </span>
           <span className="text-xs">{`${list.wishCount} жел.`}</span>
+          {list.isPrivate && list.canRead && (
+            <SharedAvatars
+              users={list.canRead}
+              size={5}
+              maxCount={3}
+              className="lg:hidden flex"
+            />
+          )}
         </div>
       </Link>
       {list.isPrivate && list.canRead ? (
-        <SharedAvatars users={list.canRead} size={6} maxCount={4} />
+        <SharedAvatars
+          users={list.canRead}
+          size={6}
+          maxCount={4}
+          className="hidden lg:flex"
+        />
       ) : (
-        <div className="text-sm">виден всем</div>
+        <div className="hidden lg:block text-sm">виден всем</div>
       )}
-      <div className="text-sm">изменен: 17 июня 2025г.</div>
+      <div className="hidden lg:block text-sm">изменен: 17 июня 2025г.</div>
 
-      <div className="flex justify-center gap-5 align-middle">
+      <div className="flex justify-end lg:justify-center gap-0 md:gap-5 align-middle">
         <EditButton variant="table" />
         <BookmarkButton variant="table" />
       </div>

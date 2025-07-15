@@ -1,7 +1,7 @@
 import { Slot } from "@radix-ui/react-slot";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { PanelLeft } from "lucide-react";
+import { ChevronRightCircle, PanelLeft } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/shared/lib/css";
@@ -257,7 +257,7 @@ function SidebarTrigger({
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { toggleSidebar } = useSidebar();
+  const { toggleSidebar, isMobile } = useSidebar();
 
   return (
     <Button
@@ -272,7 +272,11 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <PanelLeft className="size-3" />
+      {isMobile ? (
+        <ChevronRightCircle className="stroke-1 mt-1 size-5" />
+      ) : (
+        <PanelLeft className="size-4" />
+      )}
       <span className="sr-only">Открыть/закрыть меню</span>
     </Button>
   );

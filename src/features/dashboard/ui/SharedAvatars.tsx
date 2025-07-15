@@ -1,3 +1,4 @@
+import { cn } from "@/shared/lib/css";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/kit/avatar";
 import { ID } from "appwrite";
 import { memo } from "react";
@@ -13,9 +14,15 @@ const SharedAvatars = memo(function SharedAvatars({
   users,
   size,
   maxCount,
-}: SharedAvatarsProps) {
+  className,
+}: SharedAvatarsProps & React.ComponentProps<"div">) {
   return (
-    <div className="flex -space-x-2 *:data-[slot=avatar]:grayscale mt-1 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background">
+    <div
+      className={cn(
+        "flex -space-x-2 *:data-[slot=avatar]:grayscale mt-1 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background",
+        className
+      )}
+    >
       {users.slice(0, maxCount).map((user) => (
         <Avatar className={`w-${size} h-${size}`} key={ID.unique()}>
           <AvatarImage src="https://github.com/shadcn.png" alt={user} />
