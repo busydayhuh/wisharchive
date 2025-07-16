@@ -14,7 +14,7 @@ const DashboardNav = memo(function DashboardNav() {
 
   if (userId)
     return (
-      <div className="flex px-1 py-1 border-1 border-foreground rounded-3xl w-fit">
+      <div className="flex bg-muted px-1 py-1 rounded-3xl w-fit">
         <NavLink
           className={styles}
           to={href(ROUTES.WISHES, { userId: userId })}

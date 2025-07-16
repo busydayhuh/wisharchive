@@ -103,7 +103,7 @@ function WishlistsPage() {
   return (
     <div className="flex flex-col gap-0 md:gap-4">
       {galleryMode === "gallery" && (
-        <div className="gap-x-4 gap-y-3 md:gap-y-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+        <div className="gap-x-4 gap-y-3 md:gap-y-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
           {lists.map((list) => (
             <DbWishlistGalleryItem list={list} key={list.$id} />
           ))}
