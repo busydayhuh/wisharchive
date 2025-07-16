@@ -31,7 +31,7 @@ const DbWishlistTableItem = memo(function DbWishlistTableItem({
 
   getList();
   return (
-    <div className="items-center gap-3 md:gap-4 lg:gap-6 grid grid-cols-[5rem_10rem_1fr] md:grid-cols-[5rem_2fr_1fr] lg:grid-cols-[fit-content(128px)_3fr_2fr_2fr_2fr] pt-2 pb-4 md:pb-2 lg:pb-0 pl-2 md:pl-3 transition">
+    <div className="items-center gap-3 md:gap-4 lg:gap-6 grid grid-cols-[5rem_10rem_1fr] md:grid-cols-[5rem_2fr_1fr] lg:grid-cols-[fit-content(128px)_3fr_1fr_1fr_1fr_1fr] pt-2 pb-4 md:pb-2 lg:pb-0 pl-2 md:pl-3 transition">
       <Link to={href(ROUTES.WISHLIST, { listId: list.$id })}>
         <div className="relative pr-1">
           <div className="bg-muted rounded-2xl w-20 lg:w-28 aspect-[4/3] overflow-clip">
@@ -91,9 +91,14 @@ const DbWishlistTableItem = memo(function DbWishlistTableItem({
       ) : (
         <div className="hidden lg:block text-sm">виден всем</div>
       )}
-      <div className="hidden lg:block text-sm">изменен: 17 июня 2025г.</div>
+      <div className="hidden lg:block w-fit text-sm">
+        создан: 17 июня 2025г.
+      </div>
+      <div className="hidden lg:block w-fit text-sm">
+        изменен: 17 июня 2025г.
+      </div>
 
-      <div className="flex justify-end lg:justify-center gap-0 md:gap-5 align-middle">
+      <div className="flex justify-end lg:justify-around align-middle">
         <EditButton variant="table" />
         <BookmarkButton variant="table" />
       </div>

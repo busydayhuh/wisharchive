@@ -10,7 +10,8 @@ export type DashboardGalleryModeSwitchType = {
 function DashboardGalleryModeSwitch({
   setGalleryMode,
   galleryMode,
-}: DashboardGalleryModeSwitchType) {
+  className,
+}: DashboardGalleryModeSwitchType & React.ComponentProps<"div">) {
   const toggleStyles =
     "cursor-pointer rounded-xl first:rounded-l-xl last:rounded-r-xl text-muted-foreground";
   return (
@@ -20,6 +21,7 @@ function DashboardGalleryModeSwitch({
       onValueChange={(value) => {
         if (value) setGalleryMode(value);
       }}
+      className={className}
     >
       <ToggleGroupItem value="gallery" className={toggleStyles}>
         <LayoutDashboard />

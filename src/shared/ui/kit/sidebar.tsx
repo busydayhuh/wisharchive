@@ -273,9 +273,9 @@ function SidebarTrigger({
       {...props}
     >
       {isMobile ? (
-        <ChevronRightCircle className="stroke-1 mt-1 size-5" />
+        <ChevronRightCircle className="stroke-1 size-5" />
       ) : (
-        <PanelLeft className="size-4" />
+        <PanelLeft className="stroke-[1.5px] size-3" />
       )}
       <span className="sr-only">Открыть/закрыть меню</span>
     </Button>

@@ -45,7 +45,7 @@ export function EditButton({
         className
       )}
     >
-      <Pencil />
+      <Pencil className="stroke-[1.3px]" />
     </Button>
   );
 }
@@ -63,14 +63,14 @@ export function BookmarkButton({
         variant === "gallery" &&
           "top-1 right-1 z-10 absolute data-[state=off]:[&_svg]:fill-secondary data-[state=on]:[&_svg]:fill-destructive [&_svg]:stroke-0 transition hover:bg-muted-foreground/40",
         variant === "table" &&
-          "data-[state=off]:[&_svg]:text-foreground [&_svg]:stroke-[1.4px] data-[state=off]:hover:[&_svg]:fill-muted data-[state=on]:[&_svg]:text-destructive [state=on]:[&_svg]:fill-destructive hover:bg-muted",
+          "data-[state=off]:[&_svg]:text-foreground [&_svg]:stroke-[1px] data-[state=off]:hover:[&_svg]:fill-muted data-[state=on]:[&_svg]:text-destructive [state=on]:[&_svg]:fill-destructive hover:bg-muted",
         className
       )}
     >
       <Bookmark
         className={cn(
           "transition duration-200",
-          variant === "gallery" ? "size-5" : "size-5"
+          variant === "gallery" ? "size-6" : "size-5"
         )}
       />
     </Toggle>

@@ -1,6 +1,6 @@
 import { ID } from "appwrite";
 import Masonry from "react-masonry-css";
-import { useGalleryMode } from "./ui/DashboardLayout";
+import { useDashboardContext } from "./ui/DashboardLayout";
 import DbWishGalleryItem from "./ui/DbWishGalleryItem";
 import DbWishTableItem from "./ui/DbWishTableItem";
 
@@ -218,7 +218,7 @@ const wishes = [
 ];
 
 function WishesPage() {
-  const { galleryMode } = useGalleryMode();
+  const { galleryMode } = useDashboardContext();
 
   return (
     <div className="flex flex-col gap-1 md:gap-2">

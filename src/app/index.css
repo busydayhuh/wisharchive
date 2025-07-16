@@ -167,6 +167,10 @@ html {
   z-index: 10;
 }
 
+.transition-w-linear {
+  transition: width 300ms linear;
+}
+
 @media screen and (any-hover: hover) {
   .show-on-hover {
     bottom: -0.75rem;

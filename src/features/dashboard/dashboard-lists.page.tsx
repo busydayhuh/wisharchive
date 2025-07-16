@@ -1,5 +1,5 @@
 import { ID } from "appwrite";
-import { useGalleryMode } from "./ui/DashboardLayout";
+import { useDashboardContext } from "./ui/DashboardLayout";
 import DbWishlistGalleryItem from "./ui/DbWishlistGalleryItem";
 import DbWishlistTableItem from "./ui/DbWishlistTableItem";
 
@@ -97,7 +97,7 @@ const lists = [
 ];
 
 function WishlistsPage() {
-  const { galleryMode } = useGalleryMode();
+  const { galleryMode } = useDashboardContext();
   //TODO адаптировать под мобилку
 
   return (
