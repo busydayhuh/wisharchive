@@ -49,12 +49,12 @@ const DbWishGalleryItem = memo(function DbWishGalleryItem({
 
       <Link
         to={href(ROUTES.WISH, { wishId: wish.$id })}
-        className="flex md:flex-row flex-col justify-between px-1"
+        className="flex md:flex-row flex-col justify-between md:items-center px-1"
       >
-        <span className="pr-1 font-medium text-base md:text-lg truncate">
+        <span className="pr-1 font-medium text-base lg:text-base xl:text-lg truncate">
           {wish.name}
         </span>
-        <span className="text-base md:text-lg">
+        <span className="text-sm lg:text-base xl:text-lg">
           {wish.price && `${wish.price}${wish.currency}`}
         </span>
       </Link>

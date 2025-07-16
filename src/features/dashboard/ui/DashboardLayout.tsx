@@ -30,9 +30,9 @@ export function DashboardLayout() {
     <div className="flex flex-col gap-10 md:gap-12 mt-2 md:mt-4 px-2 md:px-0">
       <div className="flex md:flex-row flex-col justify-between md:items-center gap-4 md:gap-6">
         {isOwner && (
-          <div className="max-w-xs font-semibold text-3xl md:text-4xl leading-8">
+          <span className="mb-4 md:mb-0 max-w-xs font-semibold text-3xl md:text-4xl leading-8">
             Мой дашборд желаний
-          </div>
+          </span>
         )}
         <DashboardUser {...dashboardUser} />
       </div>

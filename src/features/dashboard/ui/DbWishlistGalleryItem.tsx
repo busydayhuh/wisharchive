@@ -24,7 +24,7 @@ const DbWishlistGalleryItem = memo(function DbWishlistGalleryItem({
 }: ListcardProps) {
   return (
     <div className="group/cover flex flex-col gap-1 mb-4">
-      <div className="relative overflow-hidden">
+      <div className="relative">
         <BookmarkButton />
         <EditButton />
         <Link to={href(ROUTES.WISHLIST, { listId: list.$id })}>
