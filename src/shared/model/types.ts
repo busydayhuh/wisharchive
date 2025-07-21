@@ -5,7 +5,7 @@ export type WishDocumentType = Models.Document & {
   description?: string;
   shopURL?: string;
   price?: number;
-  currency?: string;
+  currency: string;
   isArchived: boolean;
   ownerId: string;
   bookerId?: string | null;

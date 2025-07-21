@@ -1,3 +1,4 @@
+import { Currency } from "@/shared/lib/currency";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishDocumentType } from "@/shared/model/types";
 import { Button } from "@/shared/ui/kit/button";
@@ -39,8 +40,13 @@ const DbWishGalleryItem = memo(function DbWishGalleryItem({
         <span className="pr-1 font-medium text-base lg:text-base xl:text-lg truncate">
           {wish.title}
         </span>
-        <span className="text-sm lg:text-base xl:text-lg">
-          {wish.price && `${wish.price}${wish.currency}`}
+        <span className="inline-flex items-center text-sm lg:text-base xl:text-lg">
+          {wish.price && (
+            <>
+              <span className="pb-0.5">{wish.price}</span>
+              <Currency currency={wish.currency} />
+            </>
+          )}
         </span>
       </Link>
 
@@ -58,18 +64,6 @@ const DbWishGalleryItem = memo(function DbWishGalleryItem({
             </Link>
           </Button>
         )}
-        {/* {wish.url && (
-          <Button
-            variant="link"
-            className="items-center gap-1 py-0 h-fit font-normal"
-            asChild
-          >
-            <Link to={wish.url}>
-              <Globe className="size-3" />
-              <span className="leading-4">ozon.ru</span>
-            </Link>
-          </Button>
-        )} */}
       </div>
     </div>
   );

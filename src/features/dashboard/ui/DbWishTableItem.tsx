@@ -1,8 +1,9 @@
+import { Currency } from "@/shared/lib/currency";
 import { formatUrl } from "@/shared/lib/formatUrl";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishDocumentType } from "@/shared/model/types";
 import { Button } from "@/shared/ui/kit/button";
-import { LockIcon, RussianRuble, ShoppingBag, Stars } from "lucide-react";
+import { LockIcon, ShoppingBag, Stars } from "lucide-react";
 import { memo } from "react";
 import { href, Link } from "react-router";
 import ActionMenu from "./ActionMenu";
@@ -35,9 +36,9 @@ const DbWishTableItem = memo(function DbWishTableItem({
             {wish.title}
           </span>
           {wish.price ? (
-            <span className="md:hidden flex items-center gap-1">
-              {wish.price}
-              <RussianRuble className="size-3" />
+            <span className="md:hidden flex items-center">
+              <span className="pb-0.5">{wish.price}</span>
+              <Currency currency={wish.currency} />
             </span>
           ) : (
             <span className="md:hidden text-muted-foreground/60 text-sm leading-2.5">
@@ -53,12 +54,12 @@ const DbWishTableItem = memo(function DbWishTableItem({
       </Link>
       <Link
         to={href(ROUTES.WISH, { wishId: wish.$id })}
-        className="hidden md:flex lg:justify-self-center items-center gap-1 px-1 text-sm md:text-lg"
+        className="hidden md:flex lg:justify-self-center items-center px-1 text-sm md:text-lg"
       >
         {wish.price ? (
           <>
-            {wish.price}
-            <RussianRuble className="size-3" />
+            <span className="pb-0.5">{wish.price}</span>
+            <Currency currency={wish.currency} />
           </>
         ) : (
           <span className="text-muted-foreground/60 text-xs md:text-sm leading-2.5">
