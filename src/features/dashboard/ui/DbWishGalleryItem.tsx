@@ -1,31 +1,16 @@
 import { ROUTES } from "@/shared/model/routes";
+import type { WishDocumentType } from "@/shared/model/types";
 import { Button } from "@/shared/ui/kit/button";
 import { LockIcon, Stars } from "lucide-react";
 import { memo } from "react";
 import { href, Link } from "react-router";
 import ActionMenu from "./ActionMenu";
 
-type WishcardProps = {
-  wish: {
-    $id: string;
-    name: string;
-    listId: string;
-    listName: string;
-    listPrivate: boolean;
-    url: string;
-    price: number;
-    currency: string;
-    isBooked: boolean;
-    imageUrl: string;
-    imageAspectRatio: number;
-  };
-};
-
-// TODO изменить тип на встроенный от appwrite + мои поля
-
 const DbWishGalleryItem = memo(function DbWishGalleryItem({
   wish,
-}: WishcardProps) {
+}: {
+  wish: WishDocumentType;
+}) {
   return (
     <div className="group/cover relative flex flex-col gap-1 md:gap-2 mb-4 overflow-hidden">
       {wish.isBooked && (
@@ -40,8 +25,8 @@ const DbWishGalleryItem = memo(function DbWishGalleryItem({
         <ActionMenu triggerVariant="gallery" />
         <Link to={href(ROUTES.WISH, { wishId: wish.$id })}>
           <img
-            src={wish.imageUrl}
-            alt={wish.name}
+            src={wish.imageURL}
+            alt={wish.title}
             className="group-hover/cover:brightness-50 peer-[[aria-expanded='true']]/cover:brightness-50 rounded-2xl w-full max-h-[36rem] object-cover transition"
           />
         </Link>
@@ -52,7 +37,7 @@ const DbWishGalleryItem = memo(function DbWishGalleryItem({
         className="flex md:flex-row flex-col justify-between md:items-center px-1"
       >
         <span className="pr-1 font-medium text-base lg:text-base xl:text-lg truncate">
-          {wish.name}
+          {wish.title}
         </span>
         <span className="text-sm lg:text-base xl:text-lg">
           {wish.price && `${wish.price}${wish.currency}`}
@@ -60,16 +45,16 @@ const DbWishGalleryItem = memo(function DbWishGalleryItem({
       </Link>
 
       <div className="flex justify-between items-baseline px-1">
-        {wish.listId && (
+        {wish.wishlist && (
           <Button
             variant="outline"
             size="sm"
             className="rounded-full max-w-[25ch] h-6 font-normal text-xs"
             asChild
           >
-            <Link to={href(ROUTES.WISHLIST, { listId: wish.listId })}>
-              {wish.listPrivate && <LockIcon className="size-3" />}
-              <span className="truncate"> {wish.listName}</span>
+            <Link to={href(ROUTES.WISHLIST, { listId: wish.wishlist.$id })}>
+              {wish.isPrivate && <LockIcon className="size-3" />}
+              <span className="truncate">{wish.wishlist.title}</span>
             </Link>
           </Button>
         )}

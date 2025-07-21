@@ -14,7 +14,8 @@ import DashboardUser from "./DbUser";
 
 type OutletContextType = DashboardGalleryModeSwitchType & {
   isOwner: boolean;
-  searchQuery: null | string;
+  searchQuery: string | null;
+  dashboardUserId: string | undefined;
 };
 
 export function DashboardLayout() {
@@ -38,7 +39,7 @@ export function DashboardLayout() {
       </div>
       <div className="flex flex-col gap-6 -mb-7 md:-mb-9 lg:pr-6">
         {isMobile && <DbSearchbar setSearchQuery={setSearchQuery} />}
-        <div className="flex justify-between items-center gap-3 w-full">
+        <div className="flex justify-between items-end gap-3 md:gap-5 w-full">
           <DashboardNav />
           {!isMobile && (
             <DbSearchbar
@@ -54,7 +55,12 @@ export function DashboardLayout() {
       </div>
       <StarFrame>
         <Outlet
-          context={{ galleryMode, setGalleryMode, isOwner, searchQuery }}
+          context={{
+            galleryMode,
+            isOwner,
+            searchQuery,
+            dashboardUserId,
+          }}
         />
       </StarFrame>
     </div>

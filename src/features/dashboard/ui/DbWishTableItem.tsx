@@ -1,32 +1,19 @@
+import { formatUrl } from "@/shared/lib/formatUrl";
 import { ROUTES } from "@/shared/model/routes";
+import type { WishDocumentType } from "@/shared/model/types";
 import { Button } from "@/shared/ui/kit/button";
-import { Globe, LockIcon, Stars } from "lucide-react";
+import { LockIcon, RussianRuble, ShoppingBag, Stars } from "lucide-react";
 import { memo } from "react";
 import { href, Link } from "react-router";
 import ActionMenu from "./ActionMenu";
 
-type WishcardProps = {
-  wish: {
-    $id: string;
-    name: string;
-    listId: string;
-    listName: string;
-    listPrivate: boolean;
-    url: string;
-    price: number;
-    currency: string;
-    isBooked: boolean;
-    imageUrl: string;
-    imageAspectRatio: number;
-  };
-};
-
-// TODO переместить WishcardProps, дубль
-
-const DbWishTableItem = memo(function DbWishTableItem({ wish }: WishcardProps) {
-  //TODO адаптировать под мобилку
+const DbWishTableItem = memo(function DbWishTableItem({
+  wish,
+}: {
+  wish: WishDocumentType;
+}) {
   return (
-    <div className="relative items-center grid grid-cols-[80px_2fr_1fr] md:grid-cols-[fit-content(128px)_2fr_1fr_1fr_fit-content(80px)_1fr] py-1 md:py-2 pl-0 md:pl-2 overflow-hidden transition">
+    <div className="relative flex justify-items-center items-center lg:grid lg:grid-cols-[fit-content(8rem)_2fr_1fr_1fr_1fr_1fr] py-1 md:py-2 pl-0 md:pl-2 w-full overflow-hidden transition">
       {wish.isBooked && (
         <div className="top-2 md:top-3 left-1 md:left-3 absolute bg-destructive p-1.5 rounded-full text-background">
           <Stars className="size-3" />
@@ -34,19 +21,27 @@ const DbWishTableItem = memo(function DbWishTableItem({ wish }: WishcardProps) {
       )}
       <Link to={href(ROUTES.WISH, { wishId: wish.$id })}>
         <img
-          src={wish.imageUrl}
-          alt={wish.name}
-          className="rounded-[0.5rem] md:rounded-2xl w-full max-w-32 object-cover aspect-[4/3]"
+          src={wish.imageURL}
+          alt={wish.title}
+          className="rounded-[0.5rem] md:rounded-2xl w-full min-w-20 md:min-w-28 max-w-32 object-cover aspect-[4/3]"
         />
       </Link>
-      <Link to={href(ROUTES.WISH, { wishId: wish.$id })}>
-        <div className="flex flex-col px-2 md:px-4 max-w-[25ch] md:max-w-full">
+      <Link
+        to={href(ROUTES.WISH, { wishId: wish.$id })}
+        className="justify-self-start"
+      >
+        <div className="flex flex-col px-2 md:px-4 max-w-[25ch] md:max-w-[30ch] xl:max-w-full">
           <span className="font-medium text-base md:text-lg truncate">
-            {wish.name}
+            {wish.title}
           </span>
-          {wish.price && (
-            <span className="md:hidden block text-sm">
-              {`${wish.price}${wish.currency}`}
+          {wish.price ? (
+            <span className="md:hidden flex items-center gap-1">
+              {wish.price}
+              <RussianRuble className="size-3" />
+            </span>
+          ) : (
+            <span className="md:hidden text-muted-foreground/60 text-sm leading-2.5">
+              без цены
             </span>
           )}
           {wish.isBooked && (
@@ -58,14 +53,21 @@ const DbWishTableItem = memo(function DbWishTableItem({ wish }: WishcardProps) {
       </Link>
       <Link
         to={href(ROUTES.WISH, { wishId: wish.$id })}
-        className="hidden md:block"
+        className="hidden md:flex lg:justify-self-center items-center gap-1 px-1 text-sm md:text-lg"
       >
-        <div className="px-1 text-sm md:text-lg">
-          {wish.price && `${wish.price}${wish.currency}`}
-        </div>
+        {wish.price ? (
+          <>
+            {wish.price}
+            <RussianRuble className="size-3" />
+          </>
+        ) : (
+          <span className="text-muted-foreground/60 text-xs md:text-sm leading-2.5">
+            без цены
+          </span>
+        )}
       </Link>
-      <div className="hidden md:block">
-        {wish.listId && (
+      <div className="hidden md:block ml-10 lg:ml-0">
+        {wish.wishlist ? (
           <Button
             variant="outline"
             size="sm"
@@ -73,30 +75,43 @@ const DbWishTableItem = memo(function DbWishTableItem({ wish }: WishcardProps) {
             asChild
           >
             <Link
-              to={href(ROUTES.WISHLIST, { listId: wish.listId })}
+              to={href(ROUTES.WISHLIST, { listId: wish.wishlist.$id })}
               className="w-fit max-w-[25ch]"
             >
-              {wish.listPrivate && <LockIcon className="size-3" />}
-              <span className="truncate">{wish.listName}</span>
+              {wish.isPrivate && <LockIcon className="size-3" />}
+              <span className="truncate">{wish.wishlist.title}</span>
             </Link>
           </Button>
-        )}
-      </div>
-      <div className="hidden md:block">
-        {wish.url && (
+        ) : (
           <Button
-            variant="link"
-            className="items-baseline gap-1 w-fit max-w-[20ch] font-normal text-sm"
+            variant="outline"
+            size="sm"
+            className="bg-transparent border-muted-foreground/60 rounded-full w-fit h-6 font-normal text-muted-foreground/60 text-sm pointer-events-none"
             asChild
           >
-            <a href={wish.url} target="_blank">
-              <Globe className="size-3" />
-              <span className="truncate leading-4">ozon.ru</span>
-            </a>
+            <span className="max-w-[25ch] truncate">без списка</span>
           </Button>
         )}
       </div>
-      <ActionMenu triggerVariant="table" side="bottom" align="center" />
+      <div className="hidden lg:flex items-center gap-2 w-fit">
+        {wish.shopURL && (
+          <>
+            <ShoppingBag className="size-3" />
+            <Button
+              variant="link"
+              className="inline-block px-0 max-w-[10ch] xl:max-w-[25ch] font-normal text-sm truncate leading-4"
+              asChild
+            >
+              <a href={wish.shopURL} target="_blank">
+                {formatUrl(wish.shopURL)}
+              </a>
+            </Button>
+          </>
+        )}
+      </div>
+      <div className="ms-auto">
+        <ActionMenu triggerVariant="table" side="bottom" align="center" />
+      </div>
     </div>
   );
 });

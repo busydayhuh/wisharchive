@@ -98,7 +98,6 @@ const lists = [
 
 function WishlistsPage() {
   const { galleryMode } = useDashboardContext();
-  //TODO адаптировать под мобилку
 
   return (
     <div className="flex flex-col gap-0 md:gap-4">

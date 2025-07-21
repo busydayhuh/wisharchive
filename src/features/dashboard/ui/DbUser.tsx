@@ -1,22 +1,28 @@
+import type { UserDocumentType } from "@/shared/model/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/kit/avatar";
 import { Button } from "@/shared/ui/kit/button";
 import { Share2 } from "lucide-react";
 import { memo } from "react";
 import { copyUrl } from "../model/copyUrl";
-import type { FoundUser } from "../model/useFindUser";
 
 const DashboardUser = memo(function DashboardUser({
   user,
-  isPending,
+  isLoading,
   error,
-}: FoundUser) {
-  if (isPending) return <div>Loading...</div>;
-  if (error) return <div>Ошибка</div>;
+}: {
+  user: UserDocumentType | undefined;
+  isLoading: boolean;
+  error: Error | undefined;
+}) {
+  //TODO сделать скелетон для загрузки
+  if (isLoading) return <div>Загрузка...</div>;
+  if (error)
+    return <div>Не удалось загрузить информацию о пользователе ☹️</div>;
   if (user)
     return (
       <div className="flex items-center gap-3">
         <Avatar className="p-0.5 border-1 border-foreground rounded-full w-9 md:w-11 h-9 md:h-11 overflow-visible">
-          <AvatarImage src={user.userAvatar} alt={user.userName} />
+          <AvatarImage src={user.avatarURL} alt={user.userName} />
           <AvatarFallback className="rounded-full text-sm md:text-base">
             ВП
           </AvatarFallback>

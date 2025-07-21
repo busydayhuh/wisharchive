@@ -42,6 +42,7 @@
   --font-display: "Random Grotesque Standard", "sans-serif";
   --inset-shadow-base: inset 0px 0px 120px 20px var(--color-zinc-700);
   --sidebar-icons-stroke: 1.3px;
+  --breakpoint-md: 56.25rem;
 
   --animate-star: bounce-out-down 1.5s ease-out forwards;
 

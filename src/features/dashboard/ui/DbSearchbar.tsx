@@ -30,7 +30,7 @@ function DbSearchbar({
     >
       <Input
         className={cn(
-          "shadow-none pb-1.5 border-0 rounded-2xl w-full focus-visible:w-full h-8 text-sm transition-w-linear",
+          "shadow-none pb-1.5 border-0 rounded-2xl outline-muted-foreground w-full focus-visible:w-full h-8 text-sm transition-w-linear",
           !inputValue && "md:w-48"
         )}
         placeholder="найти"
@@ -50,7 +50,7 @@ function DbSearchbar({
           <X />
         </Button>
       ) : (
-        <Search className="size-4 text-ring/50 group-has-[input:focus-visible]/searchbar:text-foreground" />
+        <Search className="size-4 text-muted-foreground group-has-[input:focus-visible]/searchbar:text-foreground" />
       )}
     </div>
   );

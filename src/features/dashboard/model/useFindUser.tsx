@@ -1,42 +1,21 @@
 import db from "@/shared/model/databases";
-import type { TError } from "@/shared/model/errorMessages";
-import { Query, type Models } from "appwrite";
-import { useEffect, useState } from "react";
+import type { UserDocumentType } from "@/shared/model/types";
+import { Query } from "appwrite";
+import useSWR from "swr";
 
-type User = Models.Document | null;
-
-export type FoundUser = {
-  user: User;
-  isPending: boolean;
-  error: TError | null;
-};
+async function fetchUserDocument(userId: string) {
+  const response = await db.users.list([Query.equal("userId", userId)]);
+  return response.documents[0] as UserDocumentType;
+}
 
 function useFindUser(userId?: string) {
-  const [user, setUser] = useState<User>(null);
-  const [isPending, setIsPending] = useState(true);
-  const [error, setError] = useState<TError | null>(null);
+  const {
+    data: user,
+    isLoading,
+    error,
+  } = useSWR(`${userId}`, fetchUserDocument);
 
-  useEffect(() => {
-    async function findUser() {
-      if (!userId) return;
-
-      try {
-        const response = await db.users.list([Query.equal("userId", userId)]);
-
-        if (response.documents.length > 0) {
-          setUser(response.documents[0]);
-        }
-      } catch (error) {
-        setError({ error: error, error_message: "Пользователь не найден" });
-      } finally {
-        setIsPending(false);
-      }
-    }
-
-    findUser();
-  }, [userId]);
-
-  return { user, isPending, error };
+  return { user, isLoading, error };
 }
 
 export default useFindUser;
