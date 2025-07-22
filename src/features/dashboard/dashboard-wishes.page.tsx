@@ -9,12 +9,13 @@ function WishesPage() {
   const { galleryMode, dashboardUserId } = useDashboardContext();
   const { wishes, isLoading, error } = useFetchWishesByUser(dashboardUserId);
 
-  console.log("wishes :>> ", wishes);
-
   if (isLoading) return <div>Загрузка...</div>;
   if (error) return <div>Не удалось загрузить желания ☹️</div>;
 
-  if (wishes)
+  if (wishes && wishes.length === 0) {
+    <div>Нет желаний</div>;
+  }
+  if (wishes && wishes.length > 0)
     return (
       <div className="flex flex-col gap-1 md:gap-2">
         {galleryMode === "gallery" && (

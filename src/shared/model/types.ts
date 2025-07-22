@@ -21,7 +21,7 @@ export type WishlistDocumentType = Models.Document & {
   title: string;
   description?: string;
   ownerId: string;
-  wishesId?: string[] | [];
+  wishes: WishDocumentType[] | null;
   isPrivate?: boolean;
   canReadId?: string[] | [];
   canEditId?: string[] | [];

@@ -20,7 +20,9 @@ export function useFetchWishesByUser(userId: string | undefined) {
     data: wishes,
     isLoading,
     error,
-  } = useSWR({ userId: userId, collection: "wishes" }, fetcher);
+  } = useSWR({ userId: userId, collection: "wishes" }, fetcher, {
+    onSuccess: (data) => data.reverse(),
+  });
 
   return { wishes, isLoading, error };
 }

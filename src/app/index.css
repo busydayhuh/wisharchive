@@ -194,6 +194,26 @@ html {
     opacity: 1;
   }
 }
+.dot-on-hover {
+  position: relative;
+}
+.dot-on-hover::before {
+  content: "";
+  position: absolute;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  left: -0.75rem;
+  display: none;
+  top: 50%;
+  background-color: var(--destructive);
+  transition: transform 0.25s ease-out;
+}
+
+.dot-on-hover:hover::before {
+  display: block;
+}
 
 @layer base {
   @font-face {

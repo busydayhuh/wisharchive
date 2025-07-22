@@ -15,7 +15,7 @@ export function ActionMenuTrigger({
       className={cn(
         "inline-flex justify-center items-center border-0 rounded-full size-9 text-sm cursor-pointer",
         variant === "gallery" &&
-          "bg-secondary hover:bg-muted peer/cover transition  duration-300 show-on-hover",
+          "bg-secondary hover:bg-muted peer/cover transition duration-300 show-on-hover",
         variant === "table" &&
           "md:bg-transparent bg-muted hover:bg-muted/60 shadow-none md:mx-auto ms-auto me-1",
         className

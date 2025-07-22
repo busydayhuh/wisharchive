@@ -1,54 +1,31 @@
 import { ROUTES } from "@/shared/model/routes";
+import type { WishlistDocumentType } from "@/shared/model/types";
 import { Badge } from "@/shared/ui/kit/badge";
-import { ID } from "appwrite";
 import { Lock } from "lucide-react";
 import { memo } from "react";
 import { href, Link } from "react-router-dom";
 import { BookmarkButton, EditButton } from "./ActionButtons";
+import ImageTiles from "./ImageTiles";
 import SharedAvatars from "./SharedAvatars";
 
-type ListcardProps = {
-  list: {
-    $id: string;
-    name: string;
-    imagesUrl: Array<string | undefined>;
-    isPrivate: boolean;
-    wishCount: number;
-    canRead?: string[];
-    canEdit?: string[];
-  };
-};
-
 const DbWishlistGalleryItem = memo(function DbWishlistGalleryItem({
-  list,
-}: ListcardProps) {
+  wishlist,
+}: WishlistDocumentType) {
   return (
     <div className="group/cover flex flex-col gap-1 mb-4">
       <div className="relative">
         <BookmarkButton />
         <EditButton />
-        <Link to={href(ROUTES.WISHLIST, { listId: list.$id })}>
-          <div className="gap-0.5 grid grid-cols-[1.5fr_1fr] grid-rows-2 *:first:row-span-2 brightness-100 group-hover/cover:brightness-50 rounded-2xl h-36 overflow-hidden transition">
-            {list.imagesUrl.map((url) => {
-              if (url)
-                return (
-                  <img
-                    src={url}
-                    className="w-full h-full object-cover"
-                    key={ID.unique()}
-                  />
-                );
-              return <div className="bg-muted" key={ID.unique()}></div>;
-            })}
-          </div>
+        <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
+          <ImageTiles wishes={wishlist.wishes} />
         </Link>
       </div>
-      <Link to={href(ROUTES.WISHLIST, { listId: list.$id })}>
+      <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
         <div className="flex justify-between items-baseline px-2">
           <span className="pr-1 font-medium text-base md:text-lg truncate">
-            {list.name}
+            {wishlist.title}
           </span>
-          {list.isPrivate && (
+          {wishlist.isPrivate && (
             <Badge
               className="ms-1 me-auto px-1 py-1 rounded-full text-foreground"
               variant="outline"
@@ -56,11 +33,17 @@ const DbWishlistGalleryItem = memo(function DbWishlistGalleryItem({
               <Lock className="size-3" />
             </Badge>
           )}
-          <span className="text-sm md:text-base">{`(${list.wishCount})`}</span>
+          {wishlist.wishes ? (
+            <span className="text-sm md:text-base">
+              ( {wishlist.wishes.length} )
+            </span>
+          ) : (
+            " (0) "
+          )}
         </div>
-        {list.isPrivate && list.canRead && (
+        {wishlist.isPrivate && wishlist.canRead && (
           <SharedAvatars
-            users={list.canRead}
+            users={wishlist.canRead}
             size={5}
             maxCount={3}
             className="px-2"

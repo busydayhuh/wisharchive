@@ -14,7 +14,7 @@ const DbWishTableItem = memo(function DbWishTableItem({
   wish: WishDocumentType;
 }) {
   return (
-    <div className="relative flex justify-items-center items-center lg:grid lg:grid-cols-[fit-content(8rem)_2fr_1fr_1fr_1fr_1fr] py-1 md:py-2 pl-0 md:pl-2 w-full overflow-hidden transition">
+    <div className="flex justify-items-center items-center lg:grid lg:grid-cols-[fit-content(8rem)_2fr_1fr_1fr_1fr_1fr] py-1 md:py-2 pl-0 md:pl-1 w-full transition dot-on-hover">
       {wish.isBooked && (
         <div className="top-2 md:top-3 left-1 md:left-3 absolute bg-destructive p-1.5 rounded-full text-background">
           <Stars className="size-3" />

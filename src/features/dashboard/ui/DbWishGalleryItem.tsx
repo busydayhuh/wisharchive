@@ -13,7 +13,7 @@ const DbWishGalleryItem = memo(function DbWishGalleryItem({
   wish: WishDocumentType;
 }) {
   return (
-    <div className="group/cover relative flex flex-col gap-1 md:gap-2 mb-4 overflow-hidden">
+    <div className="relative flex flex-col gap-1 md:gap-2 mb-4 overflow-hidden">
       {wish.isBooked && (
         <div className="inline-flex top-2 left-2 z-10 absolute items-center gap-1 bg-destructive px-2 md:px-2.5 py-2 md:py-1 rounded-full md:rounded-3xl text-background">
           <Stars className="size-3" />
@@ -22,13 +22,16 @@ const DbWishGalleryItem = memo(function DbWishGalleryItem({
           </span>
         </div>
       )}
-      <div className="relative overflow-hidden">
+      <div className="group/cover relative overflow-hidden">
         <ActionMenu triggerVariant="gallery" />
-        <Link to={href(ROUTES.WISH, { wishId: wish.$id })}>
+        <Link
+          to={href(ROUTES.WISH, { wishId: wish.$id })}
+          className="group-hover/cover:brightness-50 peer-[[data-state='open']]/cover:brightness-50 transition-[filter] duration-300"
+        >
           <img
             src={wish.imageURL}
             alt={wish.title}
-            className="group-hover/cover:brightness-50 peer-[[aria-expanded='true']]/cover:brightness-50 rounded-2xl w-full max-h-[36rem] object-cover transition"
+            className="rounded-2xl w-full max-h-[36rem] object-cover"
           />
         </Link>
       </div>
