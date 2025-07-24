@@ -6,31 +6,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/shared/ui/kit/tooltip";
-import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
-import { Bookmark, Ellipsis, Gift, Pencil } from "lucide-react";
+import { Bookmark, Gift, Pencil } from "lucide-react";
 import DataStatePropInterceptor from "./DataStatePropInterceptor";
-
-export function ActionMenuTrigger({
-  variant = "gallery",
-  className,
-}: React.ComponentProps<"div"> & {
-  variant?: "gallery" | "table";
-}) {
-  return (
-    <DropdownMenuTrigger
-      className={cn(
-        "inline-flex justify-center items-center border-0 rounded-full size-9 text-sm cursor-pointer",
-        variant === "gallery" &&
-          "bg-secondary hover:bg-muted peer/cover transition duration-300 show-on-hover",
-        variant === "table" &&
-          "md:bg-transparent bg-muted hover:bg-muted/60 shadow-none md:mx-auto ms-auto me-1",
-        className
-      )}
-    >
-      <Ellipsis className="size-4" />
-    </DropdownMenuTrigger>
-  );
-}
 
 export function EditButton({
   variant = "gallery",
