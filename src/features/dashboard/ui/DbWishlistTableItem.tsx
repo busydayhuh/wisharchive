@@ -13,7 +13,9 @@ import SharedAvatars from "./SharedAvatars";
 
 const DbWishlistTableItem = memo(function DbWishlistTableItem({
   wishlist,
-}: WishlistDocumentType) {
+}: {
+  wishlist: WishlistDocumentType;
+}) {
   return (
     <div className="items-center gap-3 md:gap-4 lg:gap-6 grid grid-cols-[5rem_10rem_1fr] md:grid-cols-[5rem_2fr_1fr] lg:grid-cols-[fit-content(128px)_2fr_1fr_1fr_1fr_1fr] pt-2 pb-4 md:pb-2 lg:pb-0 pl-2 md:pl-3 transition dot-on-hover list">
       <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>

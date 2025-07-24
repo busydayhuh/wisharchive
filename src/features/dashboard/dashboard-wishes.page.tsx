@@ -16,7 +16,7 @@ function WishesPage() {
   if (error) return <div>Не удалось загрузить желания ☹️</div>;
 
   if (wishes && wishes.length === 0) {
-    <div>Нет желаний</div>;
+    return <div>Нет желаний 😶</div>;
   }
   if (wishes && wishes.length > 0)
     return (

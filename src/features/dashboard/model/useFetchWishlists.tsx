@@ -4,28 +4,39 @@ import { Query } from "appwrite";
 import useSWR from "swr";
 
 async function fetcher({
-  userId,
   collection,
+  queries,
 }: {
-  userId: string;
   collection: string;
+  queries: string[];
 }) {
-  const response = await db[collection].list([Query.equal("ownerId", userId)]);
+  const response = await db[collection].list(queries);
 
   return response.documents as WishlistDocumentType[];
 }
 
-export function useFetchWishlists(userId: string | undefined) {
+export function useFetchWishlists(userId = "", searchString = "") {
   const {
     data: wishlists,
     isLoading,
     error,
-  } = useSWR({ userId: userId, collection: "wishlists" }, fetcher, {
-    onSuccess: (data) => {
-      data.reverse();
-      data.forEach((wl) => (wl.wishes ? wl.wishes.reverse() : null));
+  } = useSWR(
+    {
+      userId: userId,
+      collection: "wishlists",
+      queries: [
+        Query.equal("ownerId", userId),
+        Query.contains("title", searchString),
+      ],
     },
-  });
+    fetcher,
+    {
+      onSuccess: (data) => {
+        data.reverse();
+        data.forEach((wl) => (wl.wishes ? wl.wishes.reverse() : null));
+      },
+    }
+  );
 
   return { wishlists, isLoading, error };
 }

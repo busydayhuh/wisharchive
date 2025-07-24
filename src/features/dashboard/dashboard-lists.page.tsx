@@ -4,13 +4,19 @@ import DbWishlistGalleryItem from "./ui/DbWishlistGalleryItem";
 import DbWishlistTableItem from "./ui/DbWishlistTableItem";
 
 function WishlistsPage() {
-  const { galleryMode, dashboardUserId } = useDashboardContext();
-  const { wishlists, isLoading, error } = useFetchWishlists(dashboardUserId);
+  const { galleryMode, dashboardUserId, searchString } = useDashboardContext();
+  const { wishlists, isLoading, error } = useFetchWishlists(
+    dashboardUserId,
+    searchString
+  );
 
   if (isLoading) return <div>Загрузка...</div>;
   if (error) return <div>Не удалось загрузить вишлисты ☹️</div>;
 
-  if (wishlists)
+  if (wishlists && wishlists.length === 0) {
+    return <div>Нет вишлистов 😶</div>;
+  }
+  if (wishlists && wishlists.length > 0)
     return (
       <div className="flex flex-col gap-0 md:gap-4">
         {galleryMode === "gallery" && (

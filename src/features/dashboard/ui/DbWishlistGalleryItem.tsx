@@ -10,7 +10,9 @@ import SharedAvatars from "./SharedAvatars";
 
 const DbWishlistGalleryItem = memo(function DbWishlistGalleryItem({
   wishlist,
-}: WishlistDocumentType) {
+}: {
+  wishlist: WishlistDocumentType;
+}) {
   return (
     <div className="group/cover flex flex-col gap-1 mb-4">
       <div className="relative">
