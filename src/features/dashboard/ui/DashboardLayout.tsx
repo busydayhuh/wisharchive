@@ -14,7 +14,7 @@ import DashboardUser from "./DbUser";
 
 type OutletContextType = DashboardGalleryModeSwitchType & {
   isOwner: boolean;
-  searchQuery: string | null;
+  searchString: string | undefined;
   dashboardUserId: string | undefined;
 };
 
@@ -25,7 +25,7 @@ export function DashboardLayout() {
 
   const isOwner = useIsDashboardOwner();
   const [galleryMode, setGalleryMode] = useState("gallery");
-  const [searchQuery, setSearchQuery] = useState<string | null>(null);
+  const [searchString, setSearchString] = useState("");
 
   return (
     <div className="flex flex-col gap-10 md:gap-12 mt-2 md:mt-4 px-2 md:px-0">
@@ -38,12 +38,12 @@ export function DashboardLayout() {
         <DashboardUser {...dashboardUser} />
       </div>
       <div className="flex flex-col gap-6 -mb-7 md:-mb-9 lg:pr-6">
-        {isMobile && <DbSearchbar setSearchQuery={setSearchQuery} />}
+        {isMobile && <DbSearchbar setSearchString={setSearchString} />}
         <div className="flex justify-between items-end gap-3 md:gap-5 w-full">
           <DashboardNav />
           {!isMobile && (
             <DbSearchbar
-              setSearchQuery={setSearchQuery}
+              setSearchString={setSearchString}
               className="ms-auto mr-2"
             />
           )}
@@ -58,7 +58,7 @@ export function DashboardLayout() {
           context={{
             galleryMode,
             isOwner,
-            searchQuery,
+            searchString,
             dashboardUserId,
           }}
         />

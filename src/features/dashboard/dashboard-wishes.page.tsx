@@ -6,8 +6,11 @@ import DbWishGalleryItem from "./ui/DbWishGalleryItem";
 import DbWishTableItem from "./ui/DbWishTableItem";
 
 function WishesPage() {
-  const { galleryMode, dashboardUserId } = useDashboardContext();
-  const { wishes, isLoading, error } = useFetchWishesByUser(dashboardUserId);
+  const { galleryMode, dashboardUserId, searchString } = useDashboardContext();
+  const { wishes, isLoading, error } = useFetchWishesByUser(
+    dashboardUserId,
+    searchString
+  );
 
   if (isLoading) return <div>Загрузка...</div>;
   if (error) return <div>Не удалось загрузить желания ☹️</div>;

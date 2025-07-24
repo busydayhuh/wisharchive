@@ -5,21 +5,21 @@ import { Search, X } from "lucide-react";
 import { useState, type Dispatch, type SetStateAction } from "react";
 
 function DbSearchbar({
-  setSearchQuery,
+  setSearchString,
   className,
 }: {
-  setSearchQuery: Dispatch<SetStateAction<string | null>>;
+  setSearchString: Dispatch<SetStateAction<string>>;
 } & React.ComponentProps<"div">) {
   const [inputValue, setInputValue] = useState("");
 
   function clearSearchbar() {
     setInputValue("");
-    setSearchQuery("");
+    setSearchString("");
   }
 
   function setNewQuery(query: string) {
     setInputValue(query);
-    setSearchQuery(query);
+    setSearchString(query);
   }
   return (
     <div
