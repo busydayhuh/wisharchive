@@ -4,6 +4,7 @@ import { Badge } from "@/shared/ui/kit/badge";
 import { Lock } from "lucide-react";
 import { memo } from "react";
 import { href, Link } from "react-router-dom";
+import useIsFavored from "../model/useIsFavored";
 import { BookmarkButton, EditButton } from "./ActionButtons";
 import ImageTiles from "./ImageTiles";
 import SharedAvatars from "./SharedAvatars";
@@ -13,10 +14,13 @@ const DbWishlistGalleryItem = memo(function DbWishlistGalleryItem({
 }: {
   wishlist: WishlistDocumentType;
 }) {
+  const isFavoredByCurrentUser = useIsFavored(wishlist.favoredBy);
+  console.log("wishlist.favoredBy :>> ", wishlist.favoredBy);
+
   return (
     <div className="group/cover flex flex-col gap-1 mb-4">
       <div className="relative">
-        <BookmarkButton />
+        <BookmarkButton isFavored={isFavoredByCurrentUser} />
         <EditButton />
         <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
           <ImageTiles wishes={wishlist.wishes} />
