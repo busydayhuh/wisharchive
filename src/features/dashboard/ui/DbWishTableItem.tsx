@@ -3,23 +3,23 @@ import { formatUrl } from "@/shared/lib/formatUrl";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishDocumentType } from "@/shared/model/types";
 import { Button } from "@/shared/ui/kit/button";
-import { LockIcon, ShoppingBag, Stars } from "lucide-react";
+import { LockIcon, ShoppingBag } from "lucide-react";
 import { memo } from "react";
 import { href, Link } from "react-router";
+import useIsBookedByCurrentUser from "../model/useIsBookedByCurrentUser";
+import { GiftButton } from "./ActionButtons";
 import ActionMenu from "./ActionMenu";
+import { useDashboardContext } from "./DashboardLayout";
 
 const DbWishTableItem = memo(function DbWishTableItem({
   wish,
 }: {
   wish: WishDocumentType;
 }) {
+  const { isOwner } = useDashboardContext();
+  const isBookedByCurrentUser = useIsBookedByCurrentUser(wish.bookerId);
   return (
     <div className="flex justify-items-center items-center lg:grid lg:grid-cols-[fit-content(8rem)_2fr_1fr_1fr_1fr_1fr] py-1 md:py-2 pl-0 md:pl-1 w-full transition dot-on-hover">
-      {wish.isBooked && (
-        <div className="top-2 md:top-3 left-1 md:left-3 absolute bg-destructive p-1.5 rounded-full text-background">
-          <Stars className="size-3" />
-        </div>
-      )}
       <Link to={href(ROUTES.WISH, { wishId: wish.$id })}>
         <img
           src={wish.imageURL}
@@ -111,7 +111,15 @@ const DbWishTableItem = memo(function DbWishTableItem({
         )}
       </div>
       <div className="ms-auto">
-        <ActionMenu triggerVariant="table" side="bottom" align="center" />
+        {isOwner ? (
+          <ActionMenu triggerVariant="table" side="bottom" align="center" />
+        ) : (
+          <GiftButton
+            variant="table"
+            isBooked={wish.isBooked}
+            isBookedByCurrentUser={isBookedByCurrentUser}
+          />
+        )}
       </div>
     </div>
   );

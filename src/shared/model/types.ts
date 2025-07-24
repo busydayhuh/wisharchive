@@ -8,8 +8,8 @@ export type WishDocumentType = Models.Document & {
   currency: string;
   isArchived: boolean;
   ownerId: string;
-  bookerId?: string | null;
-  isBooked?: boolean;
+  bookerId: string | null;
+  isBooked: boolean;
   wishlistId?: string;
   imageURL?: string;
   isPrivate?: boolean;

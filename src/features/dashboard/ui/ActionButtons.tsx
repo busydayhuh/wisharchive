@@ -2,7 +2,7 @@ import { cn } from "@/shared/lib/css";
 import { Button } from "@/shared/ui/kit/button";
 import { Toggle } from "@/shared/ui/kit/toggle";
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
-import { Bookmark, Ellipsis, Pencil } from "lucide-react";
+import { Bookmark, Ellipsis, Gift, Pencil } from "lucide-react";
 
 export function ActionMenuTrigger({
   variant = "gallery",
@@ -73,6 +73,37 @@ export function BookmarkButton({
           variant === "gallery" ? "size-6" : "size-5"
         )}
       />
+    </Toggle>
+  );
+}
+
+export function GiftButton({
+  variant = "gallery",
+  isBooked = false,
+  isBookedByCurrentUser,
+  onPressed,
+  className,
+}: React.ComponentProps<"div"> & {
+  variant?: "gallery" | "table";
+  isBooked: boolean;
+  isBookedByCurrentUser: boolean;
+  onPressed?: (pressed: boolean) => void;
+}) {
+  return (
+    <Toggle
+      disabled={isBooked && !isBookedByCurrentUser}
+      defaultPressed={isBookedByCurrentUser}
+      className={cn(
+        "z-10 data-[state=on]:bg-destructive border-0 rounded-full data-[state=on]:text-secondary cursor-pointer",
+        variant === "gallery" &&
+          "hover:bg-secondary/80 hover:text-secondary-foreground bg-secondary shadow-xs transition duration-300 show-on-hover",
+        variant === "table" &&
+          "bg-muted shadow-none rounded-full hover:bg-destructive hover:text-secondary",
+        className
+      )}
+      onPressedChange={onPressed}
+    >
+      <Gift className="stroke-[1.3px]" />
     </Toggle>
   );
 }
