@@ -1,11 +1,12 @@
 import { useUser } from "@/features/auth";
+import type { UserDocumentType } from "@/shared/model/types";
 
-function useIsBookedByCurrentUser(bookerId: string | null) {
+function useIsBookedByCurrentUser(bookedBy: UserDocumentType) {
   const { current } = useUser();
 
-  if (!bookerId) return false;
+  if (!bookedBy) return false;
 
-  return bookerId === current!.$id;
+  return bookedBy.userId === current!.$id;
 }
 
 export default useIsBookedByCurrentUser;

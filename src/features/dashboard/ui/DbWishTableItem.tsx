@@ -10,6 +10,7 @@ import useIsBookedByCurrentUser from "../model/useIsBookedByCurrentUser";
 import { GiftButton } from "./ActionButtons";
 import ActionMenu from "./ActionMenu";
 import { useDashboardContext } from "./DashboardLayout";
+import { cn } from "@/shared/lib/css";
 
 const DbWishTableItem = memo(function DbWishTableItem({
   wish,
@@ -17,7 +18,8 @@ const DbWishTableItem = memo(function DbWishTableItem({
   wish: WishDocumentType;
 }) {
   const { isOwner } = useDashboardContext();
-  const isBookedByCurrentUser = useIsBookedByCurrentUser(wish.bookerId);
+  const isBookedByCurrentUser = useIsBookedByCurrentUser(wish.bookedBy);
+
   return (
     <div className="flex justify-items-center items-center lg:grid lg:grid-cols-[fit-content(8rem)_2fr_1fr_1fr_1fr_1fr] py-1 md:py-2 pl-0 md:pl-1 w-full transition dot-on-hover">
       <Link to={href(ROUTES.WISH, { wishId: wish.$id })}>
@@ -46,7 +48,14 @@ const DbWishTableItem = memo(function DbWishTableItem({
             </span>
           )}
           {wish.isBooked && (
-            <span className="font-medium text-destructive text-sm">
+            <span
+              className={cn(
+                "font-medium text-sm",
+                isBookedByCurrentUser
+                  ? "text-destructive"
+                  : "text-muted-foreground"
+              )}
+            >
               забронировано
             </span>
           )}

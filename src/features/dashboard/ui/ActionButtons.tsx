@@ -90,7 +90,7 @@ export function GiftButton({
             className={cn(
               "z-10 data-[state=on]:bg-destructive border-0 rounded-full data-[state=on]:text-secondary cursor-pointer",
               variant === "gallery" &&
-                "hover:bg-secondary/80 hover:text-secondary-foreground bg-secondary shadow-xs transition duration-300 show-on-hover",
+                "hover:bg-secondary/80 hover:text-secondary-foreground bg-secondary shadow-xs transition duration-300 show-on-hover disabled:bg-secondary/30 disabled:text-muted/60",
               variant === "table" &&
                 "bg-muted shadow-none rounded-full hover:bg-destructive hover:text-secondary",
               className

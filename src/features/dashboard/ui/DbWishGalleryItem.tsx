@@ -1,3 +1,4 @@
+import { cn } from "@/shared/lib/css";
 import { Currency } from "@/shared/lib/currency";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishDocumentType } from "@/shared/model/types";
@@ -16,12 +17,19 @@ const DbWishGalleryItem = memo(function DbWishGalleryItem({
   wish: WishDocumentType;
 }) {
   const { isOwner } = useDashboardContext();
-  const isBookedByCurrentUser = useIsBookedByCurrentUser(wish.bookerId);
+  const isBookedByCurrentUser = useIsBookedByCurrentUser(wish.bookedBy);
 
   return (
     <div className="relative flex flex-col gap-1 md:gap-2 mb-4 overflow-hidden">
       {wish.isBooked && (
-        <div className="inline-flex top-2 left-2 z-10 absolute items-center gap-1 bg-destructive px-2 md:px-2.5 py-2 md:py-1 rounded-full md:rounded-3xl text-background">
+        <div
+          className={cn(
+            "inline-flex top-2 left-2 z-10 absolute items-center gap-1 px-2 md:px-2.5 py-2 md:py-1 rounded-full md:rounded-3xl text-background",
+            isBookedByCurrentUser
+              ? "bg-destructive text-background"
+              : "bg-muted text-muted-foreground"
+          )}
+        >
           <Gift className="size-3" />
           <span className="hidden md:block pb-0.5 font-medium">
             Забронировано
