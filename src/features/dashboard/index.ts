@@ -1,1 +1,4 @@
-export { DashboardLayout } from "./ui/DashboardLayout";
+export {
+  DashboardLayout,
+  useDashboardContext,
+} from "./ui/layouts/DashboardLayout";
