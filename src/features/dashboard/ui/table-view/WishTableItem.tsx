@@ -10,7 +10,7 @@ import { href, Link } from "react-router";
 import useIsBookedByCurrentUser from "../../model/useIsBookedByCurrentUser";
 import { GiftButton } from "../ActionButtons";
 import ActionMenu from "../ActionMenu";
-import { useDashboardContext } from "../DashboardLayout";
+import { useDashboardContext } from "../layouts/DashboardLayout";
 
 const WishTableItem = memo(function WishTableItem({
   wish,
@@ -18,7 +18,7 @@ const WishTableItem = memo(function WishTableItem({
   wish: WishDocumentType;
 }) {
   const { isOwner } = useDashboardContext();
-  const isBookedByCurrentUser = useIsBookedByCurrentUser(wish.bookedBy);
+  const isBookedByCurrentUser = useIsBookedByCurrentUser(wish.bookerId);
 
   return (
     <div className="flex justify-items-center items-center lg:grid lg:grid-cols-[fit-content(8rem)_2fr_1fr_1fr_1fr_1fr] py-1 md:py-2 pl-0 md:pl-1 w-full transition dot-on-hover">
