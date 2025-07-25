@@ -40,3 +40,28 @@ export function useFetchWishlists(userId = "", searchString = "") {
 
   return { wishlists, isLoading, error };
 }
+
+export function useFetchCollabWishlists(userId = "", searchString = "") {
+  const {
+    data: collabWishlists,
+    isLoading,
+    error,
+  } = useSWR(
+    {
+      userId: userId,
+      collection: "wishlists",
+      queries: [
+        Query.contains("canRead", userId),
+        Query.contains("title", searchString),
+      ],
+    },
+    fetcher,
+    {
+      onSuccess: (data) => {
+        data.reverse();
+        data.forEach((wl) => (wl.wishes ? wl.wishes.reverse() : null));
+      },
+    }
+  );
+  return { collabWishlists, isLoading, error };
+}
