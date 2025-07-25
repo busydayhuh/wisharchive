@@ -15,7 +15,11 @@ async function fetcher({
   return response.documents as WishDocumentType[];
 }
 
-export function useFetchWishesByUser(userId = "", searchString = "") {
+export function useFetchWishesByUser(
+  userId = "",
+  searchString = "",
+  isArchived = false
+) {
   const {
     data: wishes,
     isLoading,
@@ -27,6 +31,7 @@ export function useFetchWishesByUser(userId = "", searchString = "") {
       queries: [
         Query.equal("ownerId", userId),
         Query.contains("title", searchString),
+        Query.equal("isArchived", isArchived),
       ],
     },
     fetcher,
