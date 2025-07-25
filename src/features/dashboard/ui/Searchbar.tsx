@@ -4,7 +4,7 @@ import { Input } from "@/shared/ui/kit/input";
 import { Search, X } from "lucide-react";
 import { useState, type Dispatch, type SetStateAction } from "react";
 
-function DbSearchbar({
+function Searchbar({
   setSearchString,
   className,
 }: {
@@ -56,4 +56,4 @@ function DbSearchbar({
   );
 }
 
-export default DbSearchbar;
+export default Searchbar;

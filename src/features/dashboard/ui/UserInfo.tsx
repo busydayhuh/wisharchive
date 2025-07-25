@@ -5,7 +5,7 @@ import { Share2 } from "lucide-react";
 import { memo } from "react";
 import { copyUrl } from "../model/copyUrl";
 
-const DashboardUser = memo(function DashboardUser({
+const UserInfo = memo(function UserInfo({
   user,
   isLoading,
   error,
@@ -46,4 +46,4 @@ const DashboardUser = memo(function DashboardUser({
     );
 });
 
-export default DashboardUser;
+export default UserInfo;

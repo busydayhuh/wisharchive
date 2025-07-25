@@ -1,10 +1,10 @@
 import { useFetchWishlists } from "./model/useFetchWishlists";
 import { useDashboardContext } from "./ui/DashboardLayout";
-import DbWishlistGalleryItem from "./ui/DbWishlistGalleryItem";
-import DbWishlistTableItem from "./ui/DbWishlistTableItem";
+import WishlistGalleryItem from "./ui/gallery-view/WishlistGalleryItem";
+import WishlistTableItem from "./ui/table-view/WishlistTableItem";
 
 function WishlistsPage() {
-  const { galleryMode, dashboardUserId, searchString } = useDashboardContext();
+  const { viewMode, dashboardUserId, searchString } = useDashboardContext();
   const { wishlists, isLoading, error } = useFetchWishlists(
     dashboardUserId,
     searchString
@@ -19,16 +19,16 @@ function WishlistsPage() {
   if (wishlists && wishlists.length > 0)
     return (
       <div className="flex flex-col gap-0 md:gap-4">
-        {galleryMode === "gallery" && (
+        {viewMode === "gallery" && (
           <div className="gap-x-4 gap-y-3 md:gap-y-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
             {wishlists.map((wishlist) => (
-              <DbWishlistGalleryItem wishlist={wishlist} key={wishlist.$id} />
+              <WishlistGalleryItem wishlist={wishlist} key={wishlist.$id} />
             ))}
           </div>
         )}
-        {galleryMode === "table" &&
+        {viewMode === "table" &&
           wishlists.map((wishlist) => (
-            <DbWishlistTableItem wishlist={wishlist} key={wishlist.$id} />
+            <WishlistTableItem wishlist={wishlist} key={wishlist.$id} />
           ))}
       </div>
     );

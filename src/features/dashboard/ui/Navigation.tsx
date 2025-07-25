@@ -3,7 +3,7 @@ import { ROUTES } from "@/shared/model/routes";
 import { memo } from "react";
 import { href, NavLink, useParams } from "react-router";
 
-const DashboardNav = memo(function DashboardNav() {
+const Navigation = memo(function Navigation() {
   const userId = useParams().userId;
 
   const styles = ({ isActive }: { isActive: boolean }) =>
@@ -34,4 +34,4 @@ const DashboardNav = memo(function DashboardNav() {
   return null;
 });
 
-export default DashboardNav;
+export default Navigation;

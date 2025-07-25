@@ -3,19 +3,19 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/kit/avatar";
 import { ID } from "appwrite";
 import { memo } from "react";
 
-type SharedAvatarsProps = {
+type AvatarsGroupProps = {
   users: string[];
   size: number;
   space?: number;
   maxCount: number;
 };
 
-const SharedAvatars = memo(function SharedAvatars({
+const AvatarsGroup = memo(function AvatarsGroup({
   users,
   size,
   maxCount,
   className,
-}: SharedAvatarsProps & React.ComponentProps<"div">) {
+}: AvatarsGroupProps & React.ComponentProps<"div">) {
   return (
     <div
       className={cn(
@@ -42,4 +42,4 @@ const SharedAvatars = memo(function SharedAvatars({
   );
 });
 
-export default SharedAvatars;
+export default AvatarsGroup;

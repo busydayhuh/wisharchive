@@ -4,18 +4,17 @@ import { Badge } from "@/shared/ui/kit/badge";
 import { Lock } from "lucide-react";
 import { memo } from "react";
 import { href, Link } from "react-router-dom";
-import useIsFavored from "../model/useIsFavored";
-import { BookmarkButton, EditButton } from "./ActionButtons";
-import ImageTiles from "./ImageTiles";
-import SharedAvatars from "./SharedAvatars";
+import useIsFavored from "../../model/useIsFavored";
+import { BookmarkButton, EditButton } from "../ActionButtons";
+import AvatarsGroup from "../AvatarsGroup";
+import ImageTiles from "../ImageTiles";
 
-const DbWishlistGalleryItem = memo(function DbWishlistGalleryItem({
+const WishlistGalleryItem = memo(function WishlistGalleryItem({
   wishlist,
 }: {
   wishlist: WishlistDocumentType;
 }) {
   const isFavoredByCurrentUser = useIsFavored(wishlist.favoredBy);
-  console.log("wishlist.favoredBy :>> ", wishlist.favoredBy);
 
   return (
     <div className="group/cover flex flex-col gap-1 mb-4">
@@ -48,7 +47,7 @@ const DbWishlistGalleryItem = memo(function DbWishlistGalleryItem({
           )}
         </div>
         {wishlist.isPrivate && wishlist.canRead && (
-          <SharedAvatars
+          <AvatarsGroup
             users={wishlist.canRead}
             size={5}
             maxCount={3}
@@ -60,4 +59,4 @@ const DbWishlistGalleryItem = memo(function DbWishlistGalleryItem({
   );
 });
 
-export default DbWishlistGalleryItem;
+export default WishlistGalleryItem;

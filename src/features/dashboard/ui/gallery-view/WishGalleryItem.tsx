@@ -6,12 +6,12 @@ import { Button } from "@/shared/ui/kit/button";
 import { Gift, LockIcon } from "lucide-react";
 import { memo } from "react";
 import { href, Link } from "react-router";
-import useIsBookedByCurrentUser from "../model/useIsBookedByCurrentUser";
-import { GiftButton } from "./ActionButtons";
-import ActionMenu from "./ActionMenu";
-import { useDashboardContext } from "./DashboardLayout";
+import useIsBookedByCurrentUser from "../../model/useIsBookedByCurrentUser";
+import { GiftButton } from "../ActionButtons";
+import ActionMenu from "../ActionMenu";
+import { useDashboardContext } from "../DashboardLayout";
 
-const DbWishGalleryItem = memo(function DbWishGalleryItem({
+const WishGalleryItem = memo(function WishGalleryItem({
   wish,
 }: {
   wish: WishDocumentType;
@@ -94,4 +94,4 @@ const DbWishGalleryItem = memo(function DbWishGalleryItem({
   );
 });
 
-export default DbWishGalleryItem;
+export default WishGalleryItem;

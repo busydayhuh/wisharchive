@@ -2,24 +2,25 @@ import { ToggleGroup, ToggleGroupItem } from "@/shared/ui/kit/toggle-group";
 import { LayoutDashboard, LayoutList } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";
 
-export type DashboardGalleryModeSwitchType = {
-  setGalleryMode: Dispatch<SetStateAction<string>>;
-  galleryMode: string;
+export type ViewModeSwitchType = {
+  setViewMode: Dispatch<SetStateAction<string>>;
+  viewMode: string;
 };
 
-function DashboardGalleryModeSwitch({
-  setGalleryMode,
-  galleryMode,
+function ViewModeSwitch({
+  setViewMode,
+  viewMode,
   className,
-}: DashboardGalleryModeSwitchType & React.ComponentProps<"div">) {
+}: ViewModeSwitchType & React.ComponentProps<"div">) {
   const toggleStyles =
     "cursor-pointer rounded-xl first:rounded-l-xl last:rounded-r-xl text-muted-foreground";
+
   return (
     <ToggleGroup
       type="single"
-      value={galleryMode}
+      value={viewMode}
       onValueChange={(value) => {
-        if (value) setGalleryMode(value);
+        if (value) setViewMode(value);
       }}
       className={className}
     >
@@ -33,4 +34,4 @@ function DashboardGalleryModeSwitch({
   );
 }
 
-export default DashboardGalleryModeSwitch;
+export default ViewModeSwitch;

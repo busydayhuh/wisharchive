@@ -7,12 +7,12 @@ import { ru } from "date-fns/locale";
 import { Lock } from "lucide-react";
 import { memo } from "react";
 import { href, Link } from "react-router";
-import useIsFavored from "../model/useIsFavored";
-import { BookmarkButton, EditButton } from "./ActionButtons";
-import ImageTiles from "./ImageTiles";
-import SharedAvatars from "./SharedAvatars";
+import useIsFavored from "../../model/useIsFavored";
+import { BookmarkButton, EditButton } from "../ActionButtons";
+import AvatarsGroup from "../AvatarsGroup";
+import ImageTiles from "../ImageTiles";
 
-const DbWishlistTableItem = memo(function DbWishlistTableItem({
+const WishlistTableItem = memo(function WishlistTableItem({
   wishlist,
 }: {
   wishlist: WishlistDocumentType;
@@ -38,7 +38,7 @@ const DbWishlistTableItem = memo(function DbWishlistTableItem({
             wishlist.wishes ? wishlist.wishes.length : 0
           } жел.`}</span>
           {wishlist.isPrivate && wishlist.canRead && (
-            <SharedAvatars
+            <AvatarsGroup
               users={wishlist.canRead}
               size={5}
               maxCount={3}
@@ -48,7 +48,7 @@ const DbWishlistTableItem = memo(function DbWishlistTableItem({
         </div>
       </Link>
       {wishlist.isPrivate && wishlist.canRead ? (
-        <SharedAvatars
+        <AvatarsGroup
           users={wishlist.canRead}
           size={6}
           maxCount={4}
@@ -72,4 +72,4 @@ const DbWishlistTableItem = memo(function DbWishlistTableItem({
   );
 });
 
-export default DbWishlistTableItem;
+export default WishlistTableItem;

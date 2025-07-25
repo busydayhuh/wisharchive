@@ -5,14 +5,12 @@ import { useState } from "react";
 import { Outlet, useOutletContext, useParams } from "react-router";
 import useFindUser from "../model/useFindUser";
 import useIsDashboardOwner from "../model/useIsDashboardOwner";
-import DashboardGalleryModeSwitch, {
-  type DashboardGalleryModeSwitchType,
-} from "./DashboardGalleryModeSwitch";
-import DashboardNav from "./DbNav";
-import DbSearchbar from "./DbSearchbar";
-import DashboardUser from "./DbUser";
+import Navigation from "./Navigation";
+import Searchbar from "./Searchbar";
+import UserInfo from "./UserInfo";
+import ViewModeSwitch, { type ViewModeSwitchType } from "./ViewModeSwitch";
 
-type OutletContextType = DashboardGalleryModeSwitchType & {
+type OutletContextType = ViewModeSwitchType & {
   isOwner: boolean;
   searchString: string | undefined;
   dashboardUserId: string | undefined;
@@ -24,7 +22,8 @@ export function DashboardLayout() {
   const { isMobile } = useSidebar();
 
   const isOwner = useIsDashboardOwner();
-  const [galleryMode, setGalleryMode] = useState("gallery");
+
+  const [viewMode, setViewMode] = useState("gallery");
   const [searchString, setSearchString] = useState("");
 
   return (
@@ -35,28 +34,25 @@ export function DashboardLayout() {
             Мой дашборд желаний
           </span>
         )}
-        <DashboardUser {...dashboardUser} />
+        <UserInfo {...dashboardUser} />
       </div>
       <div className="flex flex-col gap-6 -mb-7 md:-mb-9 lg:pr-6">
-        {isMobile && <DbSearchbar setSearchString={setSearchString} />}
+        {isMobile && <Searchbar setSearchString={setSearchString} />}
         <div className="flex justify-between items-end gap-3 md:gap-5 w-full">
-          <DashboardNav />
+          <Navigation />
           {!isMobile && (
-            <DbSearchbar
+            <Searchbar
               setSearchString={setSearchString}
               className="ms-auto mr-2"
             />
           )}
-          <DashboardGalleryModeSwitch
-            galleryMode={galleryMode}
-            setGalleryMode={setGalleryMode}
-          />
+          <ViewModeSwitch viewMode={viewMode} setViewMode={setViewMode} />
         </div>
       </div>
       <StarFrame>
         <Outlet
           context={{
-            galleryMode,
+            viewMode,
             isOwner,
             searchString,
             dashboardUserId,

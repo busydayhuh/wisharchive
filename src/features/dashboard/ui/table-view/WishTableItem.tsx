@@ -1,3 +1,4 @@
+import { cn } from "@/shared/lib/css";
 import { Currency } from "@/shared/lib/currency";
 import { formatUrl } from "@/shared/lib/formatUrl";
 import { ROUTES } from "@/shared/model/routes";
@@ -6,13 +7,12 @@ import { Button } from "@/shared/ui/kit/button";
 import { LockIcon, ShoppingBag } from "lucide-react";
 import { memo } from "react";
 import { href, Link } from "react-router";
-import useIsBookedByCurrentUser from "../model/useIsBookedByCurrentUser";
-import { GiftButton } from "./ActionButtons";
-import ActionMenu from "./ActionMenu";
-import { useDashboardContext } from "./DashboardLayout";
-import { cn } from "@/shared/lib/css";
+import useIsBookedByCurrentUser from "../../model/useIsBookedByCurrentUser";
+import { GiftButton } from "../ActionButtons";
+import ActionMenu from "../ActionMenu";
+import { useDashboardContext } from "../DashboardLayout";
 
-const DbWishTableItem = memo(function DbWishTableItem({
+const WishTableItem = memo(function WishTableItem({
   wish,
 }: {
   wish: WishDocumentType;
@@ -134,4 +134,4 @@ const DbWishTableItem = memo(function DbWishTableItem({
   );
 });
 
-export default DbWishTableItem;
+export default WishTableItem;
