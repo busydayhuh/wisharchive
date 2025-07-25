@@ -9,9 +9,10 @@ export const ROUTES = {
   WISHLIST: "/list/:listId",
   WISH: "/wish/:wishId",
   /* PROTECTED */
-  SHARED: "/lists/shared",
-  BOOKED: "/wishes/booked",
-  ARCHIVED: "/wishes/archived",
+  SHARED: "/shared",
+  BOOKMARKS: "/bookmarks",
+  BOOKED: "/booked",
+  ARCHIVED: "/archived",
   PROFILE: "/edit-profile",
   EDIT: "/edit-wish/:wishId",
   ADD: "/add-wish",

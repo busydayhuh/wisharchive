@@ -42,6 +42,12 @@ export const router = createBrowserRouter([
                 HydrateFallback: () => null,
               },
               {
+                path: ROUTES.BOOKMARKS,
+                lazy: () =>
+                  import("@/features/dashboard/dashboard-bookmarks.page.tsx"),
+                HydrateFallback: () => null,
+              },
+              {
                 path: ROUTES.ARCHIVED,
                 lazy: () =>
                   import("@/features/dashboard/dashboard-archived.page"),
