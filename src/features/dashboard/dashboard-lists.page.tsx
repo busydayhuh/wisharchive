@@ -1,6 +1,6 @@
 import { useFetchWishlists } from "./model/useFetchWishlists";
-import { useDashboardContext } from "./ui/DashboardLayout";
 import WishlistGalleryItem from "./ui/gallery-view/WishlistGalleryItem";
+import { useDashboardContext } from "./ui/layouts/DashboardLayout";
 import WishlistTableItem from "./ui/table-view/WishlistTableItem";
 
 function WishlistsPage() {
