@@ -12,7 +12,7 @@ const UserInfo = memo(function UserInfo({
 }: {
   user: UserDocumentType | undefined;
   isLoading: boolean;
-  error: Error | undefined;
+  error: unknown;
 }) {
   //TODO сделать скелетон для загрузки
   if (isLoading) return <div>Загрузка...</div>;
