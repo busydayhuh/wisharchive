@@ -32,9 +32,7 @@ export type UserDocumentType = Models.Document & {
   userId: string;
   userName: string;
   userEmail: string;
-  wishlistsId?: string[];
-  wishesId?: string[];
-  favListsId?: string[];
+  favoriteWishlists: WishlistDocumentType[] | null;
   avatarURL?: string;
-  bookedWishesId?: string[];
+  bookedWishes: WishDocumentType[] | null;
 };
