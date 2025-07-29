@@ -48,7 +48,7 @@ export const AppSidebar = memo(function AppSidebar() {
     {
       name: "Избранные списки",
       icon: <Bookmark className="stroke-(length:--sidebar-icons-stroke)" />,
-      href: ROUTES.SHARED,
+      href: ROUTES.BOOKMARKS,
     },
     {
       name: "Совместные списки",
