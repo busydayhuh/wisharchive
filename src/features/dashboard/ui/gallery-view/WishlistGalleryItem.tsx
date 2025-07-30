@@ -4,23 +4,26 @@ import { Badge } from "@/shared/ui/kit/badge";
 import { Lock } from "lucide-react";
 import { memo } from "react";
 import { href, Link } from "react-router-dom";
-import useIsFavored from "../../model/useIsFavored";
+import usePermissions from "../../model/usePermissions";
 import { BookmarkButton, EditButton } from "../ActionButtons";
 import AvatarsGroup from "../AvatarsGroup";
 import ImageTiles from "../ImageTiles";
+import { useDashboardContext } from "../layouts/DashboardLayout";
+import OwnerAvatar from "../OwnerAvatar";
 
 const WishlistGalleryItem = memo(function WishlistGalleryItem({
   wishlist,
 }: {
   wishlist: WishlistDocumentType;
 }) {
-  const isFavoredByCurrentUser = useIsFavored(wishlist.favoredBy);
+  const { isOwner, isFavorite } = usePermissions(wishlist);
+  const { path } = useDashboardContext();
 
   return (
-    <div className="group/cover flex flex-col gap-1 mb-4">
+    <div className="group/cover flex flex-col gap-2 mb-4">
       <div className="relative">
-        <BookmarkButton isFavored={isFavoredByCurrentUser} />
-        <EditButton />
+        <BookmarkButton isFavorite={isFavorite || path === "/bookmarks"} />
+        {isOwner && <EditButton />}
         <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
           <ImageTiles wishes={wishlist.wishes} />
         </Link>
@@ -39,22 +42,33 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
             </Badge>
           )}
           {wishlist.wishes ? (
-            <span className="text-sm md:text-base">
+            <span className="text-xs md:text-sm">
               ( {wishlist.wishes.length} )
             </span>
           ) : (
-            " (0) "
+            <span className="text-muted-foreground text-sm md:text-base">
+              ( 0 )
+            </span>
           )}
         </div>
+      </Link>
+      <div className="flex justify-between items-center px-2">
+        {path === "/bookmarks" && (
+          <OwnerAvatar
+            userId={wishlist.ownerId}
+            userName={wishlist.owner.userName}
+            avatarURL={wishlist.owner.avatarURL}
+          />
+        )}
         {wishlist.isPrivate && wishlist.canRead && (
           <AvatarsGroup
             users={wishlist.canRead}
-            size={5}
+            size={4}
             maxCount={3}
-            className="px-2"
+            className="mt-0"
           />
         )}
-      </Link>
+      </div>
     </div>
   );
 });
