@@ -98,16 +98,18 @@ export function DashboardLayout() {
         </div>
       </div>
       <StarFrame>
-        <Outlet
-          context={{
-            viewMode,
-            isDashboardOwner,
-            searchString,
-            dashboardUserId,
-            dashboardUser,
-            path,
-          }}
-        />
+        <div className="pt-4 md:pt-8 md:pr-8 h-[calc(100vh-14rem)] overflow-y-scroll example">
+          <Outlet
+            context={{
+              viewMode,
+              isDashboardOwner,
+              searchString,
+              dashboardUserId,
+              dashboardUser,
+              path,
+            }}
+          />
+        </div>
       </StarFrame>
     </div>
   );
