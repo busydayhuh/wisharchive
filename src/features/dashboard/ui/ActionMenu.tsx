@@ -22,7 +22,7 @@ function ActionMenu({
     <DropdownMenu>
       <DropdownMenuTrigger
         className={cn(
-          "inline-flex justify-center items-center border-0 rounded-full size-9 text-sm cursor-pointer",
+          "inline-flex justify-center items-center border-0 rounded-full size-8 md:size-9 text-sm cursor-pointer",
           triggerVariant === "gallery" &&
             "bg-secondary hover:bg-muted peer/cover transition duration-300 show-on-hover",
           triggerVariant === "table" &&

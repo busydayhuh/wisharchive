@@ -4,12 +4,13 @@ import { formatUrl } from "@/shared/lib/formatUrl";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishDocumentType } from "@/shared/model/types";
 import { Button } from "@/shared/ui/kit/button";
-import { LockIcon, ShoppingBag } from "lucide-react";
+import { Gift, LockIcon, ShoppingBag } from "lucide-react";
 import { memo } from "react";
 import { href, Link } from "react-router";
-import useIsBookedByCurrentUser from "../../model/useIsBookedByCurrentUser";
+import usePermissions from "../../model/usePermissions";
 import { GiftButton } from "../ActionButtons";
 import ActionMenu from "../ActionMenu";
+import OwnerAvatar from "../OwnerAvatar";
 import { useDashboardContext } from "../layouts/DashboardLayout";
 
 const WishTableItem = memo(function WishTableItem({
@@ -17,8 +18,8 @@ const WishTableItem = memo(function WishTableItem({
 }: {
   wish: WishDocumentType;
 }) {
-  const { isOwner } = useDashboardContext();
-  const isBookedByCurrentUser = useIsBookedByCurrentUser(wish.bookerId);
+  const { isOwner, isBooker, isEditor } = usePermissions(wish);
+  const { path } = useDashboardContext();
 
   return (
     <div className="flex justify-items-center items-center lg:grid lg:grid-cols-[fit-content(8rem)_2fr_1fr_1fr_1fr_1fr] py-1 md:py-2 pl-0 md:pl-1 w-full transition dot-on-hover">
@@ -48,16 +49,15 @@ const WishTableItem = memo(function WishTableItem({
             </span>
           )}
           {wish.isBooked && (
-            <span
+            <div
               className={cn(
-                "font-medium text-sm",
-                isBookedByCurrentUser
-                  ? "text-destructive"
-                  : "text-muted-foreground"
+                "inline-flex items-center gap-1 font-medium text-sm",
+                isBooker ? "text-destructive" : "text-muted-foreground"
               )}
             >
+              <Gift className="size-3" />
               забронировано
-            </span>
+            </div>
           )}
         </div>
       </Link>
@@ -77,30 +77,38 @@ const WishTableItem = memo(function WishTableItem({
         )}
       </Link>
       <div className="hidden md:block ml-10 lg:ml-0">
-        {wish.wishlist ? (
-          <Button
-            variant="outline"
-            size="sm"
-            className="bg-transparent rounded-full h-6 font-normal text-sm"
-            asChild
-          >
-            <Link
-              to={href(ROUTES.WISHLIST, { listId: wish.wishlist.$id })}
-              className="w-fit max-w-[25ch]"
+        {path !== "/booked" ? (
+          wish.wishlist ? (
+            <Button
+              variant="outline"
+              size="sm"
+              className="bg-transparent rounded-full h-6 font-normal text-sm"
+              asChild
             >
-              {wish.isPrivate && <LockIcon className="size-3" />}
-              <span className="truncate">{wish.wishlist.title}</span>
-            </Link>
-          </Button>
+              <Link
+                to={href(ROUTES.WISHLIST, { listId: wish.wishlist.$id })}
+                className="w-fit max-w-[25ch]"
+              >
+                {wish.isPrivate && <LockIcon className="size-3" />}
+                <span className="truncate">{wish.wishlist.title}</span>
+              </Link>
+            </Button>
+          ) : (
+            <Button
+              variant="outline"
+              size="sm"
+              className="bg-transparent border-muted-foreground/60 rounded-full w-fit h-6 font-normal text-muted-foreground/60 text-sm pointer-events-none"
+              asChild
+            >
+              <span className="max-w-[25ch] truncate">без списка</span>
+            </Button>
+          )
         ) : (
-          <Button
-            variant="outline"
-            size="sm"
-            className="bg-transparent border-muted-foreground/60 rounded-full w-fit h-6 font-normal text-muted-foreground/60 text-sm pointer-events-none"
-            asChild
-          >
-            <span className="max-w-[25ch] truncate">без списка</span>
-          </Button>
+          <OwnerAvatar
+            userId={wish.ownerId}
+            userName={wish.owner.userName}
+            avatarURL={wish.owner.avatarURL}
+          />
         )}
       </div>
       <div className="hidden lg:flex items-center gap-2 w-fit">
@@ -120,13 +128,22 @@ const WishTableItem = memo(function WishTableItem({
         )}
       </div>
       <div className="ms-auto">
-        {isOwner ? (
-          <ActionMenu triggerVariant="table" side="bottom" align="center" />
-        ) : (
+        {isOwner && <ActionMenu triggerVariant="table" />}
+        {!isOwner && isEditor && (
+          <div className="flex md:flex-row flex-col gap-1 md:gap-4">
+            <ActionMenu triggerVariant="table" side="bottom" align="end" />
+            <GiftButton
+              variant="table"
+              isBooked={wish.isBooked}
+              isBookedByCurrentUser={isBooker}
+            />
+          </div>
+        )}
+        {!isOwner && !isEditor && (
           <GiftButton
             variant="table"
             isBooked={wish.isBooked}
-            isBookedByCurrentUser={isBookedByCurrentUser}
+            isBookedByCurrentUser={isBooker}
           />
         )}
       </div>

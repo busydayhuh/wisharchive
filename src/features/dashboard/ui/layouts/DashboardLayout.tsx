@@ -13,7 +13,7 @@ import UserInfo from "../UserInfo";
 import ViewModeSwitch, { type ViewModeSwitchType } from "../ViewModeSwitch";
 
 export type OutletContextType = ViewModeSwitchType & {
-  isOwner: boolean;
+  isDashboardOwner: boolean;
   searchString: string;
   dashboardUserId?: string;
   dashboardUser: {
@@ -21,6 +21,7 @@ export type OutletContextType = ViewModeSwitchType & {
     isLoading: boolean;
     error: unknown;
   };
+  path?: string;
 };
 
 const DASHBOARD_HEADERS = {
@@ -44,16 +45,17 @@ const DASHBOARD_HEADERS = {
 
 export function DashboardLayout() {
   const { current } = useUser();
+  const path = useLocation().pathname;
 
   const dashboardHeader =
-    DASHBOARD_HEADERS[useLocation().pathname as keyof typeof DASHBOARD_HEADERS];
+    DASHBOARD_HEADERS[path as keyof typeof DASHBOARD_HEADERS];
 
   const dashboardUserId = useParams().userId || current?.$id;
   const dashboardUser = useFindUser(dashboardUserId);
 
   const { isMobile } = useSidebar();
 
-  const isOwner = current?.$id === dashboardUserId;
+  const isDashboardOwner = current?.$id === dashboardUserId;
 
   const [viewMode, setViewMode] = useState("gallery");
   const [searchString, setSearchString] = useState("");
@@ -70,7 +72,7 @@ export function DashboardLayout() {
               {dashboardHeader.description}
             </span>
           </div>
-        ) : isOwner ? (
+        ) : isDashboardOwner ? (
           <span className="mb-2 md:mb-0 max-w-xs font-semibold text-3xl md:text-4xl leading-8">
             Мой дашборд желаний
           </span>
@@ -78,7 +80,7 @@ export function DashboardLayout() {
 
         {!isMobile ? (
           <UserInfo {...dashboardUser} />
-        ) : !isOwner ? (
+        ) : !isDashboardOwner ? (
           <UserInfo {...dashboardUser} />
         ) : null}
       </div>
@@ -99,10 +101,11 @@ export function DashboardLayout() {
         <Outlet
           context={{
             viewMode,
-            isOwner,
+            isDashboardOwner,
             searchString,
             dashboardUserId,
             dashboardUser,
+            path,
           }}
         />
       </StarFrame>

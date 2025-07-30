@@ -6,18 +6,19 @@ import { Button } from "@/shared/ui/kit/button";
 import { Gift, LockIcon } from "lucide-react";
 import { memo } from "react";
 import { href, Link } from "react-router";
-import useIsBookedByCurrentUser from "../../model/useIsBookedByCurrentUser";
+import usePermissions from "../../model/usePermissions";
 import { GiftButton } from "../ActionButtons";
 import ActionMenu from "../ActionMenu";
 import { useDashboardContext } from "../layouts/DashboardLayout";
+import OwnerAvatar from "../OwnerAvatar";
 
 const WishGalleryItem = memo(function WishGalleryItem({
   wish,
 }: {
   wish: WishDocumentType;
 }) {
-  const { isOwner } = useDashboardContext();
-  const isBookedByCurrentUser = useIsBookedByCurrentUser(wish.bookerId);
+  const { path } = useDashboardContext();
+  const { isOwner, isBooker, isEditor } = usePermissions(wish);
 
   return (
     <div className="relative flex flex-col gap-1 md:gap-2 mb-4 overflow-hidden">
@@ -25,7 +26,7 @@ const WishGalleryItem = memo(function WishGalleryItem({
         <div
           className={cn(
             "inline-flex top-2 left-2 z-10 absolute items-center gap-1 px-2 md:px-2.5 py-2 md:py-1 rounded-full md:rounded-3xl text-background",
-            isBookedByCurrentUser
+            isBooker
               ? "bg-destructive text-background"
               : "bg-muted text-muted-foreground"
           )}
@@ -37,13 +38,27 @@ const WishGalleryItem = memo(function WishGalleryItem({
         </div>
       )}
       <div className="group/cover relative overflow-hidden">
-        {isOwner ? (
-          <ActionMenu triggerVariant="gallery" />
-        ) : (
+        {isOwner && <ActionMenu triggerVariant="gallery" />}
+        {!isOwner && isEditor && (
+          <div className="flex gap-1">
+            <GiftButton
+              variant="gallery"
+              isBooked={wish.isBooked}
+              isBookedByCurrentUser={isBooker}
+            />
+            <ActionMenu
+              triggerVariant="gallery"
+              className="left-2"
+              side="top"
+              align="start"
+            />
+          </div>
+        )}
+        {!isOwner && !isEditor && (
           <GiftButton
             variant="gallery"
             isBooked={wish.isBooked}
-            isBookedByCurrentUser={isBookedByCurrentUser}
+            isBookedByCurrentUser={isBooker}
           />
         )}
         <Link
@@ -75,19 +90,27 @@ const WishGalleryItem = memo(function WishGalleryItem({
         </span>
       </Link>
 
-      <div className="flex justify-between items-baseline px-1">
-        {wish.wishlist && (
-          <Button
-            variant="outline"
-            size="sm"
-            className="rounded-full max-w-[25ch] h-6 font-normal text-xs"
-            asChild
-          >
-            <Link to={href(ROUTES.WISHLIST, { listId: wish.wishlist.$id })}>
-              {wish.isPrivate && <LockIcon className="size-3" />}
-              <span className="truncate">{wish.wishlist.title}</span>
-            </Link>
-          </Button>
+      <div className="flex justify-start items-baseline px-1">
+        {path === "/booked" ? (
+          <OwnerAvatar
+            userId={wish.ownerId}
+            userName={wish.owner.userName}
+            avatarURL={wish.owner.avatarURL}
+          />
+        ) : (
+          wish.wishlist && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="rounded-full max-w-[25ch] h-6 font-normal text-xs"
+              asChild
+            >
+              <Link to={href(ROUTES.WISHLIST, { listId: wish.wishlist.$id })}>
+                {wish.isPrivate && <LockIcon className="size-3" />}
+                <span className="truncate">{wish.wishlist.title}</span>
+              </Link>
+            </Button>
+          )
         )}
       </div>
     </div>

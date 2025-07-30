@@ -41,6 +41,7 @@ function ImageTiles({
       {coverImages.reverse().map((image, index) => {
         return (
           <div
+            key={ID.unique()}
             className={cn(
               "bg-muted border-1 border-background rounded-2xl w-20 lg:w-30 aspect-[4/3] overflow-clip",
               index !== 0 && `absolute top-${index} -left-${index}`

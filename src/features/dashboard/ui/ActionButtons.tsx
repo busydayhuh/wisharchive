@@ -1,5 +1,6 @@
 import { cn } from "@/shared/lib/css";
 import { Button } from "@/shared/ui/kit/button";
+import { useSidebar } from "@/shared/ui/kit/sidebar";
 import { Toggle } from "@/shared/ui/kit/toggle";
 import {
   Tooltip,
@@ -15,9 +16,10 @@ export function EditButton({
 }: React.ComponentProps<"div"> & {
   variant?: "gallery" | "table";
 }) {
+  const { isMobile } = useSidebar();
   return (
     <Button
-      size="icon"
+      size={isMobile ? "sm" : "icon"}
       variant="secondary"
       className={cn(
         "z-10",
@@ -80,11 +82,13 @@ export function GiftButton({
   isBookedByCurrentUser: boolean;
   onPressed?: (pressed: boolean) => void;
 }) {
+  const { isMobile } = useSidebar();
   return (
     <Tooltip>
       <TooltipTrigger asChild>
         <DataStatePropInterceptor>
           <Toggle
+            size={isMobile ? "sm" : "default"}
             disabled={isBooked && !isBookedByCurrentUser}
             defaultPressed={isBookedByCurrentUser}
             className={cn(
