@@ -1,13 +1,14 @@
-import { useFetchCollabWishlists } from "./model/useFetchWishlists";
+import { useFetchWishlists } from "./model/useFetchWishlists";
 import { useDashboardContext } from "./ui/layouts/DashboardLayout";
 import WishlistsPageLayout from "./ui/layouts/WishlistsPageLayout";
 
 function SharedPage() {
   const { searchString, dashboardUserId } = useDashboardContext();
-  const { collabWishlists, isLoading, error } = useFetchCollabWishlists(
-    dashboardUserId,
-    searchString
-  );
+  const {
+    wishlists: collabWishlists,
+    isLoading,
+    error,
+  } = useFetchWishlists(dashboardUserId, searchString, "collaboratingLists");
 
   return (
     <WishlistsPageLayout

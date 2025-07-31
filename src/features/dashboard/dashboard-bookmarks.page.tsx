@@ -1,22 +1,20 @@
-import type { WishlistDocumentType } from "@/shared/model/types";
+import { useUser } from "../auth";
+import { useFetchWishlists } from "./model/useFetchWishlists";
 import { useDashboardContext } from "./ui/layouts/DashboardLayout";
 import WishlistsPageLayout from "./ui/layouts/WishlistsPageLayout";
 
 function BookmarksPage() {
-  const { searchString, dashboardUser } = useDashboardContext();
-  const { user, isLoading, error } = dashboardUser;
-
-  let filteredBookmarks = [] as WishlistDocumentType[];
-
-  if (user && user.favoriteWishlists) {
-    filteredBookmarks = user.favoriteWishlists.filter(({ title }) =>
-      title.includes(searchString)
-    );
-  }
+  const { current } = useUser();
+  const { searchString } = useDashboardContext();
+  const {
+    wishlists: bookmarkedWishlists,
+    isLoading,
+    error,
+  } = useFetchWishlists(current!.$id, searchString, "bookmarkedLists");
 
   return (
     <WishlistsPageLayout
-      wishlists={filteredBookmarks}
+      wishlists={bookmarkedWishlists}
       isLoading={isLoading}
       error={error}
     />

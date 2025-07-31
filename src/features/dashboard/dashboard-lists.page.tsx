@@ -6,7 +6,8 @@ function WishlistsPage() {
   const { dashboardUserId, searchString } = useDashboardContext();
   const { wishlists, isLoading, error } = useFetchWishlists(
     dashboardUserId,
-    searchString
+    searchString,
+    "allLists"
   );
 
   return (

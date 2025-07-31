@@ -24,16 +24,13 @@ const AvatarsGroup = memo(function AvatarsGroup({
   return (
     <div
       className={cn(
-        "flex -space-x-2 *:data-[slot=avatar]:grayscale mt-1 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background",
+        "flex -space-x-2 mt-1 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background",
         className
       )}
     >
       {users.slice(0, maxCount).map((user) => (
         <Avatar className={`w-${size} h-${size}`} key={ID.unique()}>
-          <AvatarImage
-            src="https://github.com/shadcn.png"
-            alt={user.userName}
-          />
+          <AvatarImage src={user.avatarURL} alt={user.userName} />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       ))}

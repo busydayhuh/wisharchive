@@ -176,7 +176,7 @@ function WishlistEditDialog({
                 )}
                 {wishlist && (
                   <AvatarsGroup
-                    users={[wishlist.owner]}
+                    users={[wishlist.owner].concat(wishlist.collaborators)}
                     size={8}
                     maxCount={4}
                   />

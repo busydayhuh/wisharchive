@@ -15,7 +15,17 @@ async function fetcher({
   return response.documents as WishlistDocumentType[];
 }
 
-export function useFetchWishlists(userId = "", searchString = "") {
+export function useFetchWishlists(
+  userId = "",
+  searchString = "",
+  target: "allLists" | "collaboratingLists" | "bookmarkedLists"
+) {
+  const queries = {
+    allLists: [Query.equal("ownerId", userId)],
+    collaboratingLists: [Query.contains("canRead", userId)],
+    bookmarkedLists: [Query.contains("bookmarkedBy", userId)],
+  };
+
   const {
     data: wishlists,
     isLoading,
@@ -24,10 +34,9 @@ export function useFetchWishlists(userId = "", searchString = "") {
     {
       userId: userId,
       collection: "wishlists",
-      queries: [
-        Query.equal("ownerId", userId),
+      queries: queries[target as keyof typeof queries].concat([
         Query.contains("title", searchString),
-      ],
+      ]),
     },
     fetcher,
     {
@@ -39,29 +48,4 @@ export function useFetchWishlists(userId = "", searchString = "") {
   );
 
   return { wishlists, isLoading, error };
-}
-
-export function useFetchCollabWishlists(userId = "", searchString = "") {
-  const {
-    data: collabWishlists,
-    isLoading,
-    error,
-  } = useSWR(
-    {
-      userId: userId,
-      collection: "wishlists",
-      queries: [
-        Query.contains("canRead", userId),
-        Query.contains("title", searchString),
-      ],
-    },
-    fetcher,
-    {
-      onSuccess: (data) => {
-        data.reverse();
-        data.forEach((wl) => (wl.wishes ? wl.wishes.reverse() : null));
-      },
-    }
-  );
-  return { collabWishlists, isLoading, error };
 }
