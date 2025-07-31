@@ -11,7 +11,7 @@ function OwnerAvatar({
   return (
     <Link to={href(ROUTES.WISHES, { userId: userId })}>
       <div className="flex items-center gap-1 -mt-1">
-        <Avatar className="rounded-full size-4">
+        <Avatar className="rounded-full size-5">
           <AvatarImage src={avatarURL} alt={userId} />
           <AvatarFallback>ER</AvatarFallback>
         </Avatar>

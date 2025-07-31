@@ -5,11 +5,12 @@ import { Lock } from "lucide-react";
 import { memo } from "react";
 import { href, Link } from "react-router-dom";
 import usePermissions from "../../model/usePermissions";
-import { BookmarkButton, EditButton } from "../ActionButtons";
+import { BookmarkButton } from "../ActionButtons";
 import AvatarsGroup from "../AvatarsGroup";
 import ImageTiles from "../ImageTiles";
 import { useDashboardContext } from "../layouts/DashboardLayout";
 import OwnerAvatar from "../OwnerAvatar";
+import WishlistEditDialog from "../WishlistEditDialog";
 
 const WishlistGalleryItem = memo(function WishlistGalleryItem({
   wishlist,
@@ -23,7 +24,13 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
     <div className="group/cover flex flex-col gap-2 mb-4">
       <div className="relative">
         <BookmarkButton isFavorite={isFavorite || path === "/bookmarks"} />
-        {isOwner && <EditButton />}
+        {isOwner && (
+          <WishlistEditDialog
+            actionVariant="edit"
+            triggerVariant="gallery"
+            wishlist={wishlist}
+          />
+        )}
         <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
           <ImageTiles wishes={wishlist.wishes} />
         </Link>
@@ -41,13 +48,9 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
               <Lock className="size-3" />
             </Badge>
           )}
-          {wishlist.wishes ? (
-            <span className="text-xs md:text-sm">
-              ( {wishlist.wishes.length} )
-            </span>
-          ) : (
-            <span className="text-muted-foreground text-sm md:text-base">
-              ( 0 )
+          {wishlist.wishes && (
+            <span className="flex justify-center items-center bg-muted rounded-full w-5 h-5 text-xs md:text-xs">
+              {wishlist.wishes.length}
             </span>
           )}
         </div>
@@ -63,7 +66,7 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
         {wishlist.isPrivate && wishlist.canRead && (
           <AvatarsGroup
             users={wishlist.canRead}
-            size={4}
+            size={5}
             maxCount={3}
             className="mt-0"
           />
