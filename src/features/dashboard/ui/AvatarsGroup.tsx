@@ -24,7 +24,7 @@ const AvatarsGroup = memo(function AvatarsGroup({
   return (
     <div
       className={cn(
-        "flex -space-x-2 mt-1 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background",
+        "flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background",
         className
       )}
     >

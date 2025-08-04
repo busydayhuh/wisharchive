@@ -83,14 +83,21 @@ export function DashboardLayout() {
         ) : null}
       </div>
       <div className="top-0 z-10 sticky flex flex-col gap-6 bg-background md:mr-6 -mb-4 md:-mb-9 py-2">
-        {isMobile && <Searchbar setSearchString={setSearchString} />}
+        {isMobile && (
+          <Searchbar
+            searchString={searchString}
+            setSearchString={setSearchString}
+          />
+        )}
         <div className="flex justify-between items-end gap-3 md:gap-5 w-full">
           <Navigation />
           {!isMobile && (
             <Searchbar
+              searchString={searchString}
               setSearchString={setSearchString}
               className={cn(
                 "mr-2",
+                "md:justify-end w-full md:w-lg",
                 !dashboardHeader ? "ms-auto" : "md:justify-start"
               )}
             />

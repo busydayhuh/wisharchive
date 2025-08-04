@@ -26,9 +26,11 @@ import { Switch } from "@/shared/ui/kit/switch";
 import { Textarea } from "@/shared/ui/kit/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Pencil } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import AvatarsGroup from "./AvatarsGroup";
+import CollaboratorsDialog from "./CollaboratorsDialog";
 import { useDashboardContext } from "./layouts/DashboardLayout";
 
 const formSchema = z.object({
@@ -78,6 +80,7 @@ function WishlistEditDialog({
 
   const { isMobile } = useSidebar();
   const { dashboardUser } = useDashboardContext();
+  const [isPrivateChecked, setIsPrivateChecked] = useState(false);
 
   return (
     <Dialog>
@@ -150,7 +153,10 @@ function WishlistEditDialog({
                       <FormControl>
                         <Switch
                           checked={field.value}
-                          onCheckedChange={field.onChange}
+                          onCheckedChange={(checked) => {
+                            field.onChange(checked);
+                            setIsPrivateChecked(checked);
+                          }}
                           className="data-[state=unchecked]:bg-ring"
                         />
                       </FormControl>
@@ -167,32 +173,38 @@ function WishlistEditDialog({
               />
               <div className="space-y-3">
                 <FormLabel>Соавторы списка</FormLabel>
-                {!wishlist && (
-                  <AvatarsGroup
-                    users={dashboardUser.user ? [dashboardUser.user] : []}
-                    size={8}
-                    maxCount={4}
+                <div className="flex items-baseline gap-2">
+                  {!wishlist && (
+                    <AvatarsGroup
+                      users={dashboardUser.user ? [dashboardUser.user] : []}
+                      size={8}
+                      maxCount={4}
+                    />
+                  )}
+                  {wishlist && (
+                    <AvatarsGroup
+                      users={[wishlist.owner].concat(wishlist.collaborators)}
+                      size={8}
+                      maxCount={4}
+                    />
+                  )}
+                  <CollaboratorsDialog
+                    wishlist={wishlist}
+                    isPrivateChecked={isPrivateChecked}
                   />
-                )}
-                {wishlist && (
-                  <AvatarsGroup
-                    users={[wishlist.owner].concat(wishlist.collaborators)}
-                    size={8}
-                    maxCount={4}
-                  />
-                )}
+                </div>
               </div>
             </div>
             <DialogFooter>
               <DialogClose asChild>
                 <Button
                   variant="secondary"
-                  className="bg-muted hover:bg-muted/60 shadow-none rounded-2xl"
+                  className="bg-muted hover:bg-muted/60 shadow-none rounded-xl"
                 >
                   Отмена
                 </Button>
               </DialogClose>
-              <Button type="submit" className="shadow-none rounded-2xl">
+              <Button type="submit" className="shadow-none rounded-xl">
                 Сохранить
               </Button>
             </DialogFooter>

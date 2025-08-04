@@ -2,45 +2,42 @@ import { cn } from "@/shared/lib/css";
 import { Button } from "@/shared/ui/kit/button";
 import { Input } from "@/shared/ui/kit/input";
 import { Search, X } from "lucide-react";
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 
 function Searchbar({
+  searchString,
   setSearchString,
   className,
+  shouldGrow = true,
 }: {
+  searchString: string;
   setSearchString: Dispatch<SetStateAction<string>>;
+  shouldGrow?: boolean;
 } & React.ComponentProps<"div">) {
-  const [inputValue, setInputValue] = useState("");
-
   function clearSearchbar() {
-    setInputValue("");
     setSearchString("");
   }
 
   function setNewQuery(query: string) {
-    setInputValue(query);
     setSearchString(query);
   }
   return (
-    <div
-      className={cn(
-        "group/searchbar flex md:justify-end items-center gap-2 w-full md:w-lg",
-        className
-      )}
-    >
+    <div className={cn("group/searchbar flex items-center gap-2", className)}>
       <Input
         className={cn(
-          "shadow-none pb-1.5 border-0 rounded-2xl outline-muted-foreground w-full focus-visible:w-full h-8 text-sm transition-w-linear",
-          !inputValue && "md:w-48"
+          "shadow-none pb-1.5 border-0 rounded-2xl outline-ring/60 h-8 text-sm",
+          shouldGrow &&
+            "w-full md:w-full focus-visible:w-full transition-w-linear",
+          !searchString && shouldGrow && "md:w-48"
         )}
         placeholder="найти"
         type="text"
         onChange={(e) => {
           setNewQuery(e.target.value);
         }}
-        value={inputValue}
+        value={searchString}
       />
-      {inputValue ? (
+      {searchString ? (
         <Button
           size="sm"
           variant="ghost"
@@ -50,7 +47,7 @@ function Searchbar({
           <X />
         </Button>
       ) : (
-        <Search className="size-4 text-muted-foreground group-has-[input:focus-visible]/searchbar:text-foreground" />
+        <Search className="size-4 text-ring/80 group-has-[input:focus-visible]/searchbar:text-foreground" />
       )}
     </div>
   );
