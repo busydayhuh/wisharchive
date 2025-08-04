@@ -115,7 +115,7 @@ function CollaboratorsDialog({
               searchString={searchString}
               setSearchString={setSearchString}
               shouldGrow={false}
-              className=""
+              className="[&_input]:h-10"
             />
           </div>
           <ScrollArea className="max-h-[16rem]">

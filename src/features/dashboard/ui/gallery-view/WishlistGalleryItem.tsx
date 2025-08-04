@@ -21,7 +21,7 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
   const { path } = useDashboardContext();
 
   return (
-    <div className="group/cover flex flex-col gap-2 mb-4">
+    <div className="group/cover flex flex-col gap-1 mb-4">
       <div className="relative">
         <BookmarkButton isFavorite={isFavorite || path === "/bookmarks"} />
         {isOwner && (
@@ -36,7 +36,7 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
         </Link>
       </div>
       <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
-        <div className="flex justify-between items-baseline px-2">
+        <div className="flex justify-between items-center px-2">
           <span className="pr-1 font-medium text-base md:text-lg truncate">
             {wishlist.title}
           </span>
@@ -48,28 +48,28 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
               <Lock className="size-3" />
             </Badge>
           )}
-          {wishlist.wishes && (
-            <span className="flex justify-center items-center bg-muted rounded-full w-5 h-5 text-xs md:text-xs">
-              {wishlist.wishes.length}
-            </span>
+          {wishlist.collaborators && (
+            <AvatarsGroup
+              users={wishlist.collaborators}
+              size={5}
+              maxCount={3}
+              className="mt-1"
+            />
           )}
         </div>
       </Link>
       <div className="flex justify-between items-center px-2">
-        {path === "/bookmarks" && (
+        {(path === "/bookmarks" || path === "/shared") && (
           <OwnerAvatar
             userId={wishlist.ownerId}
             userName={wishlist.owner.userName}
             avatarURL={wishlist.owner.avatarURL}
           />
         )}
-        {wishlist.isPrivate && wishlist.canRead && (
-          <AvatarsGroup
-            users={wishlist.canRead}
-            size={5}
-            maxCount={3}
-            className="mt-0"
-          />
+        {wishlist.wishes && (
+          <span className="text-muted-foreground text-xs md:text-sm">
+            {wishlist.wishes.length} жел.
+          </span>
         )}
       </div>
     </div>
