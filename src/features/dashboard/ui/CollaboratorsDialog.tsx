@@ -25,6 +25,7 @@ import {
 } from "@/shared/ui/kit/select";
 import { PlusIcon } from "lucide-react";
 import { useState } from "react";
+import checkPermissions from "../model/checkPermissions";
 import useFindUser from "../model/useFindUser";
 import Searchbar from "./Searchbar";
 
@@ -36,8 +37,8 @@ function CollaboratorsDialog({
   isPrivateChecked?: boolean;
 }) {
   const [role, setRole] = useState("editors");
-  // const [selectedUsers, setSelectedUsers] = useState([] as string[]);
   const [searchString, setSearchString] = useState("");
+
   const {
     user: foundUsers,
     isLoading: searchLoading,
@@ -47,17 +48,11 @@ function CollaboratorsDialog({
   function checkRole(id: string) {
     if (!wishlist) return undefined;
 
-    if (wishlist.ownerId === id) {
-      return "Владелец";
-    }
+    const { isOwner, isEditor, isReader } = checkPermissions(id, wishlist);
 
-    if (
-      wishlist.collaborators.some(
-        (user: UserDocumentType) => user.userId === id
-      )
-    ) {
-      return wishlist.canEdit.includes(id) ? "Редактор" : "Читатель";
-    }
+    if (isOwner) return "Владелец";
+    if (isReader && !isEditor) return "Читатель";
+    if (isEditor) return "Редактор";
   }
 
   return (

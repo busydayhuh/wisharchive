@@ -7,7 +7,7 @@ import { ru } from "date-fns/locale";
 import { Lock } from "lucide-react";
 import { memo } from "react";
 import { href, Link } from "react-router";
-import usePermissions from "../../model/usePermissions";
+import usePermissions from "../../model/checkPermissions";
 import { BookmarkButton } from "../ActionButtons";
 import AvatarsGroup from "../AvatarsGroup";
 import ImageTiles from "../ImageTiles";
@@ -20,8 +20,8 @@ const WishlistTableItem = memo(function WishlistTableItem({
 }: {
   wishlist: WishlistDocumentType;
 }) {
-  const { isOwner, isFavorite } = usePermissions(wishlist);
-  const { path } = useDashboardContext();
+  const { path, authUser } = useDashboardContext();
+  const { isOwner, isFavorite } = usePermissions(authUser!.$id, wishlist);
 
   return (
     <div className="items-center gap-3 md:gap-4 lg:gap-6 grid grid-cols-[5rem_10rem_1fr_1fr] md:grid-cols-[5rem_2fr_1fr_1fr] lg:grid-cols-[fit-content(128px)_2fr_1fr_1fr_1fr_1fr_1fr] pt-2 pb-4 md:pb-2 lg:pb-0 pl-2 md:pl-3 transition dot-on-hover list">

@@ -6,7 +6,7 @@ import { Button } from "@/shared/ui/kit/button";
 import { Gift, LockIcon } from "lucide-react";
 import { memo } from "react";
 import { href, Link } from "react-router";
-import usePermissions from "../../model/usePermissions";
+import usePermissions from "../../model/checkPermissions";
 import { GiftButton } from "../ActionButtons";
 import ActionMenu from "../ActionMenu";
 import { useDashboardContext } from "../layouts/DashboardLayout";
@@ -17,8 +17,8 @@ const WishGalleryItem = memo(function WishGalleryItem({
 }: {
   wish: WishDocumentType;
 }) {
-  const { path } = useDashboardContext();
-  const { isOwner, isBooker, isEditor } = usePermissions(wish);
+  const { path, authUser } = useDashboardContext();
+  const { isOwner, isBooker, isEditor } = usePermissions(authUser!.$id, wish);
 
   return (
     <div className="relative flex flex-col gap-1 md:gap-2 mb-4 overflow-hidden">
@@ -37,8 +37,10 @@ const WishGalleryItem = memo(function WishGalleryItem({
           </span>
         </div>
       )}
+
       <div className="group/cover relative overflow-hidden">
         {isOwner && <ActionMenu triggerVariant="gallery" />}
+
         {!isOwner && isEditor && (
           <div className="flex gap-1">
             <GiftButton
@@ -54,6 +56,7 @@ const WishGalleryItem = memo(function WishGalleryItem({
             />
           </div>
         )}
+
         {!isOwner && !isEditor && (
           <GiftButton
             variant="gallery"
@@ -61,6 +64,7 @@ const WishGalleryItem = memo(function WishGalleryItem({
             isBookedByCurrentUser={isBooker}
           />
         )}
+
         <Link
           to={href(ROUTES.WISH, { wishId: wish.$id })}
           className="group-hover/cover:brightness-50 peer-[[data-state='open']]/cover:brightness-50 transition-[filter] duration-300"
