@@ -1,42 +1,38 @@
 import db from "@/shared/model/databases";
+import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { Query } from "appwrite";
 import useSWR from "swr";
 
-async function fetcher({
-  collection,
-  queries,
-}: {
-  collection: string;
-  queries: string[];
-}) {
-  const response = await db[collection].list(queries);
+async function fetcher({ queries }: { collection: string; queries: string[] }) {
+  const response = await db.wishlists.list(queries);
 
   return response.documents as WishlistDocumentType[];
 }
 
 export function useFetchWishlists(
   userId = "",
-  searchString = "",
-  target: "allLists" | "collaboratingLists" | "bookmarkedLists"
+  path = "/lists/:userId",
+  searchString = ""
 ) {
-  const queries = {
-    allLists: [Query.equal("ownerId", userId)],
-    collaboratingLists: [Query.contains("canRead", userId)],
-    bookmarkedLists: [Query.contains("bookmarkedBy", userId)],
+  const validatedPath = path.includes("/lists") ? "/lists/:userId" : path;
+
+  const FILTERS_FOR_PATHS = {
+    [ROUTES.WISHLISTS]: [Query.equal("ownerId", userId)],
+    [ROUTES.BOOKMARKS]: [Query.contains("bookmarkedBy", userId)],
+    [ROUTES.SHARED]: [Query.contains("canRead", userId)],
   };
 
   const {
     data: wishlists,
     isLoading,
     error,
+    mutate,
   } = useSWR(
     {
-      userId: userId,
-      collection: "wishlists",
-      queries: queries[target as keyof typeof queries].concat([
-        Query.contains("title", searchString),
-      ]),
+      queries: FILTERS_FOR_PATHS[
+        validatedPath as keyof typeof FILTERS_FOR_PATHS
+      ].concat([Query.contains("title", searchString)]),
     },
     fetcher,
     {
@@ -47,5 +43,5 @@ export function useFetchWishlists(
     }
   );
 
-  return { wishlists, isLoading, error };
+  return { wishlists, isLoading, error, mutate };
 }

@@ -3,12 +3,12 @@ import { useDashboardContext } from "./ui/layouts/DashboardLayout";
 import WishlistsPageLayout from "./ui/layouts/WishlistsPageLayout";
 
 function SharedPage() {
-  const { searchString, dashboardUserId } = useDashboardContext();
+  const { searchString, dashboardUserId, path } = useDashboardContext();
   const {
     wishlists: collabWishlists,
     isLoading,
     error,
-  } = useFetchWishlists(dashboardUserId, searchString, "collaboratingLists");
+  } = useFetchWishlists(dashboardUserId, path, searchString);
 
   return (
     <WishlistsPageLayout
