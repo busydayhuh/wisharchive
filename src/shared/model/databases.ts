@@ -5,13 +5,13 @@ import { CONFIG } from "./config";
 type CollectionApiType = {
   create: (
     payload: object,
-    permissions?: [],
+    permissions?: string[],
     id?: string
   ) => Promise<Models.Document>;
   update: (
     id: string,
-    payload: object,
-    permissions?: []
+    payload?: object,
+    permissions?: string[]
   ) => Promise<Models.Document>;
   delete: (id: string) => Promise<object>;
   list: (queries?: string[]) => Promise<Models.DocumentList<Models.Document>>;
