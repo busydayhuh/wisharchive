@@ -22,7 +22,11 @@ const UserInfo = memo(function UserInfo({
     return (
       <div className="flex items-center gap-3">
         <Avatar className="p-0.5 border-1 border-foreground rounded-full w-9 md:w-11 h-9 md:h-11 overflow-visible">
-          <AvatarImage src={user.avatarURL} alt={user.userName} />
+          <AvatarImage
+            src={user.avatarURL}
+            alt={user.userName}
+            className="rounded-full"
+          />
           <AvatarFallback className="rounded-full text-sm md:text-base">
             ВП
           </AvatarFallback>
