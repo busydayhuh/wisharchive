@@ -29,34 +29,28 @@ import { Pencil } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { wishlistFormSchema as formSchema } from "../model/formSchemas";
+import { useWishlistMutations } from "../model/useWishlistMutations";
 import AvatarsGroup from "./AvatarsGroup";
 import CollaboratorsDialog from "./CollaboratorsDialog";
 import { useDashboardContext } from "./layouts/DashboardLayout";
 
-const formSchema = z.object({
-  title: z.string({ required_error: "Введите название списка" }),
-  description: z
-    .string()
-    .max(500, { message: "Описание должно содержать не более 500 символов" })
-    .optional(),
-  isPrivate: z.boolean().default(false).optional(),
-});
-
-const actionVariants = {
+const headerVariants = {
   edit: {
     title: "Редактировать список",
     description: "Редактируйте существующий список",
-    submitAction() {
-      //TODO
-    },
   },
   create: {
     title: "Создать список",
     description: "Создайте новый список",
-    submitAction() {
-      //TODO
-    },
   },
+};
+
+type WishlistEditDialogPropsType = React.ComponentProps<"div"> & {
+  wishlist?: WishlistDocumentType;
+  triggerVariant?: "gallery" | "table";
+  actionVariant: "edit" | "create";
+  isOwner?: boolean;
 };
 
 function WishlistEditDialog({
@@ -64,11 +58,7 @@ function WishlistEditDialog({
   actionVariant = "edit",
   triggerVariant = "gallery",
   className,
-}: React.ComponentProps<"div"> & {
-  wishlist?: WishlistDocumentType;
-  triggerVariant?: "gallery" | "table";
-  actionVariant: "edit" | "create";
-}) {
+}: WishlistEditDialogPropsType) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -78,18 +68,25 @@ function WishlistEditDialog({
     },
   });
 
+  const { dashboardUser, dashboardUserId, path } = useDashboardContext();
+
+  const { updateWishlist } = useWishlistMutations(dashboardUserId!, path);
+
   const { isMobile } = useSidebar();
-  const { dashboardUser } = useDashboardContext();
+
+  const [openDialog, setOpenDialog] = useState(false);
   const [isPrivateChecked, setIsPrivateChecked] = useState(false);
 
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    if (actionVariant === "edit") {
+      updateWishlist(wishlist!.$id, values);
+    }
+  }
+
   return (
-    <Dialog>
+    <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(
-            actionVariants[actionVariant].submitAction
-          )}
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)}>
           <DialogTrigger asChild>
             <Button
               size={isMobile ? "sm" : "icon"}
@@ -108,9 +105,9 @@ function WishlistEditDialog({
           </DialogTrigger>
           <DialogContent className="rounded-2xl sm:max-w-[425px]">
             <DialogHeader className="gap-1 mb-2">
-              <DialogTitle>{actionVariants[actionVariant].title}</DialogTitle>
+              <DialogTitle>{headerVariants[actionVariant].title}</DialogTitle>
               <DialogDescription>
-                {actionVariants[actionVariant].description}
+                {headerVariants[actionVariant].description}
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-6">
@@ -204,7 +201,18 @@ function WishlistEditDialog({
                   Отмена
                 </Button>
               </DialogClose>
-              <Button type="submit" className="shadow-none rounded-xl">
+              <Button
+                type="submit"
+                className="shadow-none rounded-xl"
+                onClick={async () => {
+                  const isValid = await form.trigger();
+
+                  if (isValid) {
+                    onSubmit(form.getValues());
+                    setOpenDialog(false);
+                  }
+                }}
+              >
                 Сохранить
               </Button>
             </DialogFooter>
