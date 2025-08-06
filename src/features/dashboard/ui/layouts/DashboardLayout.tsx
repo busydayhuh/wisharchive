@@ -23,6 +23,7 @@ export type OutletContextType = ViewModeSwitchType & {
     error: unknown;
   };
   path?: string;
+  authUser?: UserDocumentType;
 };
 
 const DASHBOARD_HEADERS = {
@@ -52,7 +53,11 @@ export function DashboardLayout() {
     DASHBOARD_HEADERS[path as keyof typeof DASHBOARD_HEADERS];
 
   const dashboardUserId = useParams().userId || current?.$id;
-  const dashboardUser = useFindUser(dashboardUserId);
+  const dashboardUser = useFindUser(dashboardUserId || "") as {
+    user: UserDocumentType;
+    isLoading: boolean;
+    error: unknown;
+  };
 
   const { isMobile } = useSidebar();
 
@@ -115,6 +120,7 @@ export function DashboardLayout() {
               dashboardUserId,
               dashboardUser,
               path,
+              authUser: current,
             }}
           />
         </div>
