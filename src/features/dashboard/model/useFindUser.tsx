@@ -18,7 +18,7 @@ async function fetcher({
   return response.documents as UserDocumentType[];
 }
 
-function useFindUser(
+export function useFindUser(
   userId: string | string[],
   searchString = "",
   target = "userById"
@@ -45,5 +45,3 @@ function useFindUser(
 
   return { user, isLoading, error };
 }
-
-export default useFindUser;

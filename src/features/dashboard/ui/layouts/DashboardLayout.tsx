@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { useUser } from "@/features/auth";
-import useFindUser from "@/features/dashboard/model/useFindUser";
+import { useFindUser } from "@/features/dashboard/model/useFindUser";
 import { cn } from "@/shared/lib/css";
 import { ROUTES } from "@/shared/model/routes";
 import type { UserDocumentType } from "@/shared/model/types";
@@ -8,8 +8,8 @@ import { useSidebar } from "@/shared/ui/kit/sidebar";
 import StarFrame from "@/shared/ui/StarFrame";
 import { useState } from "react";
 import { Outlet, useLocation, useOutletContext, useParams } from "react-router";
+import Searchbar from "../../../../shared/ui/Searchbar";
 import Navigation from "../Navigation";
-import Searchbar from "../Searchbar";
 import UserInfo from "../UserInfo";
 import ViewModeSwitch, { type ViewModeSwitchType } from "../ViewModeSwitch";
 

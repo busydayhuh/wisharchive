@@ -3,7 +3,7 @@ import type {
   WishlistDocumentType,
 } from "@/shared/model/types";
 
-function checkPermissions(
+export function checkPermissions(
   userId: string,
   document: WishDocumentType | WishlistDocumentType
 ) {
@@ -17,5 +17,3 @@ function checkPermissions(
       : false,
   };
 }
-
-export default checkPermissions;

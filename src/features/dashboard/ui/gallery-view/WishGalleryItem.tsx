@@ -6,11 +6,11 @@ import { Button } from "@/shared/ui/kit/button";
 import { Gift, LockIcon } from "lucide-react";
 import { memo } from "react";
 import { href, Link } from "react-router";
-import usePermissions from "../../model/checkPermissions";
+import OwnerAvatar from "../../../../shared/ui/OwnerAvatar";
+import { checkPermissions } from "../../model/checkPermissions";
 import { GiftButton } from "../ActionButtons";
 import ActionMenu from "../ActionMenu";
 import { useDashboardContext } from "../layouts/DashboardLayout";
-import OwnerAvatar from "../OwnerAvatar";
 
 const WishGalleryItem = memo(function WishGalleryItem({
   wish,
@@ -18,7 +18,7 @@ const WishGalleryItem = memo(function WishGalleryItem({
   wish: WishDocumentType;
 }) {
   const { path, authUser } = useDashboardContext();
-  const { isOwner, isBooker, isEditor } = usePermissions(authUser!.$id, wish);
+  const { isOwner, isBooker, isEditor } = checkPermissions(authUser!.$id, wish);
 
   return (
     <div className="relative flex flex-col gap-1 md:gap-2 mb-4 overflow-hidden">

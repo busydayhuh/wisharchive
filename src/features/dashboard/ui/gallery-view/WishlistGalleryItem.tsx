@@ -1,16 +1,16 @@
+import { WishlistEditDialog } from "@/features/list";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
+import AvatarsGroup from "@/shared/ui/AvatarsGroup";
 import { Badge } from "@/shared/ui/kit/badge";
+import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { Lock } from "lucide-react";
 import { memo } from "react";
 import { href, Link } from "react-router-dom";
-import usePermissions from "../../model/checkPermissions";
+import { checkPermissions } from "../../model/checkPermissions";
 import { BookmarkButton } from "../ActionButtons";
-import AvatarsGroup from "../AvatarsGroup";
 import ImageTiles from "../ImageTiles";
 import { useDashboardContext } from "../layouts/DashboardLayout";
-import OwnerAvatar from "../OwnerAvatar";
-import WishlistEditDialog from "../WishlistEditDialog";
 
 const WishlistGalleryItem = memo(function WishlistGalleryItem({
   wishlist,
@@ -18,7 +18,7 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
   wishlist: WishlistDocumentType;
 }) {
   const { path, authUser } = useDashboardContext();
-  const { isOwner, isFavorite, isEditor } = usePermissions(
+  const { isOwner, isFavorite, isEditor } = checkPermissions(
     authUser!.$id,
     wishlist
   );

@@ -1,5 +1,9 @@
 import { cn } from "@/shared/lib/css";
-import type { WishlistDocumentType } from "@/shared/model/types";
+import { wishlistFormSchema as formSchema } from "@/shared/model/formSchemas";
+import type {
+  UserDocumentType,
+  WishlistDocumentType,
+} from "@/shared/model/types";
 import { Button } from "@/shared/ui/kit/button";
 import {
   Dialog,
@@ -28,12 +32,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Pencil } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useLocation } from "react-router";
 import { z } from "zod";
-import { wishlistFormSchema as formSchema } from "../model/formSchemas";
-import { useWishlistMutations } from "../model/useWishlistMutations";
-import AvatarsGroup from "./AvatarsGroup";
-import CollaboratorsDialog from "./CollaboratorsDialog";
-import { useDashboardContext } from "./layouts/DashboardLayout";
+import AvatarsGroup from "../../shared/ui/AvatarsGroup";
+import { useUser } from "../auth";
+import { useFindUser } from "../dashboard";
+import { CollaboratorsDialog } from "./CollaboratorsDialog";
+import { useWishlistMutations } from "./model/useWishlistMutations";
 
 const headerVariants = {
   edit: {
@@ -53,7 +58,7 @@ type WishlistEditDialogPropsType = React.ComponentProps<"div"> & {
   isOwner?: boolean;
 };
 
-function WishlistEditDialog({
+export function WishlistEditDialog({
   wishlist,
   actionVariant = "edit",
   triggerVariant = "gallery",
@@ -68,9 +73,11 @@ function WishlistEditDialog({
     },
   });
 
-  const { dashboardUser, dashboardUserId, path } = useDashboardContext();
+  const { current } = useUser();
+  const { user } = useFindUser(current!.$id);
+  const path = useLocation().pathname;
 
-  const { updateWishlist } = useWishlistMutations(dashboardUserId!, path);
+  const { updateWishlist } = useWishlistMutations(current!.$id, path);
 
   const { isMobile } = useSidebar();
 
@@ -173,7 +180,7 @@ function WishlistEditDialog({
                 <div className="flex items-baseline gap-2">
                   {!wishlist && (
                     <AvatarsGroup
-                      users={dashboardUser.user ? [dashboardUser.user] : []}
+                      users={user ? [user as UserDocumentType] : []}
                       size={8}
                       maxCount={4}
                     />
@@ -222,5 +229,3 @@ function WishlistEditDialog({
     </Dialog>
   );
 }
-
-export default WishlistEditDialog;

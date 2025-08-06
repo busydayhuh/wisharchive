@@ -1,5 +1,5 @@
 import db from "@/shared/model/databases";
-import { useFetchWishlists } from "./useFetchWishlists";
+import { useFetchWishlists } from "../../dashboard";
 
 export function useWishlistMutations(userId: string, path: string | undefined) {
   const { mutate: mutateDashboard } = useFetchWishlists(userId, path);

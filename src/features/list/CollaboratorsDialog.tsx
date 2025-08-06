@@ -25,11 +25,10 @@ import {
 } from "@/shared/ui/kit/select";
 import { PlusIcon } from "lucide-react";
 import { useState } from "react";
-import checkPermissions from "../model/checkPermissions";
-import useFindUser from "../model/useFindUser";
-import Searchbar from "./Searchbar";
+import Searchbar from "../../shared/ui/Searchbar";
+import { checkPermissions, useFindUser } from "../dashboard";
 
-function CollaboratorsDialog({
+export function CollaboratorsDialog({
   wishlist,
   isPrivateChecked = false,
 }: {
@@ -164,8 +163,6 @@ function CollaboratorsDialog({
     </Dialog>
   );
 }
-
-export default CollaboratorsDialog;
 
 function Collaborator({
   avatarURL,
