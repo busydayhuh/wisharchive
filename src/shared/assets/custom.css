@@ -1,0 +1,44 @@
+/* masonry */
+.my-masonry-grid {
+  display: flex;
+  margin-left: -1.25rem;
+  width: auto;
+}
+.my-masonry-grid_column {
+  padding-left: 1.25rem;
+  background-clip: padding-box;
+}
+@media screen and (max-width: 768px) {
+  .my-masonry-grid {
+    margin-left: -0.5rem;
+  }
+  .my-masonry-grid_column {
+    padding-left: 0.5rem;
+  }
+}
+
+/* маркер на hover в таблице */
+.dot-on-hover::before {
+  content: "";
+  position: absolute;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  left: -0.75rem;
+  display: none;
+  top: 50%;
+  background-color: var(--destructive);
+  transition: transform 0.25s ease-out;
+}
+
+.dot-on-hover:hover::before {
+  display: block;
+}
+
+/* кроссбраузерная оптимизация шрифтов */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}

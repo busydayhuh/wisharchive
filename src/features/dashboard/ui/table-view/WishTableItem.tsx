@@ -1,3 +1,4 @@
+import "@/shared/assets/custom.css";
 import { cn } from "@/shared/lib/css";
 import { Currency } from "@/shared/lib/currency";
 import { formatUrl } from "@/shared/lib/formatUrl";
@@ -22,7 +23,7 @@ const WishTableItem = memo(function WishTableItem({
   const { isOwner, isBooker, isEditor } = checkPermissions(authUser!.$id, wish);
 
   return (
-    <div className="flex justify-items-center items-center lg:grid lg:grid-cols-[fit-content(8rem)_2fr_1fr_1fr_1fr_1fr] py-1 md:py-2 pl-0 md:pl-1 w-full transition dot-on-hover">
+    <div className="relative flex justify-items-center items-center lg:grid lg:grid-cols-[fit-content(8rem)_2fr_1fr_1fr_1fr_1fr] py-1 md:py-2 pl-0 md:pl-1 w-full transition dot-on-hover">
       <Link to={href(ROUTES.WISH, { wishId: wish.$id })}>
         <img
           src={wish.imageURL}

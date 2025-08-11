@@ -111,7 +111,7 @@ export function DashboardLayout() {
         </div>
       </div>
       <StarFrame>
-        <div className="pt-4 md:pt-8 md:pr-8 example">
+        <div className="pt-4 md:pt-8 md:pr-8">
           <Outlet
             context={{
               viewMode,
@@ -132,5 +132,3 @@ export function DashboardLayout() {
 export function useDashboardContext() {
   return useOutletContext<OutletContextType>();
 }
-
-// h-[calc(100vh-14rem)] overflow-y-scroll

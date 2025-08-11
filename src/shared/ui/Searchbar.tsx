@@ -27,7 +27,7 @@ function Searchbar({
         className={cn(
           "shadow-none pb-1.5 border-0 rounded-2xl outline-ring/60 h-8 text-sm",
           shouldGrow &&
-            "w-full md:w-full focus-visible:w-full transition-w-linear",
+            "w-full md:w-full focus-visible:w-full transition-[width] duration-300 ease-linear",
           !searchString && shouldGrow && "md:w-48"
         )}
         placeholder="найти"

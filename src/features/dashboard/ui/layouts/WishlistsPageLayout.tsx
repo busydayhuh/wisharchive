@@ -20,22 +20,25 @@ function WishlistsPageLayout({
   if (wishlists && wishlists.length === 0) {
     return <div>Нет вишлистов 😶</div>;
   }
-  if (wishlists && wishlists.length > 0)
-    return (
-      <div className="flex flex-col gap-0 md:gap-4">
-        {viewMode === "gallery" && (
-          <div className="gap-x-4 gap-y-3 md:gap-y-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-            {wishlists.map((wishlist) => (
-              <WishlistGalleryItem wishlist={wishlist} key={wishlist.$id} />
-            ))}
-          </div>
-        )}
-        {viewMode === "table" &&
-          wishlists.map((wishlist) => (
+  if (wishlists && wishlists.length > 0) {
+    if (viewMode === "gallery")
+      return (
+        <div className="gap-x-4 gap-y-3 grid grid-flow-col auto-cols-[minmax(150px,240px)]">
+          {wishlists.map((wishlist) => (
+            <WishlistGalleryItem wishlist={wishlist} key={wishlist.$id} />
+          ))}
+        </div>
+      );
+
+    if (viewMode === "table")
+      return (
+        <div className="flex flex-col gap-0 md:gap-4">
+          {wishlists.map((wishlist) => (
             <WishlistTableItem wishlist={wishlist} key={wishlist.$id} />
           ))}
-      </div>
-    );
+        </div>
+      );
+  }
 }
 
 export default WishlistsPageLayout;

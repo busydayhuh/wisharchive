@@ -3,6 +3,7 @@ import type { WishlistDocumentType } from "@/shared/model/types";
 import { Badge } from "@/shared/ui/kit/badge";
 
 import { WishlistEditDialog } from "@/features/list";
+import "@/shared/assets/custom.css";
 import AvatarsGroup from "@/shared/ui/AvatarsGroup";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { format } from "date-fns";
@@ -24,7 +25,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
   const { isOwner, isFavorite } = checkPermissions(authUser!.$id, wishlist);
 
   return (
-    <div className="items-center gap-3 md:gap-4 lg:gap-6 grid grid-cols-[5rem_10rem_1fr_1fr] md:grid-cols-[5rem_2fr_1fr_1fr] lg:grid-cols-[fit-content(128px)_2fr_1fr_1fr_1fr_1fr_1fr] pt-2 pb-4 md:pb-2 lg:pb-0 pl-2 md:pl-3 transition dot-on-hover list">
+    <div className="relative items-center gap-3 md:gap-4 lg:gap-6 grid grid-cols-[5rem_10rem_1fr_1fr] md:grid-cols-[5rem_2fr_1fr_1fr] lg:grid-cols-[fit-content(128px)_2fr_1fr_1fr_1fr_1fr_1fr] pt-2 pb-4 md:pb-2 lg:pb-0 pl-2 md:pl-3 transition dot-on-hover">
       <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
         <ImageTiles wishes={wishlist.wishes} variant="table" />
       </Link>
@@ -75,7 +76,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
       <div className="flex justify-end lg:justify-around align-middle">
         {isOwner && (
           <WishlistEditDialog
-            actionVariant="edit"
+            action="edit"
             triggerVariant="table"
             wishlist={wishlist}
           />
