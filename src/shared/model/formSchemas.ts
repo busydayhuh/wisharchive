@@ -6,5 +6,5 @@ export const wishlistFormSchema = z.object({
     .string()
     .max(500, { message: "Описание должно содержать не более 500 символов" })
     .optional(),
-  isPrivate: z.boolean().default(false).optional(),
+  isPrivate: z.boolean(),
 });

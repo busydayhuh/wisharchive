@@ -1,4 +1,4 @@
-import { WishlistEditDialog } from "@/features/list";
+import { WishlistDialog } from "@/features/list";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import AvatarsGroup from "@/shared/ui/AvatarsGroup";
@@ -29,8 +29,8 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
         <BookmarkButton isFavorite={isFavorite || path === "/bookmarks"} />
 
         {(isOwner || isEditor) && (
-          <WishlistEditDialog
-            actionVariant="edit"
+          <WishlistDialog
+            action="edit"
             triggerVariant="gallery"
             wishlist={wishlist}
             isOwner={isOwner}

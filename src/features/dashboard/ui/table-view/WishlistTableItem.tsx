@@ -2,7 +2,7 @@ import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { Badge } from "@/shared/ui/kit/badge";
 
-import { WishlistEditDialog } from "@/features/list";
+import { WishlistDialog } from "@/features/list";
 import "@/shared/assets/custom.css";
 import AvatarsGroup from "@/shared/ui/AvatarsGroup";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
@@ -75,7 +75,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
 
       <div className="flex justify-end lg:justify-around align-middle">
         {isOwner && (
-          <WishlistEditDialog
+          <WishlistDialog
             action="edit"
             triggerVariant="table"
             wishlist={wishlist}

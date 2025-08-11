@@ -32,8 +32,9 @@ export function CollaboratorsDialog({
   wishlist,
   isPrivateChecked = false,
 }: {
-  wishlist?: WishlistDocumentType;
+  wishlist: WishlistDocumentType;
   isPrivateChecked?: boolean;
+  setPermissions?: React.Dispatch<React.SetStateAction<string[]>>;
 }) {
   const [role, setRole] = useState("editors");
   const [searchString, setSearchString] = useState("");
@@ -45,8 +46,6 @@ export function CollaboratorsDialog({
   } = useFindUser("", searchString, "userByName");
 
   function checkRole(id: string) {
-    if (!wishlist) return undefined;
-
     const { isOwner, isEditor, isReader } = checkPermissions(id, wishlist);
 
     if (isOwner) return "Владелец";
@@ -124,7 +123,7 @@ export function CollaboratorsDialog({
                       role={checkRole(user.userId)}
                     />
                   ))
-                : ""}
+                : null}
               {searchString &&
                 foundUsers &&
                 foundUsers.length > 0 &&
