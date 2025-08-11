@@ -1,6 +1,6 @@
 import { useUser } from "@/features/auth";
+import CreateButtonWithDropdown from "@/features/create";
 import { AppSidebar } from "@/features/sidebar";
-import AddButtonWithDropdown from "@/shared/ui/AddButtonWithDropdown";
 import { SidebarTrigger } from "@/shared/ui/kit/sidebar";
 import MainContainer from "@/shared/ui/MainContainer";
 import { Outlet } from "react-router-dom";
@@ -14,7 +14,7 @@ function App() {
 
       <MainContainer>
         {current && <SidebarTrigger className="mt-1 md:-ml-2 rounded-full" />}
-        {current && <AddButtonWithDropdown />}
+        {current && <CreateButtonWithDropdown />}
         <Outlet />
       </MainContainer>
     </>
