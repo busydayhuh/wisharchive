@@ -1,4 +1,4 @@
-import { Account, Avatars, Client, Databases, Storage } from "appwrite";
+import { Account, Client, Databases, Storage, Teams } from "appwrite";
 import { CONFIG } from "./config";
 
 function appwriteInit() {
@@ -11,9 +11,9 @@ function appwriteInit() {
   const account = new Account(client);
   const databases = new Databases(client);
   const storage = new Storage(client);
-  const avatars = new Avatars(client);
+  const teams = new Teams(client);
 
-  return { account, databases, storage, avatars };
+  return { account, databases, storage, teams };
 }
 
 export const appwriteService = appwriteInit();
