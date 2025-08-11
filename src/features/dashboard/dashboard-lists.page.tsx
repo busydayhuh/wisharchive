@@ -1,12 +1,11 @@
-import { useFetchWishlists } from "./model/useFetchWishlists";
+import { useWishlists } from "./model/useWishlists";
 import { useDashboardContext } from "./ui/layouts/DashboardLayout";
 import WishlistsPageLayout from "./ui/layouts/WishlistsPageLayout";
 
 function WishlistsPage() {
-  const { dashboardUserId, searchString, path } = useDashboardContext();
-  const { wishlists, isLoading, error } = useFetchWishlists(
-    dashboardUserId,
-    path,
+  const { dashboardUserId, searchString } = useDashboardContext();
+  const { wishlists, isLoading, error } = useWishlists(
+    dashboardUserId ?? "",
     searchString
   );
 
