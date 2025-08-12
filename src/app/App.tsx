@@ -1,4 +1,4 @@
-import { useUser } from "@/features/auth";
+import { useAuth } from "@/features/auth";
 import CreateButtonWithDropdown from "@/features/create";
 import { AppSidebar } from "@/features/sidebar";
 import { SidebarTrigger } from "@/shared/ui/kit/sidebar";
@@ -6,7 +6,7 @@ import MainContainer from "@/shared/ui/MainContainer";
 import { Outlet } from "react-router-dom";
 
 function App() {
-  const { current } = useUser();
+  const { current } = useAuth();
 
   return (
     <>

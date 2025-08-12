@@ -1,11 +1,11 @@
-import { useUser } from "@/features/auth";
+import { useAuth } from "@/features/auth";
 import db from "@/shared/model/databases";
 import type { TError } from "@/shared/model/errorMessages";
 import { Query, type Models } from "appwrite";
 import { useEffect, useState } from "react";
 
 function useListSubset() {
-  const { current } = useUser();
+  const { current } = useAuth();
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState<null | TError>(null);
   const [documentsList, setDocumentsList] =

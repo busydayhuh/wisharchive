@@ -33,7 +33,7 @@ type Status = {
   register_error_message?: string | null;
 };
 
-type User = Models.User<{ theme?: "light" | "dark"; avatar?: string }> | null;
+type User = Models.User<{ theme?: "light" | "dark" }> | null;
 type Session = Models.Session | null;
 
 type UserContextType = {
@@ -47,7 +47,7 @@ type UserContextType = {
 
 const UserContext = createContext<UserContextType>({} as UserContextType);
 
-export function useUser() {
+export function useAuth() {
   return useContext(UserContext);
 }
 

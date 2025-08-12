@@ -19,10 +19,10 @@ import {
 } from "@/shared/ui/kit/sidebar";
 import { GiFairyWand, GiOrbDirection, GiSun } from "react-icons/gi";
 import { Link } from "react-router";
-import { useUser } from "../auth";
+import { useAuth } from "../auth";
 
 export function UserSb() {
-  const { current, logout } = useUser();
+  const { current, logout } = useAuth();
   const { isMobile } = useSidebar();
 
   return (
@@ -34,13 +34,13 @@ export function UserSb() {
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <Avatar className="h-8 w-8 rounded-lg">
+              <Avatar className="rounded-lg w-8 h-8">
                 <AvatarImage src={current!.prefs.avatar} alt={current!.name} />
                 <AvatarFallback className="rounded-lg">ВП</AvatarFallback>
               </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{current!.name}</span>
-                <span className="truncate text-xs">{current!.email}</span>
+              <div className="flex-1 grid text-sm text-left leading-tight">
+                <span className="font-medium truncate">{current!.name}</span>
+                <span className="text-xs truncate">{current!.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -52,17 +52,17 @@ export function UserSb() {
             sideOffset={4}
           >
             <DropdownMenuLabel className="p-0 font-normal">
-              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
+              <div className="flex items-center gap-2 px-1 py-1.5 text-sm text-left">
+                <Avatar className="rounded-lg w-8 h-8">
                   <AvatarImage
                     src={current!.prefs.avatar}
                     alt={current!.name}
                   />
                   <AvatarFallback className="rounded-lg">ВП</AvatarFallback>
                 </Avatar>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{current!.name}</span>
-                  <span className="truncate text-xs">{current!.email}</span>
+                <div className="flex-1 grid text-sm text-left leading-tight">
+                  <span className="font-medium truncate">{current!.name}</span>
+                  <span className="text-xs truncate">{current!.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>

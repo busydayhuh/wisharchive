@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { useUser } from "@/features/auth";
+import { useAuth } from "@/features/auth";
 import { useFindUser } from "@/features/dashboard/model/useFindUser";
 import { cn } from "@/shared/lib/css";
 import { ROUTES } from "@/shared/model/routes";
@@ -46,7 +46,7 @@ const DASHBOARD_HEADERS = {
 };
 
 export function DashboardLayout() {
-  const { current } = useUser();
+  const { current } = useAuth();
   const path = useLocation().pathname;
 
   const dashboardHeader =

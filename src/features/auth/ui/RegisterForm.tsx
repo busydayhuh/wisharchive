@@ -13,7 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useUser } from "../model/userContext";
+import { useAuth } from "../model/authContext";
 import PassWithToggle from "./PassInputWithToggle";
 
 const formSchema = z
@@ -53,7 +53,7 @@ function RegisterForm() {
       confirmPassword: "",
     },
   });
-  const user = useUser();
+  const user = useAuth();
 
   return (
     <Form {...form}>

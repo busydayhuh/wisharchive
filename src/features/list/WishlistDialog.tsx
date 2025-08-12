@@ -25,7 +25,7 @@ import { useState, type ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { href, useNavigate } from "react-router";
 import { z } from "zod";
-import { useUser } from "../auth";
+import { useAuth } from "../auth";
 import { useFindUser } from "../dashboard";
 import { useWishlistMutations } from "./model/useWishlistMutations";
 import { CollaboratorsSection } from "./ui/CollaboratorsSection";
@@ -65,7 +65,7 @@ export function WishlistDialog({
     },
   });
 
-  const { current } = useUser();
+  const { current } = useAuth();
   const navigate = useNavigate();
 
   const { user: userDocument } = useFindUser(current?.$id ?? "");

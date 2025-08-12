@@ -1,10 +1,10 @@
-import { useUser } from "@/features/auth";
+import { useAuth } from "@/features/auth";
 import { useDashboardContext } from "@/features/dashboard";
 import { ROUTES } from "@/shared/model/routes";
 import { href, Navigate, Outlet } from "react-router-dom";
 
 export function ProtectedRoute() {
-  const { current } = useUser();
+  const { current } = useAuth();
   const context = useDashboardContext();
 
   if (!current) {
@@ -15,7 +15,7 @@ export function ProtectedRoute() {
 }
 
 export function UnauthOnlyRoute() {
-  const { current } = useUser();
+  const { current } = useAuth();
 
   if (current) {
     return <Navigate to={href(ROUTES.WISHES, { userId: current.$id })} />;

@@ -18,11 +18,11 @@ import Logo from "@/shared/ui/Logo";
 import { Archive, Blend, Bookmark, Orbit } from "lucide-react";
 import { memo } from "react";
 import { href, Link } from "react-router-dom";
-import { useUser } from "../auth";
+import { useAuth } from "../auth";
 import { UserSb } from "./UserSb";
 
 export const AppSidebar = memo(function AppSidebar() {
-  const { current } = useUser();
+  const { current } = useAuth();
   const { state: sbState } = useSidebar();
 
   const sidebarItems = [

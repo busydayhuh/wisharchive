@@ -1,1 +1,1 @@
-export { UserProvider, useUser } from "./model/userContext";
+export { useAuth, UserProvider } from "./model/authContext";
