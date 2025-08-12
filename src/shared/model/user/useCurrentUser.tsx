@@ -13,7 +13,7 @@ async function fetcher({ userId }: { userId: string }) {
   return response.documents[0] as UserDocumentType;
 }
 
-export function useUser() {
+export function useCurrentUser() {
   const { current } = useAuth();
   const {
     data: user,

@@ -1,10 +1,8 @@
 import { cn } from "@/shared/lib/css";
 import { wishlistFormSchema as formSchema } from "@/shared/model/formSchemas";
 import { ROUTES } from "@/shared/model/routes";
-import type {
-  UserDocumentType,
-  WishlistDocumentType,
-} from "@/shared/model/types";
+import type { WishlistDocumentType } from "@/shared/model/types";
+import { useCurrentUser } from "@/shared/model/user/useCurrentUser";
 import { Button } from "@/shared/ui/kit/button";
 import {
   Dialog,
@@ -25,8 +23,6 @@ import { useState, type ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { href, useNavigate } from "react-router";
 import { z } from "zod";
-import { useAuth } from "../auth";
-import { useFindUser } from "../dashboard";
 import { useWishlistMutations } from "./model/useWishlistMutations";
 import { CollaboratorsSection } from "./ui/CollaboratorsSection";
 import { WishlistFormFields } from "./ui/WishlistFormFields";
@@ -65,12 +61,11 @@ export function WishlistDialog({
     },
   });
 
-  const { current } = useAuth();
   const navigate = useNavigate();
+  const { user: currentUser } = useCurrentUser();
 
-  const { user: userDocument } = useFindUser(current?.$id ?? "");
   const { createWishlist, updateWishlist } = useWishlistMutations(
-    current?.$id ?? ""
+    currentUser?.userId ?? ""
   );
 
   const [isOpen, setIsOpen] = useState(false);
@@ -84,8 +79,8 @@ export function WishlistDialog({
     if (action === "create") {
       const response = await createWishlist({
         ...values,
-        ownerId: current?.$id ?? "",
-        owner: userDocument as UserDocumentType,
+        ownerId: currentUser?.userId ?? "",
+        owner: currentUser,
       });
 
       if (response && response.newWishlist) {
@@ -94,7 +89,7 @@ export function WishlistDialog({
     }
   }
 
-  if (!current) return null;
+  if (!currentUser) return null;
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>

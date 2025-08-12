@@ -2,6 +2,7 @@ import type {
   UserDocumentType,
   WishlistDocumentType,
 } from "@/shared/model/types";
+import { useUsers } from "@/shared/model/user/useUsers";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/kit/avatar";
 import { Button } from "@/shared/ui/kit/button";
 import {
@@ -26,7 +27,7 @@ import {
 import { PlusIcon } from "lucide-react";
 import { useState } from "react";
 import Searchbar from "../../shared/ui/Searchbar";
-import { checkPermissions, useFindUser } from "../dashboard";
+import { checkPermissions } from "../dashboard";
 
 export function CollaboratorsDialog({
   wishlist,
@@ -39,11 +40,7 @@ export function CollaboratorsDialog({
   const [role, setRole] = useState("editors");
   const [searchString, setSearchString] = useState("");
 
-  const {
-    user: foundUsers,
-    isLoading: searchLoading,
-    error: searchError,
-  } = useFindUser("", searchString, "userByName");
+  const { users, isLoading, error } = useUsers(searchString);
 
   function checkRole(id: string) {
     const { isOwner, isEditor, isReader } = checkPermissions(id, wishlist);
@@ -125,9 +122,9 @@ export function CollaboratorsDialog({
                   ))
                 : null}
               {searchString &&
-                foundUsers &&
-                foundUsers.length > 0 &&
-                foundUsers.map((user: UserDocumentType) => {
+                users &&
+                users.length > 0 &&
+                users.map((user: UserDocumentType) => {
                   if (wishlist && wishlist.ownerId === user.userId) {
                     return null;
                   }
@@ -141,11 +138,11 @@ export function CollaboratorsDialog({
                     />
                   );
                 })}
-              {searchString && searchLoading && <div>Загрузка...</div>}
-              {searchString && searchError && (
+              {searchString && isLoading && <div>Загрузка...</div>}
+              {searchString && error && (
                 <div>Не удалось загрузить пользователей ☹️</div>
               )}
-              {searchString && foundUsers && foundUsers.length === 0 && (
+              {searchString && users && users.length === 0 && (
                 <div>Пользователь не найден 😶</div>
               )}
             </div>

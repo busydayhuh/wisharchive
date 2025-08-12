@@ -12,7 +12,7 @@ export function useWishlistMutations(userId: string) {
     description?: string;
     isPrivate: boolean;
     ownerId: string;
-    owner: UserDocumentType;
+    owner?: UserDocumentType;
   }) {
     try {
       const newTeam = await team.create(payload.title);
