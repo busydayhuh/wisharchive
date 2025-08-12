@@ -1,27 +1,29 @@
-import { ROUTES } from "@/shared/model/routes";
-import type { WishlistDocumentType } from "@/shared/model/types";
-import { Badge } from "@/shared/ui/kit/badge";
-
+import { checkPermissions } from "@/features/dashboard/model/checkPermissions";
 import { WishlistDialog } from "@/features/list";
 import "@/shared/assets/custom.css";
+import { ROUTES } from "@/shared/model/routes";
+import type { WishlistDocumentType } from "@/shared/model/types";
 import AvatarsGroup from "@/shared/ui/AvatarsGroup";
+import { Badge } from "@/shared/ui/kit/badge";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 import { Lock } from "lucide-react";
 import { memo } from "react";
-import { href, Link } from "react-router";
-import { checkPermissions } from "../../model/checkPermissions";
-import { BookmarkButton } from "../ActionButtons";
-import ImageTiles from "../ImageTiles";
-import { useDashboardContext } from "../layouts/DashboardLayout";
+import { href, Link, useLocation } from "react-router";
+import { BookmarkButton } from "../actions/BookmarkButton";
+
+import { useAuth } from "@/features/auth";
+import ImageTiles from "./ImageTiles";
 
 const WishlistTableItem = memo(function WishlistTableItem({
   wishlist,
 }: {
   wishlist: WishlistDocumentType;
 }) {
-  const { path, authUser } = useDashboardContext();
+  const { pathname } = useLocation();
+  const { current: authUser } = useAuth();
+
   const { isOwner, isFavorite } = checkPermissions(authUser!.$id, wishlist);
 
   return (
@@ -53,7 +55,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
         </div>
       </Link>
       <div className="justify-self-center md:justify-self-start">
-        {(path === "/bookmarks" || path === "/shared") && (
+        {(pathname === "/bookmarks" || pathname === "/shared") && (
           <OwnerAvatar
             userId={wishlist.ownerId}
             userName={wishlist.owner.userName}
@@ -83,7 +85,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
         )}
         <BookmarkButton
           variant="table"
-          isFavorite={isFavorite || path === "/bookmarks"}
+          isFavorite={isFavorite || pathname === "/bookmarks"}
         />
       </div>
     </div>

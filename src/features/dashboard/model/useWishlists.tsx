@@ -15,8 +15,13 @@ export function useWishlists(
   searchString?: string,
   teams?: string[]
 ) {
-  const path = useLocation().pathname;
-  const queries = getWishlistQueries(path, userId, searchString ?? "", teams);
+  const { pathname } = useLocation();
+  const queries = getWishlistQueries(
+    pathname,
+    userId,
+    searchString ?? "",
+    teams
+  );
 
   const {
     data: wishlists,
@@ -42,19 +47,19 @@ export function useWishlists(
 }
 
 function getWishlistQueries(
-  path: string,
+  pathname: string,
   userId: string,
   searchString: string,
   teams?: string[]
 ) {
-  if (path.includes("/lists")) {
+  if (pathname.includes("/lists")) {
     return [
       Query.equal("ownerId", userId),
       Query.contains("title", searchString),
     ];
   }
 
-  if (path.includes("/bookmarks")) {
+  if (pathname.includes("/bookmarks")) {
     return [
       Query.contains("bookmarkedBy", userId),
       Query.contains("title", searchString),
@@ -64,7 +69,7 @@ function getWishlistQueries(
   // team каждого вишлиста имеет такой же id, как и вишлист
   // поэтому ищем вишлисты по массиву id teams
 
-  if (path.includes("/shared")) {
+  if (pathname.includes("/shared")) {
     return [
       Query.equal("$id", teams ?? ""),
       Query.contains("title", searchString),

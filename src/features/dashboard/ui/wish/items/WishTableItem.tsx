@@ -8,18 +8,18 @@ import { Button } from "@/shared/ui/kit/button";
 import { Gift, LockIcon, ShoppingBag } from "lucide-react";
 import { memo } from "react";
 import { href, Link } from "react-router";
-import OwnerAvatar from "../../../../shared/ui/OwnerAvatar";
-import { checkPermissions } from "../../model/checkPermissions";
-import { GiftButton } from "../ActionButtons";
-import ActionMenu from "../ActionMenu";
-import { useDashboardContext } from "../layouts/DashboardLayout";
+import OwnerAvatar from "../../../../../shared/ui/OwnerAvatar";
+import { checkPermissions } from "../../../model/checkPermissions";
+import { useDashboardContext } from "../../common/DashboardLayout";
+import ActionsDropdown from "../actions/ActionsDropdown";
+import { GiftButton } from "../actions/GiftButton";
 
 const WishTableItem = memo(function WishTableItem({
   wish,
 }: {
   wish: WishDocumentType;
 }) {
-  const { path, authUser } = useDashboardContext();
+  const { pathname, authUser } = useDashboardContext();
   const { isOwner, isBooker, isEditor } = checkPermissions(authUser!.$id, wish);
 
   return (
@@ -78,7 +78,7 @@ const WishTableItem = memo(function WishTableItem({
         )}
       </Link>
       <div className="hidden md:block ml-10 lg:ml-0">
-        {path !== "/booked" ? (
+        {pathname !== "/booked" ? (
           wish.wishlist ? (
             <Button
               variant="outline"
@@ -129,10 +129,20 @@ const WishTableItem = memo(function WishTableItem({
         )}
       </div>
       <div className="ms-auto">
-        {isOwner && <ActionMenu triggerVariant="table" />}
+        {isOwner && (
+          <ActionsDropdown
+            triggerVariant="table"
+            isArchived={wish.isArchived}
+          />
+        )}
         {!isOwner && isEditor && (
           <div className="flex md:flex-row flex-col gap-1 md:gap-4">
-            <ActionMenu triggerVariant="table" side="bottom" align="end" />
+            <ActionsDropdown
+              triggerVariant="table"
+              side="bottom"
+              align="end"
+              isArchived={wish.isArchived}
+            />
             <GiftButton
               variant="table"
               isBooked={wish.isBooked}

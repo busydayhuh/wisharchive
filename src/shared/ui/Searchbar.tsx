@@ -18,9 +18,6 @@ function Searchbar({
     setSearchString("");
   }
 
-  function setNewQuery(query: string) {
-    setSearchString(query);
-  }
   return (
     <div className={cn("group/searchbar flex items-center gap-2", className)}>
       <Input
@@ -33,7 +30,7 @@ function Searchbar({
         placeholder="найти"
         type="text"
         onChange={(e) => {
-          setNewQuery(e.target.value);
+          setSearchString(e.target.value ?? "");
         }}
         value={searchString}
       />

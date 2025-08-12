@@ -5,4 +5,4 @@ export { useWishlists } from "./model/useWishlists";
 export {
   DashboardLayout,
   useDashboardContext,
-} from "./ui/layouts/DashboardLayout";
+} from "./ui/common/DashboardLayout";

@@ -1,5 +1,4 @@
 import { cn } from "@/shared/lib/css";
-import { ROUTES } from "@/shared/model/routes";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,19 +7,19 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/kit/dropdown-menu";
 import { ArchiveRestore, Check, Edit2, Ellipsis, Trash2 } from "lucide-react";
-import { useDashboardContext } from "./layouts/DashboardLayout";
 
-function ActionMenu({
+function ActionsDropdown({
   align = "end",
   side = "top",
   triggerVariant = "gallery",
+  isArchived = false,
   className,
 }: React.ComponentProps<"div"> & {
   align?: "center" | "end" | "start";
   side?: "top" | "right" | "bottom" | "left";
   triggerVariant?: "gallery" | "table";
+  isArchived?: boolean;
 }) {
-  const { path } = useDashboardContext();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
@@ -41,7 +40,7 @@ function ActionMenu({
         side={side}
       >
         <DropdownMenuGroup>
-          {path === ROUTES.ARCHIVED ? (
+          {isArchived ? (
             <DropdownMenuItem>
               <ArchiveRestore /> Вернуть из архива
             </DropdownMenuItem>
@@ -62,4 +61,4 @@ function ActionMenu({
   );
 }
 
-export default ActionMenu;
+export default ActionsDropdown;

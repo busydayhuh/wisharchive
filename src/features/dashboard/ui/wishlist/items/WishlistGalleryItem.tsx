@@ -1,3 +1,5 @@
+import { useAuth } from "@/features/auth";
+import { checkPermissions } from "@/features/dashboard/model/checkPermissions";
 import { WishlistDialog } from "@/features/list";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
@@ -6,18 +8,18 @@ import { Badge } from "@/shared/ui/kit/badge";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { Lock } from "lucide-react";
 import { memo } from "react";
-import { href, Link } from "react-router-dom";
-import { checkPermissions } from "../../model/checkPermissions";
-import { BookmarkButton } from "../ActionButtons";
-import ImageTiles from "../ImageTiles";
-import { useDashboardContext } from "../layouts/DashboardLayout";
+import { href, Link, useLocation } from "react-router-dom";
+import { BookmarkButton } from "../actions/BookmarkButton";
+import ImageTiles from "./ImageTiles";
 
 const WishlistGalleryItem = memo(function WishlistGalleryItem({
   wishlist,
 }: {
   wishlist: WishlistDocumentType;
 }) {
-  const { path, authUser } = useDashboardContext();
+  const { pathname } = useLocation();
+  const { current: authUser } = useAuth();
+
   const { isOwner, isFavorite, isEditor } = checkPermissions(
     authUser!.$id,
     wishlist
@@ -26,14 +28,13 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
   return (
     <div className="group/cover flex flex-col gap-1 mb-4">
       <div className="relative">
-        <BookmarkButton isFavorite={isFavorite || path === "/bookmarks"} />
+        <BookmarkButton isFavorite={isFavorite || pathname === "/bookmarks"} />
 
         {(isOwner || isEditor) && (
           <WishlistDialog
             action="edit"
             triggerVariant="gallery"
             wishlist={wishlist}
-            isOwner={isOwner}
           />
         )}
 
@@ -67,7 +68,7 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
       </Link>
 
       <div className="flex justify-between items-center px-2">
-        {(path === "/bookmarks" || path === "/shared") && (
+        {(pathname === "/bookmarks" || pathname === "/shared") && (
           <OwnerAvatar
             userId={wishlist.ownerId}
             userName={wishlist.owner.userName}

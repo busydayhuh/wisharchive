@@ -18,12 +18,14 @@ export const router = createBrowserRouter([
         children: [
           {
             path: ROUTES.WISHES,
-            lazy: () => import("@/features/dashboard/dashboard-wishes.page"),
+            lazy: () =>
+              import("@/features/dashboard/pages/dashboard-wishes.page.tsx"),
             HydrateFallback: () => null,
           },
           {
             path: ROUTES.WISHLISTS,
-            lazy: () => import("@/features/dashboard/dashboard-lists.page"),
+            lazy: () =>
+              import("@/features/dashboard/pages/dashboard-lists.page.tsx"),
             HydrateFallback: () => null,
           },
           {
@@ -32,25 +34,33 @@ export const router = createBrowserRouter([
               {
                 path: ROUTES.SHARED,
                 lazy: () =>
-                  import("@/features/dashboard/dashboard-shared.page"),
+                  import(
+                    "@/features/dashboard/pages/dashboard-shared.page.tsx"
+                  ),
                 HydrateFallback: () => null,
               },
               {
                 path: ROUTES.BOOKED,
                 lazy: () =>
-                  import("@/features/dashboard/dashboard-booked.page"),
+                  import(
+                    "@/features/dashboard/pages/dashboard-booked.page.tsx"
+                  ),
                 HydrateFallback: () => null,
               },
               {
                 path: ROUTES.BOOKMARKS,
                 lazy: () =>
-                  import("@/features/dashboard/dashboard-bookmarks.page.tsx"),
+                  import(
+                    "@/features/dashboard/pages/dashboard-bookmarks.page.tsx"
+                  ),
                 HydrateFallback: () => null,
               },
               {
                 path: ROUTES.ARCHIVED,
                 lazy: () =>
-                  import("@/features/dashboard/dashboard-archived.page"),
+                  import(
+                    "@/features/dashboard/pages/dashboard-archived.page.tsx"
+                  ),
                 HydrateFallback: () => null,
               },
             ],

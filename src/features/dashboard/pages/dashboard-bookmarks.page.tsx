@@ -1,6 +1,6 @@
-import { useWishlists } from "./model/useWishlists";
-import { useDashboardContext } from "./ui/layouts/DashboardLayout";
-import WishlistsPageLayout from "./ui/layouts/WishlistsPageLayout";
+import { useWishlists } from "../model/useWishlists";
+import { useDashboardContext } from "../ui/common/DashboardLayout";
+import WishlistsPageLayout from "../ui/wishlist/WishlistsPageLayout";
 
 function BookmarksPage() {
   const { dashboardUserId, searchString } = useDashboardContext();

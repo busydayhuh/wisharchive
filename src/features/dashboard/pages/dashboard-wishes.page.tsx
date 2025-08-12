@@ -1,6 +1,6 @@
-import { useFetchWishesByUser } from "./model/useFetchWishes";
-import { useDashboardContext } from "./ui/layouts/DashboardLayout";
-import WishesPageLayout from "./ui/layouts/WishesPageLayout";
+import { useFetchWishesByUser } from "../model/useFetchWishes";
+import { useDashboardContext } from "../ui/common/DashboardLayout";
+import WishesPageLayout from "../ui/wish/WishesPageLayout";
 
 function WishesPage() {
   const { dashboardUserId, searchString } = useDashboardContext();

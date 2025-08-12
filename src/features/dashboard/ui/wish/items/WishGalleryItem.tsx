@@ -1,3 +1,4 @@
+import { useAuth } from "@/features/auth";
 import { cn } from "@/shared/lib/css";
 import { Currency } from "@/shared/lib/currency";
 import { ROUTES } from "@/shared/model/routes";
@@ -5,19 +6,20 @@ import type { WishDocumentType } from "@/shared/model/types";
 import { Button } from "@/shared/ui/kit/button";
 import { Gift, LockIcon } from "lucide-react";
 import { memo } from "react";
-import { href, Link } from "react-router";
-import OwnerAvatar from "../../../../shared/ui/OwnerAvatar";
-import { checkPermissions } from "../../model/checkPermissions";
-import { GiftButton } from "../ActionButtons";
-import ActionMenu from "../ActionMenu";
-import { useDashboardContext } from "../layouts/DashboardLayout";
+import { href, Link, useLocation } from "react-router";
+import OwnerAvatar from "../../../../../shared/ui/OwnerAvatar";
+import { checkPermissions } from "../../../model/checkPermissions";
+import ActionsDropdown from "../actions/ActionsDropdown";
+import { GiftButton } from "../actions/GiftButton";
 
 const WishGalleryItem = memo(function WishGalleryItem({
   wish,
 }: {
   wish: WishDocumentType;
 }) {
-  const { path, authUser } = useDashboardContext();
+  const { current: authUser } = useAuth();
+  const { pathname } = useLocation();
+
   const { isOwner, isBooker, isEditor } = checkPermissions(authUser!.$id, wish);
 
   return (
@@ -39,7 +41,12 @@ const WishGalleryItem = memo(function WishGalleryItem({
       )}
 
       <div className="group/cover relative overflow-hidden">
-        {isOwner && <ActionMenu triggerVariant="gallery" />}
+        {isOwner && (
+          <ActionsDropdown
+            triggerVariant="gallery"
+            isArchived={wish.isArchived}
+          />
+        )}
 
         {!isOwner && isEditor && (
           <div className="flex gap-1">
@@ -48,11 +55,12 @@ const WishGalleryItem = memo(function WishGalleryItem({
               isBooked={wish.isBooked}
               isBookedByCurrentUser={isBooker}
             />
-            <ActionMenu
+            <ActionsDropdown
               triggerVariant="gallery"
               className="left-2"
               side="top"
               align="start"
+              isArchived={wish.isArchived}
             />
           </div>
         )}
@@ -95,7 +103,7 @@ const WishGalleryItem = memo(function WishGalleryItem({
       </Link>
 
       <div className="flex justify-start items-baseline px-1">
-        {path === "/booked" ? (
+        {pathname === "/booked" ? (
           <OwnerAvatar
             userId={wish.ownerId}
             userName={wish.owner.userName}

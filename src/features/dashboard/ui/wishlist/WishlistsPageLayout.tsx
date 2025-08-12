@@ -1,7 +1,7 @@
 import type { WishlistDocumentType } from "@/shared/model/types";
-import WishlistGalleryItem from "../gallery-view/WishlistGalleryItem";
-import WishlistTableItem from "../table-view/WishlistTableItem";
-import { useDashboardContext } from "./DashboardLayout";
+import { useDashboardContext } from "../common/DashboardLayout";
+import WishlistGalleryItem from "./items/WishlistGalleryItem";
+import WishlistTableItem from "./items/WishlistTableItem";
 
 function WishlistsPageLayout({
   wishlists,
