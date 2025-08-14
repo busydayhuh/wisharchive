@@ -1,3 +1,15 @@
+/* кроссбраузерная оптимизация шрифтов */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* сетка для вишлистов */
+.grid-auto-fill {
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+}
+
 /* masonry */
 .my-masonry-grid {
   display: flex;
@@ -34,11 +46,4 @@
 
 .dot-on-hover:hover::before {
   display: block;
-}
-
-/* кроссбраузерная оптимизация шрифтов */
-html {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
 }

@@ -23,7 +23,7 @@ function WishlistsPageLayout({
   if (wishlists && wishlists.length > 0) {
     if (viewMode === "gallery")
       return (
-        <div className="gap-x-4 gap-y-3 grid grid-flow-col auto-cols-[minmax(150px,240px)]">
+        <div className="gap-x-4 gap-y-3 grid grid-auto-fill">
           {wishlists.map((wishlist) => (
             <WishlistGalleryItem wishlist={wishlist} key={wishlist.$id} />
           ))}
