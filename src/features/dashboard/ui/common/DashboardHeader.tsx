@@ -1,12 +1,13 @@
+import { memo } from "react";
 import DashboardOwner from "./DashboardOwner";
 
 type DashboardHeaderProps = {
   title: string | null;
   showDashboardOwner: boolean;
-  dashboardUserId: string;
+  dashboardUserId?: string;
 };
 
-function DashboardHeader({
+const DashboardHeader = memo(function DashboardHeader({
   title,
   showDashboardOwner,
   dashboardUserId,
@@ -21,6 +22,6 @@ function DashboardHeader({
       {showDashboardOwner && <DashboardOwner userId={dashboardUserId} />}
     </div>
   );
-}
+});
 
 export default DashboardHeader;

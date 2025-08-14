@@ -8,10 +8,10 @@ import { copyUrl } from "../../model/copyUrl";
 const DashboardOwner = memo(function DashboardOwner({
   userId,
 }: {
-  userId: string;
+  userId?: string;
 }) {
   const { user, isLoading, error } = useUser(userId);
-  //TODO сделать скелетон для загрузки
+
   if (isLoading) return <div>Загрузка...</div>;
 
   if (error)

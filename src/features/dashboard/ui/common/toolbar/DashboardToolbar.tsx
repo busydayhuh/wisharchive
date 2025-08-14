@@ -1,29 +1,29 @@
 import { cn } from "@/shared/lib/css";
 import Searchbar from "@/shared/ui/Searchbar";
-import { Navigation } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";
+import Navigation from "./Navigation";
 import ViewModeSwitch from "./ViewModeSwitch";
 
 type DashboardToolbarProps = {
   isMobile: boolean;
-  dashboardHeader: string | null;
   searchString: string;
   setSearchString: Dispatch<SetStateAction<string>>;
   viewMode: string;
   setViewMode: Dispatch<SetStateAction<string>>;
+  showNavigation: boolean;
 };
 
 function DashboardToolbar({
   isMobile,
-  dashboardHeader,
   searchString,
   setSearchString,
   viewMode,
   setViewMode,
+  showNavigation,
 }: DashboardToolbarProps) {
   if (isMobile) {
     return (
-      <div className="top-0 z-10 sticky flex flex-col gap-6 bg-background -mb-4 py-2">
+      <div className="top-0 z-20 sticky flex flex-col gap-6 bg-background -mb-6 py-2">
         <Searchbar
           searchString={searchString}
           setSearchString={setSearchString}
@@ -38,7 +38,7 @@ function DashboardToolbar({
   }
 
   return (
-    <div className="top-0 z-10 sticky flex justify-between items-end gap-5 bg-background mr-6 -mb-9 py-2 w-full">
+    <div className="top-0 z-20 sticky flex justify-between items-end gap-5 bg-background mr-6 -mb-6 lg:-mb-9 py-2 w-full">
       <Navigation />
 
       <Searchbar
@@ -46,8 +46,8 @@ function DashboardToolbar({
         setSearchString={setSearchString}
         className={cn(
           "mr-2",
-          "md:justify-end w-full md:w-lg",
-          !dashboardHeader ? "ms-auto" : "md:justify-start"
+          "w-lg",
+          showNavigation ? "justify-end ms-auto" : "justify-start"
         )}
       />
 

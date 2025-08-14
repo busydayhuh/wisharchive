@@ -1,7 +1,8 @@
 import { useAuth } from "@/features/auth";
 import { ROUTES } from "@/shared/model/routes";
 import { useSidebar } from "@/shared/ui/kit/sidebar";
-import { useLocation, useParams } from "react-router";
+import { useMemo } from "react";
+import { matchRoutes, useLocation, useParams } from "react-router";
 
 const DASHBOARD_HEADERS = {
   [ROUTES.BOOKED]: "Хочу подарить",
@@ -19,8 +20,14 @@ export function useDashboardMeta() {
   const { pathname } = useLocation();
 
   // Кому принадлежит дашборд
-  const dashboardUserId = paramUserId ?? authUser?.$id ?? "";
-  const isDashboardOwner = authUser?.$id === dashboardUserId;
+  const dashboardUserId = useMemo(() => {
+    if (!paramUserId && !authUser?.$id) return undefined;
+    return paramUserId ?? authUser?.$id;
+  }, [paramUserId, authUser]);
+
+  const isDashboardOwner = dashboardUserId
+    ? authUser?.$id === dashboardUserId
+    : false;
 
   // Какой заголовок отображать
   const dashboardHeader =
@@ -35,11 +42,16 @@ export function useDashboardMeta() {
   // Отображать ли инфо о владельце дашборда
   const showDashboardOwner = !isMobile || !isDashboardOwner;
 
+  // Отображать ли навигацию
+  const routes = [{ path: ROUTES.WISHES }, { path: ROUTES.WISHLISTS }];
+  const showNavigation = Boolean(matchRoutes(routes, pathname));
+
   return {
     dashboardUserId,
     isDashboardOwner,
     title,
     showDashboardOwner,
     isMobile,
+    showNavigation,
   };
 }

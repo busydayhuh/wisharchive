@@ -17,8 +17,13 @@ export function DashboardLayout() {
   const [viewMode, setViewMode] = useState("gallery");
   const [searchString, setSearchString] = useState("");
 
-  const { dashboardUserId, title, showDashboardOwner, isMobile } =
-    useDashboardMeta();
+  const {
+    dashboardUserId,
+    title,
+    showDashboardOwner,
+    isMobile,
+    showNavigation,
+  } = useDashboardMeta();
 
   return (
     <div className="flex flex-col gap-6 md:gap-10 mt-2 md:mt-4 px-2 md:px-0">
@@ -30,11 +35,11 @@ export function DashboardLayout() {
 
       <DashboardToolbar
         isMobile={isMobile}
-        dashboardHeader={title}
         searchString={searchString}
         setSearchString={setSearchString}
         viewMode={viewMode}
         setViewMode={setViewMode}
+        showNavigation={showNavigation}
       />
 
       <StarFrame>
