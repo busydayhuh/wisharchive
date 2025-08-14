@@ -11,8 +11,12 @@ async function fetcher({ userId }: { userId: string }) {
   return response.documents[0] as UserDocumentType;
 }
 
-export function useUser(userId: string) {
-  const { data: user, isLoading, error } = useSWR(userId, fetcher);
+export function useUser(userId?: string) {
+  const {
+    data: user,
+    isLoading,
+    error,
+  } = useSWR(userId && userId !== "" ? { userId: userId } : null, fetcher);
 
   return { user, isLoading, error };
 }

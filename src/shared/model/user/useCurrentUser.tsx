@@ -19,7 +19,7 @@ export function useCurrentUser() {
     data: user,
     isLoading,
     error,
-  } = useSWR(current ? current.$id : null, fetcher);
+  } = useSWR(current ? { userId: current.$id } : null, fetcher);
 
   return { user, isLoading, error };
 }
