@@ -32,12 +32,10 @@ export function useFetchWishesByUser(
         Query.equal("ownerId", userId),
         Query.contains("title", searchString),
         Query.equal("isArchived", isArchived),
+        Query.orderDesc("$sequence"),
       ],
     },
-    fetcher,
-    {
-      onSuccess: (data) => data.reverse(),
-    }
+    fetcher
   );
 
   return { wishes, isLoading, error };

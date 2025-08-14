@@ -37,7 +37,6 @@ export function useWishlists(
     fetcher,
     {
       onSuccess: (data) => {
-        data.reverse();
         data.forEach((wl) => (wl.wishes ? wl.wishes.reverse() : null));
       },
     }
@@ -56,6 +55,7 @@ function getWishlistQueries(
     return [
       Query.equal("ownerId", userId),
       Query.contains("title", searchString),
+      Query.orderDesc("$sequence"),
     ];
   }
 
@@ -63,6 +63,7 @@ function getWishlistQueries(
     return [
       Query.contains("bookmarkedBy", userId),
       Query.contains("title", searchString),
+      Query.orderDesc("$sequence"),
     ];
   }
 
@@ -73,6 +74,7 @@ function getWishlistQueries(
     return [
       Query.equal("$id", teams ?? ""),
       Query.contains("title", searchString),
+      Query.orderDesc("$sequence"),
     ];
   }
 }
