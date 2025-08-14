@@ -1,3 +1,5 @@
+import { useAuth } from "@/features/auth";
+import { useWishRoles } from "@/features/wish";
 import "@/shared/assets/custom.css";
 import { cn } from "@/shared/lib/css";
 import { Currency } from "@/shared/lib/currency";
@@ -7,10 +9,8 @@ import type { WishDocumentType } from "@/shared/model/types";
 import { Button } from "@/shared/ui/kit/button";
 import { Gift, LockIcon, ShoppingBag } from "lucide-react";
 import { memo } from "react";
-import { href, Link } from "react-router";
+import { href, Link, useLocation } from "react-router";
 import OwnerAvatar from "../../../../../shared/ui/OwnerAvatar";
-import { checkPermissions } from "../../../model/checkPermissions";
-import { useDashboardContext } from "../../common/DashboardLayout";
 import ActionsDropdown from "../actions/ActionsDropdown";
 import { GiftButton } from "../actions/GiftButton";
 
@@ -19,8 +19,13 @@ const WishTableItem = memo(function WishTableItem({
 }: {
   wish: WishDocumentType;
 }) {
-  const { pathname, authUser } = useDashboardContext();
-  const { isOwner, isBooker, isEditor } = checkPermissions(authUser!.$id, wish);
+  const { current: authUser } = useAuth();
+  const { pathname } = useLocation();
+
+  const { isOwner, isBooker, isEditor } = useWishRoles(
+    authUser?.$id ?? "",
+    wish
+  );
 
   return (
     <div className="relative flex justify-items-center items-center lg:grid lg:grid-cols-[fit-content(8rem)_2fr_1fr_1fr_1fr_1fr] py-1 md:py-2 pl-0 md:pl-1 w-full transition dot-on-hover">

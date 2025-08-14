@@ -1,4 +1,3 @@
-export { checkPermissions } from "./model/checkPermissions";
 export { useFetchWishesByUser } from "./model/useFetchWishes";
 export { useWishlists } from "./model/useWishlists";
 export {

@@ -1,4 +1,5 @@
 import { useAuth } from "@/features/auth";
+import { useWishRoles } from "@/features/wish";
 import { cn } from "@/shared/lib/css";
 import { Currency } from "@/shared/lib/currency";
 import { ROUTES } from "@/shared/model/routes";
@@ -8,7 +9,6 @@ import { Gift, LockIcon } from "lucide-react";
 import { memo } from "react";
 import { href, Link, useLocation } from "react-router";
 import OwnerAvatar from "../../../../../shared/ui/OwnerAvatar";
-import { checkPermissions } from "../../../model/checkPermissions";
 import ActionsDropdown from "../actions/ActionsDropdown";
 import { GiftButton } from "../actions/GiftButton";
 
@@ -20,7 +20,10 @@ const WishGalleryItem = memo(function WishGalleryItem({
   const { current: authUser } = useAuth();
   const { pathname } = useLocation();
 
-  const { isOwner, isBooker, isEditor } = checkPermissions(authUser!.$id, wish);
+  const { isOwner, isBooker, isEditor } = useWishRoles(
+    authUser?.$id ?? "",
+    wish
+  );
 
   return (
     <div className="relative flex flex-col gap-1 md:gap-2 mb-4 overflow-hidden">

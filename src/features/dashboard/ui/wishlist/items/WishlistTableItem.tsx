@@ -1,5 +1,4 @@
-import { checkPermissions } from "@/features/dashboard/model/checkPermissions";
-import { WishlistDialog } from "@/features/list";
+import { useWishlistRoles, WishlistDialog } from "@/features/list";
 import "@/shared/assets/custom.css";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
@@ -24,7 +23,10 @@ const WishlistTableItem = memo(function WishlistTableItem({
   const { pathname } = useLocation();
   const { current: authUser } = useAuth();
 
-  const { isOwner, isFavorite } = checkPermissions(authUser!.$id, wishlist);
+  const { isOwner, isEditor, isFavorite } = useWishlistRoles(
+    authUser?.$id ?? "",
+    wishlist
+  );
 
   return (
     <div className="relative items-center gap-3 md:gap-4 lg:gap-6 grid grid-cols-[5rem_10rem_1fr_1fr] md:grid-cols-[5rem_2fr_1fr_1fr] lg:grid-cols-[fit-content(128px)_2fr_1fr_1fr_1fr_1fr_1fr] pt-2 pb-4 md:pb-2 lg:pb-0 pl-2 md:pl-3 transition dot-on-hover">
@@ -76,7 +78,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
       </div>
 
       <div className="flex justify-end lg:justify-around align-middle">
-        {isOwner && (
+        {(isOwner || isEditor) && (
           <WishlistDialog
             action="edit"
             triggerVariant="table"

@@ -1,6 +1,5 @@
 import { useAuth } from "@/features/auth";
-import { checkPermissions } from "@/features/dashboard/model/checkPermissions";
-import { WishlistDialog } from "@/features/list";
+import { useWishlistRoles, WishlistDialog } from "@/features/list";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import AvatarsGroup from "@/shared/ui/AvatarsGroup";
@@ -20,8 +19,8 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
   const { pathname } = useLocation();
   const { current: authUser } = useAuth();
 
-  const { isOwner, isFavorite, isEditor } = checkPermissions(
-    authUser!.$id,
+  const { isOwner, isFavorite, isEditor } = useWishlistRoles(
+    authUser?.$id ?? "",
     wishlist
   );
 
