@@ -27,7 +27,7 @@ import {
 import { PlusIcon } from "lucide-react";
 import { useState } from "react";
 import Searchbar from "../../shared/ui/Searchbar";
-import { checkPermissions } from "../dashboard";
+import { useWishlistRoles } from "./model/useWishlistRoles";
 
 export function CollaboratorsDialog({
   wishlist,
@@ -35,20 +35,11 @@ export function CollaboratorsDialog({
 }: {
   wishlist: WishlistDocumentType;
   isPrivateChecked?: boolean;
-  setPermissions?: React.Dispatch<React.SetStateAction<string[]>>;
 }) {
   const [role, setRole] = useState("editors");
   const [searchString, setSearchString] = useState("");
 
   const { users, isLoading, error } = useUsers(searchString);
-
-  function checkRole(id: string) {
-    const { isOwner, isEditor, isReader } = checkPermissions(id, wishlist);
-
-    if (isOwner) return "Владелец";
-    if (isReader && !isEditor) return "Читатель";
-    if (isEditor) return "Редактор";
-  }
 
   return (
     <Dialog>
@@ -110,14 +101,14 @@ export function CollaboratorsDialog({
           </div>
           <ScrollArea className="max-h-[16rem]">
             <div className="space-y-2 px-2">
-              {wishlist && !searchString
+              {!searchString
                 ? wishlist.collaborators.map((user: UserDocumentType) => (
                     <Collaborator
                       key={user.userId}
                       avatarURL={user.avatarURL}
                       userId={user.userId}
                       userName={user.userName}
-                      role={checkRole(user.userId)}
+                      wishlist={wishlist}
                     />
                   ))
                 : null}
@@ -134,7 +125,7 @@ export function CollaboratorsDialog({
                       avatarURL={user.avatarURL}
                       userId={user.userId}
                       userName={user.userName}
-                      role={checkRole(user.userId)}
+                      wishlist={wishlist}
                     />
                   );
                 })}
@@ -164,10 +155,13 @@ function Collaborator({
   avatarURL,
   userId,
   userName,
-  role,
+  wishlist,
 }: Pick<UserDocumentType, "userId" | "userName" | "avatarURL"> & {
-  role?: string;
+  wishlist: WishlistDocumentType;
 }) {
+  const { isOwner, isReader, isEditor } = useWishlistRoles(userId, wishlist);
+  const hasRole = isOwner || isReader || isEditor;
+
   return (
     <div className="flex items-center gap-2 not-last:border-b-1">
       <Avatar className="rounded-full size-8">
@@ -182,12 +176,12 @@ function Collaborator({
         </span>
       </div>
 
-      {role ? (
+      {hasRole ? (
         <Button
           size="sm"
           className="bg-destructive hover:bg-destructive/80 ms-auto rounded-2xl text-secondary"
         >
-          {role}
+          {isOwner ? "Владелец" : isEditor ? "Редактор" : "Читатель"}
         </Button>
       ) : (
         <Button size="sm" className="ms-auto rounded-2xl">
