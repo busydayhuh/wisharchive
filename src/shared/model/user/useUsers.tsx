@@ -18,7 +18,7 @@ async function fetcher({ searchString }: { searchString: string }) {
 }
 
 export function useUsers(searchString: string) {
-  const { data: users, isLoading, error } = useSWR(searchString, fetcher);
+  const { data: users, isLoading, error } = useSWR({ searchString }, fetcher);
 
   return { users, isLoading, error };
 }
