@@ -1,20 +1,30 @@
 import { useTeamMembers } from "@/shared/model/membership/useTeamMembers";
-import type { WishlistDocumentType } from "@/shared/model/types";
+import { useWishlist } from "./useWishlist";
 
-export function useWishlistRoles(
-  userId: string,
-  wishlist: WishlistDocumentType | null
-) {
-  const { members } = useTeamMembers(wishlist?.$id ?? "");
+export type WishlistRolesType = {
+  isOwner: boolean;
+  isReader: boolean;
+  isEditor: boolean;
+  isFavorite: boolean;
+  hasWishlist: boolean;
+  inPrivateWishlist: boolean;
+};
+
+export function useWishlistRoles(userId: string, wishlistId?: string | null) {
+  const { members } = useTeamMembers(wishlistId ?? "");
   const membership =
     members?.find((member) => member.userId === userId) ?? null;
+
+  const { wishlist } = useWishlist(wishlistId);
 
   return {
     isOwner: wishlist?.ownerId === userId,
     isReader: membership?.roles.includes("readers") ?? false,
     isEditor: membership?.roles.includes("editors") ?? false,
-    isFavorite: wishlist?.bookmarkedBy.includes(userId) ?? false,
+    isFavorite: wishlist?.bookmarkedBy?.includes(userId) ?? false,
 
-    hasWishlist: Boolean(wishlist), // поле для проверки в useWishRoles
+    // поля для проверки в useWishRoles
+    hasWishlist: Boolean(wishlistId),
+    inPrivateWishlist: wishlist?.isPrivate ?? false,
   };
 }
