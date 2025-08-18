@@ -2,7 +2,7 @@ import { useWishlistRoles } from "@/features/list";
 import type { WishDocumentType } from "@/shared/model/types";
 
 export function useWishRoles(userId: string, wish: WishDocumentType) {
-  const wishlistRoles = useWishlistRoles(userId, wish.wishlist ?? null);
+  const wishlistRoles = useWishlistRoles(userId, wish.wishlist?.$id ?? null);
 
   if (wishlistRoles.hasWishlist) {
     return {
