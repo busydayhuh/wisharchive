@@ -1,13 +1,15 @@
-import { WishlistDialog } from "@/features/list";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/shared/ui/kit/dropdown-menu";
-import { Plus, Stars } from "lucide-react";
+import { ListPlus, Plus, Stars } from "lucide-react";
+import { useWishlistDialog } from "../list";
 
-function CreateButtonWithDropdown() {
+const CreateButtonWithDropdown = function CreateButtonWithDropdown() {
+  const { openDialog } = useWishlistDialog();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -25,10 +27,12 @@ function CreateButtonWithDropdown() {
         <DropdownMenuItem>
           <Stars className="stroke-[1.3px]" /> Новое желание
         </DropdownMenuItem>
-        <WishlistDialog action="create" triggerVariant="dropdown" />
+        <DropdownMenuItem onSelect={() => openDialog("create")}>
+          <ListPlus className="stroke-[1.3px]" /> Новый список
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+};
 
 export default CreateButtonWithDropdown;
