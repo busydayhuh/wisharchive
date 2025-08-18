@@ -2,18 +2,21 @@ import { cn } from "@/shared/lib/css";
 import { Button } from "@/shared/ui/kit/button";
 import { Input } from "@/shared/ui/kit/input";
 import { Search, X } from "lucide-react";
-import { type Dispatch, type SetStateAction } from "react";
+import { type ComponentProps } from "react";
+import type { Setter } from "../model/types";
+
+type SearchbarProps = {
+  searchString: string;
+  setSearchString: Setter<string>;
+  grow?: boolean;
+} & ComponentProps<"input">;
 
 function Searchbar({
   searchString,
   setSearchString,
   className,
-  shouldGrow = true,
-}: {
-  searchString: string;
-  setSearchString: Dispatch<SetStateAction<string>>;
-  shouldGrow?: boolean;
-} & React.ComponentProps<"div">) {
+  grow = true,
+}: SearchbarProps) {
   function clearSearchbar() {
     setSearchString("");
   }
@@ -23,9 +26,9 @@ function Searchbar({
       <Input
         className={cn(
           "shadow-none pb-1.5 border-0 rounded-2xl outline-ring/60 h-8 text-sm",
-          shouldGrow &&
+          grow &&
             "w-full md:w-full focus-visible:w-full transition-[width] duration-300 ease-linear",
-          !searchString && shouldGrow && "md:w-48"
+          !searchString && grow && "md:w-48"
         )}
         placeholder="найти"
         type="text"
