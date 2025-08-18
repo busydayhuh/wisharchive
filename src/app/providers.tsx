@@ -1,11 +1,14 @@
 import { UserProvider } from "@/features/auth";
+import { WishlistDialogProvider } from "@/features/list";
 import { SidebarProvider } from "@/shared/ui/kit/sidebar";
 import { type ReactNode } from "react";
 
 function Providers(props: { children: ReactNode }) {
   return (
     <UserProvider>
-      <SidebarProvider defaultOpen={true}>{props.children}</SidebarProvider>
+      <WishlistDialogProvider>
+        <SidebarProvider defaultOpen={true}>{props.children}</SidebarProvider>
+      </WishlistDialogProvider>
     </UserProvider>
   );
 }
