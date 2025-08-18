@@ -1,5 +1,10 @@
 import { useAuth } from "@/features/auth";
-import { useWishlistRoles, WishlistDialog } from "@/features/list";
+import {
+  EditWishlistButton,
+  useWishlistDialog,
+  useWishlistRoles,
+} from "@/features/list";
+
 import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import AvatarsGroup from "@/shared/ui/AvatarsGroup";
@@ -19,69 +24,83 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
   const { pathname } = useLocation();
   const { current: authUser } = useAuth();
 
+  const { openDialog } = useWishlistDialog();
+
   const { isOwner, isFavorite, isEditor } = useWishlistRoles(
     authUser?.$id ?? "",
-    wishlist
+    wishlist.$id
   );
 
-  return (
-    <div className="group/cover flex flex-col gap-1 mb-4">
-      <div className="relative">
-        <BookmarkButton isFavorite={isFavorite || pathname === "/bookmarks"} />
+  function onEditClick() {
+    openDialog("edit", wishlist.$id);
+  }
 
-        {(isOwner || isEditor) && (
-          <WishlistDialog
-            action="edit"
-            triggerVariant="gallery"
-            wishlist={wishlist}
+  return (
+    <>
+      <div className="group/cover flex flex-col gap-1 mb-4">
+        <div className="relative">
+          {/* Добавить в закладки */}
+          <BookmarkButton
+            isFavorite={isFavorite || pathname === "/bookmarks"}
           />
-        )}
+
+          {/* Редактировать */}
+          {(isOwner || isEditor) && (
+            <EditWishlistButton onClick={onEditClick} variant="gallery" />
+          )}
+
+          {/* Стопка картинок */}
+          <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
+            <ImageTiles wishes={wishlist.wishes} />
+          </Link>
+        </div>
 
         <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
-          <ImageTiles wishes={wishlist.wishes} />
-        </Link>
-      </div>
+          <div className="flex justify-between items-center px-2">
+            {/* Название */}
+            <span className="pr-1 font-medium text-base md:text-lg truncate">
+              {wishlist.title}
+            </span>
 
-      <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
+            {/* Бейдж приватности */}
+            {wishlist.isPrivate && (
+              <Badge
+                className="ms-1 me-auto px-1 py-1 rounded-full text-foreground"
+                variant="outline"
+              >
+                <Lock className="size-3" />
+              </Badge>
+            )}
+
+            {/* Соавторы */}
+            {wishlist.collaborators && (
+              <AvatarsGroup
+                users={wishlist.collaborators}
+                size={5}
+                maxCount={3}
+                className="mt-1"
+              />
+            )}
+          </div>
+        </Link>
+
         <div className="flex justify-between items-center px-2">
-          <span className="pr-1 font-medium text-base md:text-lg truncate">
-            {wishlist.title}
-          </span>
-          {wishlist.isPrivate && (
-            <Badge
-              className="ms-1 me-auto px-1 py-1 rounded-full text-foreground"
-              variant="outline"
-            >
-              <Lock className="size-3" />
-            </Badge>
-          )}
-          {wishlist.collaborators && (
-            <AvatarsGroup
-              users={wishlist.collaborators}
-              size={5}
-              maxCount={3}
-              className="mt-1"
+          {/* Владелец списка (если список чужой) */}
+          {(pathname === "/bookmarks" || pathname === "/shared") && (
+            <OwnerAvatar
+              userId={wishlist.ownerId}
+              userName={wishlist.owner.userName}
+              avatarURL={wishlist.owner.avatarURL}
             />
           )}
-        </div>
-      </Link>
 
-      <div className="flex justify-between items-center px-2">
-        {(pathname === "/bookmarks" || pathname === "/shared") && (
-          <OwnerAvatar
-            userId={wishlist.ownerId}
-            userName={wishlist.owner.userName}
-            avatarURL={wishlist.owner.avatarURL}
-          />
-        )}
-
-        {wishlist.wishes && (
+          {/* Счетчик желаний */}
           <span className="text-muted-foreground text-xs md:text-sm">
-            {wishlist.wishes.length} жел.
+            {wishlist.wishes?.length ?? 0} жел.
           </span>
-        )}
+        </div>
       </div>
-    </div>
+    </>
   );
 });
 

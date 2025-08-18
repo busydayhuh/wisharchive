@@ -22,7 +22,7 @@ export type WishlistDocumentType = Models.Document & {
   description?: string;
   ownerId: string;
   wishes: WishDocumentType[] | null;
-  isPrivate?: boolean;
+  isPrivate: boolean;
   canReadId?: string[] | [];
   canEditId?: string[] | [];
   coverImagesURL?: string[] | [];
@@ -36,3 +36,5 @@ export type UserDocumentType = Models.Document & {
   avatarURL?: string;
   bookedWishes: WishDocumentType[] | null;
 };
+
+export type Setter<T> = React.Dispatch<React.SetStateAction<T>>;
