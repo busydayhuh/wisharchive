@@ -1,4 +1,4 @@
-import { useTeamMembers } from "@/shared/model/membership/useTeamMembers";
+import { useMembership } from "@/shared/model/membership/useMembership";
 import { useWishlist } from "./useWishlist";
 
 export type WishlistRolesType = {
@@ -11,10 +11,7 @@ export type WishlistRolesType = {
 };
 
 export function useWishlistRoles(userId: string, wishlistId?: string | null) {
-  const { members } = useTeamMembers(wishlistId ?? "");
-  const membership =
-    members?.find((member) => member.userId === userId) ?? null;
-
+  const { membership } = useMembership(wishlistId ?? null, userId);
   const { wishlist } = useWishlist(wishlistId);
 
   return {
