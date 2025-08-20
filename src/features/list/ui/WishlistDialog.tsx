@@ -14,25 +14,23 @@ import {
 } from "@/shared/ui/kit/dialog";
 import { Form } from "@/shared/ui/kit/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, Pencil, PlusCircleIcon } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { href, useNavigate } from "react-router";
 import { z } from "zod";
 import { useWishlist } from "../model/useWishlist";
 import { useWishlistMutations } from "../model/useWishlistMutations";
-import { CollaboratorsSection } from "./CollaboratorsSection";
+import CollaboratorsSection from "./CollaboratorsSection";
 import { WishlistFormFields } from "./WishlistFormFields";
 
 const headerVariants = {
   edit: {
     title: "Редактировать список",
     description: "Редактируйте существующий список",
-    icon: <Pencil className="stroke-[1.3px]" />,
   },
   create: {
     title: "Создать список",
     description: "Создайте новый список",
-    icon: <PlusCircleIcon className="stroke-1 size-10" />,
   },
 };
 
@@ -49,7 +47,7 @@ export function WishlistDialog({
   isOpen,
   setIsOpen,
 }: WishlistDialogPropsType) {
-  const { wishlist, isLoading } = useWishlist(wishlistId ?? null);
+  const { wishlist, isLoading, error } = useWishlist(wishlistId ?? null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -86,7 +84,7 @@ export function WishlistDialog({
     }
   }
 
-  if (!currentUser) return null;
+  if (error) return null;
   if (isLoading) return <div>Загрузка...</div>; // TODO скелетон диалога
 
   return (
@@ -107,14 +105,12 @@ export function WishlistDialog({
               {wishlist && (
                 <CollaboratorsSection
                   wishlistId={wishlist.$id}
-                  owner={wishlist.owner}
-                  collaborators={wishlist.collaborators}
                   isPrivate={wishlist.isPrivate}
                   form={form}
                 />
               )}
 
-              <DialogFooter>
+              <DialogFooter className="mt-4">
                 <DialogClose asChild>
                   <Button
                     variant="secondary"
