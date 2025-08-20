@@ -19,7 +19,7 @@ function ImageTiles({
 
   if (variant === "gallery")
     return (
-      <div className="gap-0.5 grid grid-cols-[1.5fr_1fr] grid-rows-2 *:first:row-span-2 brightness-100 group-hover/cover:brightness-50 rounded-2xl h-36 overflow-hidden transition">
+      <div className="gap-0.5 grid grid-cols-[1.5fr_1fr] grid-rows-2 *:first:row-span-2 brightness-100 group-hover/cover:brightness-50 rounded-2xl aspect-[4/3] overflow-hidden transition">
         {coverImages.map((imageURL: string | null) => {
           if (imageURL) {
             return (
