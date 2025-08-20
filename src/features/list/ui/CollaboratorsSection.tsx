@@ -3,8 +3,8 @@ import {
   CollaboratorsAvatarsSkeleton,
   CollaboratorsDialog,
 } from "@/features/collaborators";
+import { useCollaborators } from "@/features/collaborators/";
 import { wishlistFormSchema as formSchema } from "@/shared/model/formSchemas";
-import { useCollaborators } from "@/shared/model/membership/useCollaborators";
 import { FormLabel } from "@/shared/ui/kit/form";
 import type { UseFormReturn } from "react-hook-form";
 import { z } from "zod";

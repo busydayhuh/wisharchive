@@ -6,7 +6,7 @@ import {
 } from "@/features/list";
 
 import { CollaboratorsAvatars } from "@/features/collaborators";
-import { useCollaborators } from "@/shared/model/membership/useCollaborators";
+import { useCollaborators } from "@/features/collaborators/";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { Badge } from "@/shared/ui/kit/badge";

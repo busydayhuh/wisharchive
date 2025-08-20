@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { useUsers } from "../user/useUsers";
-import { useTeamMembers } from "./useTeamMembers";
+import { useTeamMembers } from "../../../shared/model/membership/useTeamMembers";
+import { useUsers } from "../../../shared/model/user/useUsers";
 
 export type CollaboratorType = {
   userId: string;

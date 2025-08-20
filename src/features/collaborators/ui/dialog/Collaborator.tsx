@@ -1,5 +1,5 @@
+import type { CollaboratorType } from "@/features/collaborators/model/useCollaborators";
 import { cn } from "@/shared/lib/css";
-import type { CollaboratorType } from "@/shared/model/membership/useCollaborators";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/kit/avatar";
 import { Button } from "@/shared/ui/kit/button";
 import { useCollaboratorsContext } from "../../model/CollaboratorsContext";

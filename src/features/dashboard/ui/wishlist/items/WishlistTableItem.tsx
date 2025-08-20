@@ -17,7 +17,7 @@ import { BookmarkButton } from "../actions/BookmarkButton";
 
 import { useAuth } from "@/features/auth";
 import { CollaboratorsAvatars } from "@/features/collaborators";
-import { useCollaborators } from "@/shared/model/membership/useCollaborators";
+import { useCollaborators } from "@/features/collaborators/";
 import ImageTiles from "./ImageTiles";
 
 const WishlistTableItem = memo(function WishlistTableItem({

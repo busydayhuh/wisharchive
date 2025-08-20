@@ -1,4 +1,4 @@
-import { useCollaborators } from "@/shared/model/membership/useCollaborators";
+import { useCollaborators } from "@/features/collaborators/model/useCollaborators";
 import useMembershipMutations from "@/shared/model/membership/useMembershipMutations";
 import type { Setter } from "@/shared/model/types";
 import { Button } from "@/shared/ui/kit/button";

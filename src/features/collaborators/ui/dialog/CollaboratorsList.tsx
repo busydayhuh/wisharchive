@@ -1,4 +1,4 @@
-import type { CollaboratorType } from "@/shared/model/membership/useCollaborators";
+import type { CollaboratorType } from "@/features/collaborators/model/useCollaborators";
 import type { UserDocumentType } from "@/shared/model/types";
 import { useUsers } from "@/shared/model/user/useUsers";
 import { ScrollArea } from "@/shared/ui/kit/scroll-area";

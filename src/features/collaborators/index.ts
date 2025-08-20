@@ -1,3 +1,4 @@
+export { useCollaborators } from "./model/useCollaborators";
 export {
   CollaboratorsAvatars,
   CollaboratorsAvatarsSkeleton,
