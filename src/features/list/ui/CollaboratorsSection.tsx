@@ -1,44 +1,50 @@
+import {
+  CollaboratorsAvatars,
+  CollaboratorsAvatarsSkeleton,
+  CollaboratorsDialog,
+} from "@/features/collaborators";
 import { wishlistFormSchema as formSchema } from "@/shared/model/formSchemas";
-import type { UserDocumentType } from "@/shared/model/types";
-import AvatarsGroup from "@/shared/ui/AvatarsGroup";
+import { useCollaborators } from "@/shared/model/membership/useCollaborators";
 import { FormLabel } from "@/shared/ui/kit/form";
-import { useMemo } from "react";
 import type { UseFormReturn } from "react-hook-form";
 import { z } from "zod";
-import CollaboratorsDialog from "./CollaboratorsDialog";
 
 type CollaboratorsSectionProps = {
   wishlistId: string;
-  owner: UserDocumentType;
-  collaborators: UserDocumentType[] | null;
   isPrivate: boolean;
   form?: UseFormReturn<z.infer<typeof formSchema>>;
 };
 
-export function CollaboratorsSection({
+export default function CollaboratorsSection({
   wishlistId,
-  owner,
-  collaborators,
   isPrivate,
   form,
 }: CollaboratorsSectionProps) {
-  const users = useMemo(
-    () => [owner, ...(collaborators ?? [])],
-    [owner, collaborators]
-  );
+  const { collaborators, isLoading, error } = useCollaborators(wishlistId);
 
   const isPrivateChecked = form?.watch("isPrivate") ?? isPrivate;
 
   return (
     <div className="space-y-3 mt-6">
       <FormLabel>Соавторы списка</FormLabel>
-      <div className="flex items-baseline gap-2">
-        <AvatarsGroup users={users} size={8} maxCount={4} />
-        <CollaboratorsDialog
-          isPrivateChecked={isPrivateChecked}
-          wishlistId={wishlistId}
-        />
-      </div>
+      {error && <>Не удалось загрузить соавторов</>}
+
+      {isLoading && <CollaboratorsAvatarsSkeleton maxVisible={5} size={8} />}
+
+      {collaborators && (
+        <div className="flex items-center gap-2">
+          <CollaboratorsAvatars
+            collaborators={collaborators}
+            maxVisible={5}
+            size={8}
+          />
+
+          <CollaboratorsDialog
+            isPrivateChecked={isPrivateChecked}
+            wishlistId={wishlistId}
+          />
+        </div>
+      )}
     </div>
   );
 }
