@@ -63,9 +63,23 @@ const team: TeamApiType = {
 
   // для memberships
   addEditor: (teamId, email, userId) =>
-    teams.createMembership(teamId, ["editors"], email, userId),
+    teams.createMembership(
+      teamId,
+      ["editors", "readers"],
+      email,
+      userId,
+      undefined,
+      "http://localhost:5173/"
+    ),
   addReader: (teamId, email, userId) =>
-    teams.createMembership(teamId, ["readers"], email, userId),
+    teams.createMembership(
+      teamId,
+      ["readers"],
+      email,
+      userId,
+      undefined,
+      "http://localhost:5173/"
+    ),
   getMember: (teamId, membershipId) =>
     teams.getMembership(teamId, membershipId),
   listMembers: (teamId, queries, search) =>
