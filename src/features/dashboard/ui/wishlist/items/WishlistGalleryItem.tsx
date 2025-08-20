@@ -5,9 +5,10 @@ import {
   useWishlistRoles,
 } from "@/features/list";
 
+import { CollaboratorsAvatars } from "@/features/collaborators";
+import { useCollaborators } from "@/shared/model/membership/useCollaborators";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
-import AvatarsGroup from "@/shared/ui/AvatarsGroup";
 import { Badge } from "@/shared/ui/kit/badge";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { Lock } from "lucide-react";
@@ -23,6 +24,7 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
 }) {
   const { pathname } = useLocation();
   const { current: authUser } = useAuth();
+  const { collaborators } = useCollaborators(wishlist.$id);
 
   const { openDialog } = useWishlistDialog();
 
@@ -73,12 +75,13 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
             )}
 
             {/* Соавторы */}
-            {wishlist.collaborators && (
-              <AvatarsGroup
-                users={wishlist.collaborators}
+            {collaborators && (
+              <CollaboratorsAvatars
+                collaborators={collaborators}
                 size={5}
-                maxCount={3}
+                maxVisible={3}
                 className="mt-1"
+                hideOwner={true}
               />
             )}
           </div>

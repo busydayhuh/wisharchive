@@ -17,8 +17,12 @@ async function fetcher({ searchString }: { searchString: string }) {
   return response.documents as UserDocumentType[];
 }
 
-export function useUsers(searchString: string) {
-  const { data: users, isLoading, error } = useSWR({ searchString }, fetcher);
+export function useUsers(searchString: string | string[] | null) {
+  const {
+    data: users,
+    isLoading,
+    error,
+  } = useSWR(searchString ? { searchString } : null, fetcher);
 
   return { users, isLoading, error };
 }

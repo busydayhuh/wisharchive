@@ -6,7 +6,6 @@ import {
 import "@/shared/assets/custom.css";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
-import AvatarsGroup from "@/shared/ui/AvatarsGroup";
 import { Badge } from "@/shared/ui/kit/badge";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { format } from "date-fns";
@@ -17,6 +16,8 @@ import { href, Link, useLocation } from "react-router";
 import { BookmarkButton } from "../actions/BookmarkButton";
 
 import { useAuth } from "@/features/auth";
+import { CollaboratorsAvatars } from "@/features/collaborators";
+import { useCollaborators } from "@/shared/model/membership/useCollaborators";
 import ImageTiles from "./ImageTiles";
 
 const WishlistTableItem = memo(function WishlistTableItem({
@@ -26,6 +27,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
 }) {
   const { pathname } = useLocation();
   const { current: authUser } = useAuth();
+  const { collaborators } = useCollaborators(wishlist.$id);
 
   const dialogContext = useWishlistDialog();
 
@@ -65,12 +67,13 @@ const WishlistTableItem = memo(function WishlistTableItem({
             } жел.`}</span>
 
             {/* Соавторы */}
-            {wishlist.collaborators && (
-              <AvatarsGroup
-                users={wishlist.collaborators}
+            {collaborators && (
+              <CollaboratorsAvatars
+                collaborators={collaborators}
                 size={5}
-                maxCount={3}
-                className="lg:hidden flex mt-1"
+                maxVisible={3}
+                className="mt-1"
+                hideOwner={true}
               />
             )}
           </div>
@@ -86,13 +89,15 @@ const WishlistTableItem = memo(function WishlistTableItem({
           )}
         </div>
         <div className="hidden lg:flex justify-self-center md:justify-self-start">
-          {wishlist.collaborators ? (
-            <AvatarsGroup
-              users={wishlist.collaborators}
-              size={6}
-              maxCount={4}
+          {collaborators && (
+            <CollaboratorsAvatars
+              collaborators={collaborators}
+              size={5}
+              maxVisible={3}
+              className="mt-1"
+              hideOwner={true}
             />
-          ) : null}
+          )}
         </div>
         <div className="hidden lg:block w-fit text-sm">
           создан: {format(wishlist.$createdAt, "PPp", { locale: ru })}
