@@ -36,18 +36,17 @@ export function CollaboratorsDialog({
   const [searchString, setSearchString] = useState("");
 
   const { collaborators, isLoading, error } = useCollaborators(wishlistId);
-  const { addMemberAsEditor } = useMembershipMutations(wishlistId);
+
+  const { addMemberAsEditor, addMemberAsReader, deleteMember } =
+    useMembershipMutations(wishlistId);
 
   const addMember = async (userId: string, userEmail: string) => {
-    if (selectedRole === "editors") {
-      const newMembership = await addMemberAsEditor(
-        wishlistId,
-        userEmail,
-        userId
-      );
+    const newMembership =
+      selectedRole === "editors"
+        ? await addMemberAsEditor(userEmail, userId)
+        : await addMemberAsReader(userEmail, userId);
 
-      return newMembership;
-    }
+    return newMembership;
   };
 
   if (isLoading) return <div>Загрузка...</div>; // TODO скелетон
@@ -71,7 +70,13 @@ export function CollaboratorsDialog({
 
         <DialogContent className="rounded-xl sm:max-w-md">
           <CollaboratorsContext.Provider
-            value={{ wishlistId, selectedRole, setSelectedRole, addMember }}
+            value={{
+              wishlistId,
+              selectedRole,
+              setSelectedRole,
+              addMember,
+              deleteMember,
+            }}
           >
             <DialogHeader className="mb-3">
               <DialogTitle>Изменить список соавторов</DialogTitle>

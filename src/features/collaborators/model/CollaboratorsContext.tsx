@@ -11,6 +11,7 @@ type CollaboratorsContextType = {
     userId: string,
     email: string
   ) => Promise<Models.Membership | undefined>;
+  deleteMember: (userId: string) => Promise<unknown>;
 };
 
 export const CollaboratorsContext =

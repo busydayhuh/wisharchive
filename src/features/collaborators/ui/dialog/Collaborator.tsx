@@ -12,7 +12,7 @@ export default function Collaborator({
   roles,
   confirm,
 }: CollaboratorType) {
-  const { addMember } = useCollaboratorsContext();
+  const { addMember, deleteMember } = useCollaboratorsContext();
 
   const isOwner = roles?.includes("owner");
   const isConfirmed = roles && confirm;
@@ -44,6 +44,10 @@ export default function Collaborator({
           className={cn(
             "bg-muted-foreground hover:bg-muted-foreground/60 ms-auto rounded-lg text-foreground"
           )}
+          onClick={(e) => {
+            e.preventDefault();
+            deleteMember(userId);
+          }}
         >
           Исключить
         </Button>
