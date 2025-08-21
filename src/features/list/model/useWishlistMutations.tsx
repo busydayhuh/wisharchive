@@ -33,10 +33,14 @@ export function useWishlistMutations(userId: string) {
   async function updateWishlist(
     wishlistId: string,
     isPrivate: boolean,
-    payload = {}
+    payload = {},
+    privacyChanged = false
   ) {
     try {
-      const updatedPermissions = configurePermissions(isPrivate, wishlistId);
+      const updatedPermissions = privacyChanged
+        ? configurePermissions(isPrivate, wishlistId)
+        : undefined;
+
       const updatedWishlist = await db.wishlists.update(
         wishlistId,
         payload,

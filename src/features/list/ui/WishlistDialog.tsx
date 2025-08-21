@@ -67,7 +67,14 @@ export function WishlistDialog({
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (action === "edit") {
-      await updateWishlist(wishlist!.$id, values.isPrivate, values);
+      const privacyChanged = form.getFieldState("isPrivate").isDirty;
+
+      await updateWishlist(
+        wishlist!.$id,
+        values.isPrivate,
+        values,
+        privacyChanged
+      );
       setIsOpen(isOpen);
     }
 
