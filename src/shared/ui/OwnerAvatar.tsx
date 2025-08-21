@@ -15,7 +15,7 @@ function OwnerAvatar({
           <AvatarImage src={avatarURL} alt={userId} />
           <AvatarFallback>ER</AvatarFallback>
         </Avatar>
-        <span className="hidden md:inline max-w-[20ch] text-xs md:text-sm truncate">
+        <span className="max-w-[18ch] text-xs md:text-sm truncate">
           {userName}
         </span>
       </div>

@@ -27,7 +27,7 @@ export function WishlistFormFields({ form }: FormFieldsProps) {
           <FormItem>
             <FormLabel>Название списка *</FormLabel>
             <FormControl>
-              <Input {...field} className="rounded-2xl" />
+              <Input {...field} className="rounded-xl" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -42,7 +42,7 @@ export function WishlistFormFields({ form }: FormFieldsProps) {
             <FormControl>
               <Textarea
                 {...field}
-                className="rounded-2xl resize-none"
+                className="rounded-xl resize-none"
                 placeholder="Добавьте пояснения к списку..."
               />
             </FormControl>

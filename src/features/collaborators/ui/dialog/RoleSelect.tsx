@@ -18,10 +18,10 @@ export default function RoleSelect({
     <div className="space-y-3">
       <FormLabel>Пригласить соавтора в роли</FormLabel>
       <Select value={selectedRole} onValueChange={setSelectedRole}>
-        <SelectTrigger className="bg-transparent rounded-2xl w-full">
+        <SelectTrigger className="bg-transparent rounded-xl w-full">
           <SelectValue />
         </SelectTrigger>
-        <SelectContent className="rounded-2xl outline-1 outline-ring overflow-clip">
+        <SelectContent className="rounded-xl outline-1 outline-ring overflow-clip">
           <SelectItem
             value="readers"
             className="rounded-[0.5rem]"

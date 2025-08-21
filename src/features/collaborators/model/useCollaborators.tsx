@@ -8,6 +8,7 @@ export type CollaboratorType = {
   userEmail: string;
   avatarURL?: string;
   roles?: string[];
+  confirm?: boolean;
 };
 
 export function useCollaborators(wishlistId: string) {
@@ -30,6 +31,7 @@ export function useCollaborators(wishlistId: string) {
     if (!members) return undefined;
 
     const roleMap = new Map(members.map((m) => [m.userId, m.roles]));
+    const confirmMap = new Map(members.map((m) => [m.userId, m.confirm]));
 
     return users.map((user) => ({
       userId: user.userId,
@@ -37,6 +39,7 @@ export function useCollaborators(wishlistId: string) {
       userEmail: user.userEmail,
       avatarURL: user.avatarURL,
       roles: roleMap.get(user.userId),
+      confirm: confirmMap.get(user.userId),
     }));
   }, [users, members]);
 

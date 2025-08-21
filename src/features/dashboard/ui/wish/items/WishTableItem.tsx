@@ -28,12 +28,17 @@ const WishTableItem = memo(function WishTableItem({
   );
 
   return (
-    <div className="relative flex justify-items-center items-center lg:grid lg:grid-cols-[fit-content(8rem)_2fr_1fr_1fr_1fr_1fr] py-1 md:py-2 pl-0 md:pl-1 w-full transition dot-on-hover">
+    <div
+      className={cn(
+        "relative flex justify-items-center items-center lg:grid lg:grid-cols-[fit-content(8rem)_2fr_1fr_1fr_1fr_1fr] md:px-1 py-1 md:py-2 w-full transition dot-on-hover",
+        wish.isBooked && "opacity-70"
+      )}
+    >
       <Link to={href(ROUTES.WISH, { wishId: wish.$id })}>
         <img
           src={wish.imageURL}
           alt={wish.title}
-          className="rounded-[0.5rem] md:rounded-2xl w-full min-w-20 md:min-w-28 max-w-32 object-cover aspect-[4/3]"
+          className="rounded-[0.5rem] md:rounded-xl w-full max-w-24 md:max-w-32 object-cover aspect-[4/3]"
         />
       </Link>
       <Link

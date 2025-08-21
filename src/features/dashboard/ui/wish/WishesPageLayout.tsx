@@ -22,23 +22,28 @@ function WishesPageLayout({
   if (wishes && wishes.length === 0) {
     return <div>Нет желаний 😶</div>;
   }
-  if (wishes && wishes.length > 0)
-    return (
-      <div className="flex flex-col gap-1 md:gap-2">
-        {viewMode === "gallery" && (
-          <Masonry
-            breakpointCols={{ default: 4, 1100: 3, 768: 2 }}
-            className="my-masonry-grid"
-            columnClassName="my-masonry-grid_column"
-          >
-            {wishes.map((wish) => (
-              <WishGalleryItem wish={wish} key={ID.unique()} />
-            ))}
-          </Masonry>
-        )}
-        {viewMode === "table" &&
-          wishes.map((wish) => <WishTableItem wish={wish} key={wish.$id} />)}
-      </div>
-    );
+  if (wishes && wishes.length > 0) {
+    if (viewMode === "gallery")
+      return (
+        <Masonry
+          breakpointCols={{ default: 4, 1100: 3, 768: 2 }}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column"
+        >
+          {wishes.map((wish) => (
+            <WishGalleryItem wish={wish} key={ID.unique()} />
+          ))}
+        </Masonry>
+      );
+
+    if (viewMode === "table")
+      return (
+        <div className="flex flex-col gap-1 md:gap-2 -mt-2">
+          {wishes.map((wish) => (
+            <WishTableItem wish={wish} key={wish.$id} />
+          ))}
+        </div>
+      );
+  }
 }
 export default WishesPageLayout;

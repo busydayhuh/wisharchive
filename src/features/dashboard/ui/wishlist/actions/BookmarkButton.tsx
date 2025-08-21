@@ -14,25 +14,23 @@ export function BookmarkButton({
 }) {
   return (
     <Toggle
+      size={variant === "gallery" ? "sm" : "default"}
       className={cn(
-        "after:invisible data-[state=on]:after:visible z-10 after:absolute data-[state=on]:bg-transparent data-[state=on]:[&_svg]:fill-destructive px-1 py-1 border-0 rounded-full after:content-['✨'] cursor-pointer",
+        "after:invisible data-[state=on]:after:visible after:absolute after:content-['✨']",
+        "px-1 py-1 border-0 rounded-full  transition cursor-pointer z-10 text-muted-foreground",
         !isFavorite && "data-[state=on]:after:animate-star",
         isFavorite && "data-[state=on]:after:invisible",
         variant === "gallery" &&
-          "top-1 right-1 z-10 absolute data-[state=off]:[&_svg]:fill-white data-[state=on]:[&_svg]:fill-destructive data-[state=off]:[&_svg]:stroke-1 data-[state=on]:[&_svg]:stroke-0 transition text-muted-foreground hover:bg-transparent",
+          "top-2 right-2 z-10 absolute bg-secondary data-[state=on]:bg-destructive data-[state=on]:text-destructive data-[state=on]:[&_svg]:fill-white",
+
         variant === "table" &&
-          "data-[state=off]:[&_svg]:text-foreground [&_svg]:stroke-[1px] data-[state=off]:hover:[&_svg]:fill-muted data-[state=on]:[&_svg]:text-destructive [state=on]:[&_svg]:fill-destructive hover:bg-muted",
+          "data-[state=on]:[&_svg]:fill-destructive data-[state=on]:bg-transparent data-[state=on]:text-destructive ",
         className
       )}
       defaultPressed={isFavorite}
       onPressedChange={onPressed}
     >
-      <Bookmark
-        className={cn(
-          "transition duration-200",
-          variant === "gallery" ? "size-6" : "size-5"
-        )}
-      />
+      <Bookmark className={cn("stroke-[1.5px] transition duration-200")} />
     </Toggle>
   );
 }

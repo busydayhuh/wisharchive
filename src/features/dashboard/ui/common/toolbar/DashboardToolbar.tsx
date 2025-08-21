@@ -23,7 +23,7 @@ function DashboardToolbar({
 }: DashboardToolbarProps) {
   if (isMobile) {
     return (
-      <div className="top-0 z-20 sticky flex flex-col gap-6 bg-background -mb-6 py-2">
+      <div className="top-0 z-20 sticky flex flex-col gap-6 bg-background -mb-4 py-2">
         <Searchbar
           searchString={searchString}
           setSearchString={setSearchString}
@@ -38,7 +38,7 @@ function DashboardToolbar({
   }
 
   return (
-    <div className="top-0 z-20 sticky flex justify-between items-end gap-5 bg-background mr-6 -mb-6 lg:-mb-9 py-2 w-full">
+    <div className="top-0 z-20 sticky flex justify-between items-end gap-5 bg-background mr-6 -mb-6 lg:-mb-7 py-2 w-full">
       <Navigation />
 
       <Searchbar

@@ -43,7 +43,7 @@ export function DashboardLayout() {
       />
 
       <StarFrame>
-        <div className="pt-4 md:pt-8 md:pr-8">
+        <div className="pt-4 md:pt-6 md:pr-8">
           <Outlet
             context={{
               viewMode,

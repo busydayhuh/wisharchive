@@ -90,7 +90,7 @@ export function WishlistDialog({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogPortal container={document.querySelector("main")!}>
-        <DialogContent className="rounded-2xl sm:max-w-[425px]">
+        <DialogContent className="rounded-xl sm:max-w-[425px]">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <DialogHeader className="gap-1 mb-6">
@@ -114,7 +114,7 @@ export function WishlistDialog({
                 <DialogClose asChild>
                   <Button
                     variant="secondary"
-                    className="bg-muted hover:bg-muted/60 shadow-none rounded-xl"
+                    className="bg-muted hover:bg-muted/60 shadow-none rounded-md"
                   >
                     Отмена
                   </Button>
@@ -122,7 +122,7 @@ export function WishlistDialog({
                 <Button
                   type="submit"
                   disabled={form.formState.isSubmitting}
-                  className="shadow-none rounded-xl"
+                  className="shadow-none rounded-md"
                 >
                   {form.formState.isSubmitting && (
                     <Loader2 className="animate-spin" />

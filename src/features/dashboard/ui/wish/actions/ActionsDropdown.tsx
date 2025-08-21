@@ -35,7 +35,7 @@ function ActionsDropdown({
         <Ellipsis className="size-4" />
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="**:[&_svg]:stroke-[1.5px] rounded-2xl **:first:hover:rounded-tl-2xl **:first:hover:rounded-tr-2xl **:last:hover:rounded-bl-2xl **:last:hover:rounded-br-2xl w-56 **:cursor-pointer"
+        className="bg-secondary **:[&_svg]:stroke-[1.5px] rounded-xl **:first:hover:rounded-tl-xl **:first:hover:rounded-tr-xl **:last:hover:rounded-bl-xl **:last:hover:rounded-br-xl w-56 **:cursor-pointer"
         align={align}
         side={side}
       >

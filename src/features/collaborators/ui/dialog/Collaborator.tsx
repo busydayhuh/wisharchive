@@ -10,10 +10,13 @@ export default function Collaborator({
   userName,
   userEmail,
   roles,
+  confirm,
 }: CollaboratorType) {
   const { addMember } = useCollaboratorsContext();
 
   const isOwner = roles?.includes("owner");
+  const isConfirmed = roles && confirm;
+  const isInvited = roles && !confirm;
 
   const roleName = (roles: string[]) => {
     if (isOwner) return "Владелец";
@@ -35,23 +38,38 @@ export default function Collaborator({
         </span>
       </div>
 
-      {roles ? (
+      {isConfirmed && !isOwner && (
         <Button
           size="sm"
           className={cn(
-            "bg-muted hover:bg-muted/60 ms-auto rounded-2xl text-muted-foreground",
-            isOwner && "hidden"
+            "bg-muted-foreground hover:bg-muted-foreground/60 ms-auto rounded-lg text-foreground"
           )}
-          disabled={isOwner}
         >
           Исключить
         </Button>
-      ) : (
+      )}
+
+      {isInvited && !isOwner && (
+        <Button
+          size="sm"
+          variant="destructive"
+          className={cn("ms-auto rounded-lg")}
+          disabled
+        >
+          Приглашён
+        </Button>
+      )}
+
+      {!roles && (
         <Button
           type="button"
+          variant="destructive"
           size="sm"
-          className="ms-auto rounded-2xl"
-          onClick={() => addMember(userId, userEmail)}
+          className="ms-auto rounded-lg"
+          onClick={(e) => {
+            e.preventDefault();
+            addMember(userId, userEmail);
+          }}
         >
           Пригласить
         </Button>

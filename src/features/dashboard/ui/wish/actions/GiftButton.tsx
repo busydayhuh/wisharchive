@@ -22,13 +22,15 @@ export function GiftButton({
   onPressed?: (pressed: boolean) => void;
 }) {
   const { isMobile } = useSidebar();
+
+  if (isBooked && !isBookedByCurrentUser) return null;
+
   return (
     <Tooltip>
       <TooltipTrigger asChild>
         <DataStatePropInterceptor>
           <Toggle
             size={isMobile ? "sm" : "default"}
-            disabled={isBooked && !isBookedByCurrentUser}
             defaultPressed={isBookedByCurrentUser}
             className={cn(
               "z-10 data-[state=on]:bg-destructive border-0 rounded-full data-[state=on]:text-secondary cursor-pointer",

@@ -15,7 +15,7 @@ const DashboardHeader = memo(function DashboardHeader({
   return (
     <div className="flex md:flex-row flex-col justify-between md:items-center gap-4 md:gap-6">
       {title && (
-        <span className="mb-2 md:mb-0 max-w-xs font-semibold text-3xl md:text-4xl leading-8">
+        <span className="max-w-xs font-semibold text-3xl md:text-4xl leading-8">
           {title}
         </span>
       )}

@@ -22,7 +22,7 @@ const CreateButtonWithDropdown = function CreateButtonWithDropdown() {
       </DropdownMenuTrigger>
       <DropdownMenuContent
         sideOffset={24}
-        className="bg-blue-200 *:focus:bg-transparent shadow-blue-200 shadow-lg px-2 py-2 border-0 rounded-2xl **:text-foreground **:cursor-pointer"
+        className="bg-blue-200 *:focus:bg-transparent shadow-blue-200 shadow-lg px-2 py-2 border-0 rounded-xl **:text-foreground **:cursor-pointer"
       >
         <DropdownMenuItem>
           <Stars className="stroke-[1.3px]" /> Новое желание

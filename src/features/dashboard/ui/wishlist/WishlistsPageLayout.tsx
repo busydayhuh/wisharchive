@@ -32,7 +32,7 @@ function WishlistsPageLayout({
 
     if (viewMode === "table")
       return (
-        <div className="flex flex-col gap-0 md:gap-4">
+        <div className="flex flex-col md:-mt-2">
           {wishlists.map((wishlist) => (
             <WishlistTableItem wishlist={wishlist} key={wishlist.$id} />
           ))}

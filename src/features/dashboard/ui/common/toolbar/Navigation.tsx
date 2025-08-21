@@ -8,7 +8,7 @@ const Navigation = memo(function Navigation() {
 
   const styles = ({ isActive }: { isActive: boolean }) =>
     cn(
-      "px-4 pt-0.5 pb-1.5 border-1 border-foreground rounded-2xl text-sm transition",
+      "px-4 pt-0.5 pb-1.5 border-1 border-foreground rounded-xl text-sm transition",
       isActive && "pointer-events-none bg-foreground text-background",
       !isActive && "hover:bg-ring/20"
     );

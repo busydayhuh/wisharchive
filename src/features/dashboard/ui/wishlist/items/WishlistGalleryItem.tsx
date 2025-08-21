@@ -58,21 +58,21 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
         </div>
 
         <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
-          <div className="flex justify-between items-center px-2">
+          <div className="flex justify-between items-center mt-1 px-2">
             {/* Название */}
-            <span className="pr-1 font-medium text-base md:text-lg truncate">
-              {wishlist.title}
-            </span>
-
-            {/* Бейдж приватности */}
-            {wishlist.isPrivate && (
-              <Badge
-                className="ms-1 me-auto px-1 py-1 rounded-full text-foreground"
-                variant="outline"
-              >
-                <Lock className="size-3" />
-              </Badge>
-            )}
+            <div className="flex items-center gap-1 pr-2 text-base md:text-lg">
+              {wishlist.isPrivate && (
+                <Badge
+                  className="mt-1 px-0 text-muted-foreground"
+                  variant="outline"
+                >
+                  <Lock />
+                </Badge>
+              )}
+              <span className="max-w-[20ch] truncate leading-tight">
+                {wishlist.title}
+              </span>
+            </div>
 
             {/* Соавторы */}
             {collaborators && (

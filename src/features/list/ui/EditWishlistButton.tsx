@@ -24,11 +24,11 @@ export function EditWishlistButton({
         variant === "gallery" &&
           "border-0 rounded-full transition duration-300 show-on-hover",
         variant === "table" &&
-          "bg-transparent shadow-none rounded-full hover:bg-muted",
+          "bg-transparent shadow-none rounded-full hover:bg-muted text-muted-foreground",
         className
       )}
     >
-      <Pencil className="stroke-[1.3px]" />
+      <Pencil className="stroke-[1.5px]" />
     </Button>
   );
 }

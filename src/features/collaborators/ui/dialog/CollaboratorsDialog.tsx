@@ -69,7 +69,7 @@ export function CollaboratorsDialog({
           </Button>
         </DialogTrigger>
 
-        <DialogContent className="rounded-2xl sm:max-w-md">
+        <DialogContent className="rounded-xl sm:max-w-md">
           <CollaboratorsContext.Provider
             value={{ wishlistId, selectedRole, setSelectedRole, addMember }}
           >
@@ -95,7 +95,7 @@ export function CollaboratorsDialog({
             </div>
             <DialogFooter className="sm:justify-start mt-6">
               <DialogClose asChild>
-                <Button type="button" className="rounded-xl">
+                <Button type="button" className="rounded-md">
                   Готово
                 </Button>
               </DialogClose>

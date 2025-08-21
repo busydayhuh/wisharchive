@@ -26,14 +26,19 @@ const WishGalleryItem = memo(function WishGalleryItem({
   );
 
   return (
-    <div className="relative flex flex-col gap-1 md:gap-2 mb-4 overflow-hidden">
+    <div
+      className={cn(
+        "relative flex flex-col gap-1 md:gap-2 mb-4 overflow-hidden",
+        wish.isBooked && "opacity-70"
+      )}
+    >
       {wish.isBooked && (
         <div
           className={cn(
-            "inline-flex top-2 left-2 z-10 absolute items-center gap-1 px-2 md:px-2.5 py-2 md:py-1 rounded-full md:rounded-3xl text-background",
+            "inline-flex top-2 left-2 z-10 absolute items-center gap-1 px-2 md:px-2.5 py-2 md:py-1 rounded-full md:rounded-lg text-background booked-badge",
             isBooker
               ? "bg-destructive text-background"
-              : "bg-muted text-muted-foreground"
+              : "bg-muted text-foreground"
           )}
         >
           <Gift className="size-3" />
@@ -83,7 +88,7 @@ const WishGalleryItem = memo(function WishGalleryItem({
           <img
             src={wish.imageURL}
             alt={wish.title}
-            className="rounded-2xl w-full max-h-[36rem] object-cover"
+            className="rounded-xl w-full max-h-[36rem] object-cover"
           />
         </Link>
       </div>
