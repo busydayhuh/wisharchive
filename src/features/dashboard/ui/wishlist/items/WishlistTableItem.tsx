@@ -17,6 +17,7 @@ import { BookmarkButton } from "../actions/BookmarkButton";
 import { useAuth } from "@/features/auth";
 import { CollaboratorsAvatars } from "@/features/collaborators";
 import { useCollaborators } from "@/features/collaborators/";
+import { useBookmarkWishlist } from "@/features/dashboard/model/useBookmarkWishlist";
 import ImageTiles from "./ImageTiles";
 
 interface WishlistTableItemProps {
@@ -30,7 +31,11 @@ const WishlistTableItem = memo(function WishlistTableItem({
   const { current: authUser } = useAuth();
   const { collaborators } = useCollaborators(wishlist.$id);
 
-  const dialogContext = useWishlistDialog();
+  const { openDialog } = useWishlistDialog();
+  const { toggleBookmark } = useBookmarkWishlist(
+    wishlist.$id,
+    wishlist.bookmarkedBy ?? []
+  );
 
   const { isOwner, isFavorite, isEditor } = useWishlistRoles(
     authUser?.$id ?? "",
@@ -48,7 +53,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
   );
 
   function onEditClick() {
-    dialogContext.openDialog("edit", wishlist.$id);
+    openDialog("edit", wishlist.$id);
   }
 
   return (
@@ -106,6 +111,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
         <BookmarkButton
           variant="table"
           isFavorite={isFavorite || pathname === "/bookmarks"}
+          onPressed={toggleBookmark}
         />
       </div>
     </div>

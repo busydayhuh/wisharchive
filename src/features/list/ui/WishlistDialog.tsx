@@ -71,8 +71,8 @@ export function WishlistDialog({
 
       await updateWishlist(
         wishlist!.$id,
-        values.isPrivate,
         values,
+        values.isPrivate,
         privacyChanged
       );
       setIsOpen(false);

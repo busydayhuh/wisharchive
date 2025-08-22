@@ -32,8 +32,8 @@ export function useWishlistMutations(userId: string) {
 
   async function updateWishlist(
     wishlistId: string,
-    isPrivate: boolean,
     payload = {},
+    isPrivate = false,
     privacyChanged = false
   ) {
     try {

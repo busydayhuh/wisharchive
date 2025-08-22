@@ -7,6 +7,7 @@ import {
 
 import { CollaboratorsAvatars } from "@/features/collaborators";
 import { useCollaborators } from "@/features/collaborators/";
+import { useBookmarkWishlist } from "@/features/dashboard/model/useBookmarkWishlist";
 import { cn } from "@/shared/lib/css";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
@@ -27,6 +28,10 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
   const { collaborators } = useCollaborators(wishlist.$id);
 
   const { openDialog } = useWishlistDialog();
+  const { toggleBookmark } = useBookmarkWishlist(
+    wishlist.$id,
+    wishlist.bookmarkedBy ?? []
+  );
 
   const { isOwner, isFavorite, isEditor } = useWishlistRoles(
     authUser?.$id ?? "",
@@ -44,6 +49,7 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
           {/* Добавить в закладки */}
           <BookmarkButton
             isFavorite={isFavorite || pathname === "/bookmarks"}
+            onPressed={toggleBookmark}
           />
 
           {/* Редактировать */}

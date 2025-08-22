@@ -1,3 +1,4 @@
+export { useWishlistMutations } from "./model/useWishlistMutations";
 export { useWishlistRoles } from "./model/useWishlistRoles";
 export {
   useWishlistDialog,
