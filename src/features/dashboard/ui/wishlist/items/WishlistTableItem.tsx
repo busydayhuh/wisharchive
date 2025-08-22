@@ -7,7 +7,6 @@ import "@/shared/assets/custom.css";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { Badge } from "@/shared/ui/kit/badge";
-import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 import { Lock } from "lucide-react";
@@ -48,8 +47,6 @@ const WishlistTableItem = memo(function WishlistTableItem({
     [wishlist.$updatedAt]
   );
 
-  const showWishlistOwner = pathname === "/bookmarks" || pathname === "/shared";
-
   function onEditClick() {
     dialogContext.openDialog("edit", wishlist.$id);
   }
@@ -78,28 +75,18 @@ const WishlistTableItem = memo(function WishlistTableItem({
         </div>
       </Link>
 
-      {/* Владелец / соавторы */}
-      {showWishlistOwner ? (
-        <div className="hidden sm:block justify-self-center md:justify-self-start">
-          <OwnerAvatar
-            userId={wishlist.ownerId}
-            userName={wishlist.owner.userName}
-            avatarURL={wishlist.owner.avatarURL}
+      {/* Соавторы */}
+      <div className="hidden sm:flex justify-self-center">
+        {collaborators && (
+          <CollaboratorsAvatars
+            collaborators={collaborators}
+            size={7}
+            maxVisible={5}
+            className="mt-1"
+            hideOwner
           />
-        </div>
-      ) : (
-        <div className="hidden sm:flex justify-self-center">
-          {collaborators && (
-            <CollaboratorsAvatars
-              collaborators={collaborators}
-              size={7}
-              maxVisible={5}
-              className="mt-1"
-              hideOwner
-            />
-          )}
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Даты */}
       <div className="hidden lg:flex flex-col items-center gap-0.5 text-muted-foreground text-xs xl:text-sm">

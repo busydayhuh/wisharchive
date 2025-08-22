@@ -11,7 +11,6 @@ import { cn } from "@/shared/lib/css";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { Badge } from "@/shared/ui/kit/badge";
-import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { Lock } from "lucide-react";
 import { memo } from "react";
 import { href, Link, useLocation } from "react-router-dom";
@@ -33,8 +32,6 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
     authUser?.$id ?? "",
     wishlist.$id
   );
-
-  const showWishlistOwner = pathname === "/bookmarks" || pathname === "/shared";
 
   function onEditClick() {
     openDialog("edit", wishlist.$id);
@@ -90,21 +87,7 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
           </div>
         </Link>
 
-        <div
-          className={cn(
-            "flex justify-between items-end px-2",
-            showWishlistOwner && "mt-1"
-          )}
-        >
-          {/* Владелец списка (если список чужой) */}
-          {showWishlistOwner && (
-            <OwnerAvatar
-              userId={wishlist.ownerId}
-              userName={wishlist.owner.userName}
-              avatarURL={wishlist.owner.avatarURL}
-            />
-          )}
-
+        <div className={cn("flex justify-between items-end px-2")}>
           {/* Счетчик желаний */}
           <span className="text-muted-foreground text-xs md:text-sm">
             {wishlist.wishes?.length ?? 0} жел.
