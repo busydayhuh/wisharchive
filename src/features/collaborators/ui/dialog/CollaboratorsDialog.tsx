@@ -4,7 +4,6 @@ import type { Setter } from "@/shared/model/types";
 import { Button } from "@/shared/ui/kit/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -32,6 +31,7 @@ export function CollaboratorsDialog({
   wishlistId,
   isPrivateChecked = false,
 }: CollaboratorsDialogProps) {
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedRole, setSelectedRole] = useState<SelectedRole>("editors");
   const [searchString, setSearchString] = useState("");
 
@@ -57,7 +57,7 @@ export function CollaboratorsDialog({
 
   if (collaborators)
     return (
-      <Dialog>
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
           <Button
             type="button"
@@ -99,11 +99,9 @@ export function CollaboratorsDialog({
               />
             </div>
             <DialogFooter className="sm:justify-start mt-6">
-              <DialogClose asChild>
-                <Button type="button" className="rounded-md">
-                  Готово
-                </Button>
-              </DialogClose>
+              <Button className="rounded-md" onClick={() => setIsOpen(false)}>
+                Готово
+              </Button>
             </DialogFooter>
           </CollaboratorsContext.Provider>
         </DialogContent>

@@ -7,6 +7,7 @@ import {
 
 import { CollaboratorsAvatars } from "@/features/collaborators";
 import { useCollaborators } from "@/features/collaborators/";
+import { cn } from "@/shared/lib/css";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { Badge } from "@/shared/ui/kit/badge";
@@ -32,6 +33,8 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
     authUser?.$id ?? "",
     wishlist.$id
   );
+
+  const showWishlistOwner = pathname === "/bookmarks" || pathname === "/shared";
 
   function onEditClick() {
     openDialog("edit", wishlist.$id);
@@ -87,9 +90,14 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
           </div>
         </Link>
 
-        <div className="flex justify-between items-center px-2">
+        <div
+          className={cn(
+            "flex justify-between items-end px-2",
+            showWishlistOwner && "mt-1"
+          )}
+        >
           {/* Владелец списка (если список чужой) */}
-          {(pathname === "/bookmarks" || pathname === "/shared") && (
+          {showWishlistOwner && (
             <OwnerAvatar
               userId={wishlist.ownerId}
               userName={wishlist.owner.userName}

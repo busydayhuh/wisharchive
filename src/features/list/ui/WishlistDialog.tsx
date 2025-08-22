@@ -75,7 +75,7 @@ export function WishlistDialog({
         values,
         privacyChanged
       );
-      setIsOpen(isOpen);
+      setIsOpen(false);
     }
 
     if (action === "create") {
@@ -87,6 +87,7 @@ export function WishlistDialog({
 
       if (response && response.newWishlist) {
         navigate(href(ROUTES.WISHLIST, { listId: response.newWishlist.$id }));
+        setIsOpen(false);
       }
     }
   }

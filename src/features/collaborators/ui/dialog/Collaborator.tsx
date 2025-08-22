@@ -40,12 +40,14 @@ export default function Collaborator({
 
       {isConfirmed && !isOwner && (
         <Button
+          type="button"
           size="sm"
           className={cn(
             "bg-muted-foreground hover:bg-muted-foreground/60 ms-auto rounded-lg text-foreground"
           )}
           onClick={(e) => {
             e.preventDefault();
+            e.stopPropagation();
             deleteMember(userId);
           }}
         >
@@ -55,6 +57,7 @@ export default function Collaborator({
 
       {isInvited && !isOwner && (
         <Button
+          type="button"
           size="sm"
           variant="destructive"
           className={cn("ms-auto rounded-lg")}
@@ -72,6 +75,7 @@ export default function Collaborator({
           className="ms-auto rounded-lg"
           onClick={(e) => {
             e.preventDefault();
+            e.stopPropagation();
             addMember(userId, userEmail);
           }}
         >
