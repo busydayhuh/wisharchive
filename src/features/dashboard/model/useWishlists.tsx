@@ -73,6 +73,7 @@ function getWishlistQueries(
   if (pathname.includes("/shared")) {
     return [
       Query.equal("$id", teams ?? ""),
+      Query.notEqual("ownerId", userId),
       Query.contains("title", searchString),
       Query.orderDesc("$sequence"),
     ];

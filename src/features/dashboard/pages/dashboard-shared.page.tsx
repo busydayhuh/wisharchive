@@ -1,14 +1,17 @@
-import { useWishlists } from "../model/useWishlists";
+import { useAuth } from "@/features/auth";
+import { useCollabWishlists } from "../model/useCollabWishlists";
 import { useDashboardContext } from "../ui/common/DashboardLayout";
 import WishlistsPageLayout from "../ui/wishlist/WishlistsPageLayout";
 
 function SharedPage() {
-  const { searchString, dashboardUserId } = useDashboardContext();
+  const { searchString } = useDashboardContext();
+  const { current } = useAuth();
+
   const {
     wishlists: collabWishlists,
     isLoading,
     error,
-  } = useWishlists(dashboardUserId ?? "", searchString);
+  } = useCollabWishlists(current?.$id ?? "", searchString);
 
   return (
     <WishlistsPageLayout
