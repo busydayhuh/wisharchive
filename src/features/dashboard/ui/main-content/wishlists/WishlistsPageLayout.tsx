@@ -1,5 +1,5 @@
 import type { WishlistDocumentType } from "@/shared/model/types";
-import { useDashboardContext } from "../common/DashboardLayout";
+import { useDashboardContext } from "../../DashboardLayout";
 import WishlistGalleryItem from "./items/WishlistGalleryItem";
 import WishlistTableItem from "./items/WishlistTableItem";
 

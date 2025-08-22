@@ -1,8 +1,15 @@
+import { useAuth } from "@/features/auth";
 import {
+  CollaboratorsAvatars,
+  useCollaborators,
+} from "@/features/collaborators";
+import {
+  BookmarkButton,
   EditWishlistButton,
+  useBookmarkWishlist,
   useWishlistDialog,
   useWishlistRoles,
-} from "@/features/list";
+} from "@/features/wishlist";
 import "@/shared/assets/custom.css";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
@@ -12,12 +19,6 @@ import { ru } from "date-fns/locale";
 import { Lock } from "lucide-react";
 import { memo, useMemo } from "react";
 import { href, Link, useLocation } from "react-router";
-import { BookmarkButton } from "../actions/BookmarkButton";
-
-import { useAuth } from "@/features/auth";
-import { CollaboratorsAvatars } from "@/features/collaborators";
-import { useCollaborators } from "@/features/collaborators/";
-import { useBookmarkWishlist } from "@/features/dashboard/model/useBookmarkWishlist";
 import ImageTiles from "./ImageTiles";
 
 interface WishlistTableItemProps {
@@ -57,7 +58,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
   }
 
   return (
-    <div className="wl-table-grid relative items-center md:px-1 pt-2 pb-4 md:pb-8 lg:pb-2 transition dot-on-hover">
+    <div className="wl-table-grid relative items-center px-1 pt-2 pb-4 md:pb-8 lg:pb-2 transition dot-on-hover">
       {/* Превью желаний */}
       <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
         <ImageTiles wishes={wishlist.wishes} variant="table" />

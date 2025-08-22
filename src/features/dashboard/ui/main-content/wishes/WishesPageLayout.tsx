@@ -1,8 +1,8 @@
 import type { WishDocumentType } from "@/shared/model/types";
 import { ID } from "appwrite";
 import Masonry from "react-masonry-css";
-import { useDashboardContext } from "../common/DashboardLayout";
-import WishGalleryItem from "../wish/items/WishGalleryItem";
+import { useDashboardContext } from "../../DashboardLayout";
+import WishGalleryItem from "./items/WishGalleryItem";
 import WishTableItem from "./items/WishTableItem";
 
 function WishesPageLayout({

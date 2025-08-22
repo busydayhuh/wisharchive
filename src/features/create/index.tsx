@@ -1,3 +1,4 @@
+import { useWishlistDialog } from "@/features/wishlist";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -5,7 +6,6 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/kit/dropdown-menu";
 import { ListPlus, Plus, Stars } from "lucide-react";
-import { useWishlistDialog } from "../list";
 
 const CreateButtonWithDropdown = function CreateButtonWithDropdown() {
   const { openDialog } = useWishlistDialog();
@@ -13,7 +13,7 @@ const CreateButtonWithDropdown = function CreateButtonWithDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="right-[50%] bottom-8 z-20 fixed flex justify-center items-center cursor-pointer">
+        <div className="right-[50%] bottom-8 z-20 fixed flex justify-center items-center translate-x-[50%] cursor-pointer">
           <Plus className="z-10 absolute stroke-[1.3px] text-background" />
           <div className="flex justify-center items-center blur-2xs gradient-btn">
             <div className="blur-lg gradient-btn"></div>

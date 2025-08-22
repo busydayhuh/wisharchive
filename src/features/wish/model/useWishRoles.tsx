@@ -1,4 +1,4 @@
-import { useWishlistRoles } from "@/features/list";
+import { useWishlistRoles } from "@/features/wishlist";
 import type { WishDocumentType } from "@/shared/model/types";
 
 export function useWishRoles(userId: string, wish: WishDocumentType) {

@@ -2,8 +2,8 @@
 import StarFrame from "@/shared/ui/StarFrame";
 import { useState } from "react";
 import { Outlet, useOutletContext } from "react-router";
-import { useDashboardMeta } from "../../model/useDashboardMeta";
-import DashboardHeader from "./DashboardHeader";
+import { useDashboardMeta } from "../model/useDashboardMeta";
+import DashboardHeader from "./header/DashboardHeader";
 import DashboardToolbar from "./toolbar/DashboardToolbar";
 import type { ViewModeSwitchType } from "./toolbar/ViewModeSwitch";
 

@@ -1,4 +1,5 @@
 import { cn } from "@/shared/lib/css";
+import DataStatePropInterceptor from "@/shared/lib/react/DataStatePropInterceptor";
 import { useSidebar } from "@/shared/ui/kit/sidebar";
 import { Toggle } from "@/shared/ui/kit/toggle";
 import {
@@ -7,7 +8,6 @@ import {
   TooltipTrigger,
 } from "@/shared/ui/kit/tooltip";
 import { Gift } from "lucide-react";
-import DataStatePropInterceptor from "../../DataStatePropInterceptor";
 
 export function GiftButton({
   variant = "gallery",

@@ -1,5 +1,5 @@
 import { useAuth } from "@/features/auth";
-import { useWishRoles } from "@/features/wish";
+import { ActionsDropdown, GiftButton, useWishRoles } from "@/features/wish";
 import "@/shared/assets/custom.css";
 import { cn } from "@/shared/lib/css";
 import { Currency } from "@/shared/lib/currency";
@@ -7,12 +7,10 @@ import { formatUrl } from "@/shared/lib/formatUrl";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishDocumentType } from "@/shared/model/types";
 import { Button } from "@/shared/ui/kit/button";
+import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { Gift, LockIcon, ShoppingBag } from "lucide-react";
 import { memo } from "react";
 import { href, Link, useLocation } from "react-router";
-import OwnerAvatar from "../../../../../shared/ui/OwnerAvatar";
-import ActionsDropdown from "../actions/ActionsDropdown";
-import { GiftButton } from "../actions/GiftButton";
 
 const WishTableItem = memo(function WishTableItem({
   wish,

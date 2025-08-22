@@ -1,7 +1,7 @@
 import { useAuth } from "@/features/auth";
-import { useWishlistMutations } from "@/features/list";
 import { ROUTES } from "@/shared/model/routes";
 import { useNavigate } from "react-router";
+import { useWishlistMutations } from "./useWishlistMutations";
 
 export function useBookmarkWishlist(
   wishlistId: string,

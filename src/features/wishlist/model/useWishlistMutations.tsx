@@ -1,8 +1,8 @@
 import db from "@/shared/model/databases";
 import team from "@/shared/model/teams";
 import type { UserDocumentType } from "@/shared/model/types";
+import { Permission, Role } from "appwrite";
 import { useWishlists } from "../../dashboard";
-import { configurePermissions } from "./configurePermissions";
 
 export function useWishlistMutations(userId: string) {
   const { mutate: mutateDashboard } = useWishlists(userId);
@@ -67,4 +67,22 @@ export function useWishlistMutations(userId: string) {
   }
 
   return { createWishlist, updateWishlist, deleteWishlist };
+}
+
+function configurePermissions(isPrivate: boolean, teamId: string) {
+  const editingPermissions = [
+    Permission.update(Role.team(teamId, "owner")),
+    Permission.update(Role.team(teamId, "editors")),
+    Permission.delete(Role.team(teamId, "owner")),
+  ];
+
+  if (!isPrivate) {
+    return [Permission.read(Role.any()), ...editingPermissions];
+  }
+
+  return [
+    Permission.read(Role.team(teamId, "readers")),
+    Permission.read(Role.team(teamId, "owner")),
+    ...editingPermissions,
+  ];
 }

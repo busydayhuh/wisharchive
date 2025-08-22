@@ -1,6 +1,3 @@
 export { useFetchWishesByUser } from "./model/useFetchWishes";
 export { useWishlists } from "./model/useWishlists";
-export {
-  DashboardLayout,
-  useDashboardContext,
-} from "./ui/common/DashboardLayout";
+export { DashboardLayout, useDashboardContext } from "./ui/DashboardLayout";

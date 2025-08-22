@@ -1,6 +1,6 @@
 import { useWishlists } from "../model/useWishlists";
-import { useDashboardContext } from "../ui/common/DashboardLayout";
-import WishlistsPageLayout from "../ui/wishlist/WishlistsPageLayout";
+import { useDashboardContext } from "../ui/DashboardLayout";
+import WishlistsPageLayout from "../ui/main-content/wishlists/WishlistsPageLayout";
 
 function WishlistsPage() {
   const { dashboardUserId, searchString } = useDashboardContext();

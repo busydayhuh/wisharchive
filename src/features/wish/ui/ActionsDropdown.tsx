@@ -8,7 +8,7 @@ import {
 } from "@/shared/ui/kit/dropdown-menu";
 import { ArchiveRestore, Check, Edit2, Ellipsis, Trash2 } from "lucide-react";
 
-function ActionsDropdown({
+export function ActionsDropdown({
   align = "end",
   side = "top",
   triggerVariant = "gallery",
@@ -60,5 +60,3 @@ function ActionsDropdown({
     </DropdownMenu>
   );
 }
-
-export default ActionsDropdown;

@@ -1,5 +1,5 @@
 import { UserProvider } from "@/features/auth";
-import { WishlistDialogProvider } from "@/features/list";
+import { WishlistDialogProvider } from "@/features/wishlist";
 import { SidebarProvider } from "@/shared/ui/kit/sidebar";
 import { type ReactNode } from "react";
 

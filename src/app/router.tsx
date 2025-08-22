@@ -69,7 +69,7 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES.WISHLIST,
-        lazy: () => import("@/features/list/list.page"),
+        lazy: () => import("@/features/wishlist/list.page"),
         HydrateFallback: () => null,
       },
       {

@@ -1,13 +1,15 @@
 import { useAuth } from "@/features/auth";
 import {
+  CollaboratorsAvatars,
+  useCollaborators,
+} from "@/features/collaborators";
+import {
+  BookmarkButton,
   EditWishlistButton,
+  useBookmarkWishlist,
   useWishlistDialog,
   useWishlistRoles,
-} from "@/features/list";
-
-import { CollaboratorsAvatars } from "@/features/collaborators";
-import { useCollaborators } from "@/features/collaborators/";
-import { useBookmarkWishlist } from "@/features/dashboard/model/useBookmarkWishlist";
+} from "@/features/wishlist";
 import { cn } from "@/shared/lib/css";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
@@ -15,7 +17,6 @@ import { Badge } from "@/shared/ui/kit/badge";
 import { Lock } from "lucide-react";
 import { memo } from "react";
 import { href, Link, useLocation } from "react-router-dom";
-import { BookmarkButton } from "../actions/BookmarkButton";
 import ImageTiles from "./ImageTiles";
 
 const WishlistGalleryItem = memo(function WishlistGalleryItem({
