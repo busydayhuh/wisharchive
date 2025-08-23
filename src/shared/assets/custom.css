@@ -10,6 +10,12 @@ html {
   grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
 }
 
+@media screen and (max-width: 640px) {
+  .grid-auto-fill {
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  }
+}
+
 /* masonry */
 .my-masonry-grid {
   display: flex;

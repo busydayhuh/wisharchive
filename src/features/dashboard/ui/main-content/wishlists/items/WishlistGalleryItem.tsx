@@ -65,7 +65,7 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
         </div>
 
         <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
-          <div className="flex justify-between items-center mt-1 px-2">
+          <div className="flex flex-wrap justify-between items-center mt-1 px-2">
             {/* Название */}
             <div className="flex items-center gap-1 pr-2 text-base md:text-lg">
               {wishlist.isPrivate && (
@@ -76,7 +76,7 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
                   <Lock />
                 </Badge>
               )}
-              <span className="max-w-[20ch] truncate leading-tight">
+              <span className="max-w-[10ch] sm:max-w-[20ch] truncate leading-tight">
                 {wishlist.title}
               </span>
             </div>
