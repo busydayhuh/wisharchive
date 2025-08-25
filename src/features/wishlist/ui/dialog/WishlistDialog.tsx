@@ -18,9 +18,10 @@ import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { href, useNavigate } from "react-router";
 import { z } from "zod";
-import { useWishlist } from "../model/useWishlist";
-import { useWishlistMutations } from "../model/useWishlistMutations";
+import { useWishlist } from "../../model/useWishlist";
+import { useWishlistMutations } from "../../model/useWishlistMutations";
 import CollaboratorsSection from "./CollaboratorsSection";
+import { DeleteSection } from "./DeleteSection";
 import { WishlistFormFields } from "./WishlistFormFields";
 
 const headerVariants = {
@@ -61,9 +62,8 @@ export function WishlistDialog({
   const navigate = useNavigate();
   const { user: currentUser } = useCurrentUser();
 
-  const { createWishlist, updateWishlist } = useWishlistMutations(
-    currentUser?.userId ?? ""
-  );
+  const { createWishlist, updateWishlist, deleteWishlist } =
+    useWishlistMutations(currentUser?.userId ?? "");
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (action === "edit") {
@@ -115,6 +115,15 @@ export function WishlistDialog({
                   wishlistId={wishlist.$id}
                   isPrivate={wishlist.isPrivate}
                   form={form}
+                />
+              )}
+
+              {wishlist && (
+                <DeleteSection
+                  wishlistId={wishlist.$id}
+                  wishlistTitle={wishlist.title}
+                  setDialogOpen={setIsOpen}
+                  deleteWishlist={deleteWishlist}
                 />
               )}
 

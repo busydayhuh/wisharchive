@@ -58,9 +58,10 @@ export function useWishlistMutations(userId: string) {
   async function deleteWishlist(wishlistId: string) {
     try {
       await db.wishlists.delete(wishlistId);
-      await team.delete(wishlistId); // удаляем команду вместе с вишлистом
-
       mutateDashboard();
+
+      await team.delete(wishlistId); // удаляем команду вместе с вишлистом
+      console.trace();
     } catch {
       alert("Не удалось удалить вишлист");
     }

@@ -23,7 +23,9 @@ const WishlistDialogContext = createContext<WishlistDialogContextType | null>(
   null
 );
 
-const DialogLazy = lazy(() => import("@/features/wishlist/ui/WishlistDialog"));
+const DialogLazy = lazy(
+  () => import("@/features/wishlist/ui/dialog/WishlistDialog")
+);
 
 export function WishlistDialogProvider({ children }: { children: ReactNode }) {
   const [dialogState, setDialogState] = useState<DialogState>({
