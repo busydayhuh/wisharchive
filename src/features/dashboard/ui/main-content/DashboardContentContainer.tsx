@@ -1,6 +1,7 @@
+import CreateButtonWithDropdown from "@/features/create";
 import { type ReactNode } from "react";
 
-function StarFrame({ children }: { children: ReactNode }) {
+function DashboardContentContainer({ children }: { children: ReactNode }) {
   return (
     // <div className="relative border-foreground border-t-1 md:border-r-1 min-h-[calc(100vh-15rem)]">
     <div className="relative border-muted border-t-1 min-h-[calc(100vh-15rem)]">
@@ -8,8 +9,9 @@ function StarFrame({ children }: { children: ReactNode }) {
         <Star />
       </div> */}
       {children}
+      <CreateButtonWithDropdown />
     </div>
   );
 }
 
-export default StarFrame;
+export default DashboardContentContainer;
