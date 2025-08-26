@@ -4,7 +4,7 @@ import { Query } from "appwrite";
 import { useLocation } from "react-router";
 import useSWR from "swr";
 
-async function fetcher({ queries }: { queries: string[] }) {
+async function fetcher(queries: string[]) {
   const response = await db.wishlists.list(queries);
 
   return response.documents as WishlistDocumentType[];
@@ -23,26 +23,19 @@ export function useWishlists(
     teams
   );
 
+  const key = ["wishlists", userId, queries];
+
   const {
     data: wishlists,
     isLoading,
     error,
-    mutate,
-  } = useSWR(
-    {
-      queries: queries,
-      userId: userId,
-      searchString: searchString,
+  } = useSWR(key, () => fetcher(queries), {
+    onSuccess: (data) => {
+      data.forEach((wl) => (wl.wishes ? wl.wishes.reverse() : null));
     },
-    fetcher,
-    {
-      onSuccess: (data) => {
-        data.forEach((wl) => (wl.wishes ? wl.wishes.reverse() : null));
-      },
-    }
-  );
+  });
 
-  return { wishlists, isLoading, error, mutate };
+  return { wishlists, isLoading, error };
 }
 
 function getWishlistQueries(
@@ -51,14 +44,6 @@ function getWishlistQueries(
   searchString: string,
   teams?: string[]
 ) {
-  if (pathname.includes("/lists")) {
-    return [
-      Query.equal("ownerId", userId),
-      Query.contains("title", searchString),
-      Query.orderDesc("$sequence"),
-    ];
-  }
-
   if (pathname.includes("/bookmarks")) {
     return [
       Query.contains("bookmarkedBy", userId),
@@ -78,4 +63,10 @@ function getWishlistQueries(
       Query.orderDesc("$sequence"),
     ];
   }
+
+  return [
+    Query.equal("ownerId", userId),
+    Query.contains("title", searchString),
+    Query.orderDesc("$sequence"),
+  ];
 }

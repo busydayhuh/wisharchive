@@ -1,10 +1,10 @@
-import { ID, type Models } from "appwrite";
+import { type Models } from "appwrite";
 import { appwriteService } from "./appwrite";
 
 type TeamApiType = {
   create: (
     name: string,
-    teamId?: string,
+    teamId: string,
     roles?: string[]
   ) => Promise<Models.Team<Models.Preferences>>;
   updateName: (
@@ -55,7 +55,7 @@ const { teams } = appwriteService;
 
 const team: TeamApiType = {
   // для teams
-  create: (name) => teams.create(ID.unique(), name, ["editors", "readers"]),
+  create: (name, teamId) => teams.create(teamId, name, ["editors", "readers"]),
   updateName: (teamId, newName) => teams.updateName(teamId, newName),
   get: (teamId) => teams.get(teamId),
   list: (queries?, search?) => teams.list(queries, search),

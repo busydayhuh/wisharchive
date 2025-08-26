@@ -19,7 +19,7 @@ import { useForm } from "react-hook-form";
 import { href, useNavigate } from "react-router";
 import { z } from "zod";
 import { useWishlist } from "../../model/useWishlist";
-import { useWishlistMutations } from "../../model/useWishlistMutations";
+import { wishlistMutations } from "../../model/wishlistMutations";
 import CollaboratorsSection from "./CollaboratorsSection";
 import { DeleteSection } from "./DeleteSection";
 import { WishlistFormFields } from "./WishlistFormFields";
@@ -62,14 +62,11 @@ export function WishlistDialog({
   const navigate = useNavigate();
   const { user: currentUser } = useCurrentUser();
 
-  const { createWishlist, updateWishlist, deleteWishlist } =
-    useWishlistMutations(currentUser?.userId ?? "");
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (action === "edit") {
       const privacyChanged = form.getFieldState("isPrivate").isDirty;
 
-      await updateWishlist(
+      await wishlistMutations.update(
         wishlist!.$id,
         values,
         values.isPrivate,
@@ -79,14 +76,14 @@ export function WishlistDialog({
     }
 
     if (action === "create") {
-      const response = await createWishlist({
+      const newWishlist = await wishlistMutations.create({
         ...values,
         ownerId: currentUser?.userId ?? "",
         owner: currentUser,
       });
 
-      if (response && response.newWishlist) {
-        navigate(href(ROUTES.WISHLIST, { listId: response.newWishlist.$id }));
+      if (newWishlist) {
+        navigate(href(ROUTES.WISHLIST, { listId: newWishlist.$id }));
         setIsOpen(false);
       }
     }
@@ -111,20 +108,18 @@ export function WishlistDialog({
               <WishlistFormFields form={form} />
 
               {wishlist && (
-                <CollaboratorsSection
-                  wishlistId={wishlist.$id}
-                  isPrivate={wishlist.isPrivate}
-                  form={form}
-                />
-              )}
-
-              {wishlist && (
-                <DeleteSection
-                  wishlistId={wishlist.$id}
-                  wishlistTitle={wishlist.title}
-                  setDialogOpen={setIsOpen}
-                  deleteWishlist={deleteWishlist}
-                />
+                <>
+                  <CollaboratorsSection
+                    wishlistId={wishlist.$id}
+                    isPrivate={wishlist.isPrivate}
+                    form={form}
+                  />
+                  <DeleteSection
+                    wishlistId={wishlist.$id}
+                    wishlistTitle={wishlist.title}
+                    setDialogOpen={setIsOpen}
+                  />
+                </>
               )}
 
               <DialogFooter className="mt-4">

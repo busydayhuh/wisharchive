@@ -2,24 +2,23 @@ import ConfirmationDialog from "@/shared/ui/ConfirmationDialog";
 import { Button } from "@/shared/ui/kit/button";
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
+import { wishlistMutations } from "../../model/wishlistMutations";
 
 type DeleteSectionProps = {
   wishlistId: string;
   wishlistTitle: string;
-  deleteWishlist: (id: string) => Promise<void>;
   setDialogOpen: (isOpen: boolean) => void;
 };
 
 export function DeleteSection({
   wishlistId,
   wishlistTitle,
-  deleteWishlist,
   setDialogOpen,
 }: DeleteSectionProps) {
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   async function onConfirm() {
-    await deleteWishlist(wishlistId);
+    await wishlistMutations.delete(wishlistId);
     setDialogOpen(false);
   }
 

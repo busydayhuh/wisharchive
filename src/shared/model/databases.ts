@@ -1,18 +1,19 @@
 import { ID, type Models } from "appwrite";
 import { appwriteService } from "./appwrite";
 import { CONFIG } from "./config";
+import type { WishlistDocumentType } from "./types";
 
 type CollectionApiType = {
   create: (
     payload: object,
     permissions?: string[],
     id?: string
-  ) => Promise<Models.Document>;
+  ) => Promise<Models.Document & WishlistDocumentType>;
   update: (
     id: string,
     payload?: object,
     permissions?: string[]
-  ) => Promise<Models.Document>;
+  ) => Promise<WishlistDocumentType>;
   delete: (id: string) => Promise<object>;
   list: (queries?: string[]) => Promise<Models.DocumentList<Models.Document>>;
   get: (id: string) => Promise<Models.Document>;

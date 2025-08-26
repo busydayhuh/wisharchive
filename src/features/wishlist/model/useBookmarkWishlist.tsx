@@ -1,15 +1,14 @@
 import { useAuth } from "@/features/auth";
 import { ROUTES } from "@/shared/model/routes";
 import { useNavigate } from "react-router";
-import { useWishlistMutations } from "./useWishlistMutations";
+import { mutate } from "swr";
+import { wishlistMutations } from "./wishlistMutations";
 
 export function useBookmarkWishlist(
   wishlistId: string,
   bookmarkedBy: string[] | []
 ) {
   const { current } = useAuth();
-  const { updateWishlist } = useWishlistMutations(current?.$id ?? "");
-
   const navigate = useNavigate();
 
   async function toggleBookmark(pressed: boolean) {
@@ -20,9 +19,11 @@ export function useBookmarkWishlist(
       : [...bookmarkedBy].filter((id) => id !== current.$id);
 
     try {
-      await updateWishlist(wishlistId, {
+      await wishlistMutations.update(wishlistId, {
         bookmarkedBy: updatedList,
       });
+
+      mutate((key) => Array.isArray(key) && key[0] === "wishlists");
     } catch {
       console.log("Не удалось обновить закладки");
     }
