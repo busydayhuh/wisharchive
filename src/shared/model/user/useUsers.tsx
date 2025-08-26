@@ -17,12 +17,21 @@ async function fetcher({ searchString }: { searchString: string }) {
   return response.documents as UserDocumentType[];
 }
 
-export function useUsers(searchString: string | string[] | null) {
+export function useUsers(searchString: string[] | null) {
   const {
     data: users,
     isLoading,
     error,
-  } = useSWR(searchString ? { searchString } : null, fetcher);
+  } = useSWR(
+    searchString && searchString.length > 0 ? { searchString } : null,
+    fetcher,
+    {
+      onError: (err) => {
+        console.error("Ошибка SWR для ключа", searchString, err);
+        console.trace();
+      },
+    }
+  );
 
   return { users, isLoading, error };
 }

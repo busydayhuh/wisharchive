@@ -11,7 +11,9 @@ export default function CollaboratorsList({
   searchString: string;
   collaborators: CollaboratorType[];
 }) {
-  const { users, isLoading, error } = useUsers(searchString);
+  const { users, isLoading, error } = useUsers(
+    searchString ? [searchString] : null
+  );
 
   const roleMap = new Map(collaborators.map((c) => [c.userId, c.roles]));
 

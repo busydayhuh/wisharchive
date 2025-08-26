@@ -16,7 +16,12 @@ export function useUser(userId?: string) {
     data: user,
     isLoading,
     error,
-  } = useSWR(userId && userId !== "" ? { userId: userId } : null, fetcher);
+  } = useSWR(userId && userId !== "" ? { userId: userId } : null, fetcher, {
+    onError: (err) => {
+      console.error("Ошибка SWR для ключа", userId, err);
+      console.trace();
+    },
+  });
 
   return { user, isLoading, error };
 }
