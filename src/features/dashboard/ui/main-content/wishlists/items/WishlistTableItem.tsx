@@ -11,6 +11,7 @@ import {
   useWishlistRoles,
 } from "@/features/wishlist";
 import "@/shared/assets/custom.css";
+import { cn } from "@/shared/lib/css";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { Badge } from "@/shared/ui/kit/badge";
@@ -38,10 +39,11 @@ const WishlistTableItem = memo(function WishlistTableItem({
     wishlist.bookmarkedBy ?? []
   );
 
-  const { isOwner, isFavorite, isEditor } = useWishlistRoles(
+  const { isOwner, isEditor } = useWishlistRoles(
     authUser?.$id ?? "",
     wishlist.$id
   );
+  const isFavorite = wishlist.bookmarkedBy.includes(authUser?.$id) ?? false;
 
   const createdAt = useMemo(
     () => format(wishlist.$createdAt, "PP", { locale: ru }),
@@ -75,8 +77,22 @@ const WishlistTableItem = memo(function WishlistTableItem({
               </Badge>
             )}
           </div>
-          <span className="text-muted-foreground text-xs md:text-sm">
-            {wishlist.wishes?.length ?? 0} жел.
+          <span
+            className={cn(
+              "text-xs",
+              pathname === "/shared"
+                ? [
+                    "px-1.5 pb-0.5 rounded-lg text-foreground w-fit",
+                    isEditor ? "bg-blue-200" : "bg-yellow-200",
+                  ]
+                : "text-muted-foreground md:text-sm"
+            )}
+          >
+            {pathname === "/shared"
+              ? isEditor
+                ? "редактор"
+                : "читатель"
+              : `${wishlist.wishes?.length ?? 0} жел.`}
           </span>
         </div>
       </Link>
@@ -96,11 +112,11 @@ const WishlistTableItem = memo(function WishlistTableItem({
 
       {/* Даты */}
       <div className="hidden lg:flex flex-col items-center gap-0.5 text-muted-foreground text-xs xl:text-sm">
-        <span className="bg-muted px-1 py-0.5 rounded-lg">создан</span>
+        <span className="bg-muted px-1.5 py-0.5 rounded-lg">создан</span>
         <span>{createdAt}</span>
       </div>
       <div className="hidden lg:flex flex-col items-center gap-0.5 text-muted-foreground text-xs xl:text-sm">
-        <span className="bg-muted px-1 py-0.5 rounded-lg">изменён</span>
+        <span className="bg-muted px-1.5 py-0.5 rounded-lg">изменён</span>
         <span>{updatedAt}</span>
       </div>
 

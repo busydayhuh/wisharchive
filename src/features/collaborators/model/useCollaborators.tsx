@@ -11,7 +11,7 @@ export type CollaboratorType = {
   confirm?: boolean;
 };
 
-export function useCollaborators(wishlistId: string) {
+export function useCollaborators(wishlistId: string | null) {
   const {
     members,
     isLoading: membersLoading,

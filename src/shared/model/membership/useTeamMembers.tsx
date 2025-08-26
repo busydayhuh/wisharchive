@@ -7,13 +7,13 @@ async function fetcher({ teamId }: { teamId: string }) {
   return response.memberships;
 }
 
-export function useTeamMembers(wishlistId: string) {
+export function useTeamMembers(wishlistId: string | null) {
   const {
     data: members,
     isLoading,
     error,
     mutate,
-  } = useSWR({ teamId: wishlistId }, fetcher, {
+  } = useSWR(wishlistId ? { teamId: wishlistId } : null, fetcher, {
     onSuccess: (memberships) => memberships.reverse(),
   });
 

@@ -32,6 +32,7 @@ export function CollaboratorsDialog({
   isPrivateChecked = false,
 }: CollaboratorsDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
+
   const [selectedRole, setSelectedRole] = useState<SelectedRole>("editors");
   const [searchString, setSearchString] = useState("");
 

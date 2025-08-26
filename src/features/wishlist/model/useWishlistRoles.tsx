@@ -1,5 +1,4 @@
-import { useMembership } from "@/shared/model/membership/useMembership";
-import { useWishlist } from "./useWishlist";
+import { useCollaborators } from "@/features/collaborators";
 
 export type WishlistRolesType = {
   isOwner: boolean;
@@ -10,18 +9,16 @@ export type WishlistRolesType = {
   inPrivateWishlist: boolean;
 };
 
-export function useWishlistRoles(userId: string, wishlistId?: string | null) {
-  const { membership } = useMembership(wishlistId ?? null, userId);
-  const { wishlist } = useWishlist(wishlistId);
+export function useWishlistRoles(userId: string, wishlistId: string | null) {
+  const { collaborators } = useCollaborators(wishlistId);
+  const collaborator = collaborators?.find((c) => c.userId === userId);
 
   return {
-    isOwner: wishlist?.ownerId === userId,
-    isReader: membership?.roles.includes("readers") ?? false,
-    isEditor: membership?.roles.includes("editors") ?? false,
-    isFavorite: wishlist?.bookmarkedBy?.includes(userId) ?? false,
+    isOwner: collaborator?.roles?.includes("owner") ?? false,
+    isReader: collaborator?.roles?.includes("readers") ?? false,
+    isEditor: collaborator?.roles?.includes("editors") ?? false,
 
     // поля для проверки в useWishRoles
     hasWishlist: Boolean(wishlistId),
-    inPrivateWishlist: wishlist?.isPrivate ?? false,
   };
 }

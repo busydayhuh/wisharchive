@@ -34,10 +34,11 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
     wishlist.bookmarkedBy ?? []
   );
 
-  const { isOwner, isFavorite, isEditor } = useWishlistRoles(
+  const { isOwner, isEditor } = useWishlistRoles(
     authUser?.$id ?? "",
     wishlist.$id
   );
+  const isFavorite = wishlist.bookmarkedBy.includes(authUser?.$id) ?? false;
 
   function onEditClick() {
     openDialog("edit", wishlist.$id);
@@ -94,10 +95,24 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
           </div>
         </Link>
 
-        <div className={cn("flex justify-between items-end px-2")}>
-          {/* Счетчик желаний */}
-          <span className="text-muted-foreground text-xs md:text-sm">
-            {wishlist.wishes?.length ?? 0} жел.
+        {/* Счетчик желаний / роль */}
+        <div className="flex justify-between items-end px-2">
+          <span
+            className={cn(
+              "text-xs",
+              pathname === "/shared"
+                ? [
+                    "px-1.5 pb-0.5 rounded-lg text-foreground",
+                    isEditor ? "bg-blue-200" : "bg-yellow-200",
+                  ]
+                : "text-muted-foreground md:text-sm"
+            )}
+          >
+            {pathname === "/shared"
+              ? isEditor
+                ? "редактор"
+                : "читатель"
+              : `${wishlist.wishes?.length ?? 0} жел.`}
           </span>
         </div>
       </div>
