@@ -1,9 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
-import StarFrame from "@/shared/ui/StarFrame";
 import { useState } from "react";
 import { Outlet, useOutletContext } from "react-router";
 import { useDashboardMeta } from "../model/useDashboardMeta";
 import DashboardHeader from "./header/DashboardHeader";
+import DashboardContentContainer from "./main-content/DashboardContentContainer";
 import DashboardToolbar from "./toolbar/DashboardToolbar";
 import type { ViewModeSwitchType } from "./toolbar/ViewModeSwitch";
 
@@ -42,7 +42,7 @@ export function DashboardLayout() {
         showNavigation={showNavigation}
       />
 
-      <StarFrame>
+      <DashboardContentContainer>
         <div className="pt-4 md:pt-6 md:pr-8">
           <Outlet
             context={{
@@ -52,7 +52,7 @@ export function DashboardLayout() {
             }}
           />
         </div>
-      </StarFrame>
+      </DashboardContentContainer>
     </div>
   );
 }
