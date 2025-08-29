@@ -39,9 +39,11 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --font-display: "Random Grotesque Standard", "sans-serif";
+  --font-display: "Onest", "sans-serif";
+  --font-emoji: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
+    "sans-serif";
   --inset-shadow-base: inset 0px 0px 120px 20px var(--color-zinc-700);
-  --sidebar-icons-stroke: 1.3px;
+  --sidebar-icons-stroke: 1.5px;
   --breakpoint-md: 56.25rem;
   --animate-star: bounce-out-down 1.5s ease-out forwards;
   --animate-gradient-button: gradient-button 16s linear infinite;
@@ -181,55 +183,11 @@
 }
 
 @layer base {
-  /* Шрифты */
-  @font-face {
-    font-family: "Random Grotesque Standard";
-    src: url("/src/shared/assets/fonts/hinted-RG-StandardBold.woff2")
-        format("woff2"),
-      url("/src/shared/assets/fonts/hinted-RG-StandardBold.woff") format("woff");
-    font-weight: bold;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "Random Grotesque Standard";
-    src: url("/src/shared/assets/fonts/hinted-RG-StandardSemibold.woff2")
-        format("woff2"),
-      url("/src/shared/assets/fonts/hinted-RG-StandardSemibold.woff")
-        format("woff");
-    font-weight: 600;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "Random Grotesque Standard";
-    src: url("/src/shared/assets/fonts/hinted-RG-StandardRegular.woff2")
-        format("woff2"),
-      url("/src/shared/assets/fonts/hinted-RG-StandardRegular.woff")
-        format("woff");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "Random Grotesque Standard";
-    src: url("/src/shared/assets/fonts/hinted-RG-StandardMedium.woff2")
-        format("woff2"),
-      url("/src/shared/assets/fonts/hinted-RG-StandardMedium.woff")
-        format("woff");
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-  }
-
   * {
     @apply border-border outline-ring/50;
   }
 
   body {
-    @apply bg-background rounded-xl font-display text-foreground;
+    @apply bg-background rounded-xl font-display text-foreground leading-tight;
   }
 }
