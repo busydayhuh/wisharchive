@@ -1,15 +1,28 @@
 import { DashboardLayout } from "@/features/dashboard";
 import { ROUTES } from "@/shared/model/routes.ts";
-import { createBrowserRouter } from "react-router-dom";
+import { useLayoutEffect, type ReactNode } from "react";
+import { createBrowserRouter, useLocation } from "react-router-dom";
 import App from "./App.tsx";
 import { ProtectedRoute, UnauthOnlyRoute } from "./protected-route.tsx";
 import Providers from "./providers.tsx";
+
+const Wrapper = ({ children }: { children: ReactNode }) => {
+  const location = useLocation();
+
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [location.pathname]);
+
+  return children;
+};
 
 export const router = createBrowserRouter([
   {
     element: (
       <Providers>
-        <App />
+        <Wrapper>
+          <App />
+        </Wrapper>
       </Providers>
     ),
     children: [
