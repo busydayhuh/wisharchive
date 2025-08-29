@@ -1,5 +1,6 @@
 export { useBookmarkWishlist } from "./model/useBookmarkWishlist";
 export { useWishlistRoles } from "./model/useWishlistRoles";
+export type { WishlistRolesType } from "./model/useWishlistRoles";
 export {
   useWishlistDialog,
   WishlistDialogProvider,
