@@ -2,6 +2,7 @@ import { type CollaboratorType } from "@/features/collaborators/model/useCollabo
 import { cn } from "@/shared/lib/css";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/kit/avatar";
 import { ID } from "appwrite";
+import { memo } from "react";
 
 type CollaboratorsAvatarsProps = {
   collaborators: CollaboratorType[];
@@ -10,7 +11,7 @@ type CollaboratorsAvatarsProps = {
   hideOwner?: boolean;
 } & React.ComponentProps<"div">;
 
-export function CollaboratorsAvatars({
+export const CollaboratorsAvatars = memo(function CollaboratorsAvatars({
   collaborators,
   size,
   maxVisible,
@@ -49,7 +50,7 @@ export function CollaboratorsAvatars({
       )}
     </div>
   );
-}
+});
 
 export function CollaboratorsAvatarsSkeleton({
   size,
