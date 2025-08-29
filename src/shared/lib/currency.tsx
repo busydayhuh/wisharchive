@@ -14,43 +14,43 @@ import {
 export const CURRENCY = [
   {
     abbr: "RUB",
-    icon: <TbCurrencyRubel className="stroke-[1.3px]" />,
+    icon: <TbCurrencyRubel className="stroke-[1.5px]" />,
   },
   {
     abbr: "USD",
-    icon: <TbCurrencyDollar className="stroke-[1.3px]" />,
+    icon: <TbCurrencyDollar className="stroke-[1.5px]" />,
   },
   {
     abbr: "EUR",
-    icon: <TbCurrencyEuro className="stroke-[1.3px]" />,
+    icon: <TbCurrencyEuro className="stroke-[1.5px]" />,
   },
   {
     abbr: "GBP",
-    icon: <TbCurrencyPound className="stroke-[1.3px]" />,
+    icon: <TbCurrencyPound className="stroke-[1.5px]" />,
   },
   {
     abbr: "INR",
-    icon: <TbCurrencyRupee className="stroke-[1.3px]" />,
+    icon: <TbCurrencyRupee className="stroke-[1.5px]" />,
   },
   {
     abbr: "CNY",
-    icon: <TbCurrencyYuan className="stroke-[1.3px]" />,
+    icon: <TbCurrencyYuan className="stroke-[1.5px]" />,
   },
   {
     abbr: "JPY",
-    icon: <TbCurrencyYen className="stroke-[1.3px]" />,
+    icon: <TbCurrencyYen className="stroke-[1.5px]" />,
   },
   {
     abbr: "GEL",
-    icon: <TbCurrencyLari className="stroke-[1.3px]" />,
+    icon: <TbCurrencyLari className="stroke-[1.5px]" />,
   },
   {
     abbr: "SAR",
-    icon: <TbCurrencyRiyal className="stroke-[1.3px]" />,
+    icon: <TbCurrencyRiyal className="stroke-[1.5px]" />,
   },
   {
     abbr: "TRY",
-    icon: <TbCurrencyLira className="stroke-[1.3px]" />,
+    icon: <TbCurrencyLira className="stroke-[1.5px]" />,
   },
 ];
 

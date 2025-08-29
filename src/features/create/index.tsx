@@ -14,7 +14,7 @@ const CreateButtonWithDropdown = function CreateButtonWithDropdown() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <div className="right-[50%] bottom-8 z-20 fixed flex justify-center items-center translate-x-[50%] cursor-pointer">
-          <Plus className="z-10 absolute stroke-[1.3px] text-background" />
+          <Plus className="z-10 absolute stroke-[1.5px] text-background" />
           <div className="flex justify-center items-center blur-2xs gradient-btn">
             <div className="blur-lg gradient-btn"></div>
           </div>
@@ -25,10 +25,10 @@ const CreateButtonWithDropdown = function CreateButtonWithDropdown() {
         className="bg-blue-200 *:focus:bg-transparent shadow-blue-200 shadow-lg px-2 py-2 border-0 rounded-xl **:text-foreground **:cursor-pointer"
       >
         <DropdownMenuItem>
-          <Stars className="stroke-[1.3px]" /> Новое желание
+          <Stars className="stroke-[1.5px]" /> Новое желание
         </DropdownMenuItem>
         <DropdownMenuItem onSelect={() => openDialog("create")}>
-          <ListPlus className="stroke-[1.3px]" /> Новый список
+          <ListPlus className="stroke-[1.5px]" /> Новый список
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
