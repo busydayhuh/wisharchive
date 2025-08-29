@@ -16,10 +16,8 @@ export function BookmarkButton({
     <Toggle
       size={variant === "gallery" ? "sm" : "default"}
       className={cn(
-        "after:invisible data-[state=on]:after:visible after:absolute after:content-['✨']",
-        "px-1 py-1 border-0 rounded-full  transition cursor-pointer z-10 text-muted-foreground",
-        !isFavorite && "data-[state=on]:after:animate-star",
-        isFavorite && "data-[state=on]:after:invisible",
+        "relative px-1 py-1 rounded-full cursor-pointer",
+
         variant === "gallery" &&
           "top-2 right-2 z-10 absolute bg-secondary data-[state=on]:bg-destructive data-[state=on]:text-destructive data-[state=on]:[&_svg]:fill-white",
 
