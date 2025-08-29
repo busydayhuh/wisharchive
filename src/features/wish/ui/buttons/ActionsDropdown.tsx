@@ -17,7 +17,7 @@ export function ActionsDropdown({
 }: React.ComponentProps<"div"> & {
   align?: "center" | "end" | "start";
   side?: "top" | "right" | "bottom" | "left";
-  triggerVariant?: "gallery" | "table";
+  triggerVariant?: "gallery" | "table" | "page";
   isArchived?: boolean;
 }) {
   return (
@@ -29,6 +29,7 @@ export function ActionsDropdown({
             "bg-secondary hover:bg-muted peer/cover transition duration-300 show-on-hover",
           triggerVariant === "table" &&
             "md:bg-transparent bg-muted hover:bg-muted/60 shadow-none md:mx-auto ms-auto me-1",
+          triggerVariant === "page" && "bg-muted hover:bg-muted/60",
           className
         )}
       >
@@ -40,15 +41,17 @@ export function ActionsDropdown({
         side={side}
       >
         <DropdownMenuGroup>
-          {isArchived ? (
-            <DropdownMenuItem>
-              <ArchiveRestore /> Вернуть из архива
-            </DropdownMenuItem>
-          ) : (
-            <DropdownMenuItem>
-              <Check /> Уже подарили
-            </DropdownMenuItem>
-          )}
+          {triggerVariant !== "page" ? (
+            isArchived ? (
+              <DropdownMenuItem>
+                <ArchiveRestore /> Вернуть из архива
+              </DropdownMenuItem>
+            ) : (
+              <DropdownMenuItem>
+                <Check /> Уже подарили
+              </DropdownMenuItem>
+            )
+          ) : null}
           <DropdownMenuItem>
             <Edit2 /> Редактировать
           </DropdownMenuItem>
