@@ -22,7 +22,9 @@ const WishTableItem = memo(function WishTableItem({
 
   const { isOwner, isBooker, isEditor } = useWishRoles(
     authUser?.$id ?? "",
-    wish
+    wish.wishlistId,
+    wish.ownerId,
+    wish.bookerId
   );
 
   return (

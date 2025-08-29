@@ -20,7 +20,9 @@ const WishGalleryItem = memo(function WishGalleryItem({
 
   const { isOwner, isBooker, isEditor } = useWishRoles(
     authUser?.$id ?? "",
-    wish
+    wish.wishlistId,
+    wish.ownerId,
+    wish.bookerId
   );
 
   return (
@@ -40,8 +42,8 @@ const WishGalleryItem = memo(function WishGalleryItem({
           )}
         >
           <Gift className="size-3" />
-          <span className="hidden md:block pb-0.5 font-medium">
-            Забронировано
+          <span className="hidden md:block pb-0.5 font-medium text-sm">
+            забронировано
           </span>
         </div>
       )}
@@ -123,7 +125,9 @@ const WishGalleryItem = memo(function WishGalleryItem({
               className="rounded-full max-w-[25ch] h-6 font-normal text-xs"
               asChild
             >
-              <Link to={href(ROUTES.WISHLIST, { listId: wish.wishlist.$id })}>
+              <Link
+                to={href(ROUTES.WISHLIST, { listId: wish.wishlist.$id ?? "" })}
+              >
                 {wish.isPrivate && <LockIcon className="size-3" />}
                 <span className="truncate">{wish.wishlist.title}</span>
               </Link>

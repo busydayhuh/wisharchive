@@ -1,23 +1,33 @@
 import { useWishlistRoles } from "@/features/wishlist";
-import type { WishDocumentType } from "@/shared/model/types";
 
-export function useWishRoles(userId: string, wish: WishDocumentType) {
-  const wishlistRoles = useWishlistRoles(userId, wish.wishlist?.$id ?? null);
+export type WishRolesType = {
+  isOwner: boolean;
+  isBooker: boolean;
+  isReader: boolean;
+  isEditor: boolean;
+  hasWishlist?: boolean;
+};
+
+export function useWishRoles(
+  userId: string,
+  wishlistId?: string | null,
+  ownerId?: string | null,
+  bookerId?: string | null
+) {
+  const wishlistRoles = useWishlistRoles(userId, wishlistId ?? null);
 
   if (wishlistRoles.hasWishlist) {
     return {
       ...wishlistRoles,
-      isOwner: wish.ownerId === userId,
-      isBooker: wish.bookerId === userId,
+      isOwner: ownerId === userId,
+      isBooker: bookerId === userId,
     };
   }
 
   return {
-    isOwner: wish.ownerId === userId,
-    isReader: wish.isPrivate
-      ? wish.$permissions.includes(`read:(user:"${userId}")`)
-      : true,
-    isEditor: wish.$permissions.includes(`update:(user:"${userId}")`),
-    isBooker: wish.bookerId === userId,
+    isOwner: ownerId === userId,
+    isReader: true,
+    isEditor: ownerId === userId,
+    isBooker: bookerId === userId,
   };
 }
