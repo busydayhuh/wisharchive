@@ -1,6 +1,7 @@
 import db from "@/shared/model/databases";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { Query } from "appwrite";
+import { useMemo } from "react";
 import { useLocation } from "react-router";
 import useSWR from "swr";
 
@@ -11,19 +12,21 @@ async function fetcher(queries: string[]) {
 }
 
 export function useWishlists(
-  userId: string,
+  userId: string | null,
   searchString?: string,
   teams?: string[]
 ) {
   const { pathname } = useLocation();
-  const queries = getWishlistQueries(
-    pathname,
-    userId,
-    searchString ?? "",
-    teams
+
+  const queries = useMemo(
+    () => getWishlistQueries(pathname, userId ?? "", searchString ?? "", teams),
+    [pathname, userId, searchString, teams]
   );
 
-  const key = ["wishlists", userId, queries];
+  const key = useMemo(
+    () => (userId ? ["wishlists", userId, queries] : null),
+    [userId, queries]
+  );
 
   const {
     data: wishlists,
@@ -61,6 +64,15 @@ function getWishlistQueries(
       Query.notEqual("ownerId", userId),
       Query.contains("title", searchString),
       Query.orderDesc("$sequence"),
+    ];
+  }
+
+  if (pathname.includes("/edit-wish")) {
+    return [
+      Query.or([
+        Query.equal("ownerId", userId),
+        Query.contains("editorsIds", userId),
+      ]),
     ];
   }
 

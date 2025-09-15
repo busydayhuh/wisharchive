@@ -1,6 +1,6 @@
 import ConfirmationDialog from "@/shared/ui/ConfirmationDialog";
-import { Button } from "@/shared/ui/kit/button";
-import { ArrowLeft } from "lucide-react";
+import { Button, buttonVariants } from "@/shared/ui/kit/button";
+import type { VariantProps } from "class-variance-authority";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -11,11 +11,15 @@ type BackButtonProps = {
     description: string;
     actionText: string;
   };
-};
+  children: React.ReactNode;
+} & React.ComponentProps<"button"> &
+  VariantProps<typeof buttonVariants>;
 
 function BackButton({
   confirmation = false,
   confDialogProps,
+  children,
+  ...props
 }: BackButtonProps) {
   const [confOpen, setConfOpen] = useState(false);
   const navigate = useNavigate();
@@ -27,13 +31,8 @@ function BackButton({
   }
   return (
     <>
-      <Button
-        size="icon"
-        variant="ghost"
-        className="rounded-full"
-        onClick={handleClick}
-      >
-        <ArrowLeft />
+      <Button onClick={handleClick} {...props}>
+        {children}
       </Button>
 
       {confDialogProps && (

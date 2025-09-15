@@ -1,7 +1,7 @@
 import { Slot } from "@radix-ui/react-slot";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { ChevronRightCircle, PanelLeft } from "lucide-react";
+import { Menu, PanelLeft } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/shared/lib/css";
@@ -273,7 +273,7 @@ function SidebarTrigger({
       {...props}
     >
       {isMobile ? (
-        <ChevronRightCircle className="stroke-1 size-5" />
+        <Menu className="stroke-1 size-5" />
       ) : (
         <PanelLeft className="stroke-[1.5px] size-3" />
       )}

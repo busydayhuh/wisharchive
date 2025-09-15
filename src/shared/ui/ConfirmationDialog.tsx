@@ -11,14 +11,15 @@ import {
 import type { ReactNode } from "react";
 import type { Setter } from "../model/types";
 
-type ConfirmationDialogProps = {
+export type ConfirmationDialogProps = {
   title: string;
   description: ReactNode;
   actionText: string;
-  onConfirm: () => void;
+  onConfirm: (() => void) | undefined;
+  onCancel?: () => void;
 
   open: boolean;
-  onOpenChange: Setter<boolean>;
+  onOpenChange?: Setter<boolean>;
 };
 
 function ConfirmationDialog({
@@ -26,6 +27,7 @@ function ConfirmationDialog({
   description,
   actionText,
   onConfirm,
+  onCancel,
   open,
   onOpenChange,
 }: ConfirmationDialogProps) {
@@ -37,10 +39,13 @@ function ConfirmationDialog({
           <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="bg-muted hover:bg-muted/60 shadow-none border-0">
+          <AlertDialogCancel
+            className="bg-muted hover:bg-muted/60 shadow-none py-6 border-0"
+            onClick={onCancel}
+          >
             Отмена
           </AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm}>
+          <AlertDialogAction onClick={onConfirm} className="py-6">
             {actionText}
           </AlertDialogAction>
         </AlertDialogFooter>

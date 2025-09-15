@@ -1,11 +1,11 @@
-import { useWishlists } from "../model/useWishlists";
+import { useWishlists } from "@/features/wishlist";
 import { useDashboardContext } from "../ui/DashboardLayout";
 import WishlistsPageLayout from "../ui/main-content/wishlists/WishlistsPageLayout";
 
 function WishlistsPage() {
   const { dashboardUserId, searchString } = useDashboardContext();
   const { wishlists, isLoading, error } = useWishlists(
-    dashboardUserId ?? "",
+    dashboardUserId ?? null,
     searchString
   );
 

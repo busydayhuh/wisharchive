@@ -7,7 +7,7 @@ async function fetcher(wishId: string) {
   return response as WishDocumentType;
 }
 
-export function useWish(wishId?: string | null) {
+export function useWish(wishId: string | null) {
   const {
     data: wish,
     isLoading,

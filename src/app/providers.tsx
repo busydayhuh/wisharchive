@@ -7,7 +7,7 @@ function Providers(props: { children: ReactNode }) {
   return (
     <UserProvider>
       <WishlistDialogProvider>
-        <SidebarProvider defaultOpen={true}>{props.children}</SidebarProvider>
+        <SidebarProvider defaultOpen={false}>{props.children}</SidebarProvider>
       </WishlistDialogProvider>
     </UserProvider>
   );

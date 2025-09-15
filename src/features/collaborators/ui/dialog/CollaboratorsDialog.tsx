@@ -1,5 +1,5 @@
+import useMembershipMutations from "@/features/collaborators/model/membership/useMembershipMutations";
 import { useCollaborators } from "@/features/collaborators/model/useCollaborators";
-import useMembershipMutations from "@/shared/model/membership/useMembershipMutations";
 import type { Setter } from "@/shared/model/types";
 import { Button } from "@/shared/ui/kit/button";
 import {

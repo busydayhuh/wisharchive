@@ -1,22 +1,13 @@
-import { useAuth } from "@/features/auth";
-import {
-  CollaboratorsAvatars,
-  useCollaborators,
-} from "@/features/collaborators";
-import {
-  BookmarkButton,
-  EditWishlistButton,
-  useBookmarkWishlist,
-  useWishlistDialog,
-  useWishlistRoles,
-} from "@/features/wishlist";
+import { CollaboratorsAvatars } from "@/features/collaborators";
+import { useWishlistcardMeta } from "@/features/dashboard/model/useWishlistcardMeta";
+import { BookmarkButton, EditWishlistButton } from "@/features/wishlist";
 import { cn } from "@/shared/lib/css";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { Badge } from "@/shared/ui/kit/badge";
 import { Lock } from "lucide-react";
 import { memo } from "react";
-import { href, Link, useLocation } from "react-router-dom";
+import { href, Link } from "react-router-dom";
 import ImageTiles from "./ImageTiles";
 
 const WishlistGalleryItem = memo(function WishlistGalleryItem({
@@ -24,25 +15,16 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
 }: {
   wishlist: WishlistDocumentType;
 }) {
-  const { pathname } = useLocation();
-  const { current: authUser } = useAuth();
-  const { collaborators } = useCollaborators(wishlist.$id);
-
-  const { openDialog } = useWishlistDialog();
-  const { toggleBookmark } = useBookmarkWishlist(
-    wishlist.$id,
-    wishlist.bookmarkedBy ?? []
-  );
-
-  const { isOwner, isEditor } = useWishlistRoles(
-    authUser?.$id ?? "",
-    wishlist.$id
-  );
-  const isFavorite = wishlist.bookmarkedBy.includes(authUser?.$id) ?? false;
-
-  function onEditClick() {
-    openDialog("edit", wishlist.$id);
-  }
+  const {
+    collaborators,
+    toggleBookmark,
+    isOwner,
+    isEditor,
+    isFavorite,
+    onBookmarksPage,
+    onSharedPage,
+    onEdit,
+  } = useWishlistcardMeta(wishlist);
 
   return (
     <>
@@ -50,13 +32,13 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
         <div className="relative">
           {/* Добавить в закладки */}
           <BookmarkButton
-            isFavorite={isFavorite || pathname === "/bookmarks"}
+            isFavorite={isFavorite || onBookmarksPage}
             onPressed={toggleBookmark}
           />
 
           {/* Редактировать */}
           {(isOwner || isEditor) && (
-            <EditWishlistButton onClick={onEditClick} variant="gallery" />
+            <EditWishlistButton onClick={onEdit} variant="gallery" />
           )}
 
           {/* Стопка картинок */}
@@ -100,7 +82,7 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
           <span
             className={cn(
               "text-xs",
-              pathname === "/shared"
+              onSharedPage
                 ? [
                     "px-1.5 pb-0.5 rounded-lg text-foreground",
                     isEditor ? "bg-blue-200" : "bg-yellow-200",
@@ -108,7 +90,7 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
                 : "text-muted-foreground md:text-sm"
             )}
           >
-            {pathname === "/shared"
+            {onSharedPage
               ? isEditor
                 ? "редактор"
                 : "читатель"

@@ -1,7 +1,7 @@
+import { useWishlists } from "@/features/wishlist";
 import team from "@/shared/model/teams";
 import type { Models } from "appwrite";
 import useSWR from "swr";
-import { useWishlists } from "./useWishlists";
 
 async function fetcher() {
   const response = await team.list();
@@ -9,7 +9,10 @@ async function fetcher() {
   return response.teams as Models.Team<Models.Preferences>[];
 }
 
-export function useCollabWishlists(userId: string, searchString?: string) {
+export function useCollabWishlists(
+  userId: string | null,
+  searchString?: string
+) {
   const {
     data: teams,
     isLoading: teamsLoading,

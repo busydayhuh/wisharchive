@@ -16,7 +16,7 @@ export function BookmarkButton({
     <Toggle
       size={variant === "gallery" ? "sm" : "default"}
       className={cn(
-        "relative px-1 py-1 rounded-full cursor-pointer",
+        "relative px-1 py-1 rounded-full text-muted-foreground hover:text-foreground cursor-pointer",
 
         variant === "gallery" &&
           "top-2 right-2 z-10 absolute bg-secondary data-[state=on]:bg-destructive data-[state=on]:text-destructive data-[state=on]:[&_svg]:fill-white",

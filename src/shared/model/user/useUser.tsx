@@ -5,18 +5,18 @@ import type { UserDocumentType } from "../types";
 
 // Возвращает документ с информацией о конкретном юзере по id юзера
 
-async function fetcher({ userId }: { userId: string }) {
+async function fetcher(userId: string) {
   const response = await db.users.list([Query.equal("userId", userId)]);
 
   return response.documents[0] as UserDocumentType;
 }
 
-export function useUser(userId?: string) {
+export function useUser(userId?: string | null) {
   const {
     data: user,
     isLoading,
     error,
-  } = useSWR(userId && userId !== "" ? { userId: userId } : null, fetcher, {
+  } = useSWR(userId && userId !== "" ? userId : null, fetcher, {
     onError: (err) => {
       console.error("Ошибка SWR для ключа", userId, err);
       console.trace();

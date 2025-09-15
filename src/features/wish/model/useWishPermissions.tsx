@@ -1,4 +1,4 @@
-import { useWishlistRoles } from "@/features/wishlist";
+import { useWishlistPermissions } from "@/features/wishlist";
 
 export type WishRolesType = {
   isOwner: boolean;
@@ -8,13 +8,13 @@ export type WishRolesType = {
   hasWishlist?: boolean;
 };
 
-export function useWishRoles(
+export function useWishPermissions(
   userId: string,
-  wishlistId?: string | null,
-  ownerId?: string | null,
-  bookerId?: string | null
+  wishlistId: string | null,
+  ownerId: string | null,
+  bookerId: string | null
 ) {
-  const wishlistRoles = useWishlistRoles(userId, wishlistId ?? null);
+  const wishlistRoles = useWishlistPermissions(userId, wishlistId ?? null);
 
   if (wishlistRoles.hasWishlist) {
     return {
@@ -29,5 +29,6 @@ export function useWishRoles(
     isReader: true,
     isEditor: ownerId === userId,
     isBooker: bookerId === userId,
+    hasWishlist: false,
   };
 }

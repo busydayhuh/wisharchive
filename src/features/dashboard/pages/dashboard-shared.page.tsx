@@ -11,7 +11,7 @@ function SharedPage() {
     wishlists: collabWishlists,
     isLoading,
     error,
-  } = useCollabWishlists(current?.$id ?? "", searchString);
+  } = useCollabWishlists(current?.$id ?? null, searchString);
 
   return (
     <WishlistsPageLayout

@@ -1,59 +1,61 @@
-import {
-  TbCurrencyDollar,
-  TbCurrencyEuro,
-  TbCurrencyLari,
-  TbCurrencyLira,
-  TbCurrencyPound,
-  TbCurrencyRiyal,
-  TbCurrencyRubel,
-  TbCurrencyRupee,
-  TbCurrencyYen,
-  TbCurrencyYuan,
-} from "react-icons/tb";
-
 export const CURRENCY = [
   {
     abbr: "RUB",
-    icon: <TbCurrencyRubel className="stroke-[1.5px]" />,
+    title: "Российский рубль",
+    icon: "₽",
   },
   {
     abbr: "USD",
-    icon: <TbCurrencyDollar className="stroke-[1.5px]" />,
+    title: "Доллар США",
+    icon: "$",
   },
   {
     abbr: "EUR",
-    icon: <TbCurrencyEuro className="stroke-[1.5px]" />,
+    title: "Евро",
+    icon: "€",
   },
   {
     abbr: "GBP",
-    icon: <TbCurrencyPound className="stroke-[1.5px]" />,
+    title: "Фунт стерлингов",
+    icon: "£",
   },
   {
     abbr: "INR",
-    icon: <TbCurrencyRupee className="stroke-[1.5px]" />,
+    title: "Индийская рупия",
+    icon: "₹",
   },
   {
     abbr: "CNY",
-    icon: <TbCurrencyYuan className="stroke-[1.5px]" />,
+    title: "Китайский юань",
+    icon: "¥",
   },
   {
     abbr: "JPY",
-    icon: <TbCurrencyYen className="stroke-[1.5px]" />,
+    title: "Японская иена",
+    icon: "JP¥",
   },
   {
     abbr: "GEL",
-    icon: <TbCurrencyLari className="stroke-[1.5px]" />,
+    title: "Грузинский лари",
+    icon: "₾",
+  },
+  {
+    abbr: "KZT",
+    title: "Казахский тенге",
+    icon: "₸",
   },
   {
     abbr: "SAR",
-    icon: <TbCurrencyRiyal className="stroke-[1.5px]" />,
+    title: "Саудовский риял",
+    icon: "﷼",
   },
   {
     abbr: "TRY",
-    icon: <TbCurrencyLira className="stroke-[1.5px]" />,
+    title: "Турецкая лира",
+    icon: "₺",
   },
 ];
 
 export function Currency({ currency }: { currency: string }) {
-  return CURRENCY.find(({ abbr }) => abbr === currency)?.icon;
+  return <span>{CURRENCY.find(({ abbr }) => abbr === currency)?.icon}</span>;
 }

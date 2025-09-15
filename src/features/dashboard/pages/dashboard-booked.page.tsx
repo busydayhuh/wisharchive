@@ -1,26 +1,14 @@
+import { useWishes } from "@/features/wish";
+import { useDashboardContext } from "../ui/DashboardLayout";
+import WishesPageLayout from "../ui/main-content/wishes/WishesPageLayout";
+
 function BookedPage() {
-  // const { searchString, dashboardUserId } = useDashboardContext();
-  // const { user, isLoading, error } = dashboardUser;
+  const { dashboardUserId, searchString } = useDashboardContext();
+  const { wishes, isLoading, error } = useWishes(dashboardUserId, searchString);
 
-  // let filteredBookedWishes = [] as WishDocumentType[];
-
-  // if (user && user.bookedWishes) {
-  //   filteredBookedWishes = user.bookedWishes.filter(({ title }) =>
-  //     title.includes(searchString)
-  //   );
-  // }
-
-  // console.log("filteredBookedWishes :>> ", filteredBookedWishes);
-
-  // return (
-  //   <WishesPageLayout
-  //     wishes={filteredBookedWishes}
-  //     isLoading={isLoading}
-  //     error={error}
-  //   />
-  // );
-
-  return <>Booked page</>;
+  return (
+    <WishesPageLayout wishes={wishes} isLoading={isLoading} error={error} />
+  );
 }
 
 export const Component = BookedPage;

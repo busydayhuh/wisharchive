@@ -1,7 +1,8 @@
+import { ArrowLeft } from "lucide-react";
 import { useParams } from "react-router";
 import { useAuth } from "../auth";
 import { useWish } from "./model/useWish";
-import { useWishRoles } from "./model/useWishRoles";
+import { useWishPermissions } from "./model/useWishPermissions";
 import BackButton from "./ui/buttons/BackButton";
 import { RelatedWishes } from "./ui/RelatedWishes";
 import { WishImage } from "./ui/WishImage";
@@ -9,11 +10,12 @@ import { WishInfo } from "./ui/WishInfo";
 import { WishLayout } from "./ui/WishLayout";
 
 function WishPage() {
-  const { current: authUser } = useAuth();
   const { wishId } = useParams();
-  const { wish, isLoading, error } = useWish(wishId);
+  const { wish, isLoading, error } = useWish(wishId ?? null);
 
-  const roles = useWishRoles(
+  const { current: authUser } = useAuth();
+
+  const roles = useWishPermissions(
     authUser?.$id ?? "",
     wish?.wishlistId ?? null,
     wish?.ownerId ?? null,
@@ -25,12 +27,21 @@ function WishPage() {
   if (wish)
     return (
       <WishLayout
-        backSlot={<BackButton />}
+        backSlot={
+          <BackButton
+            children={<ArrowLeft />}
+            size="icon"
+            variant="ghost"
+            className="rounded-full"
+          />
+        }
         imageSlot={
           <WishImage
+            wishId={wish.$id}
             url={wish.imageURL}
             alt={wish.title}
             isBooked={wish.isBooked}
+            variant="page"
           />
         }
         infoSlot={<WishInfo wish={wish} wishRoles={roles} />}

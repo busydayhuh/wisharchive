@@ -1,12 +1,12 @@
 import { useMemo } from "react";
-import { useTeamMembers } from "../../../shared/model/membership/useTeamMembers";
 import { useUsers } from "../../../shared/model/user/useUsers";
+import { useTeamMembers } from "./membership/useTeamMembers";
 
 export type CollaboratorType = {
   userId: string;
   userName: string;
   userEmail: string;
-  avatarURL?: string;
+  avatarURL: string | null;
   roles?: string[];
   confirm?: boolean;
 };

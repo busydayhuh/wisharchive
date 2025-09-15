@@ -1,11 +1,8 @@
 import db from "@/shared/model/databases";
+import { performMutation } from "@/shared/model/performOptimisticMutation";
 import team from "@/shared/model/teams";
-import type {
-  UserDocumentType,
-  WishlistDocumentType,
-} from "@/shared/model/types";
-import { ID, Permission, Role } from "appwrite";
-import { mutate } from "swr";
+import type { UserDocumentType } from "@/shared/model/types";
+import { ID, Permission, Role, type Models } from "appwrite";
 
 type createWishlistProps = {
   title: string;
@@ -15,14 +12,9 @@ type createWishlistProps = {
   owner?: UserDocumentType;
 };
 
-type OptimisticUpdater = (
-  prev: WishlistDocumentType[]
-) => WishlistDocumentType[];
-type ServerAction = () => Promise<WishlistDocumentType | void>;
-
 async function createWishlistMutation(payload: createWishlistProps) {
   const id = ID.unique(); // id для нового вишлиста и его команды
-  const permissions = configurePermissions(payload.isPrivate, id);
+  const permissions = configureWishlistPermissions(payload.isPrivate, id);
 
   try {
     const newTeam = await team.create(payload.title, id);
@@ -44,54 +36,41 @@ async function updateWishlistMutation(
   privacyChanged = false
 ) {
   const updatedPermissions = privacyChanged
-    ? configurePermissions(isPrivate, wishlistId)
+    ? configureWishlistPermissions(isPrivate, wishlistId)
     : undefined;
 
   return performMutation(
     (prev) =>
-      prev.map((wl: WishlistDocumentType) =>
+      prev.map((wl: Models.Document) =>
         wl.$id === wishlistId ? { ...wl, ...payload } : wl
       ),
 
     async () =>
-      await db.wishlists.update(wishlistId, payload, updatedPermissions)
+      await db.wishlists.update(wishlistId, payload, updatedPermissions),
+
+    "wishlists",
+    [wishlistId]
   );
 }
 
 async function deleteWishlistMutation(wishlistId: string) {
   return performMutation(
-    (prev) => prev.filter((wl: WishlistDocumentType) => wl.$id !== wishlistId),
+    (prev) => prev.filter((wl: Models.Document) => wl.$id !== wishlistId),
 
     async () => {
       await db.wishlists.delete(wishlistId);
-      await team.delete(wishlistId);
-    }
+      await team.delete(wishlistId); // вместе с вишлистом удаляем и его команду
+    },
+
+    "wishlists",
+    [wishlistId]
   );
 }
 
-async function performMutation(
-  updater: OptimisticUpdater,
-  action: ServerAction
+export function configureWishlistPermissions(
+  isPrivate: boolean,
+  teamId: string
 ) {
-  try {
-    mutate(
-      (key) => Array.isArray(key) && key[0] === "wishlists",
-      (prev?: WishlistDocumentType[]) => updater(prev ?? []),
-      {
-        rollbackOnError: true,
-        revalidate: false,
-      }
-    );
-
-    return await action();
-  } catch {
-    console.log("Ошибка мутации списков");
-
-    mutate((key) => Array.isArray(key) && key[0] === "wishlists"); // запрашиваем актуальные данные для отката
-  }
-}
-
-function configurePermissions(isPrivate: boolean, teamId: string) {
   const editingPermissions = [
     Permission.update(Role.team(teamId, "owner")),
     Permission.update(Role.team(teamId, "editors")),

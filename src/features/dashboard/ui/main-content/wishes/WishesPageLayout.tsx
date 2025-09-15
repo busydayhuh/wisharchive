@@ -1,8 +1,7 @@
 import type { WishDocumentType } from "@/shared/model/types";
-import { ID } from "appwrite";
 import Masonry from "react-masonry-css";
 import { useDashboardContext } from "../../DashboardLayout";
-import WishGalleryItem from "./items/WishGalleryItem";
+import WishGalleryItem, { CardWrapper } from "./items/WishGalleryItem";
 import WishTableItem from "./items/WishTableItem";
 
 function WishesPageLayout({
@@ -31,7 +30,9 @@ function WishesPageLayout({
           columnClassName="my-masonry-grid_column"
         >
           {wishes.map((wish) => (
-            <WishGalleryItem wish={wish} key={ID.unique()} />
+            <CardWrapper key={wish.$id}>
+              <WishGalleryItem wish={wish} />
+            </CardWrapper>
           ))}
         </Masonry>
       );

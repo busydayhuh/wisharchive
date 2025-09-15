@@ -1,15 +1,9 @@
 import { useCollaborators } from "@/features/collaborators";
 
-export type WishlistRolesType = {
-  isOwner: boolean;
-  isReader: boolean;
-  isEditor: boolean;
-  isFavorite: boolean;
-  hasWishlist: boolean;
-  inPrivateWishlist: boolean;
-};
-
-export function useWishlistRoles(userId: string, wishlistId: string | null) {
+export function useWishlistPermissions(
+  userId: string,
+  wishlistId: string | null
+) {
   const { collaborators } = useCollaborators(wishlistId);
   const collaborator = collaborators?.find((c) => c.userId === userId);
 
@@ -18,7 +12,7 @@ export function useWishlistRoles(userId: string, wishlistId: string | null) {
     isReader: collaborator?.roles?.includes("readers") ?? false,
     isEditor: collaborator?.roles?.includes("editors") ?? false,
 
-    // поля для проверки в useWishRoles
+    // поля для проверки в useWishPermissions
     hasWishlist: Boolean(wishlistId),
   };
 }

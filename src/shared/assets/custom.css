@@ -70,3 +70,47 @@ html {
     to(rgba(0, 0, 0, 0))
   );
 }
+
+.show-btns-on-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+@media (any-hover: hover) {
+  .show-btns-on-hover .action-btns {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    transform: translateY(100%);
+    pointer-events: none;
+    visibility: hidden;
+    opacity: 0%;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .show-btns-on-hover.active .action-btns,
+  .action-btns:focus-within,
+  .action-btns:has([aria-expanded="true"]),
+  .action-btns:has([aria-pressed="true"]) {
+    opacity: 100%;
+    visibility: visible;
+
+    pointer-events: all;
+    transform: translateY(0%);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(115, 115, 115, 0.289) 100%
+    );
+  }
+}
+
+@media (any-hover: none) {
+  .show-btns-on-hover .action-btns {
+    transform: translateY(0);
+    z-index: 10;
+    pointer-events: all;
+    visibility: visible;
+  }
+}

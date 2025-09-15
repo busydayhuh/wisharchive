@@ -1,4 +1,4 @@
-import { useWishlists } from "../model/useWishlists";
+import { useWishlists } from "@/features/wishlist";
 import { useDashboardContext } from "../ui/DashboardLayout";
 import WishlistsPageLayout from "../ui/main-content/wishlists/WishlistsPageLayout";
 
@@ -8,7 +8,7 @@ function BookmarksPage() {
     wishlists: bookmarkedWishlists,
     isLoading,
     error,
-  } = useWishlists(dashboardUserId ?? "", searchString);
+  } = useWishlists(dashboardUserId ?? null, searchString);
 
   return (
     <WishlistsPageLayout

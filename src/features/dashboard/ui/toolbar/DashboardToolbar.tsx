@@ -1,7 +1,6 @@
 import { cn } from "@/shared/lib/css";
 import Searchbar from "@/shared/ui/Searchbar";
 import type { Dispatch, SetStateAction } from "react";
-import Navigation from "./Navigation";
 import ViewModeSwitch from "./ViewModeSwitch";
 
 type DashboardToolbarProps = {
@@ -30,7 +29,7 @@ function DashboardToolbar({
         />
 
         <div className="flex justify-between items-end gap-3 w-full">
-          <Navigation />
+          {/* <Navigation /> */}
           <ViewModeSwitch viewMode={viewMode} setViewMode={setViewMode} />
         </div>
       </div>
@@ -39,7 +38,7 @@ function DashboardToolbar({
 
   return (
     <div className="top-0 z-20 sticky flex justify-between items-end gap-5 bg-background mr-6 -mb-6 lg:-mb-7 py-2 w-full">
-      <Navigation />
+      {/* <Navigation /> */}
 
       <Searchbar
         searchString={searchString}

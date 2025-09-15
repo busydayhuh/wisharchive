@@ -1,12 +1,24 @@
-import team from "../teams";
+import { wishlistMutations } from "@/features/wishlist";
+import { useMemo } from "react";
+import team from "../../../../shared/model/teams";
 import { useTeamMembers } from "./useTeamMembers";
 
 function useMembershipMutations(teamId: string) {
   const { members, mutate } = useTeamMembers(teamId);
 
+  const editors = useMemo(
+    () => members?.filter((m) => m.roles.includes("editors")),
+    [members]
+  );
+
   async function addMemberAsEditor(email: string, userId: string) {
     try {
       const response = await team.addEditor(teamId, email, userId);
+
+      await wishlistMutations.update(teamId, {
+        editorsIds: [...(editors?.map((m) => m.userId) ?? []), userId],
+      });
+
       mutate();
 
       return response;
@@ -34,6 +46,11 @@ function useMembershipMutations(teamId: string) {
 
     try {
       await team.deleteMembership(teamId, membershipId);
+
+      await wishlistMutations.update(teamId, {
+        editorsIds: editors?.filter((m) => m.userId !== userId),
+      });
+
       mutate();
     } catch {
       alert("Не удалось добавить пользователя");

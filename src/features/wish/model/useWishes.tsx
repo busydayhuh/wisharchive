@@ -1,6 +1,7 @@
 import db from "@/shared/model/databases";
 import type { WishDocumentType } from "@/shared/model/types";
 import { Query } from "appwrite";
+import { useMemo } from "react";
 import { useLocation } from "react-router";
 import useSWR from "swr";
 
@@ -12,9 +13,16 @@ async function fetcher(queries: string[]) {
 
 export function useWishes(userId: string, searchString?: string) {
   const { pathname } = useLocation();
-  const queries = getWishQueries(pathname, userId, searchString ?? "");
 
-  const key = ["wishes", userId, queries];
+  const queries = useMemo(
+    () => getWishQueries(pathname, userId, searchString ?? ""),
+    [pathname, userId, searchString]
+  );
+
+  const key = useMemo(
+    () => (userId ? ["wishes", userId, queries] : null),
+    [userId, queries]
+  );
 
   const {
     data: wishes,

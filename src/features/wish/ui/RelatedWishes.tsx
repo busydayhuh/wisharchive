@@ -27,12 +27,16 @@ export function RelatedWishes({
 
   if (relatedWishes)
     return (
-      <div className="space-y-6 mx-auto max-w-[90%]">
-        <div className="flex justify-between">
-          <div className="font-medium text-xl">
+      <div className="space-y-3 md:space-y-6 mx-2 md:mx-auto mt-10 md:mt-20 md:max-w-[96%]">
+        <div className="flex flex-wrap justify-between">
+          <div className="font-medium text-lg md:text-xl">
             Другие желания пользователя {userName}
           </div>
-          <Button variant="link" className="text-destructive" asChild>
+          <Button
+            variant="link"
+            className="has-[>svg]:px-0 text-destructive"
+            asChild
+          >
             <Link to={href(ROUTES.WISHES, { userId: userId })}>
               смотреть все <ChevronRight />
             </Link>
@@ -54,7 +58,7 @@ export function RelatedWishes({
                     className="rounded-2xl"
                   />
                 ) : (
-                  <div className="bg-muted w-sm aspect-square"></div>
+                  <div className="bg-muted aspect-square"></div>
                 )}
                 <div className="font-medium text-base">{wish.title}</div>
               </div>

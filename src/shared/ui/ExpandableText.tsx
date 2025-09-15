@@ -53,10 +53,7 @@ function ExpandableText({ text, lines = 5 }: { text: string; lines?: number }) {
       >
         <div
           ref={contentRef}
-          className={cn(
-            "text-foreground text-sm",
-            !expanded && showButton && "text-mask"
-          )}
+          className={cn("text-sm", !expanded && showButton && "text-mask")}
         >
           {text}
         </div>

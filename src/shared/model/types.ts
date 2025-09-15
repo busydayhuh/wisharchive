@@ -2,39 +2,41 @@ import { type Models } from "appwrite";
 
 export type WishDocumentType = Models.Document & {
   title: string;
-  description?: string;
-  shopURL?: string;
-  price?: number;
+  description: string | null;
+  shopURL: string | null;
+  price: number | null;
   currency: string;
   isArchived: boolean;
   ownerId: string;
   bookerId: string | null;
   isBooked: boolean;
-  wishlistId?: string;
-  imageURL?: string;
-  isPrivate?: boolean;
-  canReadId?: string[] | [];
-  canEditId?: string[] | [];
+  imageURL: string | null;
+  wishlistId: string | null;
+  isPrivate: boolean;
+  wishlist: WishlistDocumentType | null;
+  bookedBy: UserDocumentType | null;
+  owner: UserDocumentType;
 };
 
 export type WishlistDocumentType = Models.Document & {
   title: string;
-  description?: string;
-  ownerId: string;
-  wishes: WishDocumentType[] | null;
+  description: string | null;
   isPrivate: boolean;
-  canReadId?: string[] | [];
-  canEditId?: string[] | [];
-  coverImagesURL?: string[] | [];
+  ownerId: string;
+  editorsIds: string[] | [] | null;
+  wishes: WishDocumentType[] | null;
+  owner: UserDocumentType | null;
+  bookmarkedBy: string[] | null;
 };
 
 export type UserDocumentType = Models.Document & {
   userId: string;
   userName: string;
   userEmail: string;
-  favoriteWishlists: WishlistDocumentType[] | null;
-  avatarURL?: string;
+  avatarURL: string | null;
   bookedWishes: WishDocumentType[] | null;
+  wishes: WishDocumentType[] | null;
+  wishlists: WishDocumentType[] | null;
 };
 
 export type Setter<T> = React.Dispatch<React.SetStateAction<T>>;

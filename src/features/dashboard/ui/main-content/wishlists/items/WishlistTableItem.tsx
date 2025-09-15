@@ -1,15 +1,5 @@
-import { useAuth } from "@/features/auth";
-import {
-  CollaboratorsAvatars,
-  useCollaborators,
-} from "@/features/collaborators";
-import {
-  BookmarkButton,
-  EditWishlistButton,
-  useBookmarkWishlist,
-  useWishlistDialog,
-  useWishlistRoles,
-} from "@/features/wishlist";
+import { CollaboratorsAvatars } from "@/features/collaborators";
+import { BookmarkButton, EditWishlistButton } from "@/features/wishlist";
 import "@/shared/assets/custom.css";
 import { cn } from "@/shared/lib/css";
 import { ROUTES } from "@/shared/model/routes";
@@ -19,8 +9,9 @@ import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 import { Lock } from "lucide-react";
 import { memo, useMemo } from "react";
-import { href, Link, useLocation } from "react-router";
+import { href, Link } from "react-router";
 import ImageTiles from "./ImageTiles";
+import { useWishlistcardMeta } from "@/features/dashboard/model/useWishlistcardMeta";
 
 interface WishlistTableItemProps {
   wishlist: WishlistDocumentType;
@@ -29,21 +20,16 @@ interface WishlistTableItemProps {
 const WishlistTableItem = memo(function WishlistTableItem({
   wishlist,
 }: WishlistTableItemProps) {
-  const { pathname } = useLocation();
-  const { current: authUser } = useAuth();
-  const { collaborators } = useCollaborators(wishlist.$id);
-
-  const { openDialog } = useWishlistDialog();
-  const { toggleBookmark } = useBookmarkWishlist(
-    wishlist.$id,
-    wishlist.bookmarkedBy ?? []
-  );
-
-  const { isOwner, isEditor } = useWishlistRoles(
-    authUser?.$id ?? "",
-    wishlist.$id
-  );
-  const isFavorite = wishlist.bookmarkedBy.includes(authUser?.$id) ?? false;
+  const {
+    collaborators,
+    toggleBookmark,
+    isOwner,
+    isEditor,
+    isFavorite,
+    onBookmarksPage,
+    onSharedPage,
+    onEdit,
+  } = useWishlistcardMeta(wishlist);
 
   const createdAt = useMemo(
     () => format(wishlist.$createdAt, "PP", { locale: ru }),
@@ -54,10 +40,6 @@ const WishlistTableItem = memo(function WishlistTableItem({
     () => format(wishlist.$updatedAt, "PP", { locale: ru }),
     [wishlist.$updatedAt]
   );
-
-  function onEditClick() {
-    openDialog("edit", wishlist.$id);
-  }
 
   return (
     <div className="wl-table-grid relative items-center px-1 pt-2 pb-4 md:pb-8 lg:pb-2 transition dot-on-hover">
@@ -80,7 +62,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
           <span
             className={cn(
               "text-xs",
-              pathname === "/shared"
+              onSharedPage
                 ? [
                     "px-1.5 pb-0.5 rounded-lg text-foreground w-fit",
                     isEditor ? "bg-blue-200" : "bg-yellow-200",
@@ -88,7 +70,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
                 : "text-muted-foreground md:text-sm"
             )}
           >
-            {pathname === "/shared"
+            {onSharedPage
               ? isEditor
                 ? "редактор"
                 : "читатель"
@@ -123,11 +105,11 @@ const WishlistTableItem = memo(function WishlistTableItem({
       {/* Кнопки */}
       <div className="flex justify-end items-center md:gap-4">
         {(isOwner || isEditor) && (
-          <EditWishlistButton onClick={onEditClick} variant="table" />
+          <EditWishlistButton onClick={onEdit} variant="table" />
         )}
         <BookmarkButton
           variant="table"
-          isFavorite={isFavorite || pathname === "/bookmarks"}
+          isFavorite={isFavorite || onBookmarksPage}
           onPressed={toggleBookmark}
         />
       </div>

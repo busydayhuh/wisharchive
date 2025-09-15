@@ -13,9 +13,9 @@ export function WishLayout({
 }) {
   return (
     <StarFrame>
-      <div className="flex gap-8 mt-4 md:mt-6 xl:mt-8 mr-8 mb-20 max-w-[96%]">
-        {backSlot}
-        <div className="gap-8 grid grid-cols-[0.7fr_1fr]">
+      <div className="flex gap-6 mt-1 md:mt-6 2xl:mt-10 md:mr-8 md:max-w-[96%]">
+        <div className="hidden md:block">{backSlot}</div>
+        <div className="gap-4 md:gap-8 grid grid-cols-1 sm:grid-cols-[1fr_1fr] w-full">
           {imageSlot}
           {infoSlot}
         </div>

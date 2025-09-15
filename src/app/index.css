@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&: is(.dark *));
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -44,7 +44,6 @@
     "sans-serif";
   --inset-shadow-base: inset 0px 0px 120px 20px var(--color-zinc-700);
   --sidebar-icons-stroke: 1.5px;
-  --breakpoint-md: 56.25rem;
   --animate-star: bounce-out-down 1.5s ease-out forwards;
   --animate-gradient-button: gradient-button 16s linear infinite;
 
@@ -89,10 +88,10 @@
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.88 0 none);
-  --muted-foreground: oklch(0.556 0 0);
+  --muted-foreground: oklch(55.553% 0.00006 271.152);
   --accent: oklch(0.88 0 none);
   --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(42.069% 0.1795 265.793);
+  --destructive: oklch(0.45 0.08 224);
   --dest-light: oklch(72.197% 0.07506 271.494);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
@@ -152,11 +151,6 @@
     @apply bg-linear-[-45deg,#FFA63D,#FF3D77,#338AFF,#3CF0C5] rounded-full bg-size-[600%] size-14 animate-gradient-button;
   }
 
-  /* Общее для action-кнопок */
-  .show-on-hover {
-    @apply right-2 z-10 absolute;
-  }
-
   /* Сетка для вишлиста в табличном view */
   .wl-table-grid {
     @apply gap-3 md:gap-4 lg:gap-6 grid grid-cols-[5rem_10rem_1fr] sm:grid-cols-[5rem_10rem_1fr_1fr] md:grid-cols-[5rem_2fr_1fr_1fr] lg:grid-cols-[fit-content(128px)_2fr_1fr_1fr_1fr_1fr];
@@ -164,21 +158,32 @@
 
   /* Для устройств с курсором */
   @media (any-hover: hover) {
-    .show-on-hover {
-      @apply invisible -bottom-3 opacity-0;
+    .show-actions {
+      @apply invisible opacity-0 translate-y-3 pointer-events-none;
     }
 
-    .group\/cover:hover .show-on-hover,
-    .show-on-hover[aria-expanded="true"] {
-      @apply visible opacity-100 -translate-y-6;
+    .group-card-wrapper:hover .show-actions,
+    .group-card-wrapper:focus-within .show-actions,
+    .show-actions:has([aria-expanded="true"]) {
+      @apply visible opacity-100 translate-y-0 pointer-events-auto;
+    }
+
+    .group-card-wrapper:hover .cover-overlay,
+    .group-card-wrapper:focus-within .cover-overlay,
+    .group-card-wrapper:has([aria-expanded="true"]) .cover-overlay {
+      @apply brightness-50;
     }
   }
 
   /* Для устройств без курсора */
   @media (any-hover: none) {
-    .show-on-hover {
-      @apply visible bottom-2 opacity-100;
+    .show-actions {
+      @apply visible opacity-100;
     }
+  }
+
+  .selection-menu {
+    @apply bg-secondary rounded-2xl **:first:hover:rounded-tl-xl **:first:focus:rounded-tl-xl **:first:hover:rounded-tr-xl **:first:focus:rounded-tr-xl **:last:hover:rounded-bl-xl **:last:focus:rounded-bl-xl **:last:hover:rounded-br-xl **:last:focus:rounded-br-xl **:cursor-pointer;
   }
 }
 
