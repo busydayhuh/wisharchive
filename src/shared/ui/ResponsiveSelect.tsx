@@ -4,7 +4,9 @@ import { Button } from "@/shared/ui/kit/button";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from "@/shared/ui/kit/select";
@@ -81,7 +83,7 @@ export function ResponsiveSelect({
           <Button
             variant="outline"
             className={cn(
-              "justify-between border border-ring/60 outline-1 outline-input w-full font-normal",
+              "justify-between bg-secondary border-0 outline-0 w-full font-normal",
               className
             )}
           >
@@ -136,18 +138,36 @@ export function ResponsiveSelect({
         </SelectValue>
       </SelectTrigger>
       <SelectContent className="max-h-[14rem] overflow-y-scroll selection-menu">
-        {options.map((opt) => (
-          <SelectItem key={opt.value} value={opt.value}>
-            {renderOption ? (
-              renderOption(opt, opt.value === value)
-            ) : (
-              <span className="flex items-center gap-2">
-                {opt.icon}
-                {opt.label}
-              </span>
-            )}
-          </SelectItem>
-        ))}
+        {options.map((opt) => {
+          if (opt.value === "none") {
+            return (
+              <>
+                <SelectGroup>
+                  <SelectItem key={opt.value} value={opt.value}>
+                    <span className="flex items-center gap-2">
+                      {opt.icon}
+                      {opt.label}
+                    </span>
+                  </SelectItem>
+                </SelectGroup>
+                <SelectSeparator />
+              </>
+            );
+          }
+
+          return (
+            <SelectItem key={opt.value} value={opt.value}>
+              {renderOption ? (
+                renderOption(opt, opt.value === value)
+              ) : (
+                <span className="flex items-center gap-2">
+                  {opt.icon}
+                  {opt.label}
+                </span>
+              )}
+            </SelectItem>
+          );
+        })}
       </SelectContent>
     </Select>
   );
