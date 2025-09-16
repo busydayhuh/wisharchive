@@ -1,5 +1,6 @@
 import { useAuth } from "@/features/auth";
 import { useWishlists } from "@/features/wishlist";
+import { cn } from "@/shared/lib/css";
 import { CURRENCY } from "@/shared/lib/currency";
 import { wishFormSchema as formSchema } from "@/shared/model/formSchemas";
 import type { WishDocumentType } from "@/shared/model/types";
@@ -17,11 +18,13 @@ import { Input } from "@/shared/ui/kit/input";
 import { Textarea } from "@/shared/ui/kit/textarea";
 import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, Lock, UsersIcon } from "lucide-react";
+import { Loader2, Lock, Trash2, UsersIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import { NumericFormat } from "react-number-format";
 import { useBlocker, useNavigate } from "react-router";
 import type z from "zod";
+import { wishMutations } from "../model/wishMutations";
 
 function WishForm({
   wish,
@@ -31,18 +34,22 @@ function WishForm({
   onSubmit: (wishId: string, values: z.infer<typeof formSchema>) => void;
 }) {
   const [blockNavigate, setBlockNavigate] = useState(true);
+  const [deleteConfOpen, setDeleteConfOpen] = useState(false);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
+    mode: "onChange",
     defaultValues: {
       title: wish?.title || "",
       description: wish?.description || "",
       shopURL: wish?.shopURL || "",
-      price: wish?.price || 0,
+      price: wish?.price || null,
       currency: wish?.currency || "RUB",
       wishlist: wish?.wishlistId || "none",
     },
   });
+
+  const { errors } = form.formState;
 
   const blocker = useBlocker(
     ({ currentLocation, nextLocation }) =>
@@ -57,7 +64,7 @@ function WishForm({
           setBlockNavigate(false);
           onSubmit(wish.$id, values);
         })}
-        className="flex flex-col gap-6 md:ml-4 px-2 md:px-0 pb-2 max-w-xl"
+        className="flex flex-col gap-6 md:ml-4 px-2 md:px-0 pb-2"
       >
         <span className="font-bold text-lg md:text-2xl">
           Редактировать желание
@@ -87,7 +94,7 @@ function WishForm({
                 <Textarea
                   {...field}
                   className="h-18 md:h-24 text-sm md:text-base resize-none"
-                  placeholder="Добавьте краткое описание желания..."
+                  placeholder="Добавьте описание или примечание к желанию"
                 />
               </FormControl>
               <FormMessage />
@@ -99,7 +106,7 @@ function WishForm({
           name="shopURL"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Где купить?</FormLabel>
+              <FormLabel>Ссылка на магазин</FormLabel>
               <FormControl>
                 <Input
                   {...field}
@@ -111,41 +118,48 @@ function WishForm({
             </FormItem>
           )}
         />
-
-        <div className="flex items-end gap-0.5">
-          <FormField
-            control={form.control}
-            name="price"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Цена</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    type="number"
-                    className="w-[10rem] text-sm md:text-base"
-                    value={String(field.value)}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
+        <div className="flex flex-col gap-2">
+          <FormLabel>Цена</FormLabel>
+          <div className="flex items-center gap-1 bg-secondary pr-2 focus-within:border-ring rounded-md focus-within:ring-[3px] focus-within:ring-ring/50 w-fit">
+            <FormField
+              control={form.control}
+              name="price"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <NumericFormat
+                      getInputRef={field.ref}
+                      className="focus-visible:border-0 focus-visible:ring-0 w-[10rem] text-sm md:text-base"
+                      thousandSeparator=" "
+                      decimalScale={0}
+                      allowNegative={false}
+                      placeholder="0"
+                      customInput={Input}
+                      onValueChange={(values) => {
+                        field.onChange(values.floatValue ?? null);
+                      }}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="currency"
+              render={({ field }) => (
+                <FormItem>
+                  <CurrencySelect
+                    onValueChange={field.onChange}
+                    value={field.value}
                   />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="currency"
-            render={({ field }) => (
-              <FormItem>
-                <CurrencySelect
-                  onValueChange={field.onChange}
-                  value={field.value}
-                />
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                </FormItem>
+              )}
+            />
+          </div>
+          <FormMessage>
+            {errors.price && errors.price.message}
+            {errors.currency && errors.currency.message}
+          </FormMessage>
         </div>
 
         <FormField
@@ -153,7 +167,7 @@ function WishForm({
           name="wishlist"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="mb-1">Добавить в вишлист?</FormLabel>
+              <FormLabel className="mb-1">Выберите вишлист</FormLabel>
               <WishlistSelect
                 onValueChange={field.onChange}
                 value={field.value}
@@ -163,19 +177,20 @@ function WishForm({
             </FormItem>
           )}
         />
-        <div className="md:bottom-5 md:left-[50%] md:fixed flex sm:flex-row flex-col-reverse gap-2 md:gap-4 mt-2 md:translate-x-[-50%]">
+        <div className="flex sm:flex-row flex-col-reverse gap-2 mt-2 sm:mt-24 w-full">
           <Button
             type="button"
             variant="secondary"
-            className="bg-muted hover:bg-muted/60 shadow-none py-6"
+            className="bg-muted hover:bg-muted/60"
             onClick={() => navigate(-1)}
+            size="lg"
           >
             Отмена
           </Button>
           <Button
             type="submit"
             disabled={form.formState.isSubmitting}
-            className="shadow-none py-6"
+            size="lg"
           >
             {form.formState.isSubmitting ? (
               <>
@@ -186,6 +201,20 @@ function WishForm({
               "Сохранить"
             )}
           </Button>
+
+          {wish && (
+            <Button
+              type="button"
+              variant="ghost"
+              size="lg"
+              className="sm:ms-auto mb-5 sm:mb-0"
+              onClick={() => {
+                setDeleteConfOpen(true);
+              }}
+            >
+              <Trash2 /> Удалить желание
+            </Button>
+          )}
         </div>
       </form>
       {blocker.state === "blocked" && (
@@ -198,6 +227,19 @@ function WishForm({
           open={true}
         />
       )}
+      <ConfirmationDialog
+        title="Удалить желание?"
+        description="Вы точно хотите удалить это желание? Это действие нельзя отменить."
+        actionText="Удалить"
+        onConfirm={async () => {
+          await wishMutations.delete(wish.$id);
+
+          setBlockNavigate(false);
+          navigate(-1);
+        }}
+        onCancel={() => setDeleteConfOpen(false)}
+        open={deleteConfOpen}
+      />
     </Form>
   );
 }
@@ -226,7 +268,13 @@ function CurrencySelect({
       onChange={onValueChange}
       value={value}
       triggerText={triggerText}
-      className="shadow-none px-1 pb-6 border-none outline-0 text-muted-foreground"
+      className="bg-muted/60 px-3 py-2"
+      renderOption={(opt) => (
+        <span className="flex justify-between items-center gap-2 py-1 w-full">
+          {opt.label}
+          <span className="text-muted-foreground">{opt.icon}</span>
+        </span>
+      )}
     />
   );
 }
@@ -244,7 +292,7 @@ function WishlistSelect({
   const options = [
     {
       value: "none",
-      label: "— Без вишлиста —",
+      label: "Без вишлиста",
     },
     ...(wishlists ?? []).map((wl) => ({
       value: wl.$id,
@@ -267,7 +315,7 @@ function WishlistSelect({
       isLoading={isLoading}
       error={error}
       renderOption={(opt) => (
-        <span className="flex items-center gap-2 py-1">
+        <span className={cn("flex items-center gap-2 py-1")}>
           {opt.label} {opt.icon}
         </span>
       )}
