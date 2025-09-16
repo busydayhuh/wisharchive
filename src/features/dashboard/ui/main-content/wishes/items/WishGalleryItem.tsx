@@ -25,13 +25,12 @@ const WishGalleryItem = memo(function WishGalleryItem({
 }: {
   wish: WishDocumentType;
 }) {
-  const { isBooker, onBookedPage } = useWishcardMeta(wish);
+  const { onBookedPage } = useWishcardMeta(wish);
 
   return (
     <div
       className={cn(
-        "relative flex flex-col gap-1 md:gap-2 mb-4 overflow-hidden",
-        wish.isBooked && !isBooker && "opacity-60"
+        "relative flex flex-col gap-1 md:gap-2 mb-4 overflow-hidden"
       )}
     >
       <WishCover wish={wish} />
@@ -118,6 +117,7 @@ const WishCover = memo(function WishCover({
             archiveWish={archiveWish}
             deleteWish={deleteWish}
             editWish={editWish}
+            title={wish.title}
           />
         )}
         {!isOwner && (
@@ -129,62 +129,8 @@ const WishCover = memo(function WishCover({
           />
         )}
       </div>
-
-      {/* <Actions
-        isOwner={isOwner}
-        isBooker={isBooker}
-        isEditor={isEditor}
-        toggleBookingStatus={toggleBookingStatus}
-        archiveWish={archiveWish}
-        deleteWish={deleteWish}
-        archived={wish.isArchived}
-        isBooked={wish.isBooked}
-      /> */}
     </div>
   );
 });
-
-// const Actions = memo(function Actions({
-//   isOwner,
-//   isBooker,
-//   isEditor,
-//   toggleBookingStatus,
-//   archived,
-//   isBooked,
-// }: {
-//   isOwner: boolean;
-//   isBooker: boolean;
-//   isEditor: boolean;
-//   toggleBookingStatus: (pressed: boolean) => void;
-//   archiveWish: (archived: boolean) => void;
-//   deleteWish: (archived: boolean) => void;
-//   archived: boolean;
-//   isBooked: boolean;
-// }) {
-//   return (
-//     <div
-//       className={cn(
-//         "bottom-0 left-0 absolute flex justify-between has-only:justify-end gap-1 p-3 w-full transition-all duration-300 show-actions"
-//       )}
-//     >
-//       {(isOwner || isEditor) && (
-//         <WishQuickActions
-//           triggerVariant="gallery"
-//           side="top"
-//           align="start"
-//           isArchived={archived}
-//         />
-//       )}
-//       {!isOwner && (
-//         <GiftButton
-//           variant="gallery"
-//           isBooked={isBooked}
-//           isBookedByCurrentUser={isBooker}
-//           onPressed={toggleBookingStatus}
-//         />
-//       )}
-//     </div>
-//   );
-// });
 
 export default WishGalleryItem;
