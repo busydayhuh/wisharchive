@@ -38,7 +38,7 @@ function ConfirmationDialog({
           <AlertDialogTitle>{title}</AlertDialogTitle>
           <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <AlertDialogFooter className="md:mt-6">
           <AlertDialogCancel
             className="bg-muted hover:bg-muted/60 shadow-none py-6 border-0"
             onClick={onCancel}

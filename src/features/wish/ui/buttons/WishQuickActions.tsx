@@ -44,25 +44,28 @@ type MenuItems = {
   action: () => void;
 }[];
 
+type WishQuickActionsProps = {
+  archiveWish: (archived: boolean) => void;
+  deleteWish: () => void;
+  editWish: () => void;
+  align?: "center" | "end" | "start";
+  side?: "top" | "right" | "bottom" | "left";
+  wishId?: string;
+  isArchived?: boolean;
+  title?: string;
+};
+
 export function WishQuickActions({
   align = "end",
   side = "top",
   triggerVariant = "gallery",
   isArchived = false,
+  title,
   archiveWish,
   deleteWish,
   editWish,
   className,
-}: React.ComponentProps<"div"> &
-  ActionVariants & {
-    align?: "center" | "end" | "start";
-    side?: "top" | "right" | "bottom" | "left";
-    wishId?: string;
-    isArchived?: boolean;
-    archiveWish: (archived: boolean) => void;
-    deleteWish: () => void;
-    editWish: () => void;
-  }) {
+}: React.ComponentProps<"div"> & ActionVariants & WishQuickActionsProps) {
   const { isMobile } = useSidebar();
   const [dialogProps, setDialogProps] =
     useState<null | ConfirmationDialogProps>(null);
@@ -77,13 +80,30 @@ export function WishQuickActions({
             title: isArchived
               ? "Восстановить желание?"
               : "Переместить в архив?",
-            description: isArchived
-              ? "Вернуть желание в список актуальных?"
-              : "Вы уверены, что хотите пометить желание как исполненное? Исполненные желания будут доступны в разделе Архив желаний.",
+            description: isArchived ? (
+              <>
+                Вернуть желание <span className="font-bold">{title}</span> в
+                список актуальных?
+              </>
+            ) : (
+              <>
+                <p>
+                  Вы уверены, что хотите переместить исполненное желание{" "}
+                  <span className="font-bold">{title}</span> в архив?
+                </p>
+
+                <p className="mt-1">
+                  Вы сможете найти его позже в разделе «Архив желаний».
+                </p>
+              </>
+            ),
             actionText: isArchived ? "Вернуть" : "Переместить",
             open: true,
             onConfirm: () => {
               archiveWish(isArchived);
+              setDialogProps(null);
+            },
+            onCancel: () => {
               setDialogProps(null);
             },
           });
@@ -96,19 +116,27 @@ export function WishQuickActions({
         action: () => {
           setDialogProps({
             title: "Удалить желание?",
-            description:
-              "Вы уверены, что хотите удалить желание? Это действие нельзя отменить.",
+            description: (
+              <>
+                Вы уверены, что хотите удалить желание{" "}
+                <span className="font-bold">{title}</span>? Это действие нельзя
+                отменить.
+              </>
+            ),
             actionText: "Удалить",
             open: true,
             onConfirm: () => {
               deleteWish();
               setDialogProps(null);
             },
+            onCancel: () => {
+              setDialogProps(null);
+            },
           });
         },
       },
     ],
-    [isArchived, archiveWish, editWish, deleteWish]
+    [isArchived, archiveWish, editWish, deleteWish, title]
   );
 
   const useButtons = triggerVariant === "gallery" && !isMobile;
@@ -154,7 +182,7 @@ function Buttons({
               </Button>
             </DataStatePropInterceptor>
           </TooltipTrigger>
-          <TooltipContent side="left">
+          <TooltipContent side="top">
             <p>{title}</p>
           </TooltipContent>
         </Tooltip>
