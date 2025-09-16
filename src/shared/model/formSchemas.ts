@@ -10,17 +10,21 @@ export const wishlistFormSchema = z.object({
 });
 
 export const wishFormSchema = z.object({
-  title: z.string().min(1, { message: "Это обязательное поле" }),
+  title: z.string().min(1, { message: "это обязательное поле" }),
   description: z
     .string()
-    .max(500, { message: "Описание должно содержать не более 500 символов" })
+    .max(500, { message: "описание должно содержать не более 500 символов" })
     .optional(),
-  shopURL: z.url({ message: "Не валидная ссылка" }).optional(),
+  shopURL: z
+    .url({ message: "не валидная ссылка" })
+    .or(z.literal(""))
+    .optional(),
   price: z
-    .number()
-    .nonnegative({ message: "Только положительные числа" })
-    .int({ message: "Только целые числа" })
-    .optional(),
+    .number({ message: "введите число" })
+    .nonnegative({ message: "принимаются только положительные числа" })
+    .int({ message: "принимаются целые числа" })
+    .transform((val) => (val === 0 ? null : val))
+    .nullish(),
   currency: z.string(),
   wishlist: z.string(),
 });
