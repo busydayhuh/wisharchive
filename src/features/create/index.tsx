@@ -1,4 +1,5 @@
 import { useWishlistDialog } from "@/features/wishlist";
+import { ROUTES } from "@/shared/model/routes";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,9 +7,11 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/kit/dropdown-menu";
 import { ListPlus, Plus, Stars } from "lucide-react";
+import { useNavigate } from "react-router";
 
 const CreateButtonWithDropdown = function CreateButtonWithDropdown() {
   const { openDialog } = useWishlistDialog();
+  const navigate = useNavigate();
 
   return (
     <DropdownMenu>
@@ -24,8 +27,15 @@ const CreateButtonWithDropdown = function CreateButtonWithDropdown() {
         sideOffset={24}
         className="bg-blue-200 *:focus:bg-transparent shadow-blue-200 shadow-lg px-2 py-2 border-0 rounded-xl **:text-foreground **:cursor-pointer"
       >
-        <DropdownMenuItem>
-          <Stars className="stroke-[1.5px]" /> Новое желание
+        <DropdownMenuItem
+          onSelect={(e) => {
+            e.preventDefault();
+
+            navigate(ROUTES.ADD);
+          }}
+        >
+          <Stars className="stroke-[1.5px]" />
+          Новое желание
         </DropdownMenuItem>
         <DropdownMenuItem onSelect={() => openDialog("create")}>
           <ListPlus className="stroke-[1.5px]" /> Новый список
