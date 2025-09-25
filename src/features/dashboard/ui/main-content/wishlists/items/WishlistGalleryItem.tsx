@@ -1,9 +1,9 @@
 import { CollaboratorsAvatars } from "@/features/collaborators";
 import { useWishlistcardMeta } from "@/features/dashboard/model/useWishlistcardMeta";
 import { BookmarkButton, EditWishlistButton } from "@/features/wishlist";
-import { cn } from "@/shared/lib/css";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
+import { RoleBadge } from "@/shared/ui/Badges";
 import { EyeOffIcon } from "lucide-react";
 import { memo } from "react";
 import { href, Link } from "react-router-dom";
@@ -27,17 +27,22 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
 
   return (
     <>
-      <div className="group/cover flex flex-col gap-1 mb-4">
+      <div className="group-card-wrapper flex flex-col gap-1 mb-4">
         <div className="relative">
           {/* Добавить в закладки */}
           <BookmarkButton
             isFavorite={isFavorite || onBookmarksPage}
             onPressed={toggleBookmark}
+            className="top-2 right-2 z-10 absolute"
           />
 
           {/* Редактировать */}
           {(isOwner || isEditor) && (
-            <EditWishlistButton onClick={onEdit} variant="gallery" />
+            <EditWishlistButton
+              onClick={onEdit}
+              variant="gallery"
+              className="right-2 bottom-2 absolute show-actions"
+            />
           )}
 
           {/* Стопка картинок */}
@@ -72,25 +77,17 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
         </Link>
 
         {/* Счетчик желаний / роль */}
-        <div className="flex justify-between items-end px-2">
-          <span
-            className={cn(
-              "text-xs",
-              onSharedPage
-                ? [
-                    "px-1.5 pb-0.5 rounded-lg text-foreground",
-                    isEditor ? "bg-blue-200" : "bg-yellow-200",
-                  ]
-                : "text-muted-foreground md:text-sm"
-            )}
-          >
-            {onSharedPage
-              ? isEditor
-                ? "редактор"
-                : "читатель"
-              : `${wishlist.wishes?.length ?? 0} жел.`}
+        {onSharedPage ? (
+          <RoleBadge
+            role={isEditor ? "editor" : "reader"}
+            size="sm"
+            className="mx-2"
+          />
+        ) : (
+          <span className="text-muted-foreground text-xs">
+            {wishlist.wishes?.length ?? 0} жел.
           </span>
-        </div>
+        )}
       </div>
     </>
   );

@@ -19,7 +19,7 @@ const badgesVariants = cva(
   {
     variants: {
       size: {
-        sm: "h-8 rounded-sm gap-1.5 px-3 has-[>svg]:px-2.5 text-xs 2xl:text-sm",
+        sm: "h-7 rounded-sm gap-1.5 px-3 has-[>svg]:px-2.5 text-xs rounded-sm",
         md: "lg:h-9 lg:px-4 lg:py-2 lg:has-[>svg]:px-3 px-2 py-1 h-8 has-[>svg]:px-2 text-xs lg:text-sm 2xl:text-base",
         lg: "h-12 rounded-xl px-6 has-[>svg]:px-4 text-sm 2xl:text-base ",
       },
@@ -57,7 +57,7 @@ export const ROLES = {
   editor: {
     title: "редактор",
     icon: <Pencil />,
-    colors: "bg-details text-details-foreground",
+    colors: "bg-muted-backdrop text-foreground",
   },
 };
 
@@ -136,10 +136,14 @@ export function RoleBadge({
   size?: Size;
   className?: string;
 }) {
-  <span className={cn(badgesVariants({ size, className }), ROLES[role].colors)}>
-    {ROLES[role].icon}
-    {ROLES[role].title}
-  </span>;
+  return (
+    <span
+      className={cn(badgesVariants({ size, className }), ROLES[role].colors)}
+    >
+      {ROLES[role].icon}
+      {ROLES[role].title}
+    </span>
+  );
 }
 
 export function ShopBadge({

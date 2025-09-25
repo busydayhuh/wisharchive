@@ -1,6 +1,5 @@
 import { cn } from "@/shared/lib/css";
 import { Button } from "@/shared/ui/kit/button";
-import { useSidebar } from "@/shared/ui/kit/sidebar";
 import { Pencil } from "lucide-react";
 
 export function EditWishlistButton({
@@ -11,24 +10,19 @@ export function EditWishlistButton({
   variant: "table" | "gallery";
   onClick: (open: boolean) => void;
 }) {
-  const { isMobile } = useSidebar();
-
   return (
     <Button
-      size={isMobile ? "sm" : "icon"}
+      size="icon"
       onClick={onClick}
       type="button"
-      variant="secondary"
+      variant={variant === "gallery" ? "secondary" : "outline"}
       className={cn(
         "z-10",
-        variant === "gallery" &&
-          "border-0 rounded-full transition duration-300 show-on-hover",
-        variant === "table" &&
-          "bg-transparent shadow-none rounded-full hover:bg-muted text-muted-foreground",
+
         className
       )}
     >
-      <Pencil className="stroke-[1.5px]" />
+      <Pencil />
     </Button>
   );
 }

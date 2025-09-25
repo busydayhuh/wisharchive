@@ -1,17 +1,16 @@
 import { CollaboratorsAvatars } from "@/features/collaborators";
+import { useWishlistcardMeta } from "@/features/dashboard/model/useWishlistcardMeta";
 import { BookmarkButton, EditWishlistButton } from "@/features/wishlist";
 import "@/shared/assets/custom.css";
-import { cn } from "@/shared/lib/css";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
-import { Badge } from "@/shared/ui/kit/badge";
+import { RoleBadge } from "@/shared/ui/Badges";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
-import { Lock } from "lucide-react";
+import { EyeOffIcon } from "lucide-react";
 import { memo, useMemo } from "react";
 import { href, Link } from "react-router";
 import ImageTiles from "./ImageTiles";
-import { useWishlistcardMeta } from "@/features/dashboard/model/useWishlistcardMeta";
 
 interface WishlistTableItemProps {
   wishlist: WishlistDocumentType;
@@ -42,7 +41,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
   );
 
   return (
-    <div className="wl-table-grid relative items-center px-1 pt-2 pb-4 md:pb-8 lg:pb-2 transition dot-on-hover">
+    <div className="wl-table-grid relative items-center px-1 py-2">
       {/* Превью желаний */}
       <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
         <ImageTiles wishes={wishlist.wishes} variant="table" />
@@ -51,31 +50,20 @@ const WishlistTableItem = memo(function WishlistTableItem({
       {/* Заголовок и счетчик желаний */}
       <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
         <div className="flex flex-col gap-1 lg:basis-2xs">
-          <div className="flex items-center gap-1 pr-1 text-base">
+          <div className="flex items-center gap-2 pr-1 font-medium text-base 2xl:text-lg">
             <span className="truncate">{wishlist.title}</span>
             {wishlist.isPrivate && (
-              <Badge className="bg-transparent mt-1 text-foreground">
-                <Lock className="size-3" />
-              </Badge>
+              <EyeOffIcon className="size-4 text-muted-foreground" />
             )}
           </div>
-          <span
-            className={cn(
-              "text-xs",
-              onSharedPage
-                ? [
-                    "px-1.5 pb-0.5 rounded-lg text-foreground w-fit",
-                    isEditor ? "bg-blue-200" : "bg-yellow-200",
-                  ]
-                : "text-muted-foreground md:text-sm"
-            )}
-          >
-            {onSharedPage
-              ? isEditor
-                ? "редактор"
-                : "читатель"
-              : `${wishlist.wishes?.length ?? 0} жел.`}
-          </span>
+
+          {onSharedPage ? (
+            <RoleBadge role={isEditor ? "editor" : "reader"} size="sm" />
+          ) : (
+            <span className="text-muted-foreground text-xs">
+              {wishlist.wishes?.length ?? 0} жел.
+            </span>
+          )}
         </div>
       </Link>
 
@@ -103,7 +91,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
       </div>
 
       {/* Кнопки */}
-      <div className="flex justify-end items-center md:gap-4">
+      <div className="flex justify-evenly items-center md:gap-4">
         {(isOwner || isEditor) && (
           <EditWishlistButton onClick={onEdit} variant="table" />
         )}

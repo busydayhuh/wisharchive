@@ -5,7 +5,7 @@ import { memo } from "react";
 
 const wishImageVariants = {
   gallery: {
-    img: "rounded-3xl aspect-[4/5] cover-overlay transition-all duration-300",
+    img: "md:rounded-3xl rounded-xl aspect-[4/5] cover-overlay transition-all duration-300",
     fallback: "aspect-[4/5]",
     icon: "w-10 md:w-16 h-10 md:h-16",
   },

@@ -53,7 +53,7 @@ const WishGalleryItem = memo(function WishGalleryItem({
             className="text-muted-foreground text-sm lg:text-base xl:text-lg"
           />
         ) : (
-          <span className="h-6"></span>
+          <span className="text-transparent">без цены</span>
         )}
       </Link>
 

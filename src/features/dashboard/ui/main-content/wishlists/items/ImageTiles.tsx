@@ -21,7 +21,7 @@ function ImageTiles({
 
   if (variant === "gallery")
     return (
-      <div className="gap-0.5 grid grid-cols-[1.5fr_1fr] grid-rows-2 *:first:row-span-2 brightness-100 group-hover/cover:brightness-50 rounded-3xl aspect-[4/3] overflow-hidden transition">
+      <div className="gap-0.5 grid grid-cols-[1.5fr_1fr] grid-rows-2 *:first:row-span-2 rounded-xl md:rounded-3xl aspect-[4/3] overflow-hidden transition cover-overlay">
         {coverImages.map((imageURL: string | null) => {
           if (imageURL) {
             return (
@@ -40,12 +40,12 @@ function ImageTiles({
 
   return (
     <div className="relative pr-1 pb-2">
-      {coverImages.map((image, index) => {
+      {coverImages.reverse().map((image, index) => {
         return (
           <div
             key={ID.unique()}
             className={cn(
-              "bg-muted border-1 border-background rounded-xl w-20 lg:w-30 aspect-[4/3] overflow-clip",
+              "bg-muted border-1 border-background rounded-sm md:rounded-xl w-[6rem] md:w-[7rem] lg:w-[10rem] aspect-[4/3] overflow-clip",
               index !== 0 && `absolute ${offsets[index]}`
             )}
           >

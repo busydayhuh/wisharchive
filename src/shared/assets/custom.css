@@ -7,7 +7,7 @@ html {
 
 /* сетка для вишлистов */
 .grid-auto-fill {
-  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
 }
 
 @media screen and (max-width: 640px) {

@@ -3,7 +3,6 @@ import { Toggle } from "@/shared/ui/kit/toggle";
 import { Bookmark } from "lucide-react";
 
 export function BookmarkButton({
-  variant = "gallery",
   isFavorite = false,
   onPressed,
   className,
@@ -14,21 +13,15 @@ export function BookmarkButton({
 }) {
   return (
     <Toggle
-      size={variant === "gallery" ? "sm" : "default"}
       className={cn(
-        "relative px-1 py-1 rounded-full text-muted-foreground hover:text-foreground cursor-pointer",
+        "bg-secondary data-[state=on]:bg-destructive data-[state=on]:[&_svg]:fill-white data-[state=on]:[&_svg]:stroke-white px-1 py-1 rounded-sm size-9 data-[state=on]:text-destructive hover:text-foreground cursor-pointer",
 
-        variant === "gallery" &&
-          "top-2 right-2 z-10 absolute bg-secondary data-[state=on]:bg-destructive data-[state=on]:text-destructive data-[state=on]:[&_svg]:fill-white",
-
-        variant === "table" &&
-          "data-[state=on]:[&_svg]:fill-destructive data-[state=on]:bg-transparent data-[state=on]:text-destructive ",
         className
       )}
       defaultPressed={isFavorite}
       onPressedChange={onPressed}
     >
-      <Bookmark className={cn("stroke-[1.5px] transition duration-200")} />
+      <Bookmark className={cn("transition duration-200")} />
     </Toggle>
   );
 }
