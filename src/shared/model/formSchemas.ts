@@ -27,4 +27,5 @@ export const wishFormSchema = z.object({
     .nullish(),
   currency: z.string(),
   wishlist: z.string(),
+  priority: z.enum(["high", "medium", "low"]),
 });

@@ -16,6 +16,7 @@ export type WishDocumentType = Models.Document & {
   wishlist: WishlistDocumentType | null;
   bookedBy: UserDocumentType | null;
   owner: UserDocumentType;
+  priority: "high" | "medium" | "low";
 };
 
 export type WishlistDocumentType = Models.Document & {
