@@ -2,6 +2,7 @@ import { useAuth } from "@/features/auth";
 import { useWishPermissions, useWishQuickActions } from "@/features/wish";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishDocumentType } from "@/shared/model/types";
+import { useCallback } from "react";
 import { href, useLocation, useNavigate } from "react-router";
 
 export function useWishcardMeta(wish: WishDocumentType) {
@@ -16,17 +17,19 @@ export function useWishcardMeta(wish: WishDocumentType) {
     wish.bookerId
   );
 
-  const { toggleBookingStatus, archiveWish, deleteWish } = useWishQuickActions(
-    wish.$id
-  );
   const onBookedPage = pathname.includes("/booked");
-  const editWish = () => navigate(href(ROUTES.EDIT, { wishId: wish.$id }));
+
+  const { bookWish, archiveWish, deleteWish } = useWishQuickActions(wish.$id);
+  const editWish = useCallback(
+    () => navigate(href(ROUTES.EDIT, { wishId: wish.$id })),
+    [navigate, wish]
+  );
 
   return {
     isOwner,
     isBooker,
     isEditor,
-    toggleBookingStatus,
+    bookWish,
     onBookedPage,
     archiveWish,
     deleteWish,
