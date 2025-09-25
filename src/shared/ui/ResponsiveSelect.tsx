@@ -4,7 +4,6 @@ import { Button } from "@/shared/ui/kit/button";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
   SelectSeparator,
   SelectTrigger,
@@ -26,6 +25,7 @@ type Option = {
   value: string;
   label: string;
   icon?: React.ReactNode;
+  colors?: string;
 };
 
 type ResponsiveSelectProps = {
@@ -137,30 +137,36 @@ export function ResponsiveSelect({
           {triggerText ? triggerText : selected?.label ?? ""}
         </SelectValue>
       </SelectTrigger>
-      <SelectContent className="max-h-[14rem] overflow-y-scroll selection-menu">
+      <SelectContent className="bg-secondary max-h-[14rem] overflow-y-scroll">
         {options.map((opt) => {
           if (opt.value === "none") {
             return (
-              <>
-                <SelectGroup>
-                  <SelectItem key={opt.value} value={opt.value}>
-                    <span className="flex items-center gap-2">
-                      {opt.icon}
-                      {opt.label}
-                    </span>
-                  </SelectItem>
-                </SelectGroup>
+              <React.Fragment key={opt.value}>
+                <SelectItem
+                  value={opt.value}
+                  className="focus:bg-muted/50 py-2 cursor-pointer"
+                >
+                  <span className="flex items-center gap-2">
+                    {opt.icon}
+                    {opt.label}
+                  </span>
+                </SelectItem>
+
                 <SelectSeparator />
-              </>
+              </React.Fragment>
             );
           }
 
           return (
-            <SelectItem key={opt.value} value={opt.value}>
+            <SelectItem
+              key={opt.value}
+              value={opt.value}
+              className="focus:bg-muted/50 py-2 cursor-pointer"
+            >
               {renderOption ? (
                 renderOption(opt, opt.value === value)
               ) : (
-                <span className="flex items-center gap-2">
+                <span className="flex items-center gap-2 [&_svg:text-muted-foreground]">
                   {opt.icon}
                   {opt.label}
                 </span>

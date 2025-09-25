@@ -1,7 +1,8 @@
+import { cn } from "@/shared/lib/css";
 import type { Setter } from "@/shared/model/types";
 import { Button } from "@/shared/ui/kit/button";
 import imageCompression from "browser-image-compression";
-import { ImageDown, Loader2, X } from "lucide-react";
+import { CircleX, ImageDown, Loader2, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import {
   useDropzone,
@@ -73,8 +74,8 @@ function WishImageUpload({
     const rejectedFile = fileRejections[0];
 
     const errorMessages = rejectedFile.errors.map((e) => {
-      if (e.code === "file-invalid-type") return "Неверный формат файла!";
-      if (e.code === "file-invalid-type") return "Файл слишком тяжелый!";
+      if (e.code === "file-invalid-type") return "Неверный формат файла";
+      if (e.code === "file-invalid-type") return "Файл слишком тяжелый";
       return e.message;
     });
 
@@ -103,6 +104,7 @@ function WishImageUpload({
             size="icon"
             className="-top-1 -right-2 absolute hover:bg-accent shadow-none rounded-full size-8 cursor-pointer"
             variant="secondary"
+            aria-label="Удалить изображение"
             onClick={() => {
               setPreview(null);
               setCompressedImage(null);
@@ -110,14 +112,14 @@ function WishImageUpload({
           >
             <X />
           </Button>
-          <div className="rounded-3xl md:w-full w-3xs max-h-[16rem] md:max-h-[36rem] 2xl:max-h-[48rem] overflow-clip">
-            <img src={preview} className="w-full h-full object-cover" />
+          <div className="rounded-3xl md:w-full w-3xs max-h-[24rem] md:max-h-[40rem] 2xl:max-h-[52rem] overflow-clip">
+            <img src={preview} className="w-full h-full" />
           </div>
         </>
       ) : (
         <div
           {...getRootProps({
-            className: `border-1 border-dashed border-muted-foreground rounded-3xl md:w-full w-3xs md:aspect-[4/3] aspect-[16/6] flex flex-col gap-3 md:gap-8 items-center justify-center ${
+            className: `border-2 border-dashed border-muted-foreground rounded-3xl md:w-full w-3xs md:aspect-[4/3] aspect-[16/6] flex flex-col gap-3 md:gap-8 items-center justify-center ${
               isDragActive || isCompressing ? "bg-muted" : "bg-muted/60"
             }`,
           })}
@@ -127,18 +129,32 @@ function WishImageUpload({
           ) : (
             <>
               <ImageDown className="stroke-1 size-8 md:size-12 text-muted-foreground" />
-              <div className="hidden md:block text-muted-foreground text-sm text-center">
+              <div className="hidden md:block text-muted-foreground text-sm md:text-base text-center">
                 <p className="font-bold">JPG, JPEG, PNG, WEBP</p>
-                <p>МАКС: 10МБ</p>
+                <p>макс: 10МБ</p>
               </div>
             </>
           )}
           <input {...getInputProps()} id="image-dropzone" />
         </div>
       )}
-      <div className="text-red-700 text-sm text-center">
-        {errorMessages && errorMessages.map((m) => <p key={m}>{m}</p>)}
-      </div>
+      {errorMessages && (
+        <div
+          className={cn(
+            "bg-muted-backdrop/60 px-3.5 py-4 rounded-md font-medium text-blue-900 text-sm"
+          )}
+        >
+          {errorMessages.map((m) => (
+            <p
+              key={m}
+              className="inline-flex items-center gap-2 [&_svg]:size-4"
+            >
+              <CircleX />
+              {m}
+            </p>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -1,28 +1,23 @@
+import { ROUTES } from "@/shared/model/routes";
 import { ArrowLeft } from "lucide-react";
-import { useParams } from "react-router";
+import { href, useNavigate, useParams } from "react-router";
 import { useAuth } from "../auth";
 import { useWish } from "./model/useWish";
-import { useWishPermissions } from "./model/useWishPermissions";
 import BackButton from "./ui/buttons/BackButton";
 import { RelatedWishes } from "./ui/RelatedWishes";
+import { WishInfo } from "./ui/wish-info/WishInfo";
 import { WishImage } from "./ui/WishImage";
-import { WishInfo } from "./ui/WishInfo";
 import { WishLayout } from "./ui/WishLayout";
 
 function WishPage() {
   const { wishId } = useParams();
   const { wish, isLoading, error } = useWish(wishId ?? null);
+  const navigate = useNavigate();
 
   const { current: authUser } = useAuth();
 
-  const roles = useWishPermissions(
-    authUser?.$id ?? "",
-    wish?.wishlistId ?? null,
-    wish?.ownerId ?? null,
-    wish?.bookerId ?? null
-  );
-
-  if (error) return "Ошибка";
+  if (error)
+    return navigate(href(ROUTES.WISHES, { userId: authUser?.$id ?? "" }));
   if (isLoading) return "Загрузка...";
   if (wish)
     return (
@@ -44,7 +39,7 @@ function WishPage() {
             variant="page"
           />
         }
-        infoSlot={<WishInfo wish={wish} wishRoles={roles} />}
+        infoSlot={<WishInfo wish={wish} />}
         relatedSlot={
           <RelatedWishes
             userId={wish.owner.userId}

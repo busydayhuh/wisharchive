@@ -1,20 +1,23 @@
 import { cn } from "@/shared/lib/css";
 import { gradients } from "@/shared/lib/gradients";
-import { HeartHandshake } from "lucide-react";
+import { LockKeyhole } from "lucide-react";
 import { memo } from "react";
 
 const wishImageVariants = {
   gallery: {
-    img: "rounded-xl max-h-[36rem] cover-overlay transition-all duration-300",
-    fallback: "aspect-square",
+    img: "rounded-3xl aspect-[4/5] cover-overlay transition-all duration-300",
+    fallback: "aspect-[4/5]",
+    icon: "w-10 md:w-16 h-10 md:h-16",
   },
   table: {
-    img: "rounded-[0.5rem] md:rounded-xl w-24 md:w-32 lg:w-40 aspect-[4/3]",
+    img: "rounded-md md:rounded-xl cover-overlay transition-all duration-300 w-24 md:w-32 lg:w-40 aspect-[4/3]",
     fallback: "h-full",
+    icon: "w-6 h-6 md:w-10 md:h-10",
   },
   page: {
-    img: "rounded-3xl max-h-[24rem] md:max-h-[36rem] 2xl:max-h-[48rem]",
-    fallback: "aspect-square",
+    img: "rounded-3xl max-h-[24rem] md:max-h-[40rem] 2xl:max-h-[52rem]",
+    fallback: "aspect-[4/5]",
+    icon: "",
   },
 };
 
@@ -25,14 +28,12 @@ export const WishImage = memo(function WishImage({
   url,
   alt,
   isBooked,
-  isBooker,
   variant = "gallery",
 }: {
   wishId: string;
   url?: string | null;
   alt?: string;
   isBooked?: boolean;
-  isBooker?: boolean;
   variant?: "gallery" | "table" | "page";
 }) {
   const fallbackColor = getFallbackColor(wishId);
@@ -42,55 +43,32 @@ export const WishImage = memo(function WishImage({
       className={cn("relative overflow-clip", wishImageVariants[variant].img)}
     >
       {url ? (
-        <img src={url} alt={alt} className="w-full h-full object-cover" />
+        <>
+          <img
+            src={url}
+            alt={alt}
+            className={cn("w-full h-full object-cover")}
+          />
+          {isBooked && variant !== "page" && (
+            <div className="top-0 left-0 absolute flex justify-center items-center bg-muted-backdrop w-full h-full pointer-events-none">
+              <LockKeyhole
+                className={cn(
+                  "stroke-[1.5px] text-white",
+                  wishImageVariants[variant].icon
+                )}
+              />
+            </div>
+          )}
+        </>
       ) : (
         <div
           style={{ background: fallbackColor }}
-          className={cn(
-            "w-full transition-all duration-500",
-            wishImageVariants[variant].fallback
-          )}
+          className={cn("w-full h-full", wishImageVariants[variant].fallback)}
         ></div>
       )}
-
-      <BookedBadge
-        isBooked={isBooked ?? false}
-        isBooker={isBooker ?? false}
-        variant={variant}
-      />
     </div>
   );
 });
-
-function BookedBadge({
-  isBooked,
-  isBooker,
-  variant = "gallery",
-}: {
-  isBooked: boolean;
-  isBooker: boolean;
-  variant?: string;
-}) {
-  if (!isBooked) return null;
-
-  return (
-    <div
-      className={cn(
-        "inline-flex top-2 left-2 z-10 absolute items-center gap-2 px-2.5 py-2 rounded-full font-medium text-xs md:text-sm",
-        variant === "gallery" && "md:rounded-lg",
-        variant === "page" && "md:rounded-lg left-3",
-        isBooker
-          ? "bg-destructive text-background"
-          : "bg-background text-foreground"
-      )}
-    >
-      <HeartHandshake className="size-4" />
-      <span className={cn("hidden", variant !== "table" && "md:block")}>
-        {isBooker ? "хочу подарить" : "забронировали"}
-      </span>
-    </div>
-  );
-}
 
 function getFallbackColor(wishId: string) {
   if (!fallbackColorCache.has(wishId)) {

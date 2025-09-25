@@ -25,7 +25,7 @@ function WishesPageLayout({
     if (viewMode === "gallery")
       return (
         <Masonry
-          breakpointCols={{ default: 4, 1100: 3, 768: 2 }}
+          breakpointCols={{ default: 5, 1470: 4, 1280: 3, 768: 2 }}
           className="my-masonry-grid"
           columnClassName="my-masonry-grid_column"
         >

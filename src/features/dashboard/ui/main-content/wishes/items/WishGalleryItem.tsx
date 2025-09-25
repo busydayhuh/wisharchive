@@ -1,14 +1,17 @@
 import { useWishcardMeta } from "@/features/dashboard/model/useWishcardMeta";
-import { GiftButton, WishImage, WishQuickActions } from "@/features/wish";
+import {
+  BookButton,
+  FormattedPrice,
+  WishImage,
+  WishQuickActions,
+} from "@/features/wish";
 import { cn } from "@/shared/lib/css";
-import { Currency } from "@/shared/lib/currency";
-import { formatPrice } from "@/shared/lib/formatPrice";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishDocumentType } from "@/shared/model/types";
+import { PriorityBadge, WishlistBadge } from "@/shared/ui/Badges";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { memo, type ReactNode } from "react";
 import { href, Link } from "react-router";
-import { WishlistBadge } from "../Badges";
 
 // Обертка для считывания состояния hover и focus-within
 
@@ -30,29 +33,31 @@ const WishGalleryItem = memo(function WishGalleryItem({
   return (
     <div
       className={cn(
-        "relative flex flex-col gap-1 md:gap-2 mb-4 overflow-hidden"
+        "relative flex flex-col gap-2 md:gap-2 mb-8 overflow-hidden"
       )}
     >
       <WishCover wish={wish} />
 
       <Link
         to={href(ROUTES.WISH, { wishId: wish.$id })}
-        className="flex md:flex-row flex-col justify-between md:items-center px-1"
+        className="flex lg:flex-row flex-col lg:justify-between px-1"
       >
         <span className="pr-1 font-medium text-base lg:text-base xl:text-lg truncate">
           {wish.title}
         </span>
-        <span className="inline-flex items-center gap-1 text-muted-foreground text-sm lg:text-base xl:text-lg">
-          {!!wish.price && (
-            <>
-              <span>{formatPrice(wish.price)}</span>
-              <Currency currency={wish.currency ?? "RUB"} />
-            </>
-          )}
-        </span>
+
+        {wish.price ? (
+          <FormattedPrice
+            price={wish.price}
+            currency={wish.currency}
+            className="text-muted-foreground text-sm lg:text-base xl:text-lg"
+          />
+        ) : (
+          <span className="h-6"></span>
+        )}
       </Link>
 
-      <div className="flex justify-start items-baseline px-1">
+      <div className="flex justify-between items-center gap-1">
         {onBookedPage ? (
           <OwnerAvatar
             userId={wish.ownerId}
@@ -63,13 +68,14 @@ const WishGalleryItem = memo(function WishGalleryItem({
         ) : (
           wish.wishlist && (
             <WishlistBadge
-              wishlistId={wish.wishlist.$id}
+              id={wish.wishlist.$id}
               title={wish.wishlist.title}
               isPrivate={wish.wishlist.isPrivate}
-              className="text-xs"
+              size="sm"
             />
           )
         )}
+        <PriorityBadge priority={wish.priority} size="sm" className="ms-auto" />
       </div>
     </div>
   );
@@ -80,15 +86,7 @@ const WishCover = memo(function WishCover({
 }: {
   wish: WishDocumentType;
 }) {
-  const {
-    isOwner,
-    isBooker,
-    isEditor,
-    toggleBookingStatus,
-    archiveWish,
-    deleteWish,
-    editWish,
-  } = useWishcardMeta(wish);
+  const { isOwner, isBooker, isEditor, bookWish } = useWishcardMeta(wish);
 
   return (
     <div className={cn("relative rounded-2xl overflow-hidden")}>
@@ -99,7 +97,6 @@ const WishCover = memo(function WishCover({
           alt={wish.title}
           variant="gallery"
           isBooked={wish.isBooked}
-          isBooker={isBooker}
         />
       </Link>
 
@@ -110,22 +107,20 @@ const WishCover = memo(function WishCover({
       >
         {(isOwner || isEditor) && (
           <WishQuickActions
+            wishId={wish.$id}
             triggerVariant="gallery"
             side="top"
             align="start"
             isArchived={wish.isArchived}
-            archiveWish={archiveWish}
-            deleteWish={deleteWish}
-            editWish={editWish}
             title={wish.title}
           />
         )}
         {!isOwner && (
-          <GiftButton
-            variant="gallery"
+          <BookButton
+            triggerVariant="gallery"
             isBooked={wish.isBooked}
             isBookedByCurrentUser={isBooker}
-            onPressed={toggleBookingStatus}
+            action={bookWish}
           />
         )}
       </div>

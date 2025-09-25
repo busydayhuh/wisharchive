@@ -2,7 +2,15 @@ import "@/shared/assets/custom.css";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "../lib/css";
 
-function ExpandableText({ text, lines = 5 }: { text: string; lines?: number }) {
+function ExpandableText({
+  text,
+  lines = 5,
+  className,
+}: {
+  text: string;
+  lines?: number;
+  className?: string;
+}) {
   const [expanded, setExpanded] = useState(false);
   const [showButton, setShowButton] = useState(false);
 
@@ -53,7 +61,11 @@ function ExpandableText({ text, lines = 5 }: { text: string; lines?: number }) {
       >
         <div
           ref={contentRef}
-          className={cn("text-sm", !expanded && showButton && "text-mask")}
+          className={cn(
+            "text-sm",
+            !expanded && showButton && "text-mask",
+            className
+          )}
         >
           {text}
         </div>
@@ -64,6 +76,7 @@ function ExpandableText({ text, lines = 5 }: { text: string; lines?: number }) {
           type="button"
           onClick={toggle}
           className="font-medium text-muted-foreground text-sm cursor-pointer"
+          aria-label={expanded ? "свернуть описание" : "показать больше"}
         >
           {expanded ? "- скрыть" : "+ показать больше"}
         </button>

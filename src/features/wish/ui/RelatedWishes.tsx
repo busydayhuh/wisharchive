@@ -1,12 +1,13 @@
 import { ROUTES } from "@/shared/model/routes";
 import { Button } from "@/shared/ui/kit/button";
 import { ChevronRight } from "lucide-react";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 import Masonry from "react-masonry-css";
 import { Link, href } from "react-router";
 import { useWishes } from "../model/useWishes";
+import { WishImage } from "./WishImage";
 
-export function RelatedWishes({
+export const RelatedWishes = memo(function RelatedWishes({
   userId,
   userName,
   wishId,
@@ -29,13 +30,14 @@ export function RelatedWishes({
     return (
       <div className="space-y-3 md:space-y-6 mx-2 md:mx-auto mt-10 md:mt-20 md:max-w-[96%]">
         <div className="flex flex-wrap justify-between">
-          <div className="font-medium text-lg md:text-xl">
+          <div className="font-bold text-lg md:text-xl 2xl:text-2xl">
             Другие желания пользователя {userName}
           </div>
           <Button
             variant="link"
             className="has-[>svg]:px-0 text-destructive"
             asChild
+            aria-label="Смотреть все желания пользователя"
           >
             <Link to={href(ROUTES.WISHES, { userId: userId })}>
               смотреть все <ChevronRight />
@@ -49,22 +51,24 @@ export function RelatedWishes({
           columnClassName="my-masonry-grid_column"
         >
           {relatedWishes.map((wish) => (
-            <Link to={href(ROUTES.WISH, { wishId: wish.$id })} key={wish.$id}>
-              <div className="flex flex-col gap-1 hover:brightness-50 mb-2 transition-all duration-300">
-                {wish.imageURL ? (
-                  <img
-                    src={wish.imageURL}
+            <div
+              className="group-card-wrapper transition-all duration-300"
+              key={wish.$id}
+            >
+              <Link to={href(ROUTES.WISH, { wishId: wish.$id })}>
+                <div className="flex flex-col gap-1">
+                  <WishImage
+                    wishId={wish.$id}
+                    url={wish.imageURL}
                     alt={wish.title}
-                    className="rounded-2xl"
+                    variant="gallery"
                   />
-                ) : (
-                  <div className="bg-muted aspect-square"></div>
-                )}
-                <div className="font-medium text-base">{wish.title}</div>
-              </div>
-            </Link>
+                  <div className="font-medium text-base">{wish.title}</div>
+                </div>
+              </Link>
+            </div>
           ))}
         </Masonry>
       </div>
     );
-}
+});

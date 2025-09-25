@@ -43,15 +43,13 @@ export function DashboardLayout() {
       />
 
       <DashboardContentContainer>
-        <div className="pt-4 md:pt-6 md:pr-8">
-          <Outlet
-            context={{
-              viewMode,
-              searchString,
-              dashboardUserId,
-            }}
-          />
-        </div>
+        <Outlet
+          context={{
+            viewMode,
+            searchString,
+            dashboardUserId,
+          }}
+        />
       </DashboardContentContainer>
     </div>
   );

@@ -4,8 +4,7 @@ import { BookmarkButton, EditWishlistButton } from "@/features/wishlist";
 import { cn } from "@/shared/lib/css";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
-import { Badge } from "@/shared/ui/kit/badge";
-import { Lock } from "lucide-react";
+import { EyeOffIcon } from "lucide-react";
 import { memo } from "react";
 import { href, Link } from "react-router-dom";
 import ImageTiles from "./ImageTiles";
@@ -50,18 +49,13 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
         <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
           <div className="flex flex-wrap justify-between items-center mt-1 px-2">
             {/* Название */}
-            <div className="flex items-center gap-1 pr-2 text-base md:text-lg">
-              {wishlist.isPrivate && (
-                <Badge
-                  className="mt-1 px-0 text-muted-foreground"
-                  variant="outline"
-                >
-                  <Lock />
-                </Badge>
-              )}
-              <span className="max-w-[10ch] sm:max-w-[20ch] truncate leading-tight">
+            <div className="flex items-center gap-2 pr-2 text-base md:text-lg">
+              <span className="max-w-[10ch] sm:max-w-[20ch] font-medium truncate leading-tight">
                 {wishlist.title}
               </span>
+              {wishlist.isPrivate && (
+                <EyeOffIcon className="size-4 text-muted-foreground" />
+              )}
             </div>
 
             {/* Соавторы */}
