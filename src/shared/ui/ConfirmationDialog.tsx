@@ -9,17 +9,15 @@ import {
   AlertDialogTitle,
 } from "@/shared/ui/kit/alert-dialog";
 import type { ReactNode } from "react";
-import type { Setter } from "../model/types";
+import { Button } from "./kit/button";
 
 export type ConfirmationDialogProps = {
   title: string;
   description: ReactNode;
   actionText: string;
   onConfirm: (() => void) | undefined;
-  onCancel?: () => void;
-
+  onCancel: () => void;
   open: boolean;
-  onOpenChange?: Setter<boolean>;
 };
 
 function ConfirmationDialog({
@@ -29,10 +27,14 @@ function ConfirmationDialog({
   onConfirm,
   onCancel,
   open,
-  onOpenChange,
 }: ConfirmationDialogProps) {
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
+    <AlertDialog
+      open={open}
+      onOpenChange={(open) => {
+        if (!open) onCancel();
+      }}
+    >
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
@@ -40,13 +42,18 @@ function ConfirmationDialog({
         </AlertDialogHeader>
         <AlertDialogFooter className="md:mt-6">
           <AlertDialogCancel
-            className="bg-muted hover:bg-muted/60 shadow-none py-6 border-0"
-            onClick={onCancel}
+            asChild
+            // className="bg-muted hover:bg-muted/60 shadow-none py-6 border-0"
+            // onClick={onCancel}
           >
-            Отмена
+            <Button onClick={onCancel} variant="outline">
+              Отмена
+            </Button>
           </AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm} className="py-6">
-            {actionText}
+          <AlertDialogAction asChild>
+            <Button onClick={onConfirm} variant="default">
+              {actionText}
+            </Button>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
