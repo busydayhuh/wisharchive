@@ -9,13 +9,20 @@ function OwnerAvatar({
   userName,
   avatarURL,
   className,
+  size = "sm",
 }: Pick<UserDocumentType, "userId" | "userName" | "avatarURL"> & {
   className?: string;
+  size?: "sm" | "md" | "lg";
 }) {
+  const avatarSizes = {
+    sm: "w-5 h-5",
+    md: "md:w-7 md:h-7 w-5 h-5",
+    lg: "md:w-10 ms:h-10 w-7 h-7",
+  };
   return (
-    <Link to={href(ROUTES.WISHES, { userId: userId })}>
+    <Link to={href(ROUTES.WISHES, { userId: userId ?? "" })}>
       <div className={cn("flex items-center gap-1 -mt-1", className)}>
-        <Avatar className="rounded-full size-5">
+        <Avatar className={cn("rounded-full", avatarSizes[size])}>
           <AvatarImage src={avatarURL ?? undefined} alt={userId} />
           <AvatarFallback>ER</AvatarFallback>
         </Avatar>
