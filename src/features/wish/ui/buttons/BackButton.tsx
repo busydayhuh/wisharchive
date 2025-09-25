@@ -1,7 +1,5 @@
-import ConfirmationDialog from "@/shared/ui/ConfirmationDialog";
 import { Button, buttonVariants } from "@/shared/ui/kit/button";
 import type { VariantProps } from "class-variance-authority";
-import { useState } from "react";
 import { useNavigate } from "react-router";
 
 type BackButtonProps = {
@@ -15,36 +13,17 @@ type BackButtonProps = {
 } & React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants>;
 
-function BackButton({
-  confirmation = false,
-  confDialogProps,
-  children,
-  ...props
-}: BackButtonProps) {
-  const [confOpen, setConfOpen] = useState(false);
+function BackButton({ children, ...props }: BackButtonProps) {
   const navigate = useNavigate();
 
   function handleClick() {
-    if (!confirmation) return navigate(-1);
-
-    setConfOpen(true);
+    return navigate(-1);
   }
   return (
     <>
       <Button onClick={handleClick} {...props}>
         {children}
       </Button>
-
-      {confDialogProps && (
-        <ConfirmationDialog
-          title={confDialogProps.title}
-          description={confDialogProps.description}
-          actionText={confDialogProps.actionText}
-          open={confOpen}
-          onOpenChange={setConfOpen}
-          onConfirm={() => navigate(-1)}
-        />
-      )}
     </>
   );
 }
