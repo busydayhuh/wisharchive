@@ -28,9 +28,8 @@ function WishEditor({ wish, onSubmit, storageImageURL }: WishEditorProps) {
       backSlot={
         <BackButton
           children={<ArrowLeft />}
-          size="icon"
           variant="ghost"
-          className="rounded-full"
+          className="z-1 absolute md:relative"
         />
       }
       imageSlot={

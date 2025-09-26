@@ -1,9 +1,7 @@
 import { ROUTES } from "@/shared/model/routes";
-import { ArrowLeft } from "lucide-react";
 import { href, useNavigate, useParams } from "react-router";
 import { useAuth } from "../auth";
 import { useWish } from "./model/useWish";
-import BackButton from "./ui/buttons/BackButton";
 import { RelatedWishes } from "./ui/RelatedWishes";
 import { WishInfo } from "./ui/wish-info/WishInfo";
 import { WishImage } from "./ui/WishImage";
@@ -22,14 +20,7 @@ function WishPage() {
   if (wish)
     return (
       <WishLayout
-        backSlot={
-          <BackButton
-            children={<ArrowLeft />}
-            size="icon"
-            variant="ghost"
-            className="rounded-full"
-          />
-        }
+        backSlot={null}
         imageSlot={
           <WishImage
             wishId={wish.$id}

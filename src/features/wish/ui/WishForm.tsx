@@ -95,7 +95,7 @@ function WishForm({
               <FormControl>
                 <Textarea
                   {...field}
-                  className="h-18 md:h-24 text-sm md:text-base resize-none"
+                  className="h-24 md:h-28 text-sm md:text-base resize-none"
                   placeholder="Добавьте описание или примечание к желанию"
                 />
               </FormControl>
@@ -194,15 +194,16 @@ function WishForm({
             </FormItem>
           )}
         />
-        <div className="flex sm:flex-row flex-col-reverse md:gap-2 md:mt-2 w-full">
-          <Button
+        <div className="flex sm:flex-row flex-col sm:justify-between gap-2 mt-2 w-full">
+          {/* <Button
             type="button"
             variant="outline"
             onClick={() => navigate(-1)}
             size="lg"
           >
             Отмена
-          </Button>
+          </Button> */}
+
           <Button
             type="submit"
             disabled={form.formState.isSubmitting}
@@ -217,7 +218,6 @@ function WishForm({
               "Сохранить"
             )}
           </Button>
-
           {wish && (
             <DeleteButton
               variant="button"
@@ -228,7 +228,6 @@ function WishForm({
                 setBlockNavigate(false);
                 navigate(href(ROUTES.WISH, { wishId: wish.$id }));
               }}
-              className="ms-auto mb-8 md:mb-0 w-fit"
               buttonText="Удалить желание"
             />
           )}
@@ -275,9 +274,9 @@ function CurrencySelect({
       onChange={onValueChange}
       value={value}
       triggerText={triggerText}
-      className="bg-muted/60 px-3 py-2"
+      className="bg-muted/60 px-3 rounded-sm h-9 text-muted-foreground"
       renderOption={(opt) => (
-        <span className="flex justify-between items-center gap-2 py-1 w-full">
+        <span className="flex justify-between items-center gap-2 w-full">
           {opt.label}
           <span className="text-muted-foreground">{opt.icon}</span>
         </span>
@@ -348,7 +347,13 @@ function PrioritySelect({
     []
   );
 
-  const triggerText = <PriorityBadge priority={value} size="sm" />;
+  const triggerText = (
+    <PriorityBadge
+      priority={value}
+      size="md"
+      className="rounded-sm md:rounded-sm 2xl:text-sm"
+    />
+  );
 
   return (
     <ResponsiveSelect
@@ -356,7 +361,7 @@ function PrioritySelect({
       onChange={onValueChange}
       value={value}
       triggerText={triggerText}
-      className="py-6"
+      className="py-6 pl-1"
     />
   );
 }

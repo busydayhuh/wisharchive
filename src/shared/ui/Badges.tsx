@@ -34,7 +34,7 @@ export const PRIORITIES = {
   high: {
     title: "высокий",
     icon: <ArrowUp />,
-    colors: "bg-pink-200 text-pink-800 [&_svg]:text-pink-800",
+    colors: "bg-rose-200 text-rose-600 [&_svg]:text-rose-600",
   },
   medium: {
     title: "средний",

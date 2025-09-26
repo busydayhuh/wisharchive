@@ -21,7 +21,7 @@ function BackButton({ children, ...props }: BackButtonProps) {
   }
   return (
     <>
-      <Button onClick={handleClick} {...props}>
+      <Button onClick={handleClick} {...props} size="lg">
         {children}
       </Button>
     </>
