@@ -10,7 +10,7 @@ const wishImageVariants = {
     icon: "w-10 md:w-16 h-10 md:h-16",
   },
   table: {
-    img: "rounded-md md:rounded-xl cover-overlay transition-all duration-300 w-24 md:w-32 lg:w-40 aspect-[4/3]",
+    img: "rounded-md md:rounded-xl cover-overlay transition-all duration-300 w-24 md:w-32 lg:w-40 aspect-square",
     fallback: "h-full",
     icon: "w-6 h-6 md:w-10 md:h-10",
   },

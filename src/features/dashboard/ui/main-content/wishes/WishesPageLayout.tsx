@@ -1,20 +1,19 @@
 import type { WishDocumentType } from "@/shared/model/types";
 import Masonry from "react-masonry-css";
-import { useDashboardContext } from "../../DashboardLayout";
 import WishGalleryItem, { CardWrapper } from "./items/WishGalleryItem";
 import WishTableItem from "./items/WishTableItem";
 
-function WishesPageLayout({
+export function WishesPageLayout({
   wishes,
   isLoading,
   error,
+  viewMode,
 }: {
   wishes?: WishDocumentType[];
   isLoading: boolean;
   error?: unknown;
+  viewMode: "gallery" | "table";
 }) {
-  const { viewMode } = useDashboardContext();
-
   if (isLoading) return <div>Загрузка...</div>;
   if (error) return <div>Не удалось загрузить желания ☹️</div>;
 
@@ -47,4 +46,3 @@ function WishesPageLayout({
       );
   }
 }
-export default WishesPageLayout;

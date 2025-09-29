@@ -16,8 +16,14 @@ function OwnerAvatar({
 }) {
   const avatarSizes = {
     sm: "w-5 h-5",
-    md: "md:w-7 md:h-7 w-5 h-5",
-    lg: "md:w-10 ms:h-10 w-7 h-7",
+    md: "lg:w-7 lg:h-7 w-5 h-5",
+    lg: "lg:w-10 lg:h-10 w-7 h-7",
+  };
+
+  const textSizes = {
+    sm: "text-sm",
+    md: "text-sm lg:text-base",
+    lg: "text-base lg:text-lg",
   };
   return (
     <Link to={href(ROUTES.WISHES, { userId: userId ?? "" })}>
@@ -26,7 +32,11 @@ function OwnerAvatar({
           <AvatarImage src={avatarURL ?? undefined} alt={userId} />
           <AvatarFallback>ER</AvatarFallback>
         </Avatar>
-        <span className="max-w-[18ch] truncate">{userName}</span>
+        <span
+          className={cn("max-w-[18ch] font-medium truncate", textSizes[size])}
+        >
+          {userName}
+        </span>
       </div>
     </Link>
   );

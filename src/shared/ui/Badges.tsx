@@ -165,7 +165,7 @@ export function ShopBadge({
       target="_blank"
       className={cn(
         badgesVariants({ size, className }),
-        "hover:underline hover:underline-offset-4"
+        "hover:underline hover:underline-offset-4 "
       )}
     >
       <img
@@ -175,7 +175,7 @@ export function ShopBadge({
         alt=""
         className="bg-details rounded-full"
       />
-      {domain}
+      <span className="max-w-[16ch] truncate">{domain}</span>
     </a>
   );
 }

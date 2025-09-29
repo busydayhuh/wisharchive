@@ -25,12 +25,12 @@ function Searchbar({
     <div className={cn("group/searchbar flex items-center gap-2", className)}>
       <Input
         className={cn(
-          "shadow-none pb-1.5 border-0 rounded-xl outline-ring/60 h-8 text-sm",
+          "shadow-none border-0 outline-ring/60 h-9 placeholder:text-ring/90 text-sm",
           grow &&
             "w-full md:w-full focus-visible:w-full transition-[width] duration-300 ease-linear",
           !searchString && grow && "md:w-48"
         )}
-        placeholder="найти"
+        placeholder="поиск"
         type="text"
         onChange={(e) => {
           setSearchString(e.target.value ?? "");
@@ -41,7 +41,7 @@ function Searchbar({
         <Button
           size="sm"
           variant="ghost"
-          className="hover:bg-transparent has-[>svg]:px-0 py-0 rounded-full"
+          className="hover:bg-transparent has-[>svg]:px-0 py-0"
           onClick={clearSearchbar}
         >
           <X />

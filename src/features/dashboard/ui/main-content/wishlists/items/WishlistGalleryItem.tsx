@@ -67,7 +67,7 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
             {collaborators && (
               <CollaboratorsAvatars
                 collaborators={collaborators}
-                size={5}
+                size="sm"
                 maxVisible={3}
                 className="mt-1"
                 hideOwner={true}
@@ -84,7 +84,7 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
             className="mx-2"
           />
         ) : (
-          <span className="text-muted-foreground text-xs">
+          <span className="mx-2 text-muted-foreground text-xs">
             {wishlist.wishes?.length ?? 0} жел.
           </span>
         )}

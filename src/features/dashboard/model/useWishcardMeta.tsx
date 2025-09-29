@@ -18,6 +18,7 @@ export function useWishcardMeta(wish: WishDocumentType) {
   );
 
   const onBookedPage = pathname.includes("/booked");
+  const onListPage = pathname.includes("list");
 
   const { bookWish, archiveWish, deleteWish } = useWishQuickActions(wish.$id);
   const editWish = useCallback(
@@ -34,5 +35,6 @@ export function useWishcardMeta(wish: WishDocumentType) {
     archiveWish,
     deleteWish,
     editWish,
+    onListPage,
   };
 }

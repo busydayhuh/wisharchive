@@ -1,45 +1,41 @@
 import { cn } from "@/shared/lib/css";
+import { useSidebar } from "@/shared/ui/kit/sidebar";
 import Searchbar from "@/shared/ui/Searchbar";
 import type { Dispatch, SetStateAction } from "react";
 import ViewModeSwitch from "./ViewModeSwitch";
 
 type DashboardToolbarProps = {
-  isMobile: boolean;
   searchString: string;
   setSearchString: Dispatch<SetStateAction<string>>;
-  viewMode: string;
-  setViewMode: Dispatch<SetStateAction<string>>;
+  viewMode: "gallery" | "table";
+  setViewMode: Dispatch<SetStateAction<"gallery" | "table">>;
   showNavigation: boolean;
 };
 
-function DashboardToolbar({
-  isMobile,
+export function DashboardToolbar({
   searchString,
   setSearchString,
   viewMode,
   setViewMode,
   showNavigation,
 }: DashboardToolbarProps) {
+  const { isMobile } = useSidebar();
+
   if (isMobile) {
     return (
-      <div className="top-0 z-20 sticky flex flex-col gap-6 bg-background -mb-4 py-2">
+      <div className="top-0 z-20 sticky flex justify-between gap-2 bg-background py-2 w-full">
         <Searchbar
           searchString={searchString}
           setSearchString={setSearchString}
         />
 
-        <div className="flex justify-between items-end gap-3 w-full">
-          {/* <Navigation /> */}
-          <ViewModeSwitch viewMode={viewMode} setViewMode={setViewMode} />
-        </div>
+        <ViewModeSwitch viewMode={viewMode} setViewMode={setViewMode} />
       </div>
     );
   }
 
   return (
-    <div className="top-0 z-20 sticky flex justify-between items-end gap-5 bg-background mr-6 -mb-6 lg:-mb-7 py-2 w-full">
-      {/* <Navigation /> */}
-
+    <div className="top-0 z-20 sticky flex justify-between items-end gap-5 bg-background mr-6 pb-3 w-full -">
       <Searchbar
         searchString={searchString}
         setSearchString={setSearchString}
@@ -54,5 +50,3 @@ function DashboardToolbar({
     </div>
   );
 }
-
-export default DashboardToolbar;

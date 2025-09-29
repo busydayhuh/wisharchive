@@ -3,12 +3,13 @@ import {
   BookButton,
   FormattedPrice,
   WishImage,
+  WishlistSelect,
   WishQuickActions,
 } from "@/features/wish";
 import { cn } from "@/shared/lib/css";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishDocumentType } from "@/shared/model/types";
-import { PriorityBadge, WishlistBadge } from "@/shared/ui/Badges";
+import { PriorityBadge } from "@/shared/ui/Badges";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { memo, type ReactNode } from "react";
 import { href, Link } from "react-router";
@@ -28,7 +29,7 @@ const WishGalleryItem = memo(function WishGalleryItem({
 }: {
   wish: WishDocumentType;
 }) {
-  const { onBookedPage } = useWishcardMeta(wish);
+  const { onBookedPage, onListPage } = useWishcardMeta(wish);
 
   return (
     <div
@@ -58,7 +59,7 @@ const WishGalleryItem = memo(function WishGalleryItem({
       </Link>
 
       <div className="flex justify-between items-center gap-1">
-        {onBookedPage ? (
+        {onBookedPage || onListPage ? (
           <OwnerAvatar
             userId={wish.ownerId}
             userName={wish.owner.userName}
@@ -66,14 +67,17 @@ const WishGalleryItem = memo(function WishGalleryItem({
             className="text-xs md:text-sm"
           />
         ) : (
-          wish.wishlist && (
-            <WishlistBadge
-              id={wish.wishlist.$id}
-              title={wish.wishlist.title}
-              isPrivate={wish.wishlist.isPrivate}
-              size="sm"
-            />
-          )
+          // <WishlistBadge
+          //   id={wish.wishlist.$id}
+          //   title={wish.wishlist.title}
+          //   isPrivate={wish.wishlist.isPrivate}
+          //   size="sm"
+          // />
+          <WishlistSelect
+            value={wish.wishlist?.$id ?? "none"}
+            onValueChange={() => {}}
+            className="top-2 right-2 absolute max-w-[16ch] md:text-sm truncate show-actions"
+          />
         )}
         <PriorityBadge priority={wish.priority} size="sm" className="ms-auto" />
       </div>

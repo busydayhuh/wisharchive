@@ -13,7 +13,7 @@ function ImageTiles({
 
   if (wishes) {
     coverImages = coverImages.map((_, i) =>
-      wishes[i] ? wishes[i].imageURL : null
+      wishes[i] && !wishes[i].isArchived ? wishes[i].imageURL : null
     );
   }
 

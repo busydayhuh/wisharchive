@@ -3,8 +3,8 @@ import { LayoutDashboard, LayoutList } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";
 
 export type ViewModeSwitchType = {
-  setViewMode: Dispatch<SetStateAction<string>>;
-  viewMode: string;
+  setViewMode: Dispatch<SetStateAction<"gallery" | "table">>;
+  viewMode: "gallery" | "table";
 };
 
 function ViewModeSwitch({
@@ -19,7 +19,7 @@ function ViewModeSwitch({
     <ToggleGroup
       type="single"
       value={viewMode}
-      onValueChange={(value) => {
+      onValueChange={(value: "gallery" | "table") => {
         if (value) setViewMode(value);
       }}
       className={className}

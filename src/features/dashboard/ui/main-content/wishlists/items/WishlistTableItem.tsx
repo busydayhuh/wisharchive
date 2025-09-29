@@ -41,7 +41,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
   );
 
   return (
-    <div className="wl-table-grid relative items-center px-1 py-2">
+    <div className="wl-table-grid relative items-center py-2">
       {/* Превью желаний */}
       <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
         <ImageTiles wishes={wishlist.wishes} variant="table" />
@@ -72,7 +72,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
         {collaborators && (
           <CollaboratorsAvatars
             collaborators={collaborators}
-            size={7}
+            size="default"
             maxVisible={5}
             className="mt-1"
             hideOwner

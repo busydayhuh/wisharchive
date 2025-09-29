@@ -5,10 +5,12 @@ import { cn } from "../lib/css";
 function ExpandableText({
   text,
   lines = 5,
+  buttonTextSize = "text-sm",
   className,
 }: {
   text: string;
   lines?: number;
+  buttonTextSize?: string;
   className?: string;
 }) {
   const [expanded, setExpanded] = useState(false);
@@ -75,7 +77,10 @@ function ExpandableText({
         <button
           type="button"
           onClick={toggle}
-          className="font-medium text-muted-foreground text-sm cursor-pointer"
+          className={cn(
+            "font-medium text-muted-foreground text-sm cursor-pointer",
+            buttonTextSize
+          )}
           aria-label={expanded ? "свернуть описание" : "показать больше"}
         >
           {expanded ? "- скрыть" : "+ показать больше"}

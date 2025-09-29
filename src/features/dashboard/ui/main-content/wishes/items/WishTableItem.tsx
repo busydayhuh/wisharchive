@@ -19,7 +19,7 @@ const WishTableItem = memo(function WishTableItem({
 }: {
   wish: WishDocumentType;
 }) {
-  const { isOwner, isBooker, isEditor, bookWish, onBookedPage } =
+  const { isOwner, isBooker, isEditor, bookWish, onBookedPage, onListPage } =
     useWishcardMeta(wish);
 
   return (
@@ -65,7 +65,7 @@ const WishTableItem = memo(function WishTableItem({
       {/* Вишлист / владелец желания */}
       {/* Отображается при w >= 768px */}
       <div className="hidden md:block">
-        {onBookedPage ? (
+        {onBookedPage || onListPage ? (
           <OwnerAvatar
             userId={wish.ownerId}
             userName={wish.owner.userName}
