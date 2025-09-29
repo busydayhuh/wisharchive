@@ -16,7 +16,10 @@ export const RelatedWishes = memo(function RelatedWishes({
   wishId: string;
   userName?: string;
 }) {
-  const { wishes, isLoading, error } = useWishes(userId);
+  const { wishes, isLoading, error } = useWishes({
+    ownerId: userId,
+    archived: false,
+  });
 
   const relatedWishes = useMemo(
     () => wishes?.filter((wish) => wish.$id !== wishId).slice(0, 4),
