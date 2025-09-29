@@ -54,5 +54,37 @@ export function useWishQuickActions(wishId: string) {
     }
   }, [wishId]);
 
-  return { bookWish, archiveWish, deleteWish, editWish };
+  const removeFromWishlist = useCallback(async () => {
+    try {
+      await wishMutations.update(wishId, {
+        wishlistId: null,
+        wishlist: null,
+      });
+    } catch {
+      console.log("Не удалось исключить желание из списка");
+    }
+  }, [wishId]);
+
+  const changeWishlist = useCallback(
+    async (newWlId: string) => {
+      try {
+        await wishMutations.update(wishId, {
+          wishlistId: newWlId,
+          wishlist: newWlId,
+        });
+      } catch {
+        console.log("Не удалось изменить список");
+      }
+    },
+    [wishId]
+  );
+
+  return {
+    bookWish,
+    archiveWish,
+    deleteWish,
+    editWish,
+    removeFromWishlist,
+    changeWishlist,
+  };
 }

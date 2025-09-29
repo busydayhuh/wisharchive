@@ -26,7 +26,7 @@ export type WishlistDocumentType = Models.Document & {
   ownerId: string;
   editorsIds: string[] | [] | null;
   wishes: WishDocumentType[] | null;
-  owner: UserDocumentType | null;
+  owner: UserDocumentType;
   bookmarkedBy: string[] | null;
 };
 

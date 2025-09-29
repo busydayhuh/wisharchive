@@ -26,6 +26,7 @@ type Option = {
   label: string;
   icon?: React.ReactNode;
   colors?: string;
+  disabled?: boolean;
 };
 
 type ResponsiveSelectProps = {
@@ -75,6 +76,8 @@ export function ResponsiveSelect({
     );
   }
 
+  console.log("options :>> ", options);
+
   // мобильная версия
   if (isMobile) {
     return (
@@ -109,6 +112,7 @@ export function ResponsiveSelect({
               <DrawerClose asChild key={opt.value}>
                 <Button
                   variant={opt.value === value ? "default" : "ghost"}
+                  disabled={opt.disabled}
                   onClick={() => onChange(opt.value)}
                   className="justify-start py-6 font-normal"
                 >
@@ -137,14 +141,15 @@ export function ResponsiveSelect({
           {triggerText ? triggerText : selected?.label ?? ""}
         </SelectValue>
       </SelectTrigger>
-      <SelectContent className="bg-secondary max-h-[14rem] overflow-y-scroll">
+      <SelectContent className="bg-secondary max-h-[16rem] overflow-y-scroll">
         {options.map((opt) => {
           if (opt.value === "none") {
             return (
               <React.Fragment key={opt.value}>
                 <SelectItem
                   value={opt.value}
-                  className="focus:bg-muted/50 py-2 cursor-pointer"
+                  className="focus:bg-muted/50 py-1 cursor-pointer"
+                  disabled={opt.disabled}
                 >
                   <span className="flex items-center gap-2">
                     {opt.icon}
@@ -161,7 +166,8 @@ export function ResponsiveSelect({
             <SelectItem
               key={opt.value}
               value={opt.value}
-              className="focus:bg-muted/50 py-2 cursor-pointer"
+              disabled={opt.disabled}
+              className="focus:bg-muted/50 py-1 cursor-pointer"
             >
               {renderOption ? (
                 renderOption(opt, opt.value === value)
