@@ -16,9 +16,9 @@ import { useSidebar } from "@/shared/ui/kit/sidebar";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Archive, ArchiveRestore, Edit2, Ellipsis, Trash2 } from "lucide-react";
 import { type JSX } from "react";
+import DeleteButton from "../../../shared/ui/DeleteButton";
 import { useWishQuickActions } from "../model/useWishQuickActions";
 import { ArchiveButton } from "./buttons/ArchiveButton";
-import DeleteButton from "./buttons/DeleteButton";
 
 const dropdownTriggerVariants = cva(
   "inline-flex justify-center items-center border-0 rounded-full size-8 md:size-9 text-foreground text-sm transition duration-300 cursor-pointer shrink-0",

@@ -56,6 +56,7 @@ export const BookButton = memo(function BookButton({
       className={cn(bookButtonVariants({ triggerVariant }), className)}
       onPressedChange={handlePress}
       aria-label={title}
+      disabled={bookedBySomebody}
     >
       {isBookedByCurrentUser ? <LockKeyholeOpen /> : <LockKeyhole />}
       {title}

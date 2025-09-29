@@ -26,8 +26,8 @@ import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
 import { href, useBlocker, useNavigate } from "react-router";
 import type z from "zod";
+import DeleteButton from "../../../shared/ui/DeleteButton";
 import { wishMutations } from "../model/wishMutations";
-import DeleteButton from "./buttons/DeleteButton";
 
 function WishForm({
   wish,
@@ -293,7 +293,10 @@ function WishlistSelect({
   value?: string;
 }) {
   const { current } = useAuth();
-  const { wishlists, isLoading, error } = useWishlists(current?.$id ?? null);
+  const { wishlists, isLoading, error } = useWishlists({
+    ownerId: current?.$id,
+    allEditable: true,
+  });
 
   const options = [
     {
