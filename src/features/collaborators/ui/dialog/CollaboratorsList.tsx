@@ -21,7 +21,7 @@ export default function CollaboratorsList({
   if (!searchString) {
     return (
       <ScrollArea className="max-h-[16rem]">
-        <div className="space-y-2 px-2">
+        <div className="space-y-4 px-2">
           {collaborators.map((c) => (
             <Collaborator
               key={c.userId}
@@ -45,7 +45,7 @@ export default function CollaboratorsList({
 
     return (
       <ScrollArea className="max-h-[16rem]">
-        <div className="space-y-2 px-2">
+        <div className="space-y-4 px-2">
           {users?.map((user: UserDocumentType) => {
             return (
               <Collaborator

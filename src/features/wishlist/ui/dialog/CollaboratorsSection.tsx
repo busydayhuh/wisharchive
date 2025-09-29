@@ -36,10 +36,11 @@ export default function CollaboratorsSection({
           <CollaboratorsAvatars
             collaborators={collaborators}
             maxVisible={5}
-            size={8}
+            size="default"
           />
 
           <CollaboratorsDialog
+            collaborators={collaborators}
             isPrivateChecked={isPrivateChecked}
             wishlistId={wishlistId}
           />

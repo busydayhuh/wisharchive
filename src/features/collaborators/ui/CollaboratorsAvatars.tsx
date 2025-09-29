@@ -6,7 +6,7 @@ import { memo } from "react";
 
 type CollaboratorsAvatarsProps = {
   collaborators: CollaboratorType[];
-  size: number;
+  size: "default" | "sm" | "lg";
   maxVisible: number;
   hideOwner?: boolean;
 } & React.ComponentProps<"div">;
@@ -21,6 +21,18 @@ export const CollaboratorsAvatars = memo(function CollaboratorsAvatars({
   const visible = collaborators.slice(0, maxVisible);
   const remaining = collaborators.length - maxVisible;
 
+  const sizes = {
+    default: "w-8 h-8",
+    lg: "w-10 h-10",
+    sm: "w-6 h-6",
+  };
+
+  const spacing = {
+    default: "-space-x-3",
+    lg: "-space-x-4",
+    sm: "-space-x-2",
+  };
+
   if (!collaborators) return null;
 
   // в команде списка всегда как минимум 1 участник (владелец)
@@ -31,19 +43,20 @@ export const CollaboratorsAvatars = memo(function CollaboratorsAvatars({
   return (
     <div
       className={cn(
-        "flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background",
+        "flex *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background",
+        spacing[size],
         className
       )}
     >
       {visible.map((c) => (
-        <Avatar className={`w-${size} h-${size}`} key={ID.unique()}>
-          <AvatarImage src={c.avatarURL} alt={c.userName} />
+        <Avatar className={sizes[size]} key={ID.unique()}>
+          <AvatarImage src={c.avatarURL ?? undefined} alt={c.userName} />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       ))}
 
       {remaining > 0 && (
-        <Avatar className={`w-${size} h-${size}`}>
+        <Avatar className={sizes[size]}>
           <AvatarImage />
           <AvatarFallback className="text-xs">+{remaining}</AvatarFallback>
         </Avatar>

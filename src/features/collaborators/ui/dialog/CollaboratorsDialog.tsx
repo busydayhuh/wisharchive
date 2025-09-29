@@ -1,5 +1,5 @@
 import useMembershipMutations from "@/features/collaborators/model/membership/useMembershipMutations";
-import { useCollaborators } from "@/features/collaborators/model/useCollaborators";
+import { type CollaboratorType } from "@/features/collaborators/model/useCollaborators";
 import type { Setter } from "@/shared/model/types";
 import { Button } from "@/shared/ui/kit/button";
 import {
@@ -10,19 +10,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/kit/dialog";
-import { FormLabel } from "@/shared/ui/kit/form";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { PlusIcon } from "lucide-react";
 import { useState } from "react";
 import Searchbar from "../../../../shared/ui/Searchbar";
-import {
-  CollaboratorsContext,
-  type SelectedRole,
-} from "../../model/CollaboratorsContext";
+import { CollaboratorsContext } from "../../model/CollaboratorsContext";
 import CollaboratorsList from "./CollaboratorsList";
 import RoleSelect from "./RoleSelect";
 
 type CollaboratorsDialogProps = {
+  collaborators: CollaboratorType[];
   wishlistId: string;
   isPrivateChecked?: boolean;
 };
@@ -30,13 +27,12 @@ type CollaboratorsDialogProps = {
 export function CollaboratorsDialog({
   wishlistId,
   isPrivateChecked = false,
+  collaborators,
 }: CollaboratorsDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const [selectedRole, setSelectedRole] = useState<SelectedRole>("editors");
+  const [selectedRole, setSelectedRole] = useState("editors");
   const [searchString, setSearchString] = useState("");
-
-  const { collaborators, isLoading, error } = useCollaborators(wishlistId);
 
   const { addMemberAsEditor, addMemberAsReader, deleteMember } =
     useMembershipMutations(wishlistId);
@@ -49,12 +45,6 @@ export function CollaboratorsDialog({
 
     return newMembership;
   };
-
-  if (isLoading) return <div>Загрузка...</div>; // TODO скелетон
-  if (error) {
-    alert("Что-то пошло не так");
-    return null;
-  } // TODO тост ошибки
 
   if (collaborators)
     return (
@@ -69,7 +59,7 @@ export function CollaboratorsDialog({
           </Button>
         </DialogTrigger>
 
-        <DialogContent className="rounded-xl sm:max-w-md">
+        <DialogContent className="rounded-xl w-full md:max-w-md">
           <CollaboratorsContext.Provider
             value={{
               wishlistId,
@@ -86,7 +76,7 @@ export function CollaboratorsDialog({
               </DialogDescription>
             </DialogHeader>
 
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-6 lg:gap-8">
               <RoleSelect isPrivateChecked={isPrivateChecked} />
 
               <Search
@@ -100,7 +90,7 @@ export function CollaboratorsDialog({
               />
             </div>
             <DialogFooter className="sm:justify-start mt-6">
-              <Button className="rounded-md" onClick={() => setIsOpen(false)}>
+              <Button size="lg" onClick={() => setIsOpen(false)}>
                 Готово
               </Button>
             </DialogFooter>
@@ -118,13 +108,15 @@ function Search({
   setSearchString: Setter<string>;
 }) {
   return (
-    <div className="space-y-3">
-      <FormLabel>Найти пользователя по имени или никнейму</FormLabel>
+    <div>
+      <span className="inline-block mb-2 font-medium text-muted-foreground text-sm">
+        Найти пользователя по имени или никнейму
+      </span>
       <Searchbar
         searchString={searchString}
         setSearchString={setSearchString}
         grow={false}
-        className="[&_input]:h-10"
+        className="[&_input]:h-12"
       />
     </div>
   );

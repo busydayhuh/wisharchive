@@ -2,6 +2,7 @@ import type { CollaboratorType } from "@/features/collaborators/model/useCollabo
 import { cn } from "@/shared/lib/css";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/kit/avatar";
 import { Button } from "@/shared/ui/kit/button";
+import { MailCheck, Plus, Trash2 } from "lucide-react";
 import { useCollaboratorsContext } from "../../model/CollaboratorsContext";
 
 export default function Collaborator({
@@ -26,14 +27,14 @@ export default function Collaborator({
 
   return (
     <div className="flex items-center gap-2">
-      <Avatar className="rounded-full size-8">
-        <AvatarImage src={avatarURL} alt={userId} />
+      <Avatar className="rounded-full w-10 h-10">
+        <AvatarImage src={avatarURL ?? undefined} alt={userId} />
         <AvatarFallback>ER</AvatarFallback>
       </Avatar>
 
       <div className="flex flex-col">
         <span className="font-medium text-sm md:text-base">{userName}</span>
-        <span className="text-ring text-xs md:text-sm leading-tight">
+        <span className="text-muted-foreground text-xs leading-tight">
           {roles ? roleName(roles) : null}
         </span>
       </div>
@@ -41,9 +42,9 @@ export default function Collaborator({
       {isConfirmed && !isOwner && (
         <Button
           type="button"
-          size="sm"
+          size="default"
           className={cn(
-            "bg-muted-foreground hover:bg-muted-foreground/60 ms-auto rounded-lg text-foreground"
+            "bg-muted-foreground hover:bg-muted-foreground/60 ms-auto rounded-sm w-9 md:w-auto h-9 md:h-11 text-foreground"
           )}
           onClick={(e) => {
             e.preventDefault();
@@ -51,19 +52,25 @@ export default function Collaborator({
             deleteMember(userId);
           }}
         >
-          Исключить
+          <span className="md:hidden">
+            <Trash2 />
+          </span>
+          <span className="hidden md:inline">Исключить</span>
         </Button>
       )}
 
       {isInvited && !isOwner && (
         <Button
           type="button"
-          size="sm"
+          size="default"
           variant="destructive"
-          className={cn("ms-auto rounded-lg")}
+          className={cn("ms-auto rounded-sm w-9 md:w-auto h-9 md:h-11")}
           disabled
         >
-          Приглашён
+          <span className="md:hidden">
+            <MailCheck />
+          </span>
+          <span className="hidden md:inline">Приглашён</span>
         </Button>
       )}
 
@@ -71,15 +78,18 @@ export default function Collaborator({
         <Button
           type="button"
           variant="destructive"
-          size="sm"
-          className="ms-auto rounded-lg"
+          size="default"
+          className="ms-auto rounded-sm w-9 md:w-auto h-9 md:h-11"
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
             addMember(userId, userEmail);
           }}
         >
-          Пригласить
+          <span className="md:hidden">
+            <Plus />
+          </span>
+          <span className="hidden md:inline">Пригласить</span>
         </Button>
       )}
     </div>

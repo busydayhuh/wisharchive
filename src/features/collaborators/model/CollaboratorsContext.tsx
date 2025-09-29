@@ -5,8 +5,8 @@ export type SelectedRole = "editors" | "readers";
 
 type CollaboratorsContextType = {
   wishlistId: string;
-  selectedRole: SelectedRole;
-  setSelectedRole: (role: SelectedRole) => void;
+  selectedRole: string;
+  setSelectedRole: (role: string) => void;
   addMember: (
     userId: string,
     email: string
