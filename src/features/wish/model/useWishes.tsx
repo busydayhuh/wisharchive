@@ -2,7 +2,6 @@ import db from "@/shared/model/databases";
 import type { WishDocumentType } from "@/shared/model/types";
 import { Query } from "appwrite";
 import { useMemo } from "react";
-import { useLocation } from "react-router";
 import useSWR from "swr";
 
 async function fetcher(queries: string[]) {
@@ -11,54 +10,67 @@ async function fetcher(queries: string[]) {
   return response.documents as WishDocumentType[];
 }
 
-export function useWishes(userId: string, searchString?: string) {
-  const { pathname } = useLocation();
-
+export function useWishes(filters?: {
+  ownerId?: string;
+  searchString?: string;
+  bookerId?: string;
+  wishlistId?: string;
+  archived?: boolean;
+  order?: "asc" | "desc";
+  orderBy?: "$sequence" | "price" | "priority" | "title";
+}) {
   const queries = useMemo(
-    () => getWishQueries(pathname, userId, searchString ?? ""),
-    [pathname, userId, searchString]
+    () => (filters ? getWishQueries(filters) : null),
+    [filters]
   );
 
-  const key = useMemo(
-    () => (userId ? ["wishes", userId, queries] : null),
-    [userId, queries]
-  );
+  const key = useMemo(() => (queries ? ["wishes", queries] : null), [queries]);
 
   const {
     data: wishes,
     isLoading,
     error,
-  } = useSWR(key, () => fetcher(queries));
+  } = useSWR(key, () => fetcher(queries as string[])); // если queries null, то key = null и запроса не будет
 
   return { wishes, isLoading, error };
 }
 
-function getWishQueries(
-  pathname: string,
-  userId: string,
-  searchString: string
-) {
-  if (pathname.includes("/booked")) {
-    return [
-      Query.contains("bookerId", userId),
-      Query.contains("title", searchString),
-      Query.orderDesc("$sequence"),
-    ];
+function getWishQueries(filters?: {
+  ownerId?: string;
+  searchString?: string;
+  bookerId?: string;
+  wishlistId?: string;
+  archived?: boolean;
+  order?: "asc" | "desc";
+  orderBy?: "$sequence" | "price" | "priority" | "title";
+}) {
+  const queries = [];
+
+  if (filters?.ownerId) {
+    queries.push(Query.equal("ownerId", filters.ownerId));
   }
 
-  if (pathname.includes("/archived")) {
-    return [
-      Query.equal("ownerId", userId),
-      Query.equal("isArchived", true),
-      Query.contains("title", searchString),
-      Query.orderDesc("$sequence"),
-    ];
+  if (filters?.searchString) {
+    queries.push(Query.contains("title", filters?.searchString));
   }
 
-  return [
-    Query.equal("ownerId", userId),
-    Query.contains("title", searchString),
-    Query.equal("isArchived", false),
-    Query.orderDesc("$sequence"),
-  ];
+  if (filters?.wishlistId) {
+    queries.push(Query.equal("wishlistId", filters.wishlistId));
+  }
+
+  if (filters?.bookerId) {
+    queries.push(Query.equal("bookerId", filters.bookerId));
+  }
+
+  if (filters?.order && filters.orderBy) {
+    if (filters.order === "desc") {
+      queries.push(Query.orderDesc(filters.orderBy));
+    } else {
+      queries.push(Query.orderAsc(filters.orderBy));
+    }
+  }
+
+  queries.push(Query.equal("isArchived", filters?.archived ?? false));
+
+  return queries.length > 0 ? (queries as string[]) : null;
 }

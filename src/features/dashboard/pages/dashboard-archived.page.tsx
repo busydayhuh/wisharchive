@@ -1,13 +1,24 @@
 import { useWishes } from "@/features/wish";
 import { useDashboardContext } from "../ui/DashboardLayout";
-import WishesPageLayout from "../ui/main-content/wishes/WishesPageLayout";
+import { WishesPageLayout } from "../ui/main-content/wishes/WishesPageLayout";
 
 function ArchivedWishesPage() {
-  const { dashboardUserId, searchString } = useDashboardContext();
-  const { wishes, isLoading, error } = useWishes(dashboardUserId, searchString);
+  const { dashboardUserId, searchString, viewMode } = useDashboardContext();
+  const { wishes, isLoading, error } = useWishes({
+    ownerId: dashboardUserId,
+    searchString: searchString,
+    archived: true,
+    order: "desc",
+    orderBy: "$sequence",
+  });
 
   return (
-    <WishesPageLayout wishes={wishes} isLoading={isLoading} error={error} />
+    <WishesPageLayout
+      wishes={wishes}
+      isLoading={isLoading}
+      error={error}
+      viewMode={viewMode}
+    />
   );
 }
 

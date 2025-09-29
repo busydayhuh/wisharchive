@@ -8,7 +8,12 @@ function BookmarksPage() {
     wishlists: bookmarkedWishlists,
     isLoading,
     error,
-  } = useWishlists(dashboardUserId ?? null, searchString);
+  } = useWishlists({
+    bookmarkedBy: dashboardUserId,
+    searchString: searchString,
+    order: "desc",
+    orderBy: "$sequence",
+  });
 
   return (
     <WishlistsPageLayout

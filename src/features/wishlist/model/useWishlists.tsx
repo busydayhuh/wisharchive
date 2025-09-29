@@ -2,7 +2,6 @@ import db from "@/shared/model/databases";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { Query } from "appwrite";
 import { useMemo } from "react";
-import { useLocation } from "react-router";
 import useSWR from "swr";
 
 async function fetcher(queries: string[]) {
@@ -11,28 +10,30 @@ async function fetcher(queries: string[]) {
   return response.documents as WishlistDocumentType[];
 }
 
-export function useWishlists(
-  userId: string | null,
-  searchString?: string,
-  teams?: string[]
-) {
-  const { pathname } = useLocation();
-
+export function useWishlists(filters?: {
+  ownerId?: string;
+  searchString?: string;
+  bookmarkedBy?: string;
+  allEditable?: boolean;
+  teams?: string[];
+  order?: "asc" | "desc";
+  orderBy?: "$sequence" | "$updatedAt" | "title";
+}) {
   const queries = useMemo(
-    () => getWishlistQueries(pathname, userId ?? "", searchString ?? "", teams),
-    [pathname, userId, searchString, teams]
+    () => (filters ? getWishlistQueries(filters) : null),
+    [filters]
   );
 
   const key = useMemo(
-    () => (userId ? ["wishlists", userId, queries] : null),
-    [userId, queries]
+    () => (queries ? ["wishlists", queries] : null),
+    [queries]
   );
 
   const {
     data: wishlists,
     isLoading,
     error,
-  } = useSWR(key, () => fetcher(queries), {
+  } = useSWR(key, () => fetcher(queries as string[]), {
     onSuccess: (data) => {
       data.forEach((wl) => (wl.wishes ? wl.wishes.reverse() : null));
     },
@@ -41,44 +42,57 @@ export function useWishlists(
   return { wishlists, isLoading, error };
 }
 
-function getWishlistQueries(
-  pathname: string,
-  userId: string,
-  searchString: string,
-  teams?: string[]
-) {
-  if (pathname.includes("/bookmarks")) {
-    return [
-      Query.contains("bookmarkedBy", userId),
-      Query.contains("title", searchString),
-      Query.orderDesc("$sequence"),
-    ];
+function getWishlistQueries(filters?: {
+  ownerId?: string;
+  searchString?: string;
+  bookmarkedBy?: string;
+  allEditable?: boolean;
+  teams?: string[];
+  order?: "asc" | "desc";
+  orderBy?: "$sequence" | "$updatedAt" | "title";
+}) {
+  const queries = [];
+
+  if (filters?.ownerId) {
+    queries.push(Query.equal("ownerId", filters.ownerId));
+  }
+
+  if (filters?.searchString) {
+    queries.push(Query.contains("title", filters?.searchString));
+  }
+
+  if (filters?.bookmarkedBy) {
+    queries.push(Query.contains("bookmarkedBy", filters?.bookmarkedBy));
   }
 
   // team каждого вишлиста имеет такой же id, как и вишлист
   // поэтому ищем вишлисты по массиву id teams
 
-  if (pathname.includes("/shared")) {
-    return [
-      Query.equal("$id", teams ?? ""),
-      Query.notEqual("ownerId", userId),
-      Query.contains("title", searchString),
-      Query.orderDesc("$sequence"),
-    ];
+  if (filters?.teams && filters?.teams.length > 0 && filters?.ownerId) {
+    queries.push(
+      Query.equal("$id", filters.teams),
+      Query.notEqual("ownerId", filters?.ownerId)
+    );
   }
 
-  if (pathname.includes("/edit-wish")) {
-    return [
-      Query.or([
-        Query.equal("ownerId", userId),
-        Query.contains("editorsIds", userId),
-      ]),
-    ];
+  if (filters?.teams && filters?.teams.length > 0 && !filters?.ownerId) {
+    queries.push(Query.equal("$id", filters.teams));
   }
 
-  return [
-    Query.equal("ownerId", userId),
-    Query.contains("title", searchString),
-    Query.orderDesc("$sequence"),
-  ];
+  if (filters?.ownerId && filters?.allEditable) {
+    queries.push(
+      Query.equal("ownerId", filters?.ownerId),
+      Query.contains("editorsIds", filters?.ownerId)
+    );
+  }
+
+  if (filters?.order && filters.orderBy) {
+    if (filters.order === "desc") {
+      queries.push(Query.orderDesc(filters.orderBy));
+    } else {
+      queries.push(Query.orderAsc(filters.orderBy));
+    }
+  }
+
+  return queries.length > 0 ? (queries as string[]) : null;
 }

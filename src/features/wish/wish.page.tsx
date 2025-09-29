@@ -16,7 +16,7 @@ function WishPage() {
 
   if (error)
     return navigate(href(ROUTES.WISHES, { userId: authUser?.$id ?? "" }));
-  if (isLoading) return "Загрузка...";
+  if (isLoading) return <>"Загрузка..."</>;
   if (wish)
     return (
       <WishLayout

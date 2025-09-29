@@ -4,10 +4,12 @@ import WishlistsPageLayout from "../ui/main-content/wishlists/WishlistsPageLayou
 
 function WishlistsPage() {
   const { dashboardUserId, searchString } = useDashboardContext();
-  const { wishlists, isLoading, error } = useWishlists(
-    dashboardUserId ?? null,
-    searchString
-  );
+  const { wishlists, isLoading, error } = useWishlists({
+    ownerId: dashboardUserId,
+    searchString: searchString,
+    order: "desc",
+    orderBy: "$sequence",
+  });
 
   return (
     <WishlistsPageLayout

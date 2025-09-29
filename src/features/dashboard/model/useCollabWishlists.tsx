@@ -9,10 +9,7 @@ async function fetcher() {
   return response.teams as Models.Team<Models.Preferences>[];
 }
 
-export function useCollabWishlists(
-  userId: string | null,
-  searchString?: string
-) {
+export function useCollabWishlists(userId?: string, searchString?: string) {
   const {
     data: teams,
     isLoading: teamsLoading,
@@ -25,7 +22,13 @@ export function useCollabWishlists(
     wishlists,
     isLoading: wlLoading,
     error: wlError,
-  } = useWishlists(userId, searchString, teamsIds);
+  } = useWishlists({
+    ownerId: userId,
+    searchString: searchString,
+    teams: teamsIds,
+    order: "desc",
+    orderBy: "$sequence",
+  });
 
   return {
     wishlists,
