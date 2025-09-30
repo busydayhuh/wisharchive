@@ -31,6 +31,8 @@ export function useWishQuickActions(wishId: string) {
       try {
         await wishMutations.update(wishId, {
           isArchived: !archived,
+          wishlist: null,
+          wishlistId: null,
         });
 
         mutate((key) => Array.isArray(key) && key[0] === "wishes");
