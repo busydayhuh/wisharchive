@@ -4,7 +4,7 @@ import {
   ArrowUp,
   CircleDot,
   Eye,
-  EyeOff,
+  EyeClosed,
   Pencil,
 } from "lucide-react";
 import { href, Link } from "react-router";
@@ -20,7 +20,7 @@ const badgesVariants = cva(
     variants: {
       size: {
         sm: "h-7 rounded-sm gap-1.5 px-3 has-[>svg]:px-2.5 text-xs rounded-sm",
-        md: "lg:h-9 lg:px-4 lg:py-2 lg:has-[>svg]:px-3 px-2 py-1 h-8 has-[>svg]:px-2 text-xs lg:text-sm 2xl:text-base",
+        md: "lg:h-9 lg:px-4 lg:py-2 lg:has-[>svg]:px-3 px-2 py-1 h-8 has-[>svg]:px-2 text-xs lg:text-sm",
         lg: "h-12 rounded-xl px-6 has-[>svg]:px-4 text-sm 2xl:text-base ",
       },
     },
@@ -104,7 +104,7 @@ export function WishlistBadge({
         "bg-secondary hover:bg-secondary/70 hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 cursor-pointer md:max-w-[25ch] truncate"
       )}
     >
-      {isPrivate && <EyeOff />}
+      {isPrivate && <EyeClosed />}
       {title}
     </Link>
   );

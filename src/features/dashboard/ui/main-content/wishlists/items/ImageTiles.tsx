@@ -12,13 +12,9 @@ function ImageTiles({
 }) {
   let coverImages = Array(3).fill(null);
 
-  const activeOnly = wishes?.filter((w) => !w.isArchived) ?? [];
-
   if (wishes) {
     coverImages = coverImages.map((_, i) =>
-      activeOnly[i]
-        ? { imageURL: activeOnly[i].imageURL, id: activeOnly[i].$id }
-        : null
+      wishes[i] ? { imageURL: wishes[i].imageURL, id: wishes[i].$id } : null
     );
   }
 

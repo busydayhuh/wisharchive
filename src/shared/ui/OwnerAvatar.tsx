@@ -15,7 +15,7 @@ function OwnerAvatar({
   size?: "sm" | "md" | "lg";
 }) {
   const avatarSizes = {
-    sm: "w-5 h-5",
+    sm: "w-6 h-6",
     md: "lg:w-7 lg:h-7 w-5 h-5",
     lg: "lg:w-10 lg:h-10 w-7 h-7",
   };
@@ -32,8 +32,12 @@ function OwnerAvatar({
           <AvatarImage src={avatarURL ?? undefined} alt={userId} />
           <AvatarFallback>ER</AvatarFallback>
         </Avatar>
+
         <span
-          className={cn("max-w-[18ch] font-medium truncate", textSizes[size])}
+          className={cn(
+            "max-w-[18ch] font-medium truncate owner-name",
+            textSizes[size]
+          )}
         >
           {userName}
         </span>
