@@ -1,20 +1,28 @@
 import { useAuth } from "@/features/auth";
-import { useCollabWishlists } from "@/features/dashboard/model/useCollabWishlists";
+import { useCollabWishlists } from "@/features/dashboard";
 import { cn } from "@/shared/lib/css";
+import { useSidebar } from "@/shared/ui/kit/sidebar";
 import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
-import { EyeClosed, List, Users2, X } from "lucide-react";
+import { ArrowLeftRightIcon, EyeClosed, List, Users2, X } from "lucide-react";
 
 export function WishlistSelect({
   onValueChange,
   value,
+  variant = "dashboard",
   className,
 }: {
   onValueChange: (value: string) => void;
   value?: string;
+  variant?: "dashboard" | "form";
   className?: string;
 }) {
   const { current } = useAuth();
-  const { wishlists, isLoading, error } = useCollabWishlists();
+  const { isMobile } = useSidebar();
+
+  const { wishlists, isLoading, error } = useCollabWishlists({
+    order: "desc",
+    orderBy: "$updatedAt",
+  });
 
   const icons = {
     default: (
@@ -62,7 +70,13 @@ export function WishlistSelect({
       options={options}
       onChange={onValueChange}
       value={value}
-      className={cn("shadow-none", className)}
+      triggerJSX={
+        variant === "dashboard" &&
+        isMobile && <ArrowLeftRightIcon className="size-3" />
+      }
+      triggerCSS={cn(className)}
+      title="Выберите список"
+      contentCSS={cn("max-h-md", variant === "dashboard" && "w-xs")}
       isLoading={isLoading}
       error={error}
       renderOption={(opt) => (

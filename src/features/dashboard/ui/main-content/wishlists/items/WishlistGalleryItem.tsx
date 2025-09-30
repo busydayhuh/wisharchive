@@ -4,7 +4,7 @@ import { BookmarkButton, EditWishlistButton } from "@/features/wishlist";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { RoleBadge } from "@/shared/ui/Badges";
-import { EyeOffIcon } from "lucide-react";
+import { EyeClosed } from "lucide-react";
 import { memo } from "react";
 import { href, Link } from "react-router-dom";
 import ImageTiles from "./ImageTiles";
@@ -59,7 +59,7 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
                 {wishlist.title}
               </span>
               {wishlist.isPrivate && (
-                <EyeOffIcon className="size-4 text-muted-foreground" />
+                <EyeClosed className="size-3 md:size-4 text-muted-foreground" />
               )}
             </div>
 

@@ -7,7 +7,7 @@ import type { WishlistDocumentType } from "@/shared/model/types";
 import { RoleBadge } from "@/shared/ui/Badges";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
-import { EyeOffIcon } from "lucide-react";
+import { EyeClosed } from "lucide-react";
 import { memo, useMemo } from "react";
 import { href, Link } from "react-router";
 import ImageTiles from "./ImageTiles";
@@ -41,7 +41,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
   );
 
   return (
-    <div className="wl-table-grid relative items-center py-2">
+    <div className="wl-table-grid relative items-center py-2 pl-2 md:pl-0">
       {/* Превью желаний */}
       <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
         <ImageTiles wishes={wishlist.wishes} variant="table" />
@@ -53,7 +53,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
           <div className="flex items-center gap-2 pr-1 font-medium text-base 2xl:text-lg">
             <span className="truncate">{wishlist.title}</span>
             {wishlist.isPrivate && (
-              <EyeOffIcon className="size-4 text-muted-foreground" />
+              <EyeClosed className="size-3 md:size-4 text-muted-foreground" />
             )}
           </div>
 

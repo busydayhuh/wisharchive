@@ -10,10 +10,13 @@ export const wishlistFormSchema = z.object({
 });
 
 export const wishFormSchema = z.object({
-  title: z.string().min(1, { message: "это обязательное поле" }),
+  title: z
+    .string()
+    .min(1, { message: "это обязательное поле" })
+    .max(100, { message: "максимум 100 символов" }),
   description: z
     .string()
-    .max(500, { message: "описание должно содержать не более 500 символов" })
+    .max(500, { message: "максимум 500 символов" })
     .optional(),
   shopURL: z
     .url({ message: "не валидная ссылка" })

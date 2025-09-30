@@ -1,4 +1,5 @@
 import type { WishlistDocumentType } from "@/shared/model/types";
+import Masonry from "react-masonry-css";
 import { useDashboardContext } from "../../DashboardLayout";
 import WishlistGalleryItem from "./items/WishlistGalleryItem";
 import WishlistTableItem from "./items/WishlistTableItem";
@@ -23,11 +24,15 @@ function WishlistsPageLayout({
   if (wishlists && wishlists.length > 0) {
     if (viewMode === "gallery")
       return (
-        <div className="gap-x-4 gap-y-3 grid grid-auto-fill">
+        <Masonry
+          breakpointCols={{ default: 5, 1470: 4, 1280: 3, 768: 2 }}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column"
+        >
           {wishlists.map((wishlist) => (
             <WishlistGalleryItem wishlist={wishlist} key={wishlist.$id} />
           ))}
-        </div>
+        </Masonry>
       );
 
     if (viewMode === "table")

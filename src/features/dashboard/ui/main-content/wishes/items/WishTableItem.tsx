@@ -2,14 +2,16 @@ import { useWishcardMeta } from "@/features/dashboard/model/useWishcardMeta";
 import {
   BookButton,
   FormattedPrice,
+  useWishQuickActions,
   WishImage,
+  WishlistSelect,
   WishQuickActions,
 } from "@/features/wish";
 import "@/shared/assets/custom.css";
 import { cn } from "@/shared/lib/css";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishDocumentType } from "@/shared/model/types";
-import { PriorityBadge, ShopBadge, WishlistBadge } from "@/shared/ui/Badges";
+import { PriorityBadge, ShopBadge } from "@/shared/ui/Badges";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { memo } from "react";
 import { href, Link } from "react-router";
@@ -21,11 +23,12 @@ const WishTableItem = memo(function WishTableItem({
 }) {
   const { isOwner, isBooker, isEditor, bookWish, onBookedPage, onListPage } =
     useWishcardMeta(wish);
+  const { changeWishlist } = useWishQuickActions(wish.$id);
 
   return (
     <div
       className={cn(
-        "relative items-center grid grid-cols-[3fr_1fr] md:grid-cols-[26rem_1fr_1fr] lg:grid-cols-[32rem_1fr_1fr_0.5fr] 2xl:grid-cols-[64rem_1fr_1fr_0.5fr] xl:grid-cols-[52rem_1fr_1fr_0.5fr] md:px-1 py-1 md:py-2 w-full transition"
+        "relative items-center grid grid-cols-[3fr_1fr] md:grid-cols-[26rem_1fr_1fr_1fr] lg:grid-cols-[32rem_1fr_1fr_1fr_0.5fr] 2xl:grid-cols-[54rem_1fr_1fr_1fr_0.5fr] xl:grid-cols-[42rem_1fr_1fr_1fr_0.5fr] md:px-1 py-1 md:py-2 w-full transition"
       )}
     >
       <div className="group-card-wrapper flex items-center">
@@ -43,10 +46,10 @@ const WishTableItem = memo(function WishTableItem({
         {/* Название и цена */}
         <Link
           to={href(ROUTES.WISH, { wishId: wish.$id })}
-          className="flex flex-col gap-2 me-auto px-2 md:px-4"
+          className="flex flex-col gap-2 me-auto px-4"
         >
-          <div className="flex xl:flex-row flex-col xl:gap-5">
-            <span className="max-w-[16ch] sm:max-w-[20ch] md:max-w-[24ch] lg:max-w-[30ch] xl:max-w-full font-medium text-base xl:text-lg truncate">
+          <div className="flex flex-col gap-1">
+            <span className="max-w-[40ch] overflow-hidden font-medium text-sm md:text-base xl:text-lg break-words text-ellipsis line-clamp-2">
               {wish.title}
             </span>
 
@@ -58,9 +61,13 @@ const WishTableItem = memo(function WishTableItem({
               />
             )}
           </div>
-          <PriorityBadge priority={wish.priority} size="sm" />
         </Link>
       </div>
+      <PriorityBadge
+        priority={wish.priority}
+        size="md"
+        className="hidden md:inline-flex 2xl:text-sm"
+      />
 
       {/* Вишлист / владелец желания */}
       {/* Отображается при w >= 768px */}
@@ -72,21 +79,22 @@ const WishTableItem = memo(function WishTableItem({
             avatarURL={wish.owner.avatarURL}
           />
         ) : (
-          wish.wishlist && (
-            <WishlistBadge
-              id={wish.wishlist.$id}
-              title={wish.wishlist.title}
-              isPrivate={wish.wishlist.isPrivate}
-              size="md"
-            />
-          )
+          <WishlistSelect
+            value={wish.wishlist?.$id ?? "none"}
+            onValueChange={(newWlId: string) => {
+              changeWishlist(newWlId === "none" ? null : newWlId);
+            }}
+            className="w-fit max-w-[16ch] h-9 md:h-11 font-medium text-xs lg:text-sm truncate"
+          />
         )}
       </div>
 
       {/* Ссылка на магазин */}
       {/* Отображается при w >= 1024px */}
       <div className="hidden lg:block">
-        {wish.shopURL && <ShopBadge shopURL={wish.shopURL} />}
+        {wish.shopURL && (
+          <ShopBadge shopURL={wish.shopURL} className="2xl:text-sm" />
+        )}
       </div>
 
       {/* Экшен-кнопки */}

@@ -66,12 +66,15 @@ export function useWishQuickActions(wishId: string) {
   }, [wishId]);
 
   const changeWishlist = useCallback(
-    async (newWlId: string) => {
+    async (newWlId: string | null) => {
       try {
         await wishMutations.update(wishId, {
           wishlistId: newWlId,
           wishlist: newWlId,
         });
+
+        mutate((key) => Array.isArray(key) && key[0] === "wishes");
+        mutate((key) => Array.isArray(key) && key[0] === "wishlists");
       } catch {
         console.log("Не удалось изменить список");
       }

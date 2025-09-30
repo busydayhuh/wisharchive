@@ -24,7 +24,7 @@ export const CollaboratorsAvatars = memo(function CollaboratorsAvatars({
   const sizes = {
     default: "w-8 h-8",
     lg: "w-10 h-10",
-    sm: "w-6 h-6",
+    sm: "w-5 h-5",
   };
 
   const spacing = {

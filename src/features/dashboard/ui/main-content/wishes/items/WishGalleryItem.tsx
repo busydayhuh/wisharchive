@@ -2,6 +2,7 @@ import { useWishcardMeta } from "@/features/dashboard/model/useWishcardMeta";
 import {
   BookButton,
   FormattedPrice,
+  useWishQuickActions,
   WishImage,
   WishlistSelect,
   WishQuickActions,
@@ -29,15 +30,26 @@ const WishGalleryItem = memo(function WishGalleryItem({
 }: {
   wish: WishDocumentType;
 }) {
-  const { onBookedPage, onListPage } = useWishcardMeta(wish);
+  const { onBookedPage, onListPage, isOwner } = useWishcardMeta(wish);
+  const { changeWishlist } = useWishQuickActions(wish.$id);
 
   return (
     <div
       className={cn(
-        "relative flex flex-col gap-2 md:gap-2 mb-8 overflow-hidden"
+        "relative flex flex-col gap-2 md:gap-2 mb-4 md:mb-8 overflow-hidden"
       )}
     >
       <WishCover wish={wish} />
+
+      {isOwner && (
+        <WishlistSelect
+          value={wish.wishlist?.$id ?? "none"}
+          onValueChange={(newWlId: string) => {
+            changeWishlist(newWlId === "none" ? null : newWlId);
+          }}
+          className="top-3 right-3 absolute w-fit max-w-[16ch] h-9 md:h-11 font-medium md:text-sm truncate show-actions"
+        />
+      )}
 
       <Link
         to={href(ROUTES.WISH, { wishId: wish.$id })}
@@ -59,27 +71,15 @@ const WishGalleryItem = memo(function WishGalleryItem({
       </Link>
 
       <div className="flex justify-between items-center gap-1">
-        {onBookedPage || onListPage ? (
+        {(onBookedPage || onListPage) && (
           <OwnerAvatar
             userId={wish.ownerId}
             userName={wish.owner.userName}
             avatarURL={wish.owner.avatarURL}
             className="text-xs md:text-sm"
           />
-        ) : (
-          // <WishlistBadge
-          //   id={wish.wishlist.$id}
-          //   title={wish.wishlist.title}
-          //   isPrivate={wish.wishlist.isPrivate}
-          //   size="sm"
-          // />
-          <WishlistSelect
-            value={wish.wishlist?.$id ?? "none"}
-            onValueChange={() => {}}
-            className="top-2 right-2 absolute max-w-[16ch] md:text-sm truncate show-actions"
-          />
         )}
-        <PriorityBadge priority={wish.priority} size="sm" className="ms-auto" />
+        <PriorityBadge priority={wish.priority} size="sm" />
       </div>
     </div>
   );

@@ -164,12 +164,12 @@
   /* Для устройств с курсором */
   @media (any-hover: hover) {
     .show-actions {
-      @apply invisible opacity-0 translate-y-3 pointer-events-none;
+      @apply invisible opacity-0 transition translate-y-3 duration-300 pointer-events-none;
     }
 
     .group-card-wrapper:hover .show-actions,
     .group-card-wrapper:focus-within .show-actions,
-    .show-actions:has([aria-expanded="true"]) {
+    .show-actions[data-state="open"] {
       @apply visible opacity-100 translate-y-0 pointer-events-auto;
     }
 

@@ -1,4 +1,5 @@
 import { cn } from "@/shared/lib/css";
+import { getFallbackColor } from "@/shared/lib/getFallbackColor";
 import type { WishDocumentType } from "@/shared/model/types";
 import { ID } from "appwrite";
 
@@ -11,9 +12,13 @@ function ImageTiles({
 }) {
   let coverImages = Array(3).fill(null);
 
+  const activeOnly = wishes?.filter((w) => !w.isArchived) ?? [];
+
   if (wishes) {
     coverImages = coverImages.map((_, i) =>
-      wishes[i] && !wishes[i].isArchived ? wishes[i].imageURL : null
+      activeOnly[i]
+        ? { imageURL: activeOnly[i].imageURL, id: activeOnly[i].$id }
+        : null
     );
   }
 
@@ -22,25 +27,34 @@ function ImageTiles({
   if (variant === "gallery")
     return (
       <div className="gap-0.5 grid grid-cols-[1.5fr_1fr] grid-rows-2 *:first:row-span-2 rounded-xl md:rounded-3xl aspect-[4/3] overflow-hidden transition cover-overlay">
-        {coverImages.map((imageURL: string | null) => {
-          if (imageURL) {
-            return (
-              <img
-                src={imageURL}
-                className="w-full h-full object-cover"
-                key={ID.unique()}
-              />
-            );
+        {coverImages.map((wish) => {
+          if (!wish) {
+            return <div className="bg-muted" key={ID.unique()}></div>;
           }
 
-          return <div className="bg-muted" key={ID.unique()}></div>;
+          if (wish?.imageURL) {
+            return (
+              <img
+                src={wish.imageURL}
+                className="w-full h-full object-cover"
+                key={wish.id + "coverImage"}
+              />
+            );
+          } else {
+            return (
+              <div
+                style={{ background: getFallbackColor(wish.id) }}
+                key={wish.id + "coverImage"}
+              ></div>
+            );
+          }
         })}
       </div>
     );
 
   return (
     <div className="relative pr-1 pb-2">
-      {coverImages.reverse().map((image, index) => {
+      {coverImages.reverse().map((wish, index) => {
         return (
           <div
             key={ID.unique()}
@@ -49,8 +63,21 @@ function ImageTiles({
               index !== 0 && `absolute ${offsets[index]}`
             )}
           >
-            {image && (
-              <img src={image} className="w-full h-full object-cover" />
+            {wish && wish.imageURL && (
+              <img
+                src={wish.imageURL}
+                className="border-0 outline-0 w-full h-full object-cover"
+                style={{ background: getFallbackColor(wish.id) }}
+                key={wish.id + "coverImage"}
+              />
+            )}
+
+            {wish && !wish.imageURL && (
+              <div
+                className="w-full h-full"
+                style={{ background: getFallbackColor(wish.id) }}
+                key={wish.id + "coverImage"}
+              />
             )}
           </div>
         );

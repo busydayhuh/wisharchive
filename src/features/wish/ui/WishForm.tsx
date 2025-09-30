@@ -1,6 +1,3 @@
-import { useAuth } from "@/features/auth";
-import { useWishlists } from "@/features/wishlist";
-import { cn } from "@/shared/lib/css";
 import { CURRENCY } from "@/shared/lib/currency";
 import { wishFormSchema as formSchema } from "@/shared/model/formSchemas";
 import { ROUTES } from "@/shared/model/routes";
@@ -20,7 +17,7 @@ import { Input } from "@/shared/ui/kit/input";
 import { Textarea } from "@/shared/ui/kit/textarea";
 import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, Lock, UsersIcon } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
@@ -28,6 +25,7 @@ import { href, useBlocker, useNavigate } from "react-router";
 import type z from "zod";
 import DeleteButton from "../../../shared/ui/DeleteButton";
 import { wishMutations } from "../model/wishMutations";
+import { WishlistSelect } from "./wish-info/WishlistSelect";
 
 function WishForm({
   wish,
@@ -136,7 +134,7 @@ function WishForm({
         />
         <div className="flex flex-col gap-2">
           <FormLabel>Цена</FormLabel>
-          <div className="flex items-center gap-1 bg-secondary pr-2 focus-within:border-ring rounded-md focus-within:ring-[3px] focus-within:ring-ring/50 w-fit">
+          <div className="flex justify-between items-center gap-1 bg-secondary pr-2 focus-within:border-ring rounded-md focus-within:ring-[3px] focus-within:ring-ring/50 md:w-fit">
             <FormField
               control={form.control}
               name="price"
@@ -145,7 +143,7 @@ function WishForm({
                   <FormControl>
                     <NumericFormat
                       getInputRef={field.ref}
-                      className="focus-visible:border-0 focus-visible:ring-0 w-[10rem] text-sm md:text-base"
+                      className="focus-visible:border-0 focus-visible:ring-0 text-sm md:text-base"
                       thousandSeparator=" "
                       decimalScale={0}
                       allowNegative={false}
@@ -186,8 +184,10 @@ function WishForm({
             <FormItem>
               <FormLabel className="mb-1">Выберите вишлист</FormLabel>
               <WishlistSelect
-                onValueChange={field.onChange}
+                variant="form"
                 value={field.value}
+                onValueChange={field.onChange}
+                className="py-6 w-full md:w-[24rem] text-sm md:text-base"
               />
 
               <FormMessage />
@@ -195,15 +195,6 @@ function WishForm({
           )}
         />
         <div className="flex sm:flex-row flex-col sm:justify-between gap-2 mt-2 w-full">
-          {/* <Button
-            type="button"
-            variant="outline"
-            onClick={() => navigate(-1)}
-            size="lg"
-          >
-            Отмена
-          </Button> */}
-
           <Button
             type="submit"
             disabled={form.formState.isSubmitting}
@@ -273,59 +264,16 @@ function CurrencySelect({
       options={options}
       onChange={onValueChange}
       value={value}
-      triggerText={triggerText}
-      className="bg-muted/60 px-3 rounded-sm h-9 text-muted-foreground"
+      triggerJSX={
+        <span className="flex justify-between items-center gap-1">
+          {triggerText}
+        </span>
+      }
+      triggerCSS="bg-muted/60 px-3 rounded-sm h-9 text-muted-foreground"
       renderOption={(opt) => (
-        <span className="flex justify-between items-center gap-2 w-full">
+        <span className="flex justify-between items-center gap-2 py-2 w-full">
           {opt.label}
           <span className="text-muted-foreground">{opt.icon}</span>
-        </span>
-      )}
-    />
-  );
-}
-
-function WishlistSelect({
-  onValueChange,
-  value,
-}: {
-  onValueChange: (value: string) => void;
-  value?: string;
-}) {
-  const { current } = useAuth();
-  const { wishlists, isLoading, error } = useWishlists({
-    ownerId: current?.$id,
-    allEditable: true,
-  });
-
-  const options = [
-    {
-      value: "none",
-      label: "Без вишлиста",
-    },
-    ...(wishlists ?? []).map((wl) => ({
-      value: wl.$id,
-      label: wl.title,
-      icon: (
-        <>
-          {wl.isPrivate && <Lock className="size-3" />}
-          {wl.ownerId !== current?.$id && <UsersIcon />}
-        </>
-      ),
-    })),
-  ];
-
-  return (
-    <ResponsiveSelect
-      options={options}
-      onChange={onValueChange}
-      value={value}
-      className="shadow-none py-6 w-full md:w-[24rem]"
-      isLoading={isLoading}
-      error={error}
-      renderOption={(opt) => (
-        <span className={cn("flex items-center gap-2 py-1")}>
-          {opt.label} {opt.icon}
         </span>
       )}
     />
@@ -363,8 +311,8 @@ function PrioritySelect({
       options={options}
       onChange={onValueChange}
       value={value}
-      triggerText={triggerText}
-      className="py-6 pl-1"
+      triggerJSX={triggerText}
+      triggerCSS="py-6 pl-1.5"
     />
   );
 }

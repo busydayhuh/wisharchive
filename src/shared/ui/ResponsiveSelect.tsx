@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/ui/kit/select";
-import { ChevronDown, Loader2 } from "lucide-react";
+import { Check, ChevronDown, Loader2 } from "lucide-react";
 import { cn } from "../lib/css";
 import {
   Drawer,
@@ -33,24 +33,26 @@ type ResponsiveSelectProps = {
   value?: string;
   onChange: (value: string) => void;
   options: Option[];
-  triggerText?: React.ReactNode;
+  triggerJSX?: React.ReactNode;
   title?: string;
   renderOption?: (opt: Option, isSelected: boolean) => React.ReactNode;
   isLoading?: boolean;
   error?: string;
-  className?: string;
+  triggerCSS?: string;
+  contentCSS?: string;
 };
 
 export function ResponsiveSelect({
   value,
   onChange,
   options,
-  triggerText,
+  triggerJSX,
   title = "Выбор",
   renderOption,
   isLoading = false,
   error,
-  className,
+  triggerCSS,
+  contentCSS,
 }: ResponsiveSelectProps) {
   const { isMobile } = useSidebar();
   const selected = options.find((o) => o.value === value);
@@ -76,8 +78,6 @@ export function ResponsiveSelect({
     );
   }
 
-  console.log("options :>> ", options);
-
   // мобильная версия
   if (isMobile) {
     return (
@@ -87,14 +87,11 @@ export function ResponsiveSelect({
             variant="outline"
             className={cn(
               "justify-between bg-secondary border-0 outline-0 w-full font-normal",
-              className
+              triggerCSS
             )}
           >
-            {triggerText ? (
-              <span className="flex justify-between items-center gap-2 w-full">
-                {triggerText}
-                <ChevronDown className="size-3" />
-              </span>
+            {triggerJSX ? (
+              triggerJSX
             ) : (
               <span className="flex justify-between items-center gap-2 w-full">
                 {selected?.label ?? ""}
@@ -105,7 +102,7 @@ export function ResponsiveSelect({
         </DrawerTrigger>
         <DrawerContent className="rounded-t-2xl w-full">
           <DrawerHeader>
-            <DrawerTitle className="sr-only">{title}</DrawerTitle>
+            <DrawerTitle>{title}</DrawerTitle>
           </DrawerHeader>
           <div className="flex flex-col">
             {options.map((opt) => (
@@ -124,6 +121,7 @@ export function ResponsiveSelect({
                       {opt.label}
                     </span>
                   )}
+                  {opt.value === value && <Check className="ms-auto" />}
                 </Button>
               </DrawerClose>
             ))}
@@ -136,12 +134,17 @@ export function ResponsiveSelect({
   // десктоп
   return (
     <Select onValueChange={onChange} value={value}>
-      <SelectTrigger className={cn("text-sm md:text-base", className)}>
+      <SelectTrigger className={cn("shadow-none cursor-pointer", triggerCSS)}>
         <SelectValue>
-          {triggerText ? triggerText : selected?.label ?? ""}
+          {triggerJSX ? triggerJSX : selected?.label ?? ""}
         </SelectValue>
       </SelectTrigger>
-      <SelectContent className="bg-secondary max-h-[16rem] overflow-y-scroll">
+      <SelectContent
+        className={cn(
+          "bg-secondary max-h-[26rem] overflow-y-scroll",
+          contentCSS
+        )}
+      >
         {options.map((opt) => {
           if (opt.value === "none") {
             return (
@@ -172,7 +175,7 @@ export function ResponsiveSelect({
               {renderOption ? (
                 renderOption(opt, opt.value === value)
               ) : (
-                <span className="flex items-center gap-2 [&_svg:text-muted-foreground]">
+                <span className="flex items-center gap-2 py-2 [&_svg:text-muted-foreground]">
                   {opt.icon}
                   {opt.label}
                 </span>

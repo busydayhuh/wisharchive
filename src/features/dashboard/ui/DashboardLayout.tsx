@@ -21,7 +21,7 @@ export function DashboardLayout() {
     useDashboardMeta();
 
   return (
-    <div className="mt-2 md:mt-4 px-2 md:px-0">
+    <div className="mt-2 md:mt-4 px-1 md:px-0">
       <div className="flex flex-col gap-6 md:gap-10">
         <DashboardHeader
           title={title}

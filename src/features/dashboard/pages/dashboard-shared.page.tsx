@@ -11,7 +11,12 @@ function SharedPage() {
     wishlists: collabWishlists,
     isLoading,
     error,
-  } = useCollabWishlists(current?.$id, searchString);
+  } = useCollabWishlists({
+    userId: current?.$id,
+    searchString: searchString,
+    order: "desc",
+    orderBy: "$sequence",
+  });
 
   return (
     <WishlistsPageLayout
