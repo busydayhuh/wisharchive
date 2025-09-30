@@ -12,7 +12,7 @@ function SharedPage() {
     isLoading,
     error,
   } = useCollabWishlists({
-    userId: current?.$id,
+    ownerId: current?.$id,
     searchString: searchString,
     order: "desc",
     orderBy: "$sequence",

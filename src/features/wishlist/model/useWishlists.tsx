@@ -7,6 +7,8 @@ import useSWR from "swr";
 async function fetcher(queries: string[]) {
   const response = await db.wishlists.list(queries);
 
+  console.log("response.documents, queries :>> ", response.documents, queries);
+
   return response.documents as WishlistDocumentType[];
 }
 
@@ -53,7 +55,7 @@ function getWishlistQueries(filters?: {
 }) {
   const queries = [];
 
-  if (filters?.ownerId) {
+  if (filters?.ownerId && !filters?.teams) {
     queries.push(Query.equal("ownerId", filters.ownerId));
   }
 
