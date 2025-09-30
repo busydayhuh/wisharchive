@@ -2,9 +2,7 @@ import { useWishcardMeta } from "@/features/dashboard/model/useWishcardMeta";
 import {
   BookButton,
   FormattedPrice,
-  useWishQuickActions,
   WishImage,
-  WishlistSelect,
   WishQuickActions,
 } from "@/features/wish";
 import { cn } from "@/shared/lib/css";
@@ -14,6 +12,7 @@ import { PriorityBadge } from "@/shared/ui/Badges";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { memo, type ReactNode } from "react";
 import { href, Link } from "react-router";
+import { WishlistChanger } from "./WishlistChanger";
 
 // Обертка для считывания состояния hover и focus-within
 
@@ -31,7 +30,6 @@ const WishGalleryItem = memo(function WishGalleryItem({
   wish: WishDocumentType;
 }) {
   const { onBookedPage, onListPage, isOwner } = useWishcardMeta(wish);
-  const { changeWishlist } = useWishQuickActions(wish.$id);
 
   return (
     <div
@@ -40,16 +38,14 @@ const WishGalleryItem = memo(function WishGalleryItem({
       )}
     >
       <WishCover wish={wish} />
-
-      {isOwner && (
-        <WishlistSelect
-          value={wish.wishlist?.$id ?? "none"}
-          onValueChange={(newWlId: string) => {
-            changeWishlist(newWlId === "none" ? null : newWlId);
-          }}
-          className="top-3 right-3 absolute w-fit max-w-[16ch] h-9 md:h-11 font-medium md:text-sm truncate show-actions"
-        />
-      )}
+      <WishlistChanger
+        className="top-3 right-3 absolute w-fit max-w-[16ch] h-9 md:h-11 font-medium md:text-sm 2xl:text-sm truncate show-actions"
+        isOwner={isOwner}
+        isArchived={wish.isArchived}
+        wishlist={wish.wishlist}
+        wishId={wish.$id}
+        wishlistId={wish.wishlistId}
+      />
 
       <Link
         to={href(ROUTES.WISH, { wishId: wish.$id })}
@@ -69,17 +65,16 @@ const WishGalleryItem = memo(function WishGalleryItem({
           <span className="text-transparent">без цены</span>
         )}
       </Link>
-
       <div className="flex justify-between items-center gap-1">
+        <PriorityBadge priority={wish.priority} size="sm" />
         {(onBookedPage || onListPage) && (
           <OwnerAvatar
             userId={wish.ownerId}
             userName={wish.owner.userName}
             avatarURL={wish.owner.avatarURL}
-            className="text-xs md:text-sm"
+            className="[&_.owner-name]:hidden lg:[&_.owner-name]:inline text-xs md:text-sm"
           />
         )}
-        <PriorityBadge priority={wish.priority} size="sm" />
       </div>
     </div>
   );

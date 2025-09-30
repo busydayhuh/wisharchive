@@ -2,9 +2,7 @@ import { useWishcardMeta } from "@/features/dashboard/model/useWishcardMeta";
 import {
   BookButton,
   FormattedPrice,
-  useWishQuickActions,
   WishImage,
-  WishlistSelect,
   WishQuickActions,
 } from "@/features/wish";
 import "@/shared/assets/custom.css";
@@ -15,6 +13,7 @@ import { PriorityBadge, ShopBadge } from "@/shared/ui/Badges";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { memo } from "react";
 import { href, Link } from "react-router";
+import { WishlistChanger } from "./WishlistChanger";
 
 const WishTableItem = memo(function WishTableItem({
   wish,
@@ -23,7 +22,6 @@ const WishTableItem = memo(function WishTableItem({
 }) {
   const { isOwner, isBooker, isEditor, bookWish, onBookedPage, onListPage } =
     useWishcardMeta(wish);
-  const { changeWishlist } = useWishQuickActions(wish.$id);
 
   return (
     <div
@@ -79,12 +77,13 @@ const WishTableItem = memo(function WishTableItem({
             avatarURL={wish.owner.avatarURL}
           />
         ) : (
-          <WishlistSelect
-            value={wish.wishlist?.$id ?? "none"}
-            onValueChange={(newWlId: string) => {
-              changeWishlist(newWlId === "none" ? null : newWlId);
-            }}
+          <WishlistChanger
             className="w-fit max-w-[16ch] h-9 md:h-11 font-medium text-xs lg:text-sm truncate"
+            isOwner={isOwner}
+            isArchived={wish.isArchived}
+            wishlist={wish.wishlist}
+            wishId={wish.$id}
+            wishlistId={wish.wishlistId}
           />
         )}
       </div>
