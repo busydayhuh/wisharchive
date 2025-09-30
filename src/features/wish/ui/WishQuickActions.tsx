@@ -21,7 +21,7 @@ import { useWishQuickActions } from "../model/useWishQuickActions";
 import { ArchiveButton } from "./buttons/ArchiveButton";
 
 const dropdownTriggerVariants = cva(
-  "inline-flex justify-center items-center border-0 rounded-full size-8 md:size-9 text-foreground text-sm transition duration-300 cursor-pointer shrink-0",
+  "inline-flex justify-center items-center border-0 rounded-sm size-9 text-foreground text-sm transition duration-300 cursor-pointer shrink-0",
   {
     variants: {
       triggerVariant: {
@@ -68,15 +68,17 @@ export function WishQuickActions({
   const { archiveWish, deleteWish, editWish } = useWishQuickActions(wishId);
 
   const handleItemSelect = (item: MenuItem) => {
-    requestAnimationFrame(() => {
-      openConfDialog({
-        onConfirm: item.action,
-        action: item.actionName,
-        isActive: item.isActive,
-        name: title,
+    if (item.confirmation) {
+      return requestAnimationFrame(() => {
+        openConfDialog({
+          onConfirm: item.action,
+          action: item.actionName,
+          isActive: item.isActive,
+          name: title,
+        });
       });
-    });
-    item.action();
+    }
+    return item.action();
   };
 
   const items = [
