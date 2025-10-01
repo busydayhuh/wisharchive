@@ -1,7 +1,7 @@
 import db from "@/shared/model/databases";
 import type { WishDocumentType } from "@/shared/model/types";
 import { Query } from "appwrite";
-import { useMemo } from "react";
+import stableStringify from "fast-json-stable-stringify";
 import useSWR from "swr";
 
 async function fetcher(queries: string[]) {
@@ -19,18 +19,14 @@ export function useWishes(filters?: {
   order?: "asc" | "desc";
   orderBy?: "$sequence" | "price" | "priority" | "title";
 }) {
-  const queries = useMemo(
-    () => (filters ? getWishQueries(filters) : null),
-    [filters]
-  );
-
-  const key = useMemo(() => (queries ? ["wishes", queries] : null), [queries]);
+  const queries = filters ? getWishQueries(filters) : null;
+  const key = filters ? ["wishes", stableStringify(filters)] : null;
 
   const {
     data: wishes,
     isLoading,
     error,
-  } = useSWR(key, () => fetcher(queries as string[])); // если queries null, то key = null и запроса не будет
+  } = useSWR(key, () => fetcher(queries!)); // если queries null, то key = null и запроса не будет
 
   return { wishes, isLoading, error };
 }
@@ -43,34 +39,31 @@ function getWishQueries(filters?: {
   archived?: boolean;
   order?: "asc" | "desc";
   orderBy?: "$sequence" | "price" | "priority" | "title";
-}) {
-  const queries = [];
+}): string[] {
+  const queries: string[] = [];
 
-  if (filters?.ownerId) {
-    queries.push(Query.equal("ownerId", filters.ownerId));
-  }
+  if (filters?.ownerId) queries.push(Query.equal("ownerId", filters.ownerId));
 
-  if (filters?.searchString) {
-    queries.push(Query.contains("title", filters?.searchString));
-  }
+  if (filters?.searchString)
+    queries.push(Query.contains("title", filters.searchString));
 
-  if (filters?.wishlistId) {
+  if (filters?.wishlistId)
     queries.push(Query.equal("wishlistId", filters.wishlistId));
-  }
 
-  if (filters?.bookerId) {
+  if (filters?.bookerId)
     queries.push(Query.equal("bookerId", filters.bookerId));
-  }
 
   if (filters?.order && filters.orderBy) {
-    if (filters.order === "desc") {
-      queries.push(Query.orderDesc(filters.orderBy));
-    } else {
-      queries.push(Query.orderAsc(filters.orderBy));
-    }
+    queries.push(
+      filters.order === "desc"
+        ? Query.orderDesc(filters.orderBy)
+        : Query.orderAsc(filters.orderBy)
+    );
   }
 
-  queries.push(Query.equal("isArchived", filters?.archived ?? false));
+  if (filters?.archived !== undefined) {
+    queries.push(Query.equal("isArchived", filters.archived));
+  }
 
-  return queries.length > 0 ? (queries as string[]) : null;
+  return queries;
 }

@@ -7,7 +7,7 @@ import type { UserDocumentType } from "../types";
 
 // Возвращает документ с информацией об авторизованном юзере
 
-async function fetcher({ userId }: { userId: string }) {
+async function fetcher(userId: string) {
   const response = await db.users.list([Query.equal("userId", userId)]);
 
   return response.documents[0] as UserDocumentType;
@@ -15,11 +15,13 @@ async function fetcher({ userId }: { userId: string }) {
 
 export function useCurrentUser() {
   const { current } = useAuth();
+  const key = current ? ["user", current.$id] : null;
+
   const {
     data: user,
     isLoading,
     error,
-  } = useSWR(current ? { userId: current.$id } : null, fetcher);
+  } = useSWR(key, ([, userId]) => fetcher(userId));
 
   return { user, isLoading, error };
 }
