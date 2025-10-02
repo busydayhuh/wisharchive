@@ -12,11 +12,12 @@ async function fetcher(userId: string) {
 }
 
 export function useUser(userId?: string | null) {
+  const key = userId ? ["user", userId] : null;
   const {
     data: user,
     isLoading,
     error,
-  } = useSWR(userId && userId !== "" ? userId : null, fetcher, {
+  } = useSWR(key, ([, userId]) => fetcher(userId), {
     onError: (err) => {
       console.error("Ошибка SWR для ключа", userId, err);
       console.trace();
