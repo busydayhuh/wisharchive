@@ -1,7 +1,4 @@
-export {
-  CollaboratorsDialogProvider,
-  useCollaboratorsDialog,
-} from "./model/CollaboratorsDialogContext";
+export { CollaboratorsDialogProvider } from "./model/CollaboratorsDialogContext";
 export {
   resolveVisibility,
   resolveWishlistRoles,
@@ -14,6 +11,7 @@ export {
   useWishTeamRoles,
 } from "./model/team-api-hooks/useTeamRoles";
 export type { Roles, WishRoles } from "./model/types";
+export { useCollaboratorsDialog } from "./model/useCollaboratorsDialog";
 export {
   CollaboratorsAvatars,
   CollaboratorsAvatarsSkeleton,

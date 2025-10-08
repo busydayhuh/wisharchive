@@ -1,13 +1,8 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useState,
-  type ReactNode,
-} from "react";
+import { useCallback, useState, type ReactNode } from "react";
 import { CollaboratorsDialog } from "../ui/dialog/CollaboratorsDialog";
+import { CollaboratorsDialogContext } from "./useCollaboratorsDialog";
 
-type CollaboratorsDialogContextType = {
+export type CollaboratorsDialogContextType = {
   openCollabDialog: (wishlistId: string, isPrivateChecked?: boolean) => void;
   closeCollabDialog: () => void;
 };
@@ -16,9 +11,6 @@ type CollaboratorsDialogState = {
   wishlistId: string;
   isPrivateChecked?: boolean;
 };
-
-const CollaboratorsDialogContext =
-  createContext<CollaboratorsDialogContextType | null>(null);
 
 export function CollaboratorsDialogProvider({
   children,
@@ -55,15 +47,4 @@ export function CollaboratorsDialogProvider({
       )}
     </CollaboratorsDialogContext.Provider>
   );
-}
-
-export function useCollaboratorsDialog() {
-  const ctx = useContext(CollaboratorsDialogContext);
-
-  if (!ctx)
-    throw new Error(
-      "useCollaboratorsDialogProvider должен использоваться только внутри CollaboratorsDialogProvider"
-    );
-
-  return ctx;
 }

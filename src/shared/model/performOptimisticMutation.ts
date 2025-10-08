@@ -33,8 +33,8 @@ export async function performMutation(
     });
 
     return await action();
-  } catch {
-    console.log("Ошибка мутации");
+  } catch (error) {
+    console.log("Ошибка мутации", error);
 
     // запрашиваем актуальные данные для отката
     mutate((key) => Array.isArray(key) && key[0] === keyword);

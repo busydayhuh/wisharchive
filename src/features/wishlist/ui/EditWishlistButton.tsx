@@ -3,17 +3,18 @@ import { Button } from "@/shared/ui/kit/button";
 import { Pencil } from "lucide-react";
 
 export function EditWishlistButton({
+  variant = "gallery",
   onClick,
   className,
 }: React.ComponentProps<"button"> & {
-  onClick: (open: boolean) => void;
+  variant?: "gallery" | "table" | "page";
 }) {
   return (
     <Button
       size="icon"
       onClick={onClick}
       type="button"
-      variant="secondary"
+      variant={variant === "page" ? "ghost" : "secondary"}
       className={cn(
         "z-10",
 

@@ -2,8 +2,7 @@ import type { Roles } from "@/features/collaborators";
 import { useIsMobile } from "@/shared/lib/react/use-mobile";
 import type { WishDocumentType } from "@/shared/model/types";
 import ExpandableText from "@/shared/ui/ExpandableText";
-import { Button } from "@/shared/ui/kit/button";
-import { Pencil, StarsIcon } from "lucide-react";
+import { StarsIcon } from "lucide-react";
 import { BookmarkButton } from "./BookmarkButton";
 import { EditWishlistButton } from "./EditWishlistButton";
 import { WishlistCollaborators } from "./WishlistCollaborators";
@@ -41,14 +40,7 @@ export function WishlistHeader({
             wishesCount={wishes ? wishes.length : 0}
           />
           {(userRoles?.isEditor || userRoles?.isWishlistOwner) && (
-            <Button
-              size="icon"
-              onClick={openWishlistEditor}
-              variant="secondary"
-              aria-label="Редактировать вишлист"
-            >
-              <Pencil />
-            </Button>
+            <EditWishlistButton onClick={openWishlistEditor} variant="page" />
           )}
         </div>
         <div className="flex justify-between items-center">
@@ -76,7 +68,7 @@ export function WishlistHeader({
 
   return (
     <div className="space-y-4 lg:space-y-6 lg:mb-3 pr-6">
-      <div className="flex justify-between items-center gap-4 lg:gap-2">
+      <div className="flex justify-between items-end gap-4 lg:gap-2">
         <div className="flex items-baseline gap-4">
           <WishlistName
             title={title}
@@ -84,7 +76,7 @@ export function WishlistHeader({
             wishesCount={wishes ? wishes.length : 0}
           />
           {(userRoles?.isEditor || userRoles?.isWishlistOwner) && (
-            <EditWishlistButton onClick={openWishlistEditor} />
+            <EditWishlistButton onClick={openWishlistEditor} variant="page" />
           )}
         </div>
         <WishlistCollaborators wishlistId={wishlistId} isPrivate={isPrivate} />
@@ -121,7 +113,7 @@ export function WishlistName({
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <p className="font-bold text-2xl lg:text-3xl 2xl:text-4xl leading-6 lg:leading-tight">
+      <p className="font-bold text-2xl lg:text-3xl 2xl:text-4xl leading-6 lg:leading-8">
         {title}
       </p>
       <p className="inline-flex items-center gap-2 text-muted-foreground text-xs md:text-sm">

@@ -1,8 +1,9 @@
 import WishlistDialog from "@/features/wishlist/ui/dialog/WishlistDialog";
 import type { WishlistDocumentType } from "@/shared/model/types";
-import { createContext, useCallback, useContext, useState } from "react";
+import { useCallback, useState } from "react";
 
 import type { ReactNode } from "react";
+import { WishlistDialogContext } from "./useWishlistDialog";
 
 type DialogState = {
   wishlist: WishlistDocumentType | null;
@@ -16,10 +17,6 @@ export type WishlistDialogContextType = {
   ) => void;
   closeDialog: () => void;
 };
-
-const WishlistDialogContext = createContext<WishlistDialogContextType | null>(
-  null
-);
 
 export function WishlistDialogProvider({ children }: { children: ReactNode }) {
   const [dialogState, setDialogState] = useState<DialogState>({
@@ -57,15 +54,4 @@ export function WishlistDialogProvider({ children }: { children: ReactNode }) {
       )}
     </WishlistDialogContext.Provider>
   );
-}
-
-export function useWishlistDialog() {
-  const ctx = useContext(WishlistDialogContext);
-
-  if (!ctx)
-    throw new Error(
-      "useWishlistDialog должен использоваться только внутри WishlistDialogProvider"
-    );
-
-  return ctx;
 }

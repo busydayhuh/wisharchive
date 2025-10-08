@@ -1,6 +1,6 @@
 import { useWishQuickActions, WishlistSelect } from "@/features/wish";
 import { cn } from "@/shared/lib/css";
-import { useConfirmationDialog } from "@/shared/model/confirmation-dialog/ConfirmationDialogContext";
+import { useConfirmationDialog } from "@/shared/model/confirmation-dialog/useConfirmationDialog";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { WishlistBadge } from "@/shared/ui/Badges";
 import { Button } from "@/shared/ui/kit/button";

@@ -1,5 +1,5 @@
 import { cn } from "@/shared/lib/css";
-import { useConfirmationDialog } from "@/shared/model/confirmation-dialog/ConfirmationDialogContext";
+import { useConfirmationDialog } from "@/shared/model/confirmation-dialog/useConfirmationDialog";
 import { IconBtnWithTooltip } from "@/shared/ui/IconBtnWithTooltip";
 import { Button } from "@/shared/ui/kit/button";
 import { Trash2 } from "lucide-react";

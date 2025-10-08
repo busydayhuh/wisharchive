@@ -1,12 +1,7 @@
 import ConfirmationDialog from "@/shared/ui/ConfirmationDialog";
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useState,
-  type ReactNode,
-} from "react";
+import { useCallback, useState, type ReactNode } from "react";
 import { getConfirmationText } from "./getConfirmationText";
+import { ConfirmationDialogContext } from "./useConfirmationDialog";
 
 export type Action = "delete" | "archive" | "book" | "edit";
 
@@ -18,7 +13,7 @@ type OpenConfDialogProps = {
   isOwner?: boolean;
 };
 
-type ConfirmationDialogContextType = {
+export type ConfirmationDialogContextType = {
   openConfDialog: (props: OpenConfDialogProps) => void;
   closeConfDialog: () => void;
 };
@@ -33,9 +28,6 @@ type ConfirmationDialogStateType = {
   open: boolean;
 } & ConfirmationTextType &
   OpenConfDialogProps;
-
-const ConfirmationDialogContext =
-  createContext<ConfirmationDialogContextType | null>(null);
 
 export function ConfirmationDialogProvider({
   children,
@@ -71,15 +63,4 @@ export function ConfirmationDialogProvider({
       )}
     </ConfirmationDialogContext.Provider>
   );
-}
-
-export function useConfirmationDialog() {
-  const ctx = useContext(ConfirmationDialogContext);
-
-  if (!ctx)
-    throw new Error(
-      "useConfirmationDialogProvider должен использоваться только внутри ConfirmationDialogProvider"
-    );
-
-  return ctx;
 }

@@ -1,9 +1,7 @@
 import { cn } from "@/shared/lib/css";
 import { useIsMobile } from "@/shared/lib/react/use-mobile";
-import {
-  useConfirmationDialog,
-  type Action,
-} from "@/shared/model/confirmation-dialog/ConfirmationDialogContext";
+import { type Action } from "@/shared/model/confirmation-dialog/ConfirmationDialogContext";
+import { useConfirmationDialog } from "@/shared/model/confirmation-dialog/useConfirmationDialog";
 import { IconBtnWithTooltip } from "@/shared/ui/IconBtnWithTooltip";
 import { Button } from "@/shared/ui/kit/button";
 import {

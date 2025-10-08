@@ -1,9 +1,7 @@
 export { toggleBookmark } from "./model/toggleBookmark";
+export { useWishlistDialog } from "./model/useWishlistDialog";
 export { useWishlists } from "./model/useWishlists";
-export {
-  useWishlistDialog,
-  WishlistDialogProvider,
-} from "./model/WishlistDialogContext";
+export { WishlistDialogProvider } from "./model/WishlistDialogContext";
 export {
   configureWishlistPermissions,
   wishlistMutations,
