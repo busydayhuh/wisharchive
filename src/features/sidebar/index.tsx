@@ -9,93 +9,87 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
+  SidebarTrigger,
   useSidebar,
 } from "@/shared/ui/kit/sidebar";
 import Logo from "@/shared/ui/Logo";
-import { Archive, Blend, Bookmark, Orbit } from "lucide-react";
+import {
+  Archive,
+  Blend,
+  Bookmark,
+  List,
+  LockKeyhole,
+  Orbit,
+} from "lucide-react";
 import { memo } from "react";
-import { href, Link } from "react-router-dom";
+import { href, matchPath, NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "../auth";
 import { UserSb } from "./UserSb";
 
 export const AppSidebar = memo(function AppSidebar() {
   const { current } = useAuth();
-  const { state: sbState } = useSidebar();
+  const { pathname: currentPath } = useLocation();
+  const { isMobile } = useSidebar();
 
   const sidebarItems = [
     {
-      name: "Мой дашборд",
-      icon: <Orbit className="stroke-(length:--sidebar-icons-stroke)" />,
+      name: "Мои желания",
+      icon: <Orbit />,
       href: href(ROUTES.WISHES, { userId: current!.$id }),
-      subItems: [
-        {
-          name: "Мои желания",
-          href: href(ROUTES.WISHES, { userId: current!.$id }),
-        },
-        {
-          name: "Мои вишлисты",
-          href: href(ROUTES.WISHLISTS, { userId: current!.$id }),
-        },
-        {
-          name: "Хочу подарить",
-          href: ROUTES.BOOKED,
-        },
-      ],
     },
     {
-      name: "Избранные списки",
-      icon: <Bookmark className="stroke-(length:--sidebar-icons-stroke)" />,
+      name: "Мои списки",
+      icon: <List />,
+      href: href(ROUTES.WISHLISTS, { userId: current!.$id }),
+    },
+    {
+      name: "Хочу подарить",
+      icon: <LockKeyhole />,
+      href: ROUTES.BOOKED,
+    },
+
+    {
+      name: "Закладки",
+      icon: <Bookmark />,
       href: ROUTES.BOOKMARKS,
     },
     {
       name: "Совместные списки",
-      icon: <Blend className="stroke-(length:--sidebar-icons-stroke)" />,
+      icon: <Blend />,
       href: ROUTES.SHARED,
     },
 
     {
       name: "Архив желаний",
-      icon: <Archive className="stroke-(length:--sidebar-icons-stroke)" />,
+      icon: <Archive />,
       href: ROUTES.ARCHIVED,
     },
   ];
 
   return (
-    <Sidebar collapsible="icon">
-      <SidebarHeader className="flex flex-row gap-2 mb-2 py-3 border-muted border-b-1">
+    <Sidebar collapsible="icon" variant="floating">
+      <SidebarHeader className="flex flex-row justify-center items-center gap-2 mb-2 py-3">
         <Logo />
-        {sbState === "expanded" ? (
-          <div className="font-semibold">wisharchive</div>
-        ) : null}
+        {!isMobile && (
+          <SidebarTrigger className="top-[50%] -right-2 absolute -translate-y-[100%]" />
+        )}
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {sidebarItems.map(({ name, icon, href, subItems }) => (
+              {sidebarItems.map(({ name, icon, href }) => (
                 <SidebarMenuItem key={name}>
-                  <SidebarMenuButton asChild tooltip={name}>
-                    <Link to={href}>
+                  <SidebarMenuButton
+                    tooltip={name}
+                    asChild
+                    isActive={!!matchPath(currentPath, href)}
+                  >
+                    <NavLink to={href}>
                       {icon}
                       {name}
-                    </Link>
+                    </NavLink>
                   </SidebarMenuButton>
-                  {subItems && (
-                    <SidebarMenuSub>
-                      {subItems.map(({ name, href }) => {
-                        return (
-                          <SidebarMenuSubItem key={name}>
-                            <SidebarMenuSubButton asChild>
-                              <Link to={href}>{name}</Link>
-                            </SidebarMenuSubButton>
-                          </SidebarMenuSubItem>
-                        );
-                      })}
-                    </SidebarMenuSub>
-                  )}
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>

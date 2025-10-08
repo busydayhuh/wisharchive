@@ -1,7 +1,7 @@
 import { Slot } from "@radix-ui/react-slot";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { Menu, PanelLeft } from "lucide-react";
+import { ChevronLeft, ChevronRight, Menu } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/shared/lib/css";
@@ -186,7 +186,7 @@ function Sidebar({
           data-sidebar="sidebar"
           data-slot="sidebar"
           data-mobile="true"
-          className="[&>button]:hidden bg-sidebar p-0 w-(--sidebar-width) text-sidebar-foreground"
+          className="[&>button]:hidden bg-sidebar p-0 w-(--sidebar-width) text-sidebar-foreground border-r-sidebar-border"
           style={
             {
               "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
@@ -243,7 +243,7 @@ function Sidebar({
         <div
           data-sidebar="sidebar"
           data-slot="sidebar-inner"
-          className="flex flex-col bg-sidebar group-data-[variant=floating]:shadow-sm group-data-[variant=floating]:border border-sidebar-border group-data-[variant=floating]:border-sidebar-border border-r-1 group-data-[variant=floating]:rounded-lg w-full h-full"
+          className="flex flex-col bg-sidebar group-data-[variant=floating]:shadow-none group-data-[variant=floating]:border border-sidebar-border group-data-[variant=floating]:border-sidebar-border border-r-1 group-data-[variant=floating]:rounded-lg w-full h-full"
         >
           {children}
         </div>
@@ -257,15 +257,21 @@ function SidebarTrigger({
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { toggleSidebar, isMobile } = useSidebar();
+  const { toggleSidebar, isMobile, state } = useSidebar();
 
   return (
     <Button
       data-sidebar="trigger"
       data-slot="sidebar-trigger"
-      variant="ghost"
-      size="icon"
-      className={cn("size-7", className)}
+      variant={isMobile ? "ghost" : "default"}
+      size="sm"
+      className={cn(
+        "hover:bg-sidebar",
+        className,
+        isMobile && "has-[>svg]:px-1",
+        !isMobile &&
+          "rounded-full rounded-tl-none rounded-bl-none bg-sidebar text-sidebar-foreground"
+      )}
       onClick={(event) => {
         onClick?.(event);
         toggleSidebar();
@@ -273,9 +279,11 @@ function SidebarTrigger({
       {...props}
     >
       {isMobile ? (
-        <Menu className="stroke-1 size-5" />
+        <Menu className="size-5" />
+      ) : state === "collapsed" ? (
+        <ChevronRight className="size-3" />
       ) : (
-        <PanelLeft className="stroke-[1.5px] size-3" />
+        <ChevronLeft className="size-3" />
       )}
       <span className="sr-only">Открыть/закрыть меню</span>
     </Button>
@@ -477,7 +485,7 @@ function SidebarMenuItem({ className, ...props }: React.ComponentProps<"li">) {
 }
 
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button flex items-center gap-2 data-[active=true]:bg-sidebar-accent data-[state=open]:hover:bg-sidebar-accent hover:bg-sidebar-accent active:bg-sidebar-accent aria-disabled:opacity-50 disabled:opacity-50 p-2 group-data-[collapsible=icon]:p-2! group-has-data-[sidebar=menu-action]/menu-item:pr-8 rounded-md outline-hidden ring-sidebar-ring focus-visible:ring-2 w-full [&>svg]:size-4 group-data-[collapsible=icon]:size-8! overflow-hidden data-[active=true]:font-medium text-sm text-left [&>span:last-child]:truncate transition-[width,height,padding] data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:text-sidebar-accent-foreground hover:text-sidebar-accent-foreground active:text-sidebar-accent-foreground aria-disabled:pointer-events-none disabled:pointer-events-none [&>svg]:shrink-0",
+  "peer/menu-button flex items-center gap-2 data-[active=true]:bg-sidebar-accent data-[state=open]:hover:bg-sidebar-accent hover:bg-sidebar-accent active:bg-sidebar-accent aria-disabled:opacity-50 disabled:opacity-50 p-2 group-data-[collapsible=icon]:p-2! group-has-data-[sidebar=menu-action]/menu-item:pr-8 rounded-sm outline-hidden ring-sidebar-ring focus-visible:ring-2 w-full [&>svg]:size-4 group-data-[collapsible=icon]:size-8! overflow-hidden data-[active=true]:font-medium text-sm text-left [&>span:last-child]:truncate transition-[width,height,padding] data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:text-sidebar-accent-foreground hover:text-sidebar-accent-foreground active:text-sidebar-accent-foreground aria-disabled:pointer-events-none disabled:pointer-events-none [&>svg]:shrink-0",
   {
     variants: {
       variant: {
