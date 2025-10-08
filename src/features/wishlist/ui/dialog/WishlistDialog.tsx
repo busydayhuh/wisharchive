@@ -81,16 +81,17 @@ export function WishlistDialog({
 
       if (newWishlist) {
         setIsOpen(false);
-        requestAnimationFrame(() => {
-          return navigate(href(ROUTES.WISHLIST, { listId: newWishlist.$id }));
-        });
+
+        setTimeout(() => {
+          document.body.style.pointerEvents = "auto";
+          navigate(href(ROUTES.WISHLIST, { listId: newWishlist.$id }));
+        }, 200);
       }
     }
   }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      {/* <DialogPortal container={document.querySelector("main")!}> */}
       <DialogContent className="rounded-xl sm:max-w-[425px]">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -139,7 +140,6 @@ export function WishlistDialog({
           </form>
         </Form>
       </DialogContent>
-      {/* </DialogPortal> */}
     </Dialog>
   );
 }

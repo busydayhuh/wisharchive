@@ -67,7 +67,7 @@ export function WishlistHeader({
 
   return (
     <div className="space-y-4 lg:space-y-6 lg:mb-3 pr-6">
-      <div className="flex justify-between items-end gap-4 lg:gap-2">
+      <div className="flex justify-between items-start gap-4 lg:gap-2">
         <div className="flex items-baseline gap-4">
           <WishlistName
             title={title}

@@ -20,6 +20,7 @@ export default function CollaboratorsList({
   );
 
   const roleMap = new Map(collaborators?.map((c) => [c.userId, c.roles]));
+  const reversedCollaborators = collaborators?.slice().reverse();
 
   // дефолтное отображение всех соавторов
   if (!searchString) {
@@ -37,11 +38,11 @@ export default function CollaboratorsList({
         </div>
       );
 
-    if (collaborators)
+    if (reversedCollaborators)
       return (
         <ScrollArea className="max-h-[16rem]">
           <div className="space-y-4 px-2">
-            {collaborators.map((c) => (
+            {reversedCollaborators.map((c) => (
               <Collaborator
                 key={c.userId}
                 avatarURL={c.avatarURL}

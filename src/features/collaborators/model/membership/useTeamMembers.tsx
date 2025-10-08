@@ -19,7 +19,9 @@ export function useTeamMembers(wishlistId: string | null) {
     isLoading,
     error,
     mutate,
-  } = useSWR(key, ([, wishlistId]) => fetcher(wishlistId));
+  } = useSWR(key, ([, wishlistId]) => fetcher(wishlistId), {
+    onSuccess: (data) => data.slice().reverse(),
+  });
 
   return { members, isLoading, error, mutate };
 }
