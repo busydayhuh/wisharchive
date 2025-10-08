@@ -49,7 +49,10 @@ const WishGalleryItem = memo(function WishGalleryItem({
       <WishCover wish={wish} userRoles={userRoles} />
       {!wish.isArchived && (
         <WishlistControl
-          className="top-3 right-3 absolute hover:bg-muted w-fit max-w-[16ch] h-9 md:h-11 font-medium md:text-sm 2xl:text-sm truncate show-actions"
+          className={cn(
+            "top-3 right-3 absolute hover:bg-muted w-fit max-w-[16ch] h-9 md:h-11 font-medium md:text-sm 2xl:text-sm truncate",
+            !wish.wishlist && "show-actions"
+          )}
           onListPage={!!onListPage}
           isOwner={userRoles?.isWishOwner ?? false}
           isEditor={userRoles?.isEditor ?? false}

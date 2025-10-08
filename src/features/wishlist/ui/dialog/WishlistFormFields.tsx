@@ -1,3 +1,4 @@
+import { cn } from "@/shared/lib/css";
 import { wishlistFormSchema as formSchema } from "@/shared/model/formSchemas";
 import {
   FormControl,
@@ -25,9 +26,11 @@ export function WishlistFormFields({ form }: FormFieldsProps) {
         name="title"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Название списка *</FormLabel>
+            <FormLabel className="gap-1">
+              Название <span className="text-destructive">*</span>
+            </FormLabel>
             <FormControl>
-              <Input {...field} className="rounded-xl" />
+              <Input {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -38,12 +41,12 @@ export function WishlistFormFields({ form }: FormFieldsProps) {
         name="description"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Описание списка</FormLabel>
+            <FormLabel>Описание</FormLabel>
             <FormControl>
               <Textarea
                 {...field}
-                className="rounded-xl resize-none"
-                placeholder="Добавьте пояснения к списку..."
+                className="rounded-xl h-24 md:h-28 resize-none"
+                placeholder="Добавьте заметку к списку"
               />
             </FormControl>
             <FormMessage />
@@ -55,7 +58,7 @@ export function WishlistFormFields({ form }: FormFieldsProps) {
         name="isPrivate"
         render={({ field }) => (
           <FormItem>
-            <div className="flex gap-2">
+            <div className="flex items-start gap-2">
               <FormControl>
                 <Switch
                   checked={field.value}
@@ -63,13 +66,23 @@ export function WishlistFormFields({ form }: FormFieldsProps) {
                   className="data-[state=unchecked]:bg-ring"
                 />
               </FormControl>
-              <FormLabel>Секретный список</FormLabel>
+              <div className="flex flex-col gap-1">
+                <FormLabel
+                  className={cn(
+                    field.value && "text-foreground",
+                    "cursor-pointer"
+                  )}
+                >
+                  Секретный список
+                </FormLabel>
+                {field.value && (
+                  <FormDescription className="text-xs">
+                    Список будет доступен только вам и соавторам списка
+                  </FormDescription>
+                )}
+              </div>
             </div>
-            {field.value && (
-              <FormDescription>
-                Список будет доступен только вам и соавторам
-              </FormDescription>
-            )}
+
             <FormMessage />
           </FormItem>
         )}

@@ -3,11 +3,11 @@ import { z } from "zod";
 export const wishlistFormSchema = z.object({
   title: z
     .string()
-    .min(1, { message: "Это обязательное поле" })
+    .min(1, { message: "это обязательное поле" })
     .max(100, { message: "максимум 100 символов" }),
   description: z
     .string()
-    .max(500, { message: "Описание должно содержать не более 500 символов" })
+    .max(500, { message: "не более 500 символов" })
     .optional(),
   isPrivate: z.boolean(),
 });

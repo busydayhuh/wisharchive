@@ -27,28 +27,26 @@ export default function CollaboratorsSection({
   const isPrivateChecked = form?.watch("isPrivate") ?? isPrivate;
 
   return (
-    <div className="space-y-3 mt-6">
-      <FormLabel>Соавторы списка</FormLabel>
+    <div className="mt-6">
+      <FormLabel className="mb-3">Соавторы списка</FormLabel>
 
-      {collaborators && (
-        <div className="flex items-center gap-2">
-          <CollaboratorsAvatars
-            collaborators={collaborators}
-            isLoading={isLoading}
-            error={error}
-            maxVisible={5}
-            size="default"
-          />
-          <Button
-            type="button"
-            variant="ghost"
-            className="bg-transparent rounded-full w-8 h-8"
-            onClick={() => openCollabDialog(wishlistId, isPrivateChecked)}
-          >
-            <PlusIcon />
-          </Button>
-        </div>
-      )}
+      <div className="flex items-center gap-2">
+        <CollaboratorsAvatars
+          collaborators={collaborators}
+          isLoading={isLoading}
+          error={error}
+          maxVisible={5}
+          size="default"
+        />
+        <Button
+          type="button"
+          variant="ghost"
+          className="bg-transparent rounded-full w-8 h-8"
+          onClick={() => openCollabDialog(wishlistId, isPrivateChecked)}
+        >
+          <PlusIcon />
+        </Button>
+      </div>
     </div>
   );
 }

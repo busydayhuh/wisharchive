@@ -13,6 +13,7 @@ export function WishlistControl({
   wishId,
   onListPage,
   className,
+  variant = "gallery",
 }: {
   isOwner: boolean;
   isEditor: boolean;
@@ -20,6 +21,7 @@ export function WishlistControl({
   wishId: string;
   onListPage?: boolean;
   className?: string;
+  variant?: "gallery" | "table";
 }) {
   const { changeWishlist, removeFromWishlist } = useWishQuickActions(wishId);
   const { openConfDialog } = useConfirmationDialog();
@@ -49,10 +51,16 @@ export function WishlistControl({
         onClick={handleRemove}
         size="icon"
         variant="secondary"
-        className={cn(className, "aspect-square h-9 md:h-9")}
+        className={cn(
+          className,
+          variant === "gallery" && "aspect-square",
+          variant === "table" && "px-2.5",
+          "h-9 md:h-9"
+        )}
         aria-label="Убрать из списка"
       >
         <X />
+        {variant === "table" && "Убрать"}
       </Button>
     );
 

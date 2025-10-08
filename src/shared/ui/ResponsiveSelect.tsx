@@ -11,6 +11,7 @@ import {
 } from "@/shared/ui/kit/select";
 import { Check, ChevronDown, Loader2 } from "lucide-react";
 import { cn } from "../lib/css";
+import { useIsMobile } from "../lib/react/use-mobile";
 import {
   Drawer,
   DrawerClose,
@@ -19,7 +20,6 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "./kit/drawer";
-import { useSidebar } from "./kit/sidebar";
 
 type Option = {
   value: string;
@@ -54,7 +54,7 @@ export function ResponsiveSelect({
   triggerCSS,
   contentCSS,
 }: ResponsiveSelectProps) {
-  const { isMobile } = useSidebar();
+  const isMobile = useIsMobile();
   const selected = options.find((o) => o.value === value);
 
   if (error) {
