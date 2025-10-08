@@ -75,11 +75,9 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
 
         {/* Счетчик желаний / роль */}
         {onSharedPage ? (
-          <RoleBadge
-            role={userRoles?.isEditor ? "editor" : "reader"}
-            size="sm"
-            className="mx-2"
-          />
+          userRoles && (
+            <RoleBadge roles={userRoles} size="sm" className="mx-2" />
+          )
         ) : (
           <p className="mx-2 text-muted-foreground text-xs">
             {wishlist.wishes?.length ?? 0} жел.

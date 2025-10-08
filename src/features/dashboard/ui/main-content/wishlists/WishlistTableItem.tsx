@@ -56,10 +56,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
           </div>
 
           {onSharedPage ? (
-            <RoleBadge
-              role={userRoles?.isEditor ? "editor" : "reader"}
-              size="sm"
-            />
+            userRoles && <RoleBadge roles={userRoles} size="sm" />
           ) : (
             <p className="text-muted-foreground text-xs">
               {wishlist.wishes?.length ?? 0} жел.

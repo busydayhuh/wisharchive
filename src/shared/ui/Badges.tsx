@@ -3,6 +3,7 @@ import {
   ArrowDown,
   ArrowUp,
   CircleDot,
+  Crown,
   Eye,
   EyeClosed,
   Pencil,
@@ -58,6 +59,11 @@ export const ROLES = {
     title: "редактор",
     icon: <Pencil />,
     colors: "bg-muted-backdrop text-foreground",
+  },
+  owner: {
+    title: "владелец",
+    icon: <Crown />,
+    colors: "bg-indigo-200 text-foreground",
   },
 };
 
@@ -128,20 +134,32 @@ export function BookingBadge({
   );
 }
 export function RoleBadge({
-  role = "reader",
+  roles,
   size = "sm",
   className,
 }: {
-  role: "reader" | "editor";
+  roles: {
+    isWishlistOwner: boolean;
+    isReader: boolean;
+    isEditor: boolean;
+  };
   size?: Size;
   className?: string;
 }) {
+  const roleName = roles.isWishlistOwner
+    ? "owner"
+    : roles.isEditor
+    ? "editor"
+    : "reader";
   return (
     <span
-      className={cn(badgesVariants({ size, className }), ROLES[role].colors)}
+      className={cn(
+        badgesVariants({ size, className }),
+        ROLES[roleName].colors
+      )}
     >
-      {ROLES[role].icon}
-      {ROLES[role].title}
+      {ROLES[roleName].icon}
+      {ROLES[roleName].title}
     </span>
   );
 }

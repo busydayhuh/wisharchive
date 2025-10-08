@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useCollabWishlists } from "../model/useCollabWishlists";
 import { useDashboardContext } from "../ui/DashboardLayout";
 import WishlistsPageLayout from "../ui/main-content/wishlists/WishlistsPageLayout";
@@ -5,16 +6,20 @@ import WishlistsPageLayout from "../ui/main-content/wishlists/WishlistsPageLayou
 function SharedPage() {
   const { searchString } = useDashboardContext();
 
-  const {
-    wishlists: collabWishlists,
-    isLoading,
-    error,
-  } = useCollabWishlists({
+  const { wishlists, isLoading, error } = useCollabWishlists({
     collabsOnly: true,
     searchString: searchString,
     order: "desc",
     orderBy: "$sequence",
   });
+
+  const collabWishlists = useMemo(
+    () =>
+      wishlists?.filter(
+        (wl) => wl.editorsIds.length > 0 || wl.readersIds.length > 0
+      ),
+    [wishlists]
+  );
 
   return (
     <WishlistsPageLayout
