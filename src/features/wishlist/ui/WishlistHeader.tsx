@@ -1,8 +1,8 @@
 import type { Roles } from "@/features/collaborators";
+import { useIsMobile } from "@/shared/lib/react/use-mobile";
 import type { WishDocumentType } from "@/shared/model/types";
 import ExpandableText from "@/shared/ui/ExpandableText";
 import { Button } from "@/shared/ui/kit/button";
-import { useSidebar } from "@/shared/ui/kit/sidebar";
 import { Pencil, StarsIcon } from "lucide-react";
 import { BookmarkButton } from "./BookmarkButton";
 import { EditWishlistButton } from "./EditWishlistButton";
@@ -29,7 +29,7 @@ export function WishlistHeader({
   isFavorite: boolean;
   openWishlistEditor: () => void;
 }) {
-  const { isMobile } = useSidebar();
+  const isMobile = useIsMobile();
 
   if (isMobile)
     return (

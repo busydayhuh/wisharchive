@@ -1,7 +1,7 @@
 import { useAuth } from "@/features/auth";
 import { useCollabWishlists } from "@/features/dashboard";
 import { cn } from "@/shared/lib/css";
-import { useSidebar } from "@/shared/ui/kit/sidebar";
+import { useIsMobile } from "@/shared/lib/react/use-mobile";
 import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
 import { ArrowLeftRightIcon, EyeClosed, List, Users2, X } from "lucide-react";
 
@@ -17,7 +17,7 @@ export function WishlistSelect({
   className?: string;
 }) {
   const { current } = useAuth();
-  const { isMobile } = useSidebar();
+  const isMobile = useIsMobile();
 
   const { wishlists, isLoading, error } = useCollabWishlists({
     order: "desc",

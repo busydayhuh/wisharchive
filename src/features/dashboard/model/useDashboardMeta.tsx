@@ -1,6 +1,6 @@
 import { useAuth } from "@/features/auth";
+import { useIsMobile } from "@/shared/lib/react/use-mobile";
 import { ROUTES } from "@/shared/model/routes";
-import { useSidebar } from "@/shared/ui/kit/sidebar";
 import { useMemo } from "react";
 import { matchRoutes, useLocation, useParams } from "react-router";
 
@@ -14,7 +14,7 @@ const DASHBOARD_HEADERS = {
 };
 
 export function useDashboardMeta() {
-  const { isMobile } = useSidebar();
+  const isMobile = useIsMobile();
 
   const { current: authUser } = useAuth();
   const { userId: paramUserId } = useParams();

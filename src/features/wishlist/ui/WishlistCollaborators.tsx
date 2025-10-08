@@ -3,8 +3,8 @@ import {
   useCollaboratorsDialog,
   useTeamCollaborators,
 } from "@/features/collaborators";
+import { useIsMobile } from "@/shared/lib/react/use-mobile";
 import { Button } from "@/shared/ui/kit/button";
-import { useSidebar } from "@/shared/ui/kit/sidebar";
 import { PlusIcon } from "lucide-react";
 
 export function WishlistCollaborators({
@@ -16,7 +16,7 @@ export function WishlistCollaborators({
 }) {
   const { collaborators, isLoading, error } = useTeamCollaborators(wishlistId);
   const { openCollabDialog } = useCollaboratorsDialog();
-  const { isMobile } = useSidebar();
+  const isMobile = useIsMobile();
 
   if (collaborators)
     return (

@@ -1,4 +1,5 @@
 import { cn } from "@/shared/lib/css";
+import { useIsMobile } from "@/shared/lib/react/use-mobile";
 import {
   useConfirmationDialog,
   type Action,
@@ -12,7 +13,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/shared/ui/kit/dropdown-menu";
-import { useSidebar } from "@/shared/ui/kit/sidebar";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Archive, ArchiveRestore, Edit2, Ellipsis, Trash2 } from "lucide-react";
 import { type JSX } from "react";
@@ -63,7 +63,7 @@ export function WishQuickActions({
   triggerVariant = "gallery",
   className,
 }: WishQuickActionsProps) {
-  const { isMobile } = useSidebar();
+  const isMobile = useIsMobile();
   const { openConfDialog } = useConfirmationDialog();
   const { archiveWish, deleteWish, editWish } = useWishQuickActions(wishId);
 

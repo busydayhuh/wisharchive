@@ -1,5 +1,5 @@
 import { cn } from "@/shared/lib/css";
-import { useSidebar } from "@/shared/ui/kit/sidebar";
+import { useIsMobile } from "@/shared/lib/react/use-mobile";
 import Searchbar from "@/shared/ui/Searchbar";
 import type { Dispatch, SetStateAction } from "react";
 import ViewModeSwitch from "./ViewModeSwitch";
@@ -19,7 +19,7 @@ export function DashboardToolbar({
   setViewMode,
   showNavigation,
 }: DashboardToolbarProps) {
-  const { isMobile } = useSidebar();
+  const isMobile = useIsMobile();
 
   if (isMobile) {
     return (
