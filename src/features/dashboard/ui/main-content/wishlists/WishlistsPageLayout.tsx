@@ -1,8 +1,8 @@
 import type { WishlistDocumentType } from "@/shared/model/types";
 import Masonry from "react-masonry-css";
 import { useDashboardContext } from "../../DashboardLayout";
-import WishlistGalleryItem from "./items/WishlistGalleryItem";
-import WishlistTableItem from "./items/WishlistTableItem";
+import WishlistGalleryItem from "./WishlistGalleryItem";
+import WishlistTableItem from "./WishlistTableItem";
 
 function WishlistsPageLayout({
   wishlists,

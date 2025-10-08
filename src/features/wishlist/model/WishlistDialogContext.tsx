@@ -1,21 +1,19 @@
-import {
-  createContext,
-  lazy,
-  Suspense,
-  useCallback,
-  useContext,
-  useState,
-} from "react";
+import WishlistDialog from "@/features/wishlist/ui/dialog/WishlistDialog";
+import type { WishlistDocumentType } from "@/shared/model/types";
+import { createContext, useCallback, useContext, useState } from "react";
 
 import type { ReactNode } from "react";
 
 type DialogState = {
-  wishlistId: string | null;
+  wishlist: WishlistDocumentType | null;
   action: "create" | "edit" | null;
 };
 
 export type WishlistDialogContextType = {
-  openDialog: (action: "create" | "edit", wishlistId?: string) => void;
+  openDialog: (
+    action: "create" | "edit",
+    wishlist?: WishlistDocumentType
+  ) => void;
   closeDialog: () => void;
 };
 
@@ -23,28 +21,24 @@ const WishlistDialogContext = createContext<WishlistDialogContextType | null>(
   null
 );
 
-const DialogLazy = lazy(
-  () => import("@/features/wishlist/ui/dialog/WishlistDialog")
-);
-
 export function WishlistDialogProvider({ children }: { children: ReactNode }) {
   const [dialogState, setDialogState] = useState<DialogState>({
-    wishlistId: null,
+    wishlist: null,
     action: null,
   });
 
   const openDialog = useCallback(
-    (action: "create" | "edit", wishlistId?: string) => {
+    (action: "create" | "edit", wishlist?: WishlistDocumentType) => {
       setDialogState({
         action,
-        wishlistId: wishlistId ?? null,
+        wishlist: wishlist ?? null,
       });
     },
     []
   );
 
   const closeDialog = useCallback(() => {
-    setDialogState({ wishlistId: null, action: null });
+    setDialogState({ wishlist: null, action: null });
   }, []);
 
   return (
@@ -52,16 +46,14 @@ export function WishlistDialogProvider({ children }: { children: ReactNode }) {
       {children}
 
       {dialogState.action && (
-        <Suspense fallback={null}>
-          <DialogLazy
-            action={dialogState.action}
-            wishlistId={dialogState.wishlistId ?? null}
-            isOpen={true}
-            setIsOpen={(open) => {
-              if (!open) closeDialog();
-            }}
-          />
-        </Suspense>
+        <WishlistDialog
+          action={dialogState.action}
+          wishlist={dialogState.wishlist}
+          isOpen={true}
+          setIsOpen={(open) => {
+            if (!open) closeDialog();
+          }}
+        />
       )}
     </WishlistDialogContext.Provider>
   );

@@ -9,7 +9,7 @@ import {
 import { ListPlus, Plus, Stars } from "lucide-react";
 import { useNavigate } from "react-router";
 
-const CreateButtonWithDropdown = function CreateButtonWithDropdown() {
+function CreateButtonWithDropdown() {
   const { openDialog } = useWishlistDialog();
   const navigate = useNavigate();
 
@@ -43,6 +43,6 @@ const CreateButtonWithDropdown = function CreateButtonWithDropdown() {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-};
+}
 
 export default CreateButtonWithDropdown;

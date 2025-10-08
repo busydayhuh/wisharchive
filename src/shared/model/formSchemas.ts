@@ -1,7 +1,10 @@
 import { z } from "zod";
 
 export const wishlistFormSchema = z.object({
-  title: z.string().min(1, { message: "Это обязательное поле" }),
+  title: z
+    .string()
+    .min(1, { message: "Это обязательное поле" })
+    .max(100, { message: "максимум 100 символов" }),
   description: z
     .string()
     .max(500, { message: "Описание должно содержать не более 500 символов" })

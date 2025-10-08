@@ -21,13 +21,11 @@ const WishlistTableItem = memo(function WishlistTableItem({
 }: WishlistTableItemProps) {
   const {
     collaborators,
-    toggleBookmark,
-    isOwner,
-    isEditor,
+    bookmarkWishlist,
     isFavorite,
-    onBookmarksPage,
     onSharedPage,
-    onEdit,
+    openWishlistEditor,
+    userRoles,
   } = useWishlistcardMeta(wishlist);
 
   const createdAt = useMemo(
@@ -51,14 +49,17 @@ const WishlistTableItem = memo(function WishlistTableItem({
       <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
         <div className="flex flex-col gap-1 lg:basis-2xs">
           <div className="flex items-center gap-2 pr-1 font-medium text-base 2xl:text-lg">
-            <span className="truncate">{wishlist.title}</span>
+            <span className="max-w-[42ch] truncate">{wishlist.title}</span>
             {wishlist.isPrivate && (
               <EyeClosed className="size-3 md:size-4 text-muted-foreground" />
             )}
           </div>
 
           {onSharedPage ? (
-            <RoleBadge role={isEditor ? "editor" : "reader"} size="sm" />
+            <RoleBadge
+              role={userRoles?.isEditor ? "editor" : "reader"}
+              size="sm"
+            />
           ) : (
             <span className="text-muted-foreground text-xs">
               {wishlist.wishes?.length ?? 0} жел.
@@ -91,14 +92,17 @@ const WishlistTableItem = memo(function WishlistTableItem({
       </div>
 
       {/* Кнопки */}
-      <div className="flex justify-evenly items-center md:gap-4">
-        {(isOwner || isEditor) && (
-          <EditWishlistButton onClick={onEdit} variant="table" />
+      <div className="flex justify-end md:justify-evenly items-center">
+        {(userRoles?.isWishlistOwner || userRoles?.isEditor) && (
+          <EditWishlistButton
+            onClick={openWishlistEditor}
+            className="hidden md:inline-flex"
+          />
         )}
         <BookmarkButton
           variant="table"
-          isFavorite={isFavorite || onBookmarksPage}
-          onPressed={toggleBookmark}
+          isFavorite={isFavorite}
+          onPressed={bookmarkWishlist}
         />
       </div>
     </div>

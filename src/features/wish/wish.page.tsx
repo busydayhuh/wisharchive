@@ -14,8 +14,7 @@ function WishPage() {
 
   const { current: authUser } = useAuth();
 
-  if (error)
-    return navigate(href(ROUTES.WISHES, { userId: authUser?.$id ?? "" }));
+  if (error) navigate(href(ROUTES.WISHES, { userId: authUser?.$id ?? "" }));
   if (isLoading) return <>"Загрузка..."</>;
   if (wish)
     return (

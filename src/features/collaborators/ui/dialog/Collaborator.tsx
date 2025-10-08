@@ -1,9 +1,10 @@
-import type { CollaboratorType } from "@/features/collaborators/model/useCollaborators";
+import type { CollaboratorType } from "@/features/collaborators/model/types";
 import { cn } from "@/shared/lib/css";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/kit/avatar";
 import { Button } from "@/shared/ui/kit/button";
-import { MailCheck, Plus, Trash2 } from "lucide-react";
-import { useCollaboratorsContext } from "../../model/CollaboratorsContext";
+import { Loader2, MailCheck, Plus, Trash2 } from "lucide-react";
+import { useState } from "react";
+import { useCollaboratorsDialogContext } from "../../model/CollaboratorsPanelContext";
 
 export default function Collaborator({
   avatarURL,
@@ -13,11 +14,9 @@ export default function Collaborator({
   roles,
   confirm,
 }: CollaboratorType) {
-  const { addMember, deleteMember } = useCollaboratorsContext();
-
-  const isOwner = roles?.includes("owner");
-  const isConfirmed = roles && confirm;
-  const isInvited = roles && !confirm;
+  const isOwner = roles?.includes("owner") ?? false;
+  const isConfirmed = (roles && confirm) ?? false;
+  const isInvited = (roles && !confirm) ?? false;
 
   const roleName = (roles: string[]) => {
     if (isOwner) return "Владелец";
@@ -39,59 +38,96 @@ export default function Collaborator({
         </span>
       </div>
 
-      {isConfirmed && !isOwner && (
-        <Button
-          type="button"
-          size="default"
-          className={cn(
-            "bg-muted-foreground hover:bg-muted-foreground/60 ms-auto rounded-sm w-9 md:w-auto h-9 md:h-11 text-foreground"
-          )}
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            deleteMember(userId);
-          }}
-        >
-          <span className="md:hidden">
-            <Trash2 />
-          </span>
-          <span className="hidden md:inline">Исключить</span>
-        </Button>
-      )}
-
-      {isInvited && !isOwner && (
-        <Button
-          type="button"
-          size="default"
-          variant="destructive"
-          className={cn("ms-auto rounded-sm w-9 md:w-auto h-9 md:h-11")}
-          disabled
-        >
-          <span className="md:hidden">
-            <MailCheck />
-          </span>
-          <span className="hidden md:inline">Приглашён</span>
-        </Button>
-      )}
-
-      {!roles && (
-        <Button
-          type="button"
-          variant="destructive"
-          size="default"
-          className="ms-auto rounded-sm w-9 md:w-auto h-9 md:h-11"
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            addMember(userId, userEmail);
-          }}
-        >
-          <span className="md:hidden">
-            <Plus />
-          </span>
-          <span className="hidden md:inline">Пригласить</span>
-        </Button>
-      )}
+      <CollaboratorActionButton
+        userId={userId}
+        userEmail={userEmail}
+        isOwner={isOwner}
+        isConfirmed={isConfirmed}
+        isInvited={isInvited}
+      />
     </div>
   );
+}
+
+function CollaboratorActionButton({
+  userId,
+  userEmail,
+  isOwner,
+  isConfirmed,
+  isInvited,
+}: Pick<CollaboratorType, "userEmail" | "userId"> & {
+  isOwner: boolean;
+  isConfirmed: boolean;
+  isInvited: boolean;
+}) {
+  const { addMember, deleteMember } = useCollaboratorsDialogContext();
+  const [loading, setLoading] = useState(false);
+  const variant = isConfirmed ? "remove" : isInvited ? "invited" : "add";
+
+  const variants = {
+    remove: {
+      icon: <Trash2 />,
+      text: "Исключить",
+      action: "remove",
+      disabled: loading,
+      styles:
+        "bg-muted-foreground hover:bg-muted-foreground/60  text-foreground",
+    },
+    invited: {
+      icon: <MailCheck />,
+      text: "Приглашён",
+      action: null,
+      disabled: true,
+    },
+    add: {
+      icon: <Plus />,
+      text: "Пригласить",
+      action: "add",
+      disabled: loading,
+    },
+  };
+
+  async function handleMembershipChange(
+    e: React.MouseEvent,
+    action: "remove" | "add" | "invited"
+  ) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (action === "invited") return;
+
+    setLoading(true);
+
+    try {
+      if (action === "remove") await deleteMember(userId);
+      if (action === "add") await addMember(userId, userEmail);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (!isOwner)
+    return (
+      <Button
+        type="button"
+        variant={variant === "remove" ? "default" : "destructive"}
+        size="default"
+        className={cn(
+          "ms-auto rounded-sm w-9 md:w-auto h-9 md:h-11",
+          variant === "remove" &&
+            "bg-muted-foreground hover:bg-muted-foreground/60  text-foreground"
+        )}
+        onClick={(e) => handleMembershipChange(e, variant)}
+        disabled={variants[variant].disabled}
+      >
+        <span className="md:hidden">
+          {loading ? (
+            <Loader2 className="animate-spin" />
+          ) : (
+            variants[variant].icon
+          )}
+        </span>
+        <span className="hidden md:inline">{variants[variant].text}</span>
+      </Button>
+    );
 }

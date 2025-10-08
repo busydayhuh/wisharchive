@@ -3,7 +3,7 @@ import { createContext, useContext } from "react";
 
 export type SelectedRole = "editors" | "readers";
 
-type CollaboratorsContextType = {
+type CollaboratorsPanelContextType = {
   wishlistId: string;
   selectedRole: string;
   setSelectedRole: (role: string) => void;
@@ -14,14 +14,14 @@ type CollaboratorsContextType = {
   deleteMember: (userId: string) => Promise<unknown>;
 };
 
-export const CollaboratorsContext =
-  createContext<CollaboratorsContextType | null>(null);
+export const CollaboratorsPanelContext =
+  createContext<CollaboratorsPanelContextType | null>(null);
 
-export function useCollaboratorsContext() {
-  const ctx = useContext(CollaboratorsContext);
+export function useCollaboratorsDialogContext() {
+  const ctx = useContext(CollaboratorsPanelContext);
   if (!ctx)
     throw new Error(
-      "useCollaboratorsContext должен использоваться внутри провайдера"
+      "CollaboratorsPanelContext должен использоваться внутри провайдера"
     );
   return ctx;
 }

@@ -1,3 +1,4 @@
+import { type WishRoles } from "@/features/collaborators";
 import { useWishcardMeta } from "@/features/dashboard/model/useWishcardMeta";
 import {
   BookButton,
@@ -12,15 +13,23 @@ import { PriorityBadge } from "@/shared/ui/Badges";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { memo, type ReactNode } from "react";
 import { href, Link } from "react-router";
-import { WishlistChanger } from "./WishlistChanger";
+import { WishlistControl } from "./WishlistControl";
 
 // Обертка для считывания состояния hover и focus-within
 
 export const CardWrapper = memo(function CardWrapper({
+  wish,
   children,
 }: {
+  wish: WishDocumentType;
   children: ReactNode;
 }) {
+  const { hasAccess } = useWishcardMeta(wish);
+
+  if (!hasAccess) {
+    return null;
+  }
+
   return <div className="group-card-wrapper">{children}</div>;
 });
 
@@ -29,7 +38,7 @@ const WishGalleryItem = memo(function WishGalleryItem({
 }: {
   wish: WishDocumentType;
 }) {
-  const { onBookedPage, onListPage, isOwner } = useWishcardMeta(wish);
+  const { onBookedPage, onListPage, userRoles } = useWishcardMeta(wish);
 
   return (
     <div
@@ -37,15 +46,17 @@ const WishGalleryItem = memo(function WishGalleryItem({
         "relative flex flex-col gap-2 md:gap-2 mb-4 md:mb-8 overflow-hidden"
       )}
     >
-      <WishCover wish={wish} />
-      <WishlistChanger
-        className="top-3 right-3 absolute w-fit max-w-[16ch] h-9 md:h-11 font-medium md:text-sm 2xl:text-sm truncate show-actions"
-        isOwner={isOwner}
-        isArchived={wish.isArchived}
-        wishlist={wish.wishlist}
-        wishId={wish.$id}
-        wishlistId={wish.wishlistId}
-      />
+      <WishCover wish={wish} userRoles={userRoles} />
+      {!wish.isArchived && (
+        <WishlistControl
+          className="top-3 right-3 absolute hover:bg-muted w-fit max-w-[16ch] h-9 md:h-11 font-medium md:text-sm 2xl:text-sm truncate show-actions"
+          onListPage={!!onListPage}
+          isOwner={userRoles?.isWishOwner ?? false}
+          isEditor={userRoles?.isEditor ?? false}
+          wishlist={wish.wishlist}
+          wishId={wish.$id}
+        />
+      )}
 
       <Link
         to={href(ROUTES.WISH, { wishId: wish.$id })}
@@ -62,11 +73,10 @@ const WishGalleryItem = memo(function WishGalleryItem({
             className="text-muted-foreground text-sm lg:text-base xl:text-lg"
           />
         ) : (
-          <span className="text-transparent">без цены</span>
+          <span className="text-transparent whitespace-nowrap">₽</span>
         )}
       </Link>
       <div className="flex justify-between items-center gap-1">
-        <PriorityBadge priority={wish.priority} size="sm" />
         {(onBookedPage || onListPage) && (
           <OwnerAvatar
             userId={wish.ownerId}
@@ -75,6 +85,7 @@ const WishGalleryItem = memo(function WishGalleryItem({
             className="[&_.owner-name]:hidden lg:[&_.owner-name]:inline text-xs md:text-sm"
           />
         )}
+        <PriorityBadge priority={wish.priority} size="sm" />
       </div>
     </div>
   );
@@ -82,11 +93,11 @@ const WishGalleryItem = memo(function WishGalleryItem({
 
 const WishCover = memo(function WishCover({
   wish,
+  userRoles,
 }: {
   wish: WishDocumentType;
+  userRoles?: WishRoles;
 }) {
-  const { isOwner, isBooker, isEditor, bookWish } = useWishcardMeta(wish);
-
   return (
     <div className={cn("relative rounded-2xl overflow-hidden")}>
       <Link to={href(ROUTES.WISH, { wishId: wish.$id })}>
@@ -99,30 +110,31 @@ const WishCover = memo(function WishCover({
         />
       </Link>
 
-      <div
-        className={cn(
-          "bottom-0 left-0 absolute flex justify-between has-only:justify-end gap-1 p-3 w-full transition-all duration-300 show-actions"
-        )}
-      >
-        {(isOwner || isEditor) && (
-          <WishQuickActions
-            wishId={wish.$id}
-            triggerVariant="gallery"
-            side="top"
-            align="start"
-            isArchived={wish.isArchived}
-            title={wish.title}
-          />
-        )}
-        {!isOwner && (
-          <BookButton
-            triggerVariant="gallery"
-            isBooked={wish.isBooked}
-            isBookedByCurrentUser={isBooker}
-            action={bookWish}
-          />
-        )}
-      </div>
+      {userRoles && (
+        <div
+          className={cn(
+            "bottom-0 left-0 absolute flex justify-between has-only:justify-end gap-1 p-3 w-full transition-all duration-300 show-actions"
+          )}
+        >
+          {userRoles.isWishOwner ? (
+            <WishQuickActions
+              wishId={wish.$id}
+              triggerVariant="gallery"
+              side="top"
+              align="start"
+              isArchived={wish.isArchived}
+              title={wish.title}
+            />
+          ) : (
+            <BookButton
+              wishId={wish.$id}
+              triggerVariant="gallery"
+              isBooked={wish.isBooked}
+              isBookedByCurrentUser={userRoles?.isBooker}
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 });

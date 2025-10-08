@@ -1,18 +1,34 @@
-import { type CollaboratorType } from "@/features/collaborators/model/useCollaborators";
 import { cn } from "@/shared/lib/css";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/kit/avatar";
 import { ID } from "appwrite";
 import { memo } from "react";
+import type { CollaboratorType } from "../model/types";
 
 type CollaboratorsAvatarsProps = {
   collaborators: CollaboratorType[];
+  isLoading?: boolean;
+  error?: Error;
   size: "default" | "sm" | "lg";
   maxVisible: number;
   hideOwner?: boolean;
 } & React.ComponentProps<"div">;
 
+const SIZES = {
+  default: "w-8 h-8",
+  lg: "w-10 h-10",
+  sm: "w-5 h-5",
+};
+
+const SPACING = {
+  default: "-space-x-3",
+  lg: "-space-x-4",
+  sm: "-space-x-2",
+};
+
 export const CollaboratorsAvatars = memo(function CollaboratorsAvatars({
   collaborators,
+  isLoading,
+  error,
   size,
   maxVisible,
   hideOwner = false,
@@ -21,42 +37,32 @@ export const CollaboratorsAvatars = memo(function CollaboratorsAvatars({
   const visible = collaborators.slice(0, maxVisible);
   const remaining = collaborators.length - maxVisible;
 
-  const sizes = {
-    default: "w-8 h-8",
-    lg: "w-10 h-10",
-    sm: "w-5 h-5",
-  };
-
-  const spacing = {
-    default: "-space-x-3",
-    lg: "-space-x-4",
-    sm: "-space-x-2",
-  };
-
-  if (!collaborators) return null;
+  if (error) return "☹️ Не удалось загрузить соавторов";
+  if (isLoading)
+    return <CollaboratorsAvatarsSkeleton size={size} maxVisible={maxVisible} />;
 
   // в команде списка всегда как минимум 1 участник (владелец)
   // не показываем соавторов в карточках, если нет других участников
-  // но показываем всех, включая владельца, в диалогах и на странице вишлиста
+  // но всегда показываем в диалогах и на странице вишлиста, даже если в соавторах только автор
   if (hideOwner && collaborators.length < 2) return null;
 
   return (
     <div
       className={cn(
         "flex *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background",
-        spacing[size],
+        SPACING[size],
         className
       )}
     >
       {visible.map((c) => (
-        <Avatar className={sizes[size]} key={ID.unique()}>
+        <Avatar className={SIZES[size]} key={ID.unique()}>
           <AvatarImage src={c.avatarURL ?? undefined} alt={c.userName} />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       ))}
 
       {remaining > 0 && (
-        <Avatar className={sizes[size]}>
+        <Avatar className={SIZES[size]}>
           <AvatarImage />
           <AvatarFallback className="text-xs">+{remaining}</AvatarFallback>
         </Avatar>
@@ -69,21 +75,20 @@ export function CollaboratorsAvatarsSkeleton({
   size,
   maxVisible,
   className,
-}: {
-  size: number;
-  maxVisible?: number;
-} & React.ComponentProps<"div">) {
+}: Pick<CollaboratorsAvatarsProps, "size" | "maxVisible"> &
+  React.ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        "flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background",
+        "flex *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background",
+        SPACING[size],
         className
       )}
     >
       {[...Array(maxVisible ?? 3)].map((_, i) => (
         <div
           key={i}
-          className={`bg-muted rounded-full w-${size} h-${size}animate-pulse`}
+          className={cn("bg-muted rounded-full animate-pulse", SIZES[size])}
         />
       ))}
     </div>

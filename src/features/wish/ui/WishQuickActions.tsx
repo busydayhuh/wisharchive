@@ -28,7 +28,7 @@ const dropdownTriggerVariants = cva(
         gallery: "bg-secondary hover:bg-muted",
         page: "bg-muted hover:bg-muted/60",
         table:
-          "md:bg-transparent bg-muted hover:bg-muted shadow-none lg:mx-auto ms-auto me-1 data-[state=open]:bg-muted",
+          "bg-secondary hover:bg-secondary/80 shadow-none lg:mx-auto ms-auto me-1 data-[state=open]:bg-muted",
       },
     },
   }
@@ -185,11 +185,11 @@ function Buttons({
   const renderers: Partial<Record<Action, (item: MenuItem) => JSX.Element>> = {
     archive: (item: MenuItem) => (
       <ArchiveButton
+        wishId={wishId}
         key={wishId + item.actionName}
         variant="quick-action"
         isArchived={item.isActive ?? false}
         wishTitle={title}
-        action={item.action}
       />
     ),
     edit: (item: MenuItem) => (

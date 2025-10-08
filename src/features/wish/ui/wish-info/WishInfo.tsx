@@ -11,15 +11,17 @@ export const WishInfo = memo(function WishInfo({
 }: {
   wish: WishDocumentType;
 }) {
-  const { isEditor, isOwner, isBooker } = useWishcardMeta(wish);
-  const { archiveWish, bookWish, editWish } = useWishQuickActions(wish.$id);
+  const { userRoles, hasAccess } = useWishcardMeta(wish);
+  const { editWish } = useWishQuickActions(wish.$id);
+
+  if (!hasAccess) return null;
 
   return (
     <div className="flex flex-col gap-6 lg:gap-10 2xl:gap-12 px-2 md:px-0 py-2.5">
       <WishHeader
         title={wish.title}
         owner={wish.owner}
-        isEditor={isEditor}
+        isEditor={userRoles?.isEditor}
         editWish={editWish}
       />
 
@@ -31,16 +33,15 @@ export const WishInfo = memo(function WishInfo({
       />
 
       <WishFooter
+        wishId={wish.$id}
         wishTitle={wish.title}
         isBooked={wish.isBooked}
         price={wish.price}
         currency={wish.currency}
         shopURL={wish.shopURL}
         isArchived={wish.isArchived}
-        isBooker={isBooker}
-        isOwner={isOwner}
-        archiveWish={archiveWish}
-        bookWish={bookWish}
+        isBooker={userRoles?.isEditor ?? false}
+        isOwner={userRoles?.isEditor ?? false}
       />
     </div>
   );

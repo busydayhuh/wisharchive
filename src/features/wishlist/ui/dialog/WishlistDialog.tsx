@@ -1,5 +1,6 @@
 import { wishlistFormSchema as formSchema } from "@/shared/model/formSchemas";
 import { ROUTES } from "@/shared/model/routes";
+import type { WishlistDocumentType } from "@/shared/model/types";
 import { useCurrentUser } from "@/shared/model/user/useCurrentUser";
 import { Button } from "@/shared/ui/kit/button";
 import {
@@ -9,7 +10,6 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogPortal,
   DialogTitle,
 } from "@/shared/ui/kit/dialog";
 import { Form } from "@/shared/ui/kit/form";
@@ -18,7 +18,6 @@ import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { href, useNavigate } from "react-router";
 import { z } from "zod";
-import { useWishlist } from "../../model/useWishlist";
 import { wishlistMutations } from "../../model/wishlistMutations";
 import CollaboratorsSection from "./CollaboratorsSection";
 import { DeleteSection } from "./DeleteSection";
@@ -37,19 +36,17 @@ const headerVariants = {
 
 export type WishlistDialogPropsType = React.ComponentProps<"button"> & {
   action: "edit" | "create";
-  wishlistId?: string | null;
+  wishlist?: WishlistDocumentType | null;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 };
 
 export function WishlistDialog({
   action = "edit",
-  wishlistId,
+  wishlist,
   isOpen,
   setIsOpen,
 }: WishlistDialogPropsType) {
-  const { wishlist, isLoading, error } = useWishlist(wishlistId ?? null);
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -83,69 +80,66 @@ export function WishlistDialog({
       });
 
       if (newWishlist) {
-        navigate(href(ROUTES.WISHLIST, { listId: newWishlist.$id }));
         setIsOpen(false);
+        requestAnimationFrame(() => {
+          return navigate(href(ROUTES.WISHLIST, { listId: newWishlist.$id }));
+        });
       }
     }
   }
 
-  if (error) return null;
-  if (isLoading) return <div>Загрузка...</div>; // TODO скелетон диалога
-
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogPortal container={document.querySelector("main")!}>
-        <DialogContent className="rounded-xl sm:max-w-[425px]">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              <DialogHeader className="gap-1 mb-6">
-                <DialogTitle>{headerVariants[action].title}</DialogTitle>
-                <DialogDescription className="sr-only">
-                  {headerVariants[action].description}
-                </DialogDescription>
-              </DialogHeader>
+      {/* <DialogPortal container={document.querySelector("main")!}> */}
+      <DialogContent className="rounded-xl sm:max-w-[425px]">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <DialogHeader className="gap-1 mb-6">
+              <DialogTitle>{headerVariants[action].title}</DialogTitle>
+              <DialogDescription className="sr-only">
+                {headerVariants[action].description}
+              </DialogDescription>
+            </DialogHeader>
 
-              <WishlistFormFields form={form} />
+            <WishlistFormFields form={form} />
 
-              {wishlist && (
-                <>
-                  <CollaboratorsSection
-                    wishlistId={wishlist.$id}
-                    isPrivate={wishlist.isPrivate}
-                    form={form}
-                  />
-                  <DeleteSection
-                    wishlistId={wishlist.$id}
-                    wishlistTitle={wishlist.title}
-                    setDialogOpen={setIsOpen}
-                  />
-                </>
-              )}
+            {wishlist && (
+              <>
+                <CollaboratorsSection
+                  wishlistId={wishlist.$id}
+                  isPrivate={wishlist.isPrivate}
+                  form={form}
+                />
+                <DeleteSection
+                  wishlistId={wishlist.$id}
+                  wishlistTitle={wishlist.title}
+                  setDialogOpen={setIsOpen}
+                />
+              </>
+            )}
 
-              <DialogFooter className="mt-4">
-                <DialogClose asChild>
-                  <Button
-                    variant="secondary"
-                    className="bg-muted hover:bg-muted/60 shadow-none rounded-md"
-                  >
-                    Отмена
-                  </Button>
-                </DialogClose>
-                <Button
-                  type="submit"
-                  disabled={form.formState.isSubmitting}
-                  className="shadow-none rounded-md"
-                >
-                  {form.formState.isSubmitting && (
-                    <Loader2 className="animate-spin" />
-                  )}
-                  Сохранить
+            <DialogFooter className="mt-4">
+              <DialogClose asChild>
+                <Button variant="outline" size="lg">
+                  Отмена
                 </Button>
-              </DialogFooter>
-            </form>
-          </Form>
-        </DialogContent>
-      </DialogPortal>
+              </DialogClose>
+              <Button
+                type="submit"
+                size="lg"
+                disabled={form.formState.isSubmitting}
+                className="shadow-none rounded-md"
+              >
+                {form.formState.isSubmitting && (
+                  <Loader2 className="animate-spin" />
+                )}
+                Сохранить
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
+      </DialogContent>
+      {/* </DialogPortal> */}
     </Dialog>
   );
 }

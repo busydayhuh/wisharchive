@@ -8,7 +8,9 @@ const DASHBOARD_HEADERS = {
   [ROUTES.BOOKED]: "Хочу подарить",
   [ROUTES.ARCHIVED]: "Архив желаний",
   [ROUTES.SHARED]: "Совместные списки",
-  [ROUTES.BOOKMARKS]: "Избранные списки",
+  [ROUTES.BOOKMARKS]: "Закладки",
+  "/wishes/": "Мои желания",
+  "/lists/": "Мои списки",
 };
 
 export function useDashboardMeta() {
@@ -30,17 +32,14 @@ export function useDashboardMeta() {
     : false;
 
   // Какой заголовок отображать
-  const dashboardHeader =
-    DASHBOARD_HEADERS[pathname as keyof typeof DASHBOARD_HEADERS];
-
-  const title = dashboardHeader
-    ? dashboardHeader
-    : isDashboardOwner
-    ? "Мой дашборд желаний"
-    : null;
+  const title =
+    Object.entries(DASHBOARD_HEADERS).find(([path]) =>
+      pathname.startsWith(path)
+    )?.[1] ?? "Мой дашборд";
 
   // Отображать ли инфо о владельце дашборда
   const showDashboardOwner = !isMobile || !isDashboardOwner;
+  const showTitle = isDashboardOwner;
 
   // Отображать ли навигацию
   const routes = [{ path: ROUTES.WISHES }, { path: ROUTES.WISHLISTS }];
@@ -50,6 +49,7 @@ export function useDashboardMeta() {
     dashboardUserId,
     isDashboardOwner,
     title,
+    showTitle,
     showDashboardOwner,
     isMobile,
     showNavigation,

@@ -4,7 +4,8 @@ import type { Action, ConfirmationTextType } from "./ConfirmationDialogContext";
 export function getConfirmationText(
   action?: Action,
   name?: ReactNode,
-  isActive?: boolean
+  isActive?: boolean,
+  isOwner?: boolean
 ) {
   if (!action) return { title: "", description: "", actionText: "" };
 
@@ -33,6 +34,18 @@ export function getConfirmationText(
       actionText: "Удалить",
     },
 
+    edit: {
+      title: "Убрать желание из общего списка?",
+      description: (
+        <>
+          Желание не будет удалено. {isOwner ? "Вы сможете" : "Автор сможет"}{" "}
+          найти его среди своих желаний, но оно больше не будет принадлежать
+          этому списку.
+        </>
+      ),
+      actionText: "Убрать",
+    },
+
     archive: {
       title: isActive ? "Вернуть из архива?" : "Переместить в архив?",
       description: isActive ? (
@@ -45,7 +58,7 @@ export function getConfirmationText(
             Вы уверены, что хотите переместить желание <strong>{name}</strong> в
             архив?
           </span>
-          <span className="block mt-4">
+          <span className="block mt-2">
             Вы сможете найти его позже в разделе «Архив желаний».
           </span>
         </>

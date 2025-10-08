@@ -10,6 +10,10 @@ function useMembershipMutations(teamId: string) {
     () => members?.filter((m) => m.roles.includes("editors")),
     [members]
   );
+  const readers = useMemo(
+    () => members?.filter((m) => m.roles.includes("readers")),
+    [members]
+  );
 
   async function addMemberAsEditor(email: string, userId: string) {
     try {
@@ -30,6 +34,11 @@ function useMembershipMutations(teamId: string) {
   async function addMemberAsReader(email: string, userId: string) {
     try {
       const response = await team.addReader(teamId, email, userId);
+
+      await wishlistMutations.update(teamId, {
+        readersIds: [...(readers?.map((m) => m.userId) ?? []), userId],
+      });
+
       mutate();
 
       return response;
@@ -49,11 +58,12 @@ function useMembershipMutations(teamId: string) {
 
       await wishlistMutations.update(teamId, {
         editorsIds: editors?.filter((m) => m.userId !== userId),
+        readersIds: readers?.filter((m) => m.userId !== userId),
       });
 
       mutate();
     } catch {
-      alert("Не удалось добавить пользователя");
+      alert("Не удалось удалить пользователя");
     }
   }
 

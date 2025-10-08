@@ -3,11 +3,9 @@ import { Button } from "@/shared/ui/kit/button";
 import { Pencil } from "lucide-react";
 
 export function EditWishlistButton({
-  variant,
   onClick,
   className,
 }: React.ComponentProps<"button"> & {
-  variant: "table" | "gallery";
   onClick: (open: boolean) => void;
 }) {
   return (
@@ -15,12 +13,13 @@ export function EditWishlistButton({
       size="icon"
       onClick={onClick}
       type="button"
-      variant={variant === "gallery" ? "secondary" : "outline"}
+      variant="secondary"
       className={cn(
         "z-10",
 
         className
       )}
+      aria-label="Редактировать вишлист"
     >
       <Pencil />
     </Button>

@@ -14,6 +14,7 @@ export function useWishlists(filters?: {
   searchString?: string;
   bookmarkedBy?: string;
   teams?: string[];
+  collabsOnly?: boolean;
   order?: "asc" | "desc";
   orderBy?: "$sequence" | "$updatedAt" | "title";
 }) {
@@ -38,6 +39,7 @@ function getWishlistQueries(filters?: {
   searchString?: string;
   bookmarkedBy?: string;
   teams?: string[];
+  collabsOnly?: boolean;
   order?: "asc" | "desc";
   orderBy?: "$sequence" | "$updatedAt" | "title";
 }) {
@@ -55,13 +57,13 @@ function getWishlistQueries(filters?: {
   // team каждого вишлиста имеет такой же id, как и вишлист
   // поэтому ищем вишлисты по массиву id teams
 
-  if (filters?.teams && filters?.teams.length > 0 && filters?.ownerId)
+  if (filters?.teams && filters?.teams.length > 0 && filters?.collabsOnly)
     queries.push(
       Query.equal("$id", filters.teams),
-      Query.notEqual("ownerId", filters?.ownerId)
+      Query.or([Query.isNotNull("editorsIds"), Query.isNotNull("readersIds")])
     );
 
-  if (filters?.teams && filters?.teams.length > 0 && !filters?.ownerId)
+  if (filters?.teams && filters?.teams.length > 0 && !filters?.collabsOnly)
     queries.push(Query.equal("$id", filters.teams));
 
   if (filters?.order && filters.orderBy) {

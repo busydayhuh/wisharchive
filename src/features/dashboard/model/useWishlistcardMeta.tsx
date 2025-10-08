@@ -1,46 +1,47 @@
 import { useAuth } from "@/features/auth";
-import { useCollaborators } from "@/features/collaborators";
 import {
-  useBookmarkWishlist,
-  useWishlistDialog,
-  useWishlistPermissions,
-} from "@/features/wishlist";
+  resolveWishlistRoles,
+  useDashboardCollaborators,
+} from "@/features/collaborators";
+import { toggleBookmark, useWishlistDialog } from "@/features/wishlist";
+import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
-import { useLocation } from "react-router";
+import { useCallback } from "react";
+import { useMatch } from "react-router";
 
 export function useWishlistcardMeta(wishlist: WishlistDocumentType) {
-  const { pathname } = useLocation();
+  const { editorsIds, readersIds, bookmarkedBy, wishlistId, ownerId } =
+    wishlist;
+
   const { current: authUser } = useAuth();
-  const { collaborators } = useCollaborators(wishlist.$id);
+  const { collaborators } = useDashboardCollaborators(editorsIds, readersIds);
 
   const { openDialog } = useWishlistDialog();
-  const { toggleBookmark } = useBookmarkWishlist(
-    wishlist.$id,
-    wishlist.bookmarkedBy ?? []
+  const openWishlistEditor = useCallback(
+    () => openDialog("edit", wishlist),
+    [wishlist, openDialog]
   );
 
-  const { isOwner, isEditor } = useWishlistPermissions(
-    authUser?.$id ?? "",
-    wishlist.$id
-  );
   const isFavorite =
-    (!!authUser?.$id && wishlist.bookmarkedBy?.includes(authUser.$id)) ?? false;
+    (!!authUser?.$id && bookmarkedBy?.includes(authUser.$id)) ?? false;
+  const bookmarkWishlist = (pressed: boolean) =>
+    toggleBookmark(pressed, wishlistId, bookmarkedBy ?? [], authUser?.$id);
 
-  const onBookmarksPage = pathname.includes("/bookmarks");
-  const onSharedPage = pathname.includes("/shared");
+  const userRoles = resolveWishlistRoles(
+    editorsIds,
+    readersIds,
+    ownerId,
+    authUser?.$id
+  );
 
-  function onEdit() {
-    openDialog("edit", wishlist.$id);
-  }
+  const onSharedPage = useMatch(ROUTES.SHARED);
 
   return {
     collaborators,
-    toggleBookmark,
-    isOwner,
-    isEditor,
+    bookmarkWishlist,
+    userRoles,
     isFavorite,
-    onBookmarksPage,
     onSharedPage,
-    onEdit,
+    openWishlistEditor,
   };
 }

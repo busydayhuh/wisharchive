@@ -16,13 +16,11 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
 }) {
   const {
     collaborators,
-    toggleBookmark,
-    isOwner,
-    isEditor,
+    bookmarkWishlist,
     isFavorite,
-    onBookmarksPage,
     onSharedPage,
-    onEdit,
+    openWishlistEditor,
+    userRoles,
   } = useWishlistcardMeta(wishlist);
 
   return (
@@ -31,16 +29,15 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
         <div className="relative">
           {/* Добавить в закладки */}
           <BookmarkButton
-            isFavorite={isFavorite || onBookmarksPage}
-            onPressed={toggleBookmark}
+            isFavorite={isFavorite}
+            onPressed={bookmarkWishlist}
             className="top-2 right-2 z-10 absolute"
           />
 
           {/* Редактировать */}
-          {(isOwner || isEditor) && (
+          {(userRoles?.isWishlistOwner || userRoles?.isEditor) && (
             <EditWishlistButton
-              onClick={onEdit}
-              variant="gallery"
+              onClick={openWishlistEditor}
               className="right-2 bottom-2 absolute show-actions"
             />
           )}
@@ -79,7 +76,7 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
         {/* Счетчик желаний / роль */}
         {onSharedPage ? (
           <RoleBadge
-            role={isEditor ? "editor" : "reader"}
+            role={userRoles?.isEditor ? "editor" : "reader"}
             size="sm"
             className="mx-2"
           />

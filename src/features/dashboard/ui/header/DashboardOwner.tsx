@@ -3,7 +3,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/kit/avatar";
 import { Button } from "@/shared/ui/kit/button";
 import { Share2 } from "lucide-react";
 import { memo } from "react";
-import { copyUrl } from "../../model/copyUrl";
 
 const DashboardOwner = memo(function DashboardOwner({
   userId,
@@ -22,7 +21,7 @@ const DashboardOwner = memo(function DashboardOwner({
       <div className="flex items-center gap-3">
         <Avatar className="p-0.5 border-1 border-foreground rounded-full w-9 md:w-11 h-9 md:h-11 overflow-visible">
           <AvatarImage
-            src={user.avatarURL}
+            src={user.avatarURL ?? undefined}
             alt={user.userName}
             className="rounded-full"
           />
@@ -38,11 +37,7 @@ const DashboardOwner = memo(function DashboardOwner({
             @{user.userId}
           </span>
         </div>
-        <Button
-          size="sm"
-          className="shadow-0 rounded-full w-7 h-7"
-          onClick={copyUrl}
-        >
+        <Button size="sm" className="shadow-0 rounded-full w-7 h-7">
           <Share2 className="size-3" />
         </Button>
       </div>

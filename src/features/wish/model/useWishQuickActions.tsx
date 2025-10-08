@@ -62,6 +62,8 @@ export function useWishQuickActions(wishId: string) {
         wishlistId: null,
         wishlist: null,
       });
+
+      await mutate((key) => Array.isArray(key) && key[0] === "wishes");
     } catch {
       console.log("Не удалось исключить желание из списка");
     }
@@ -75,8 +77,10 @@ export function useWishQuickActions(wishId: string) {
           wishlist: newWlId,
         });
 
-        mutate((key) => Array.isArray(key) && key[0] === "wishes");
-        mutate((key) => Array.isArray(key) && key[0] === "wishlists");
+        await Promise.all([
+          mutate((key) => Array.isArray(key) && key[0] === "wishes"),
+          mutate((key) => Array.isArray(key) && key[0] === "wishlists"),
+        ]);
       } catch {
         console.log("Не удалось изменить список");
       }

@@ -1,40 +1,41 @@
 import { useAuth } from "@/features/auth";
-import { useWishPermissions, useWishQuickActions } from "@/features/wish";
+import { resolveVisibility, resolveWishRoles } from "@/features/collaborators";
+import { useWishQuickActions } from "@/features/wish";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishDocumentType } from "@/shared/model/types";
-import { useCallback } from "react";
-import { href, useLocation, useNavigate } from "react-router";
+import { useMemo } from "react";
+import { useMatch } from "react-router-dom";
 
-export function useWishcardMeta(wish: WishDocumentType) {
+export function useWishcardMeta({
+  wishlist,
+  ownerId,
+  bookerId,
+  $id,
+}: Pick<WishDocumentType, "ownerId" | "bookerId" | "$id" | "wishlist">) {
   const { current: authUser } = useAuth();
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
 
-  const { isOwner, isBooker, isEditor } = useWishPermissions(
-    authUser?.$id ?? "",
-    wish.wishlistId ?? null,
-    wish.ownerId,
-    wish.bookerId
+  const roles = useMemo(
+    () => resolveWishRoles(wishlist, ownerId, bookerId, authUser?.$id),
+    [wishlist, ownerId, bookerId, authUser?.$id]
   );
+  const quickActions = useWishQuickActions($id);
 
-  const onBookedPage = pathname.includes("/booked");
-  const onListPage = pathname.includes("list");
+  const hasAccess = useMemo(() => {
+    return resolveVisibility(
+      wishlist?.isPrivate ?? false,
+      authUser?.$id,
+      roles
+    );
+  }, [authUser?.$id, roles, wishlist?.isPrivate]);
 
-  const { bookWish, archiveWish, deleteWish } = useWishQuickActions(wish.$id);
-  const editWish = useCallback(
-    () => navigate(href(ROUTES.EDIT, { wishId: wish.$id })),
-    [navigate, wish]
-  );
+  const onBookedPage = useMatch(ROUTES.BOOKED);
+  const onListPage = useMatch(ROUTES.WISHLIST);
 
   return {
-    isOwner,
-    isBooker,
-    isEditor,
-    bookWish,
+    userRoles: roles,
+    quickActions,
     onBookedPage,
-    archiveWish,
-    deleteWish,
-    editWish,
     onListPage,
+    hasAccess,
   };
 }

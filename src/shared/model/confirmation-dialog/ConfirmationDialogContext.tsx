@@ -15,6 +15,7 @@ type OpenConfDialogProps = {
   onConfirm: () => void;
   name?: string;
   isActive?: boolean;
+  isOwner?: boolean;
 };
 
 type ConfirmationDialogContextType = {
@@ -48,7 +49,8 @@ export function ConfirmationDialogProvider({
     const dialogText = getConfirmationText(
       props.action,
       props.name,
-      props.isActive
+      props.isActive,
+      props.isOwner
     );
     if (dialogText)
       setDialogState({ ...dialogText, open: true, onConfirm: props.onConfirm });

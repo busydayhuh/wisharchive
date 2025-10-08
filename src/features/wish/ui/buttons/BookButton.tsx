@@ -5,6 +5,7 @@ import { Toggle } from "@/shared/ui/kit/toggle";
 import { cva } from "class-variance-authority";
 import { LockKeyhole, LockKeyholeOpen } from "lucide-react";
 import { memo } from "react";
+import { useWishQuickActions } from "../../model/useWishQuickActions";
 
 const bookButtonVariants = cva(
   "inline-flex justify-center items-center border-0 transition duration-300 cursor-pointer shrink-0",
@@ -12,32 +13,33 @@ const bookButtonVariants = cva(
     variants: {
       triggerVariant: {
         gallery:
-          "hover:bg-muted/80 bg-secondary shadow-xs md:size-12 data-[state=on]:bg-destructive data-[state=on]:text-background data-[state=on]:hover:bg-destructive/90",
+          "hover:bg-muted bg-secondary shadow-xs md:size-12 data-[state=on]:bg-destructive data-[state=on]:text-background data-[state=on]:hover:bg-destructive/90 hover:text-foreground ",
         page: "bg-primary text-primary-foreground hover:bg-primary/90 data-[state=on]:bg-secondary shadow-none hover:text-primary-foreground data-[state=on]:hover:bg-secondary/80 h-12 rounded-md px-6 has-[>svg]:px-4",
         table:
-          "bg-muted shadow-none hover:bg-destructive hover:text-secondary data-[state=on]:bg-destructive data-[state=on]:text-background data-[state=on]:hover:bg-destructive/90",
+          "shadow-none bg-secondary text-foreground hover:bg-secondary/90 hover:text-foreground data-[state=on]:bg-destructive data-[state=on]:text-background data-[state=on]:hover:bg-destructive/90",
       },
     },
   }
 );
 
 export const BookButton = memo(function BookButton({
+  wishId,
   triggerVariant = "gallery",
   isBooked = false,
   isBookedByCurrentUser,
-  action,
   className,
 }: React.ComponentProps<"div"> & {
+  wishId: string;
   triggerVariant?: "gallery" | "table" | "page";
   isBooked: boolean;
   isBookedByCurrentUser: boolean;
-  action: (pressed: boolean) => void;
 }) {
   const { openConfDialog } = useConfirmationDialog();
+  const { bookWish } = useWishQuickActions(wishId);
 
   const handlePress = () =>
     openConfDialog({
-      onConfirm: () => action(!isBookedByCurrentUser),
+      onConfirm: () => bookWish(!isBookedByCurrentUser),
       action: "book",
       isActive: isBookedByCurrentUser,
     });

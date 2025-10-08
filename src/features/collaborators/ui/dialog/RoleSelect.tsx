@@ -1,18 +1,20 @@
 import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
-import { useCollaboratorsContext } from "../../model/CollaboratorsContext";
+import { Eye, Pencil } from "lucide-react";
+import { useCollaboratorsDialogContext } from "../../model/CollaboratorsPanelContext";
 
 export default function RoleSelect({
   isPrivateChecked,
 }: {
   isPrivateChecked: boolean;
 }) {
-  const { selectedRole, setSelectedRole } = useCollaboratorsContext();
+  const { selectedRole, setSelectedRole } = useCollaboratorsDialogContext();
   const options = [
-    { value: "editors", label: "Редактора" },
+    { value: "editors", label: "Редактора", icon: <Pencil /> },
     {
       value: "readers",
       label: "Читателя (только для приватных списков)",
       disabled: !isPrivateChecked,
+      icon: <Eye />,
     },
   ];
 
@@ -26,7 +28,7 @@ export default function RoleSelect({
         value={selectedRole}
         onChange={setSelectedRole}
         options={options}
-        className="py-6 w-full md:text-sm"
+        triggerCSS="py-6 w-full md:text-sm"
       />
       <div className="px-2 text-muted-foreground text-xs leading-tight">
         {selectedRole === "readers"

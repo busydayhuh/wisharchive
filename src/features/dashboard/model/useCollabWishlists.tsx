@@ -10,7 +10,7 @@ async function fetcher() {
 }
 
 export function useCollabWishlists(filters?: {
-  ownerId?: string;
+  collabsOnly?: boolean;
   searchString?: string;
   order?: "asc" | "desc";
   orderBy?: "$sequence" | "$updatedAt" | "title";

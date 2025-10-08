@@ -101,11 +101,11 @@ export function WishlistBadge({
       to={href(ROUTES.WISHLIST, { listId: id })}
       className={cn(
         badgesVariants({ size, className }),
-        "bg-secondary hover:bg-secondary/70 hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 cursor-pointer md:max-w-[25ch] truncate"
+        "bg-secondary hover:bg-secondary/90 hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 cursor-pointer "
       )}
     >
       {isPrivate && <EyeClosed />}
-      {title}
+      <span className="max-w-[20ch] truncate">{title}</span>
     </Link>
   );
 }

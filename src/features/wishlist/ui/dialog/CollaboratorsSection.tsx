@@ -1,11 +1,12 @@
 import {
   CollaboratorsAvatars,
-  CollaboratorsAvatarsSkeleton,
-  CollaboratorsDialog,
+  useCollaboratorsDialog,
+  useTeamCollaborators,
 } from "@/features/collaborators";
-import { useCollaborators } from "@/features/collaborators/";
 import { wishlistFormSchema as formSchema } from "@/shared/model/formSchemas";
+import { Button } from "@/shared/ui/kit/button";
 import { FormLabel } from "@/shared/ui/kit/form";
+import { PlusIcon } from "lucide-react";
 import type { UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 
@@ -20,30 +21,32 @@ export default function CollaboratorsSection({
   isPrivate,
   form,
 }: CollaboratorsSectionProps) {
-  const { collaborators, isLoading, error } = useCollaborators(wishlistId);
+  const { collaborators, isLoading, error } = useTeamCollaborators(wishlistId);
+  const { openCollabDialog } = useCollaboratorsDialog();
 
   const isPrivateChecked = form?.watch("isPrivate") ?? isPrivate;
 
   return (
     <div className="space-y-3 mt-6">
       <FormLabel>Соавторы списка</FormLabel>
-      {error && <>Не удалось загрузить соавторов</>}
-
-      {isLoading && <CollaboratorsAvatarsSkeleton maxVisible={5} size={8} />}
 
       {collaborators && (
         <div className="flex items-center gap-2">
           <CollaboratorsAvatars
             collaborators={collaborators}
+            isLoading={isLoading}
+            error={error}
             maxVisible={5}
             size="default"
           />
-
-          <CollaboratorsDialog
-            collaborators={collaborators}
-            isPrivateChecked={isPrivateChecked}
-            wishlistId={wishlistId}
-          />
+          <Button
+            type="button"
+            variant="ghost"
+            className="bg-transparent rounded-full w-8 h-8"
+            onClick={() => openCollabDialog(wishlistId, isPrivateChecked)}
+          >
+            <PlusIcon />
+          </Button>
         </div>
       )}
     </div>

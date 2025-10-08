@@ -1,17 +1,9 @@
 import { useMemo } from "react";
-import { useUsers } from "../../../shared/model/user/useUsers";
-import { useTeamMembers } from "./membership/useTeamMembers";
+import { useUsers } from "../../../../shared/model/user/useUsers";
+import { useTeamMembers } from "../membership/useTeamMembers";
+import type { CollaboratorType } from "../types";
 
-export type CollaboratorType = {
-  userId: string;
-  userName: string;
-  userEmail: string;
-  avatarURL: string | null;
-  roles?: string[];
-  confirm?: boolean;
-};
-
-export function useCollaborators(wishlistId: string | null) {
+export function useTeamCollaborators(wishlistId: string | null) {
   const {
     members,
     isLoading: membersLoading,
@@ -26,14 +18,14 @@ export function useCollaborators(wishlistId: string | null) {
     error: usersError,
   } = useUsers(memberIds);
 
-  const collaborators = useMemo<CollaboratorType[] | undefined>(() => {
-    if (!users) return undefined;
-    if (!members) return undefined;
+  const { collaborators, collaboratorsById } = useMemo(() => {
+    if (!users || !members)
+      return { collaborators: undefined, collaboratorsById: new Map() };
 
     const roleMap = new Map(members.map((m) => [m.userId, m.roles]));
     const confirmMap = new Map(members.map((m) => [m.userId, m.confirm]));
 
-    return users.map((user) => ({
+    const collaborators: CollaboratorType[] = users.map((user) => ({
       userId: user.userId,
       userName: user.userName,
       userEmail: user.userEmail,
@@ -41,10 +33,15 @@ export function useCollaborators(wishlistId: string | null) {
       roles: roleMap.get(user.userId),
       confirm: confirmMap.get(user.userId),
     }));
+
+    const collaboratorsById = new Map(collaborators.map((c) => [c.userId, c]));
+
+    return { collaborators, collaboratorsById };
   }, [users, members]);
 
   return {
     collaborators,
+    collaboratorsById,
     isLoading: membersLoading || usersLoading,
     error: membersError || usersError,
   };

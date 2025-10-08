@@ -22,7 +22,7 @@ export function DashboardLayout() {
 
   return (
     <div className="mt-2 md:mt-4 px-1 md:px-0">
-      <div className="flex flex-col gap-6 md:gap-10">
+      <div className="flex flex-col gap-4 md:gap-10 lg:gap-16">
         <DashboardHeader
           title={title}
           showDashboardOwner={showDashboardOwner}

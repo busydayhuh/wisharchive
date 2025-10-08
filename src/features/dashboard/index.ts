@@ -1,5 +1,6 @@
 export { useCollabWishlists } from "./model/useCollabWishlists";
 export { useWishcardMeta } from "./model/useWishcardMeta";
+export { useWishlistcardMeta } from "./model/useWishlistcardMeta";
 export { DashboardLayout, useDashboardContext } from "./ui/DashboardLayout";
 export { DashboardContentContainer } from "./ui/main-content/DashboardContentContainer";
 export { WishesPageLayout } from "./ui/main-content/wishes/WishesPageLayout";
