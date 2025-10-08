@@ -32,10 +32,10 @@ export default function Collaborator({
       </Avatar>
 
       <div className="flex flex-col">
-        <span className="font-medium text-sm md:text-base">{userName}</span>
-        <span className="text-muted-foreground text-xs leading-tight">
+        <p className="font-medium text-sm md:text-base">{userName}</p>
+        <p className="text-muted-foreground text-xs leading-tight">
           {roles ? roleName(roles) : null}
-        </span>
+        </p>
       </div>
 
       <CollaboratorActionButton
@@ -127,7 +127,10 @@ function CollaboratorActionButton({
             variants[variant].icon
           )}
         </span>
-        <span className="hidden md:inline">{variants[variant].text}</span>
+        <span className="hidden md:inline-flex items-center gap-1.5">
+          {loading && <Loader2 className="animate-spin" />}
+          {variants[variant].text}
+        </span>
       </Button>
     );
 }

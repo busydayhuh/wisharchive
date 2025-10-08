@@ -68,7 +68,7 @@ function WishForm({
         })}
         className="flex flex-col gap-6 md:ml-4 px-2 md:px-0 pb-2"
       >
-        <span className="font-bold text-lg md:text-2xl">{pageHeader}</span>
+        <p className="font-bold text-lg md:text-2xl">{pageHeader}</p>
         <FormField
           control={form.control}
           name="title"

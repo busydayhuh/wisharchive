@@ -2,7 +2,6 @@ import type { Roles } from "@/features/collaborators";
 import { useIsMobile } from "@/shared/lib/react/use-mobile";
 import type { WishDocumentType } from "@/shared/model/types";
 import ExpandableText from "@/shared/ui/ExpandableText";
-import { StarsIcon } from "lucide-react";
 import { BookmarkButton } from "./BookmarkButton";
 import { EditWishlistButton } from "./EditWishlistButton";
 import { WishlistCollaborators } from "./WishlistCollaborators";
@@ -118,7 +117,7 @@ export function WishlistName({
       </p>
       <p className="inline-flex items-center gap-2 text-muted-foreground text-xs md:text-sm">
         <span>{wishesCount} жел.</span>
-        <StarsIcon className="size-3" />
+        <span>|</span>
         <span className="flex items-center gap-2">
           {isPrivate ? "приватный" : "публичный"}
         </span>

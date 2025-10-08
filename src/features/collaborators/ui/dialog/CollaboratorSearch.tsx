@@ -10,9 +10,9 @@ export function CollaboratorSearch({
 }) {
   return (
     <div>
-      <span className="inline-block mb-2 font-medium text-muted-foreground text-sm">
+      <p className="inline-block mb-2 font-medium text-muted-foreground text-sm">
         Найти пользователя по имени или никнейму
-      </span>
+      </p>
       <Searchbar
         searchString={searchString}
         setSearchString={setSearchString}

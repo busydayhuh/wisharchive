@@ -52,9 +52,9 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
           <div className="flex flex-wrap justify-between items-center mt-1 px-2">
             {/* Название */}
             <div className="flex items-center gap-2 pr-2 text-base md:text-lg">
-              <span className="max-w-[10ch] sm:max-w-[20ch] font-medium truncate leading-tight">
+              <p className="max-w-[10ch] sm:max-w-[20ch] font-medium truncate leading-tight">
                 {wishlist.title}
-              </span>
+              </p>
               {wishlist.isPrivate && (
                 <EyeClosed className="size-3 md:size-4 text-muted-foreground" />
               )}
@@ -81,9 +81,9 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
             className="mx-2"
           />
         ) : (
-          <span className="mx-2 text-muted-foreground text-xs">
+          <p className="mx-2 text-muted-foreground text-xs">
             {wishlist.wishes?.length ?? 0} жел.
-          </span>
+          </p>
         )}
       </div>
     </>

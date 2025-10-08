@@ -39,8 +39,8 @@ export function UserSb() {
                 <AvatarFallback className="rounded-lg">ВП</AvatarFallback>
               </Avatar>
               <div className="flex-1 grid text-sm text-left leading-tight">
-                <span className="font-medium truncate">{current!.name}</span>
-                <span className="text-xs truncate">{current!.email}</span>
+                <p className="font-medium truncate">{current!.name}</p>
+                <p className="text-xs truncate">{current!.email}</p>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -61,8 +61,8 @@ export function UserSb() {
                   <AvatarFallback className="rounded-lg">ВП</AvatarFallback>
                 </Avatar>
                 <div className="flex-1 grid text-sm text-left leading-tight">
-                  <span className="font-medium truncate">{current!.name}</span>
-                  <span className="text-xs truncate">{current!.email}</span>
+                  <p className="font-medium truncate">{current!.name}</p>
+                  <p className="text-xs truncate">{current!.email}</p>
                 </div>
               </div>
             </DropdownMenuLabel>

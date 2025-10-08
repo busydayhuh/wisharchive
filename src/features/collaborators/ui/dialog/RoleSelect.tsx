@@ -20,9 +20,9 @@ export default function RoleSelect({
 
   return (
     <div className="space-y-3">
-      <span className="inline-block mb-2 font-medium text-muted-foreground text-sm">
+      <p className="inline-block mb-2 font-medium text-muted-foreground text-sm">
         Пригласить соавтора в роли
-      </span>
+      </p>
 
       <ResponsiveSelect
         value={selectedRole}

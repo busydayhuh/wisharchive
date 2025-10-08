@@ -65,9 +65,9 @@ const WishGalleryItem = memo(function WishGalleryItem({
         to={href(ROUTES.WISH, { wishId: wish.$id })}
         className="flex lg:flex-row flex-col lg:justify-between px-1"
       >
-        <span className="pr-1 font-medium text-base lg:text-base xl:text-lg truncate">
+        <p className="pr-1 font-medium text-base lg:text-base xl:text-lg truncate">
           {wish.title}
-        </span>
+        </p>
 
         {wish.price ? (
           <FormattedPrice
@@ -76,7 +76,7 @@ const WishGalleryItem = memo(function WishGalleryItem({
             className="text-muted-foreground text-sm lg:text-base xl:text-lg"
           />
         ) : (
-          <span className="text-transparent whitespace-nowrap">₽</span>
+          <p className="text-transparent whitespace-nowrap">₽</p>
         )}
       </Link>
       <div className="flex justify-between items-center gap-1">

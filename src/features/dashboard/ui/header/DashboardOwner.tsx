@@ -30,12 +30,12 @@ const DashboardOwner = memo(function DashboardOwner({
           </AvatarFallback>
         </Avatar>
         <div className="grid text-left">
-          <span className="font-semibold text-xl md:text-2xl truncate leading-tight">
+          <p className="font-semibold text-xl md:text-2xl truncate leading-tight">
             {user.userName}
-          </span>
-          <span className="text-xs md:text-sm truncate leading-tight">
+          </p>
+          <p className="text-xs md:text-sm truncate leading-tight">
             @{user.userId}
-          </span>
+          </p>
         </div>
         <Button size="sm" className="shadow-0 rounded-full w-7 h-7">
           <Share2 className="size-3" />

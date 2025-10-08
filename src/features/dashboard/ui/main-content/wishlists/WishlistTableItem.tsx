@@ -49,7 +49,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
       <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
         <div className="flex flex-col gap-1 lg:basis-2xs">
           <div className="flex items-center gap-2 pr-1 font-medium text-base 2xl:text-lg">
-            <span className="max-w-[42ch] truncate">{wishlist.title}</span>
+            <p className="max-w-[42ch] truncate">{wishlist.title}</p>
             {wishlist.isPrivate && (
               <EyeClosed className="size-3 md:size-4 text-muted-foreground" />
             )}
@@ -61,9 +61,9 @@ const WishlistTableItem = memo(function WishlistTableItem({
               size="sm"
             />
           ) : (
-            <span className="text-muted-foreground text-xs">
+            <p className="text-muted-foreground text-xs">
               {wishlist.wishes?.length ?? 0} жел.
-            </span>
+            </p>
           )}
         </div>
       </Link>
@@ -83,12 +83,12 @@ const WishlistTableItem = memo(function WishlistTableItem({
 
       {/* Даты */}
       <div className="hidden lg:flex flex-col items-center gap-0.5 text-muted-foreground text-xs xl:text-sm">
-        <span className="bg-muted px-1.5 py-0.5 rounded-lg">создан</span>
-        <span>{createdAt}</span>
+        <p className="bg-muted px-1.5 py-0.5 rounded-lg">создан</p>
+        <p>{createdAt}</p>
       </div>
       <div className="hidden lg:flex flex-col items-center gap-0.5 text-muted-foreground text-xs xl:text-sm">
-        <span className="bg-muted px-1.5 py-0.5 rounded-lg">изменён</span>
-        <span>{updatedAt}</span>
+        <p className="bg-muted px-1.5 py-0.5 rounded-lg">изменён</p>
+        <p>{updatedAt}</p>
       </div>
 
       {/* Кнопки */}

@@ -57,18 +57,18 @@ export const WishDetails = memo(function WishDetails({
               className
             )}
           >
-            <span className="font-medium text-muted-foreground/50 md:text-base shrink-0">
+            <p className="font-medium text-muted-foreground/50 md:text-base shrink-0">
               {i.header}
-            </span>
+            </p>
 
             <div className="border-b-1 border-b-muted-foreground/30 border-dotted w-full h-1"></div>
 
             {i.element ? (
               i.element
             ) : (
-              <span className="text-muted-foreground/50 text-sm 2xl:text-base">
+              <p className="text-muted-foreground/50 text-sm 2xl:text-base">
                 нет
-              </span>
+              </p>
             )}
           </div>
         ))}
