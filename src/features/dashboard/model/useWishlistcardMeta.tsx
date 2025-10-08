@@ -10,8 +10,7 @@ import { useCallback } from "react";
 import { useMatch } from "react-router";
 
 export function useWishlistcardMeta(wishlist: WishlistDocumentType) {
-  const { editorsIds, readersIds, bookmarkedBy, wishlistId, ownerId } =
-    wishlist;
+  const { editorsIds, readersIds, bookmarkedBy, ownerId, $id } = wishlist;
 
   const { current: authUser } = useAuth();
   const { collaborators } = useDashboardCollaborators(editorsIds, readersIds);
@@ -25,7 +24,7 @@ export function useWishlistcardMeta(wishlist: WishlistDocumentType) {
   const isFavorite =
     (!!authUser?.$id && bookmarkedBy?.includes(authUser.$id)) ?? false;
   const bookmarkWishlist = (pressed: boolean) =>
-    toggleBookmark(pressed, wishlistId, bookmarkedBy ?? [], authUser?.$id);
+    toggleBookmark(pressed, $id, bookmarkedBy ?? [], authUser?.$id);
 
   const userRoles = resolveWishlistRoles(
     editorsIds,
