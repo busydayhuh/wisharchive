@@ -1,3 +1,4 @@
+import { DashboardToolbarProvider } from "@/features/dashboard";
 import { useParams } from "react-router";
 import { useWishlist } from "./model/useWishlist";
 import { WishlistLayout } from "./ui/WishlistLayout";
@@ -10,7 +11,12 @@ function WishlistPage() {
 
   if (error) return <>Ошибка</>;
 
-  if (wishlist) return <WishlistLayout wishlist={wishlist} />;
+  if (wishlist)
+    return (
+      <DashboardToolbarProvider dashboardType="list">
+        <WishlistLayout wishlist={wishlist} />
+      </DashboardToolbarProvider>
+    );
 }
 
 export const Component = WishlistPage;

@@ -17,7 +17,7 @@ import { Input } from "@/shared/ui/kit/input";
 import { Textarea } from "@/shared/ui/kit/textarea";
 import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
+import { ChevronDown, Loader2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
@@ -46,11 +46,12 @@ function WishForm({
       price: wish?.price || null,
       currency: wish?.currency || "RUB",
       wishlist: wish?.wishlistId || "none",
-      priority: wish?.priority || "medium",
+      priority: wish?.priority || "1",
     },
   });
 
   const { errors } = form.formState;
+
   const pageHeader = wish ? "Редактировать желание" : "Новое желание";
 
   const blocker = useBlocker(
@@ -66,7 +67,7 @@ function WishForm({
           setBlockNavigate(false);
           await onSubmit(values, wish?.$id);
         })}
-        className="flex flex-col gap-6 md:ml-4 px-2 md:px-0 pb-2"
+        className="flex flex-col gap-4 md:gap-6 md:ml-4 px-2 md:px-0 pb-2"
       >
         <p className="font-bold text-lg md:text-2xl">{pageHeader}</p>
         <FormField
@@ -227,7 +228,12 @@ function WishForm({
       {blocker.state === "blocked" && (
         <ConfirmationDialog
           title="Покинуть страницу?"
-          description="Вы точно хотите покинуть эту страницу? Изменения не будут сохранены."
+          description={
+            <p>
+              Вы точно хотите покинуть эту страницу? Изменения не будут
+              сохранены.
+            </p>
+          }
           actionText="Покинуть"
           onConfirm={() => {
             setBlockNavigate(false);
@@ -267,6 +273,7 @@ function CurrencySelect({
       triggerJSX={
         <span className="flex justify-between items-center gap-1">
           {triggerText}
+          <ChevronDown className="md:hidden size-3" />
         </span>
       }
       triggerCSS="bg-muted/60 px-3 rounded-sm h-9 text-muted-foreground"
@@ -276,16 +283,17 @@ function CurrencySelect({
           <span className="text-muted-foreground">{opt.icon}</span>
         </span>
       )}
+      title="Валюта"
     />
   );
 }
 
 function PrioritySelect({
   onValueChange,
-  value = "medium",
+  value = "1",
 }: {
   onValueChange: (value: string) => void;
-  value: "high" | "medium" | "low";
+  value: "2" | "1" | "0";
 }) {
   const options = useMemo(
     () =>
@@ -313,6 +321,7 @@ function PrioritySelect({
       value={value}
       triggerJSX={triggerText}
       triggerCSS="py-6 pl-1.5"
+      title="Приоритет"
     />
   );
 }

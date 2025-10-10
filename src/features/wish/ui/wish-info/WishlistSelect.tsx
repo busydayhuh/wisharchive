@@ -11,7 +11,7 @@ export function WishlistSelect({
   variant = "dashboard",
   className,
 }: {
-  onValueChange: (value: string) => void;
+  onValueChange: (value: string, additional?: { isPrivate: boolean }) => void;
   value?: string;
   variant?: "dashboard" | "form";
   className?: string;
@@ -20,8 +20,8 @@ export function WishlistSelect({
   const isMobile = useIsMobile();
 
   const { wishlists, isLoading, error } = useCollabWishlists({
-    order: "desc",
-    orderBy: "$updatedAt",
+    sort: { field: "$sequence", direction: "desc" },
+    filters: [],
   });
 
   const icons = {
@@ -52,6 +52,7 @@ export function WishlistSelect({
       value: "none",
       label: "без списка",
       icon: icons.none,
+      additional: { isPrivate: false },
     },
     ...(wishlists ?? []).map((wl) => ({
       value: wl.$id,
@@ -62,6 +63,7 @@ export function WishlistSelect({
             ? icons.private
             : icons.default
           : icons.collab,
+      additional: { isPrivate: wl.isPrivate },
     })),
   ];
 

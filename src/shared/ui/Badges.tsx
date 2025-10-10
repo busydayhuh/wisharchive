@@ -32,17 +32,17 @@ const badgesVariants = cva(
 );
 
 export const PRIORITIES = {
-  high: {
+  "2": {
     title: "высокий",
     icon: <ArrowUp />,
     colors: "bg-rose-200 text-rose-600 [&_svg]:text-rose-600",
   },
-  medium: {
+  "1": {
     title: "средний",
     icon: <CircleDot />,
     colors: "bg-indigo-200 text-indigo-700 [&_svg]:text-indigo-700",
   },
-  low: {
+  "0": {
     title: "низкий",
     icon: <ArrowDown />,
     colors: "bg-muted text-muted-foreground [&_svg]:text-muted-foreground",
@@ -68,11 +68,11 @@ export const ROLES = {
 };
 
 export function PriorityBadge({
-  priority = "medium",
+  priority = "1",
   size = "md",
   className,
 }: {
-  priority: "high" | "medium" | "low";
+  priority: "2" | "1" | "0";
   size?: Size;
   className?: string;
 }) {

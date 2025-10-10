@@ -12,11 +12,10 @@ export type WishDocumentType = Models.Document & {
   isBooked: boolean;
   imageURL: string | null;
   wishlistId: string | null;
-  isPrivate: boolean;
   wishlist: WishlistDocumentType | null;
   bookedBy: UserDocumentType | null;
   owner: UserDocumentType;
-  priority: "high" | "medium" | "low";
+  priority: "2" | "1" | "0";
 };
 
 export type WishlistDocumentType = Models.Document & {

@@ -1,6 +1,5 @@
 import type { WishlistDocumentType } from "@/shared/model/types";
 import Masonry from "react-masonry-css";
-import { useDashboardContext } from "../../DashboardLayout";
 import WishlistGalleryItem from "./WishlistGalleryItem";
 import WishlistTableItem from "./WishlistTableItem";
 
@@ -8,13 +7,13 @@ function WishlistsPageLayout({
   wishlists,
   isLoading,
   error,
+  viewMode,
 }: {
   wishlists?: WishlistDocumentType[];
   isLoading: boolean;
+  viewMode: "gallery" | "table";
   error?: unknown;
 }) {
-  const { viewMode } = useDashboardContext();
-
   if (isLoading) return <div>Загрузка...</div>;
   if (error) return <div>Не удалось загрузить вишлисты ☹️</div>;
 

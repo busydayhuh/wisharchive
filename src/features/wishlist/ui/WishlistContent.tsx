@@ -1,24 +1,19 @@
 import {
   DashboardContentContainer,
+  useDashboardToolbar,
   WishesPageLayout,
 } from "@/features/dashboard";
 import { useWishes } from "@/features/wish";
 
-export function WishlistContent({
-  wishlistId,
-  searchString,
-  viewMode,
-}: {
-  wishlistId: string;
-  searchString: string;
-  viewMode: "gallery" | "table";
-}) {
+export function WishlistContent({ wishlistId }: { wishlistId: string }) {
+  const { searchString, toolbarState } = useDashboardToolbar();
+
   const { wishes, isLoading, error } = useWishes({
     searchString: searchString,
     wishlistId: wishlistId,
     archived: false,
-    order: "desc",
-    orderBy: "$sequence",
+    sort: toolbarState.sort,
+    filters: toolbarState.filters,
   });
   return (
     <DashboardContentContainer>
@@ -26,7 +21,7 @@ export function WishlistContent({
         wishes={wishes}
         isLoading={isLoading}
         error={error}
-        viewMode={viewMode}
+        viewMode={toolbarState.viewMode}
       />
     </DashboardContentContainer>
   );

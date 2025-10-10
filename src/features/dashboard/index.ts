@@ -1,4 +1,8 @@
+export { DashboardToolbarProvider } from "./model/DashboardToolbarContext";
+export type { SortState } from "./model/DashboardToolbarContext";
+export type { Filter } from "./model/toolbarConfig";
 export { useCollabWishlists } from "./model/useCollabWishlists";
+export { useDashboardToolbar } from "./model/useDashboardToolbar";
 export { useWishcardMeta } from "./model/useWishcardMeta";
 export { useWishlistcardMeta } from "./model/useWishlistcardMeta";
 export { DashboardLayout, useDashboardContext } from "./ui/DashboardLayout";

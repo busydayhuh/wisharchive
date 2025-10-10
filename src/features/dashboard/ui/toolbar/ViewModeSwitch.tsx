@@ -1,9 +1,8 @@
 import { ToggleGroup, ToggleGroupItem } from "@/shared/ui/kit/toggle-group";
 import { LayoutDashboard, LayoutList } from "lucide-react";
-import type { Dispatch, SetStateAction } from "react";
 
 export type ViewModeSwitchType = {
-  setViewMode: Dispatch<SetStateAction<"gallery" | "table">>;
+  setViewMode: (value: "gallery" | "table") => void;
   viewMode: "gallery" | "table";
 };
 
@@ -13,15 +12,13 @@ function ViewModeSwitch({
   className,
 }: ViewModeSwitchType & React.ComponentProps<"div">) {
   const toggleStyles =
-    "cursor-pointer rounded-md first:rounded-l-md last:rounded-r-md text-muted-foreground";
+    "cursor-pointer rounded-sm first:rounded-l-sm last:rounded-r-sm text-muted-foreground";
 
   return (
     <ToggleGroup
       type="single"
       value={viewMode}
-      onValueChange={(value: "gallery" | "table") => {
-        if (value) setViewMode(value);
-      }}
+      onValueChange={setViewMode}
       className={className}
     >
       <ToggleGroupItem value="gallery" className={toggleStyles}>

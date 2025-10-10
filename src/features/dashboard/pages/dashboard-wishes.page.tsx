@@ -1,15 +1,18 @@
 import { useWishes } from "@/features/wish";
+import { useDashboardToolbar } from "../model/useDashboardToolbar";
 import { useDashboardContext } from "../ui/DashboardLayout";
 import { WishesPageLayout } from "../ui/main-content/wishes/WishesPageLayout";
 
 function WishesPage() {
-  const { dashboardUserId, searchString, viewMode } = useDashboardContext();
+  const { dashboardUserId } = useDashboardContext();
+  const { searchString, toolbarState } = useDashboardToolbar();
+
   const { wishes, isLoading, error } = useWishes({
     ownerId: dashboardUserId,
     searchString: searchString,
     archived: false,
-    order: "desc",
-    orderBy: "$sequence",
+    sort: toolbarState.sort,
+    filters: toolbarState.filters,
   });
 
   return (
@@ -17,7 +20,7 @@ function WishesPage() {
       wishes={wishes}
       isLoading={isLoading}
       error={error}
-      viewMode={viewMode}
+      viewMode={toolbarState.viewMode}
     />
   );
 }

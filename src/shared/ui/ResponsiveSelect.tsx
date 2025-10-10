@@ -27,11 +27,12 @@ type Option = {
   icon?: React.ReactNode;
   colors?: string;
   disabled?: boolean;
+  additional?: { isPrivate: boolean };
 };
 
 type ResponsiveSelectProps = {
   value?: string;
-  onChange: (value: string) => void;
+  onChange: (value: string, additional?: { isPrivate: boolean }) => void;
   options: Option[];
   triggerJSX?: React.ReactNode;
   title?: string;
@@ -56,6 +57,8 @@ export function ResponsiveSelect({
 }: ResponsiveSelectProps) {
   const isMobile = useIsMobile();
   const selected = options.find((o) => o.value === value);
+
+  const optionsMap = Object.fromEntries(options.map((o) => [o.value, o]));
 
   if (error) {
     return (
@@ -110,7 +113,11 @@ export function ResponsiveSelect({
                 <Button
                   variant={opt.value === value ? "default" : "ghost"}
                   disabled={opt.disabled}
-                  onClick={() => onChange(opt.value)}
+                  onClick={() => {
+                    return optionsMap[opt.value].additional
+                      ? onChange(opt.value, opt.additional)
+                      : onChange(opt.value);
+                  }}
                   className="justify-start py-6 font-normal"
                 >
                   {renderOption ? (
@@ -133,7 +140,14 @@ export function ResponsiveSelect({
 
   // десктоп
   return (
-    <Select onValueChange={onChange} value={value}>
+    <Select
+      onValueChange={(value: string) => {
+        return optionsMap[value].additional
+          ? onChange(value, optionsMap[value].additional)
+          : onChange(value);
+      }}
+      value={value}
+    >
       <SelectTrigger className={cn("shadow-none cursor-pointer", triggerCSS)}>
         <SelectValue>
           {triggerJSX ? triggerJSX : selected?.label ?? ""}

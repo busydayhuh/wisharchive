@@ -1,16 +1,15 @@
 import { useMemo } from "react";
 import { useCollabWishlists } from "../model/useCollabWishlists";
-import { useDashboardContext } from "../ui/DashboardLayout";
+import { useDashboardToolbar } from "../model/useDashboardToolbar";
 import WishlistsPageLayout from "../ui/main-content/wishlists/WishlistsPageLayout";
 
 function SharedPage() {
-  const { searchString } = useDashboardContext();
+  const { searchString, toolbarState } = useDashboardToolbar();
 
   const { wishlists, isLoading, error } = useCollabWishlists({
-    collabsOnly: true,
     searchString: searchString,
-    order: "desc",
-    orderBy: "$sequence",
+    sort: toolbarState.sort,
+    filters: toolbarState.filters,
   });
 
   const collabWishlists = useMemo(
@@ -26,6 +25,7 @@ function SharedPage() {
       wishlists={collabWishlists}
       isLoading={isLoading}
       error={error}
+      viewMode={toolbarState.viewMode}
     />
   );
 }

@@ -12,9 +12,10 @@ type CreateWishProps = {
   description?: string | null;
   shopURL?: string | null;
   currency?: string;
+  isPrivate?: boolean;
 };
 
-type UpdateWishProps = Partial<CreateWishProps> & {
+export type UpdateWishProps = Partial<CreateWishProps> & {
   bookerId?: string | null;
   bookedBy?: string | null;
   isBooked?: boolean;

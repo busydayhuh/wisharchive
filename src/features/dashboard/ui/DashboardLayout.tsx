@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
-import { useState } from "react";
 import { Outlet, useOutletContext } from "react-router";
+import { DashboardToolbarProvider } from "../model/DashboardToolbarContext";
+import type { DashboardType } from "../model/toolbarConfig";
 import { useDashboardMeta } from "../model/useDashboardMeta";
 import DashboardHeader from "./header/DashboardHeader";
 import { DashboardContentContainer } from "./main-content/DashboardContentContainer";
@@ -13,41 +14,49 @@ export type OutletContextType = ViewModeSwitchType & {
   dashboardUserId: string;
 };
 
-export function DashboardLayout() {
-  const [viewMode, setViewMode] = useState<"gallery" | "table">("gallery");
-  const [searchString, setSearchString] = useState("");
+export function DashboardLayoutWrapper({
+  dashboardType,
+}: {
+  dashboardType: DashboardType;
+}) {
+  return (
+    <DashboardToolbarProvider dashboardType={dashboardType}>
+      <DashboardLayout />
+    </DashboardToolbarProvider>
+  );
+}
 
-  const { dashboardUserId, title, showDashboardOwner, showNavigation } =
-    useDashboardMeta();
+export function DashboardLayout() {
+  const {
+    dashboardUserId,
+    title,
+    showDashboardOwner,
+    dashboardType,
+    isDashboardOwner,
+  } = useDashboardMeta();
 
   return (
-    <div className="mt-2 md:mt-4 px-1 md:px-0">
-      <div className="flex flex-col gap-4 md:gap-10 lg:gap-16">
-        <DashboardHeader
-          title={title}
-          showDashboardOwner={showDashboardOwner}
-          dashboardUserId={dashboardUserId}
-        />
+    <DashboardToolbarProvider dashboardType={dashboardType as DashboardType}>
+      <div className="mt-1 md:mt-8 px-1 md:px-0">
+        <div className="flex flex-col gap-1 md:gap-6 lg:gap-10">
+          <DashboardHeader
+            title={title}
+            showDashboardOwner={showDashboardOwner}
+            dashboardUserId={dashboardUserId}
+          />
 
-        <DashboardToolbar
-          searchString={searchString}
-          setSearchString={setSearchString}
-          viewMode={viewMode}
-          setViewMode={setViewMode}
-          showNavigation={showNavigation}
-        />
+          <DashboardToolbar isOwner={isDashboardOwner} />
+        </div>
+
+        <DashboardContentContainer>
+          <Outlet
+            context={{
+              dashboardUserId,
+            }}
+          />
+        </DashboardContentContainer>
       </div>
-
-      <DashboardContentContainer>
-        <Outlet
-          context={{
-            viewMode,
-            searchString,
-            dashboardUserId,
-          }}
-        />
-      </DashboardContentContainer>
-    </div>
+    </DashboardToolbarProvider>
   );
 }
 

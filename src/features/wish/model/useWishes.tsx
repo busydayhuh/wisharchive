@@ -1,8 +1,19 @@
+import type { Filter, SortState } from "@/features/dashboard/";
 import db from "@/shared/model/databases";
 import type { WishDocumentType } from "@/shared/model/types";
 import { Query } from "appwrite";
 import stableStringify from "fast-json-stable-stringify";
 import useSWR from "swr";
+
+type QueryFilters = {
+  ownerId?: string;
+  searchString?: string;
+  bookerId?: string;
+  wishlistId?: string;
+  archived?: boolean;
+  sort: SortState;
+  filters: Filter[] | [];
+};
 
 async function fetcher(queries: string[]) {
   const response = await db.wishes.list(queries);
@@ -10,15 +21,7 @@ async function fetcher(queries: string[]) {
   return response.documents as WishDocumentType[];
 }
 
-export function useWishes(filters?: {
-  ownerId?: string;
-  searchString?: string;
-  bookerId?: string;
-  wishlistId?: string;
-  archived?: boolean;
-  order?: "asc" | "desc";
-  orderBy?: "$sequence" | "price" | "priority" | "title";
-}) {
+export function useWishes(filters?: QueryFilters) {
   const queries = filters ? getWishQueries(filters) : null;
   const key = filters ? ["wishes", stableStringify(filters)] : null;
 
@@ -31,16 +34,10 @@ export function useWishes(filters?: {
   return { wishes, isLoading, error };
 }
 
-function getWishQueries(filters?: {
-  ownerId?: string;
-  searchString?: string;
-  bookerId?: string;
-  wishlistId?: string;
-  archived?: boolean;
-  order?: "asc" | "desc";
-  orderBy?: "$sequence" | "price" | "priority" | "title";
-}): string[] {
+function getWishQueries(filters?: QueryFilters): string[] {
   const queries: string[] = [];
+  const toolbarFilters =
+    filters?.filters && filters?.filters.length > 0 ? filters.filters : null;
 
   if (filters?.ownerId) queries.push(Query.equal("ownerId", filters.ownerId));
 
@@ -53,16 +50,24 @@ function getWishQueries(filters?: {
   if (filters?.bookerId)
     queries.push(Query.equal("bookerId", filters.bookerId));
 
-  if (filters?.order && filters.orderBy) {
+  if (filters?.archived !== undefined) {
+    queries.push(Query.equal("isArchived", filters.archived));
+  }
+
+  if (filters?.sort) {
     queries.push(
-      filters.order === "desc"
-        ? Query.orderDesc(filters.orderBy)
-        : Query.orderAsc(filters.orderBy)
+      filters.sort.direction === "desc"
+        ? Query.orderDesc(filters.sort.field)
+        : Query.orderAsc(filters.sort.field)
     );
   }
 
-  if (filters?.archived !== undefined) {
-    queries.push(Query.equal("isArchived", filters.archived));
+  if (toolbarFilters) {
+    toolbarFilters.forEach((f) => {
+      if (f.value) {
+        queries.push(Query.equal(f.key, f.value));
+      }
+    });
   }
 
   return queries;

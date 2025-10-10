@@ -13,6 +13,15 @@ const DASHBOARD_HEADERS = {
   "/lists/": "Мои списки",
 };
 
+const DASHBOARD_TYPES = {
+  [ROUTES.BOOKED]: "booked",
+  [ROUTES.ARCHIVED]: "archived",
+  [ROUTES.SHARED]: "shared",
+  [ROUTES.BOOKMARKS]: "bookmarks",
+  "/wishes/": "wishes",
+  "/lists/": "lists",
+};
+
 export function useDashboardMeta() {
   const isMobile = useIsMobile();
 
@@ -37,6 +46,12 @@ export function useDashboardMeta() {
       pathname.startsWith(path)
     )?.[1] ?? "Мой дашборд";
 
+  // Тип дашборда для фильтров тулбара
+  const dashboardType =
+    Object.entries(DASHBOARD_TYPES).find(([path]) =>
+      pathname.startsWith(path)
+    )?.[1] ?? "wishes";
+
   // Отображать ли инфо о владельце дашборда
   const showDashboardOwner = !isMobile || !isDashboardOwner;
   const showTitle = isDashboardOwner;
@@ -53,5 +68,6 @@ export function useDashboardMeta() {
     showDashboardOwner,
     isMobile,
     showNavigation,
+    dashboardType,
   };
 }

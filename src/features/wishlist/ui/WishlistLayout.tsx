@@ -1,6 +1,5 @@
 import { DashboardToolbar, useWishlistcardMeta } from "@/features/dashboard";
 import type { WishlistDocumentType } from "@/shared/model/types";
-import { useState } from "react";
 import { WishlistContent } from "./WishlistContent";
 import { WishlistHeader } from "./WishlistHeader";
 
@@ -9,9 +8,6 @@ export function WishlistLayout({
 }: {
   wishlist: WishlistDocumentType;
 }) {
-  const [searchString, setSearchString] = useState("");
-  const [viewMode, setViewMode] = useState<"gallery" | "table">("gallery");
-
   const { userRoles, isFavorite, bookmarkWishlist, openWishlistEditor } =
     useWishlistcardMeta(wishlist);
 
@@ -29,19 +25,9 @@ export function WishlistLayout({
           userRoles={userRoles}
           openWishlistEditor={openWishlistEditor}
         />
-        <DashboardToolbar
-          searchString={searchString}
-          setSearchString={setSearchString}
-          viewMode={viewMode}
-          setViewMode={setViewMode}
-          showNavigation={false}
-        />
+        <DashboardToolbar isOwner={false} />
       </div>
-      <WishlistContent
-        wishlistId={wishlist.$id}
-        searchString={searchString}
-        viewMode={viewMode}
-      />
+      <WishlistContent wishlistId={wishlist.$id} />
     </>
   );
 }

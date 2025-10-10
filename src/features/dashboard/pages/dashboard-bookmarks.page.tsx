@@ -1,9 +1,12 @@
 import { useWishlists } from "@/features/wishlist";
+import { useDashboardToolbar } from "../model/useDashboardToolbar";
 import { useDashboardContext } from "../ui/DashboardLayout";
 import WishlistsPageLayout from "../ui/main-content/wishlists/WishlistsPageLayout";
 
 function BookmarksPage() {
-  const { dashboardUserId, searchString } = useDashboardContext();
+  const { dashboardUserId } = useDashboardContext();
+  const { searchString, toolbarState } = useDashboardToolbar();
+
   const {
     wishlists: bookmarkedWishlists,
     isLoading,
@@ -11,8 +14,8 @@ function BookmarksPage() {
   } = useWishlists({
     bookmarkedBy: dashboardUserId,
     searchString: searchString,
-    order: "desc",
-    orderBy: "$sequence",
+    sort: toolbarState.sort,
+    filters: toolbarState.filters,
   });
 
   return (
@@ -20,6 +23,7 @@ function BookmarksPage() {
       wishlists={bookmarkedWishlists}
       isLoading={isLoading}
       error={error}
+      viewMode={toolbarState.viewMode}
     />
   );
 }

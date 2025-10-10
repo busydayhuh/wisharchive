@@ -2,6 +2,8 @@ import { useWishlists } from "@/features/wishlist";
 import team from "@/shared/model/teams";
 import type { Models } from "appwrite";
 import useSWR from "swr";
+import type { SortState } from "./DashboardToolbarContext";
+import type { Filter } from "./toolbarConfig";
 
 async function fetcher() {
   const response = await team.list();
@@ -9,11 +11,10 @@ async function fetcher() {
   return response.teams as Models.Team<Models.Preferences>[];
 }
 
-export function useCollabWishlists(filters?: {
-  collabsOnly?: boolean;
+export function useCollabWishlists(filters: {
   searchString?: string;
-  order?: "asc" | "desc";
-  orderBy?: "$sequence" | "$updatedAt" | "title";
+  sort: SortState;
+  filters: Filter[] | [];
 }) {
   const {
     data: teams,

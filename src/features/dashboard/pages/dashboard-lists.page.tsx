@@ -1,14 +1,17 @@
 import { useWishlists } from "@/features/wishlist";
+import { useDashboardToolbar } from "../model/useDashboardToolbar";
 import { useDashboardContext } from "../ui/DashboardLayout";
 import WishlistsPageLayout from "../ui/main-content/wishlists/WishlistsPageLayout";
 
 function WishlistsPage() {
-  const { dashboardUserId, searchString } = useDashboardContext();
+  const { dashboardUserId } = useDashboardContext();
+  const { searchString, toolbarState } = useDashboardToolbar();
+
   const { wishlists, isLoading, error } = useWishlists({
     ownerId: dashboardUserId,
     searchString: searchString,
-    order: "desc",
-    orderBy: "$sequence",
+    sort: toolbarState.sort,
+    filters: toolbarState.filters,
   });
 
   return (
@@ -16,6 +19,7 @@ function WishlistsPage() {
       wishlists={wishlists}
       isLoading={isLoading}
       error={error}
+      viewMode={toolbarState.viewMode}
     />
   );
 }
