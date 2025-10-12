@@ -51,16 +51,8 @@ export function SortingSelect() {
         value={`${sortState.field}+${sortState.direction}`}
         onChange={setSort}
         options={options}
-        // triggerJSX={
-        //   isMobile ? (
-        //     <span className="flex items-center gap-1">
-        //       {mobileTriggerIcon}
-        //       <ChevronDown className="opacity-50 size-3" />
-        //     </span>
-        //   ) : undefined
-        // }
         triggerCSS={cn(
-          "bg-muted max-w-[16rem] font-medium",
+          "bg-muted shadow-2xs max-w-[16rem] font-medium",
           isMobile && "h-9 px-2.5",
           !isMobile && "pl-1.5"
         )}

@@ -50,7 +50,7 @@ const WishGalleryItem = memo(function WishGalleryItem({
       {!wish.isArchived && (
         <WishlistControl
           className={cn(
-            "top-3 right-3 absolute hover:bg-muted w-fit max-w-[16ch] h-9 md:h-11 font-medium md:text-sm 2xl:text-sm truncate",
+            "top-3 right-3 absolute hover:bg-muted md:py-5 w-fit max-w-[16ch] md:max-w-[24ch] font-medium md:text-sm 2xl:text-sm truncate",
             !wish.wishlist && "show-actions"
           )}
           onListPage={!!onListPage}

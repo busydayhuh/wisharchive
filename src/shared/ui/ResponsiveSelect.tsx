@@ -148,7 +148,7 @@ export function ResponsiveSelect({
       }}
       value={value}
     >
-      <SelectTrigger className={cn("shadow-none cursor-pointer", triggerCSS)}>
+      <SelectTrigger className={cn("cursor-pointer", triggerCSS)}>
         <SelectValue>
           {triggerJSX ? triggerJSX : selected?.label ?? ""}
         </SelectValue>

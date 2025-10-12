@@ -76,7 +76,7 @@ export function WishlistSelect({
         variant === "dashboard" &&
         isMobile && <ArrowLeftRightIcon className="size-3" />
       }
-      triggerCSS={cn(className)}
+      triggerCSS={className}
       title="Выберите список"
       contentCSS={cn("max-h-md", variant === "dashboard" && "w-xs")}
       isLoading={isLoading}

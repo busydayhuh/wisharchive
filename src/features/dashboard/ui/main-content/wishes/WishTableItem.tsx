@@ -31,23 +31,21 @@ const WishTableItem = memo(function WishTableItem({
         "relative items-center gap-2 grid grid-cols-[3fr_1fr] md:grid-cols-[22rem_1fr_1fr_0.5fr] lg:grid-cols-[28rem_1fr_1fr_1fr_0.5fr] 2xl:grid-cols-[54rem_1fr_1fr_1fr_0.5fr] xl:grid-cols-[40rem_1fr_1fr_1fr_0.5fr] md:px-1 py-1 md:py-2 w-full transition"
       )}
     >
-      <div className="group-card-wrapper flex items-center">
-        {/* Картинка */}
-        <Link to={href(ROUTES.WISH, { wishId: wish.$id })}>
-          <WishImage
-            wishId={wish.$id}
-            url={wish.imageURL}
-            alt={wish.title}
-            isBooked={wish.isBooked}
-            variant="table"
-          />
-        </Link>
+      {/* Картинка */}
+      <Link
+        to={href(ROUTES.WISH, { wishId: wish.$id })}
+        className="group-card-wrapper flex items-center"
+      >
+        <WishImage
+          wishId={wish.$id}
+          url={wish.imageURL}
+          alt={wish.title}
+          isBooked={wish.isBooked}
+          variant="table"
+        />
 
         {/* Название и цена */}
-        <Link
-          to={href(ROUTES.WISH, { wishId: wish.$id })}
-          className="flex flex-col gap-2 px-4 lg:px-8"
-        >
+        <div className="flex flex-col gap-2 px-4 lg:px-8">
           <div className="flex flex-col gap-1">
             <p className="max-w-[40ch] overflow-hidden font-medium text-sm md:text-base break-words text-ellipsis line-clamp-2">
               {wish.title}
@@ -61,8 +59,8 @@ const WishTableItem = memo(function WishTableItem({
               />
             )}
           </div>
-        </Link>
-      </div>
+        </div>
+      </Link>
       <PriorityBadge
         priority={wish.priority}
         size="md"
@@ -89,7 +87,7 @@ const WishTableItem = memo(function WishTableItem({
       {/* Отображается при w >= 768px */}
       <div className="hidden md:block justify-self-center">
         <WishlistControl
-          className="w-fit max-w-[16ch] h-9 font-medium text-xs lg:text-sm truncate"
+          className="hover:bg-secondary/70 md:py-5 w-fit max-w-[16ch] lg:max-w-[24ch] h-9 font-medium text-xs lg:text-sm truncate"
           isOwner={userRoles?.isWishOwner ?? false}
           onListPage={!!onListPage}
           isEditor={userRoles?.isEditor ?? false}

@@ -63,11 +63,7 @@ function FiltersGroup({ isOwner }: { isOwner: boolean }) {
       <FiltersPopover toggles={toggles} isActive={toolbarFilters.length > 0} />
     );
 
-  return (
-    <div className="flex gap-2 max-w-lg overflow-x-scroll shrink-0">
-      {toggles}
-    </div>
-  );
+  return <div className="flex gap-2 max-w-xl overflow-x-scroll">{toggles}</div>;
 }
 
 function FilterToggle({
@@ -107,7 +103,7 @@ function FilterToggle({
       defaultPressed={isPressed}
       onPressedChange={toggleFilter}
       className={cn(
-        "bg-secondary data-[state=on]:bg-destructive text-muted-foreground data-[state=on]:text-background cursor-pointer"
+        "bg-secondary data-[state=on]:bg-destructive hover:bg-secondary/70 shadow-xs px-3 text-muted-foreground data-[state=on]:text-background cursor-pointer shrink-0"
       )}
     >
       {label}
@@ -129,7 +125,7 @@ function FiltersPopover({
           <ListFilterPlus />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="flex flex-wrap items-center gap-1.5 bg-secondary w-3xs">
+      <PopoverContent className="flex flex-wrap items-center gap-1.5 bg-secondary w-3xs shrink-0">
         {toggles}
       </PopoverContent>
     </Popover>
