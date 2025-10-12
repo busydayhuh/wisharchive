@@ -114,3 +114,12 @@ html {
     visibility: visible;
   }
 }
+
+.image-pixelated {
+  image-rendering: pixelated;
+  filter: contrast(140%) saturate(120%);
+}
+.image-normal {
+  image-rendering: auto;
+  filter: none;
+}

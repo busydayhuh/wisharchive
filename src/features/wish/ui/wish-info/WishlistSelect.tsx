@@ -3,7 +3,7 @@ import { useCollabWishlists } from "@/features/dashboard";
 import { cn } from "@/shared/lib/css";
 import { useIsMobile } from "@/shared/lib/react/use-mobile";
 import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
-import { ArrowLeftRightIcon, EyeClosed, List, Users2, X } from "lucide-react";
+import { ArrowLeftRightIcon, Eye, EyeClosed, Users2, X } from "lucide-react";
 
 export function WishlistSelect({
   onValueChange,
@@ -26,17 +26,17 @@ export function WishlistSelect({
 
   const icons = {
     default: (
-      <span className="bg-pink-200 p-2 rounded-sm [&_svg]:size-3 text-foreground">
-        <EyeClosed />
+      <span className="bg-chart-4 p-2 rounded-sm [&_svg]:size-3 text-foreground">
+        <Eye />
       </span>
     ),
     private: (
-      <span className="bg-indigo-200 p-2 rounded-sm [&_svg]:size-3 text-indigo-800">
-        <List />
+      <span className="bg-chart-1 p-2 rounded-sm [&_svg]:size-3">
+        <EyeClosed />
       </span>
     ),
     collab: (
-      <span className="bg-sky-200 p-2 rounded-sm [&_svg]:size-3 text-sky-800">
+      <span className="bg-chart-3 p-2 rounded-sm [&_svg]:size-3 text-sky-800">
         <Users2 />
       </span>
     ),
@@ -63,7 +63,6 @@ export function WishlistSelect({
             ? icons.private
             : icons.default
           : icons.collab,
-      additional: { isPrivate: wl.isPrivate },
     })),
   ];
 
@@ -72,11 +71,16 @@ export function WishlistSelect({
       options={options}
       onChange={onValueChange}
       value={value}
-      triggerJSX={
-        variant === "dashboard" &&
-        isMobile && <ArrowLeftRightIcon className="size-3" />
+      renderTrigger={(selected) =>
+        variant === "dashboard" && isMobile ? (
+          <ArrowLeftRightIcon className="size-3" />
+        ) : (
+          <span className={cn("flex items-center gap-2")}>
+            {selected?.icon} {selected?.label}
+          </span>
+        )
       }
-      triggerCSS={className}
+      triggerCSS={cn(!isMobile && "pl-1", isMobile && "w-9 h-9", className)}
       title="Выберите список"
       contentCSS={cn("max-h-md", variant === "dashboard" && "w-xs")}
       isLoading={isLoading}

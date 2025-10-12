@@ -35,17 +35,17 @@ export const PRIORITIES = {
   "2": {
     title: "высокий",
     icon: <ArrowUp />,
-    colors: "bg-rose-200 text-rose-600 [&_svg]:text-rose-600",
+    colors: "bg-chart-1",
   },
   "1": {
     title: "средний",
     icon: <CircleDot />,
-    colors: "bg-indigo-200 text-indigo-700 [&_svg]:text-indigo-700",
+    colors: "bg-chart-4",
   },
   "0": {
     title: "низкий",
     icon: <ArrowDown />,
-    colors: "bg-muted text-muted-foreground [&_svg]:text-muted-foreground",
+    colors: "bg-muted",
   },
 };
 
@@ -58,12 +58,12 @@ export const ROLES = {
   editor: {
     title: "редактор",
     icon: <Pencil />,
-    colors: "bg-muted-backdrop text-foreground",
+    colors: "bg-chart-3 text-foreground",
   },
   owner: {
     title: "владелец",
     icon: <Crown />,
-    colors: "bg-indigo-200 text-foreground",
+    colors: "bg-chart-1 text-foreground",
   },
 };
 

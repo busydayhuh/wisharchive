@@ -34,11 +34,11 @@ type ResponsiveSelectProps = {
   value?: string;
   onChange: (value: string, additional?: { isPrivate: boolean }) => void;
   options: Option[];
-  triggerJSX?: React.ReactNode;
+  renderTrigger?: (selected?: Option) => React.ReactNode;
   title?: string;
   renderOption?: (opt: Option, isSelected: boolean) => React.ReactNode;
   isLoading?: boolean;
-  error?: string;
+  error?: Error;
   triggerCSS?: string;
   contentCSS?: string;
 };
@@ -47,7 +47,7 @@ export function ResponsiveSelect({
   value,
   onChange,
   options,
-  triggerJSX,
+  renderTrigger,
   title = "Выбор",
   renderOption,
   isLoading = false,
@@ -63,7 +63,7 @@ export function ResponsiveSelect({
   if (error) {
     return (
       <div className="bg-red-50 p-2 rounded-lg text-red-500 text-sm">
-        {error}
+        {error.message}
       </div>
     );
   }
@@ -93,8 +93,8 @@ export function ResponsiveSelect({
               triggerCSS
             )}
           >
-            {triggerJSX ? (
-              triggerJSX
+            {renderTrigger ? (
+              renderTrigger(selected)
             ) : (
               <span className="flex justify-between items-center gap-2 w-full">
                 {selected?.label ?? ""}
@@ -150,7 +150,7 @@ export function ResponsiveSelect({
     >
       <SelectTrigger className={cn("cursor-pointer", triggerCSS)}>
         <SelectValue>
-          {triggerJSX ? triggerJSX : selected?.label ?? ""}
+          {renderTrigger ? renderTrigger(selected) : selected?.label ?? ""}
         </SelectValue>
       </SelectTrigger>
       <SelectContent

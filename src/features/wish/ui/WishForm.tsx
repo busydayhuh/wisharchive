@@ -2,7 +2,7 @@ import { CURRENCY } from "@/shared/lib/currency";
 import { wishFormSchema as formSchema } from "@/shared/model/formSchemas";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishDocumentType } from "@/shared/model/types";
-import { PRIORITIES, PriorityBadge } from "@/shared/ui/Badges";
+import { PRIORITIES } from "@/shared/ui/Badges";
 import ConfirmationDialog from "@/shared/ui/ConfirmationDialog";
 import { Button } from "@/shared/ui/kit/button";
 import {
@@ -188,7 +188,7 @@ function WishForm({
                 variant="form"
                 value={field.value}
                 onValueChange={field.onChange}
-                className="py-6 w-full md:w-[24rem] text-sm md:text-base"
+                className="py-6 pl-2 w-full md:w-[24rem] text-sm md:text-base"
               />
 
               <FormMessage />
@@ -263,19 +263,18 @@ function CurrencySelect({
       })),
     []
   );
-  const triggerText = CURRENCY.find((c) => c.abbr === value)?.icon ?? null;
 
   return (
     <ResponsiveSelect
       options={options}
       onChange={onValueChange}
       value={value}
-      triggerJSX={
+      renderTrigger={(selected) => (
         <span className="flex justify-between items-center gap-1">
-          {triggerText}
+          {selected?.icon}
           <ChevronDown className="md:hidden size-3" />
         </span>
-      }
+      )}
       triggerCSS="bg-muted/60 px-3 rounded-sm h-9 text-muted-foreground"
       renderOption={(opt) => (
         <span className="flex justify-between items-center gap-2 py-2 w-full">
@@ -306,21 +305,18 @@ function PrioritySelect({
     []
   );
 
-  const triggerText = (
-    <PriorityBadge
-      priority={value}
-      size="md"
-      className="rounded-sm md:rounded-sm 2xl:text-sm"
-    />
-  );
-
   return (
     <ResponsiveSelect
       options={options}
       onChange={onValueChange}
       value={value}
-      triggerJSX={triggerText}
-      triggerCSS="py-6 pl-1.5"
+      renderTrigger={(selected) => (
+        <span className="flex items-center gap-1.5">
+          {selected?.icon}
+          {selected?.label}
+        </span>
+      )}
+      triggerCSS="py-6"
       title="Приоритет"
     />
   );

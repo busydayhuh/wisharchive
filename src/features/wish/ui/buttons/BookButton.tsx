@@ -13,10 +13,10 @@ const bookButtonVariants = cva(
     variants: {
       triggerVariant: {
         gallery:
-          "hover:bg-muted bg-secondary shadow-xs md:size-12 data-[state=on]:bg-destructive data-[state=on]:text-background data-[state=on]:hover:bg-destructive/90 hover:text-foreground ",
+          "hover:bg-muted bg-secondary shadow-xs md:size-12 data-[state=on]:bg-primary data-[state=on]:text-background data-[state=on]:hover:bg-primary/90 hover:text-foreground ",
         page: "bg-primary text-primary-foreground hover:bg-primary/90 data-[state=on]:bg-secondary shadow-none hover:text-primary-foreground data-[state=on]:hover:bg-secondary/80 h-12 rounded-md px-6 has-[>svg]:px-4",
         table:
-          "shadow-none bg-secondary text-foreground hover:bg-secondary/90 hover:text-foreground data-[state=on]:bg-destructive data-[state=on]:text-background data-[state=on]:hover:bg-destructive/90",
+          "shadow-none bg-secondary text-foreground hover:bg-secondary/90 hover:text-foreground data-[state=on]:bg-primary data-[state=on]:text-background data-[state=on]:hover:bg-primary/90",
       },
     },
   }

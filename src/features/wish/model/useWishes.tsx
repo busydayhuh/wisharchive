@@ -25,6 +25,9 @@ export function useWishes(filters?: QueryFilters) {
   const queries = filters ? getWishQueries(filters) : null;
   const key = filters ? ["wishes", stableStringify(filters)] : null;
 
+  if (filters?.filters?.some((f) => f.key === "isPrivate"))
+    console.log("Error filters in useWishes:", filters);
+
   const {
     data: wishes,
     isLoading,
