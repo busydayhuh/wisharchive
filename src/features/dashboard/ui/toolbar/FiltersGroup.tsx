@@ -9,7 +9,7 @@ import {
 } from "@/shared/ui/kit/popover";
 import { Toggle } from "@/shared/ui/kit/toggle";
 import { ListFilterPlus } from "lucide-react";
-import type { JSX } from "react";
+import { useCallback, useMemo, type JSX } from "react";
 import type { ToolbarState } from "../../model/DashboardToolbarContext";
 import { toolbarConfigs } from "../../model/toolbarConfig";
 import { useDashboardToolbar } from "../../model/useDashboardToolbar";
@@ -21,32 +21,42 @@ function FiltersGroup({ isOwner }: { isOwner: boolean }) {
   const isMobile = useIsMobile();
   const { current: user } = useAuth();
 
-  const toolbarFilters = toolbarState.filters;
-  const pageFilters = toolbarConfigs[dashboardType].filters;
+  const toolbarFilters = useMemo(() => toolbarState.filters, [toolbarState]);
+  const pageFilters = useMemo(
+    () => toolbarConfigs[dashboardType].filters,
+    [dashboardType]
+  );
 
-  const isPressed = (key: string) => toolbarFilters.some((f) => f.key === key);
+  const isPressed = useCallback(
+    (key: string) => toolbarFilters.some((f) => f.key === key),
+    [toolbarFilters]
+  );
 
-  const toggles =
-    pageFilters.length > 0
-      ? pageFilters.map((i) => {
-          const shouldRender =
-            !(i.requiresUser && !user) && (!i.onlyIfOwner || isOwner);
-          if (!shouldRender) return null;
+  const toggles = useMemo(() => {
+    if (pageFilters.length === 0) return null;
 
-          const value = i.requiresUser && user ? user.$id : i.value;
+    return pageFilters
+      .map((i) => {
+        const shouldRender =
+          !(i.requiresUser && !user) && (!i.onlyIfOwner || isOwner);
 
-          return (
-            <FilterToggle
-              key={i.label}
-              filterKey={i.key}
-              value={value}
-              label={i.label}
-              isPressed={isPressed(i.key)}
-              setToolbarState={setToolbarState}
-            />
-          );
-        })
-      : null;
+        if (!shouldRender) return null;
+
+        const value = i.requiresUser && user ? user.$id : i.value;
+
+        return (
+          <FilterToggle
+            key={i.label}
+            filterKey={i.key}
+            value={value}
+            label={i.label}
+            isPressed={isPressed(i.key)}
+            setToolbarState={setToolbarState}
+          />
+        );
+      })
+      .filter(Boolean);
+  }, [isOwner, isPressed, pageFilters, setToolbarState, user]);
 
   if (isMobile)
     return (
@@ -73,21 +83,22 @@ function FilterToggle({
   isPressed: boolean;
   setToolbarState: React.Dispatch<React.SetStateAction<ToolbarState>>;
 }) {
-  const filter = { key: filterKey, value, label };
+  const filter = useMemo(
+    () => ({ key: filterKey, value, label }),
+    [filterKey, value, label]
+  );
 
-  const toggleFilter = (pressed: boolean) => {
-    if (pressed)
+  const toggleFilter = useCallback(
+    (pressed: boolean) => {
       setToolbarState((prev) => ({
         ...prev,
-        filters: [...prev.filters, filter],
+        filters: pressed
+          ? [...prev.filters, filter]
+          : prev.filters.filter((f) => f.key !== filter.key),
       }));
-
-    if (!pressed)
-      setToolbarState((prev) => ({
-        ...prev,
-        filters: [...prev.filters].filter((f) => f.key !== filterKey),
-      }));
-  };
+    },
+    [filter, setToolbarState]
+  );
 
   return (
     <Toggle
@@ -96,7 +107,7 @@ function FilterToggle({
       defaultPressed={isPressed}
       onPressedChange={toggleFilter}
       className={cn(
-        "data-[state=on]:bg-destructive border-1 border-muted-foreground/50 data-[state=on]:border-none text-muted-foreground data-[state=on]:text-background cursor-pointer"
+        "bg-secondary data-[state=on]:bg-destructive text-muted-foreground data-[state=on]:text-background cursor-pointer"
       )}
     >
       {label}

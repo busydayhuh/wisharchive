@@ -8,14 +8,6 @@ import FiltersGroup from "./FiltersGroup";
 import { SortingSelect } from "./SortingSelect";
 import ViewModeSwitch from "./ViewModeSwitch";
 
-// type DashboardToolbarProps = {
-//   searchString: string;
-//   setSearchString: Dispatch<SetStateAction<string>>;
-//   viewMode: "gallery" | "table";
-//   setViewMode: Dispatch<SetStateAction<"gallery" | "table">>;
-//   showNavigation: boolean;
-// };
-
 export function DashboardToolbar({ isOwner }: { isOwner: boolean }) {
   const isMobile = useIsMobile();
   const onArchivedPage = useMatch(ROUTES.ARCHIVED);

@@ -43,6 +43,7 @@ export function DashboardLayout() {
             title={title}
             showDashboardOwner={showDashboardOwner}
             dashboardUserId={dashboardUserId}
+            isDashboardOwner={isDashboardOwner}
           />
 
           <DashboardToolbar isOwner={isDashboardOwner} />
