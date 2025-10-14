@@ -103,7 +103,7 @@ function FilterToggle({
       defaultPressed={isPressed}
       onPressedChange={toggleFilter}
       className={cn(
-        "data-[state=on]:bg-primary hover:bg-accent shadow-xs px-2 rounded-sm data-[state=on]:text-background hover:text-foreground cursor-pointer shrink-0"
+        "data-[state=on]:bg-primary hover:bg-accent px-2.5 rounded-md font-medium data-[state=on]:text-background hover:text-foreground cursor-pointer shrink-0"
       )}
     >
       {label}

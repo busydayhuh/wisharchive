@@ -1,21 +1,10 @@
-import { DashboardLayout } from "@/features/dashboard";
 import { ROUTES } from "@/shared/model/routes.ts";
 import DefaultLoader from "@/shared/ui/DefaultLoader.tsx";
-import { useLayoutEffect, type ReactNode } from "react";
-import { createBrowserRouter, useLocation } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
 import { ProtectedRoute, UnauthOnlyRoute } from "./protected-route.tsx";
 import Providers from "./providers.tsx";
-
-const Wrapper = ({ children }: { children: ReactNode }) => {
-  const location = useLocation();
-
-  useLayoutEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-  }, [location.pathname]);
-
-  return children;
-};
+import { Wrapper } from "./router-scroll-wrapper.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -28,72 +17,44 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        element: <DashboardLayout />,
-        children: [
-          {
-            path: ROUTES.WISHES,
-            lazy: () =>
-              import("@/features/dashboard/pages/dashboard-wishes.page.tsx"),
-            HydrateFallback: DefaultLoader,
-          },
-          {
-            path: ROUTES.WISHLISTS,
-            lazy: () =>
-              import("@/features/dashboard/pages/dashboard-lists.page.tsx"),
-            HydrateFallback: DefaultLoader,
-          },
-          {
-            element: <ProtectedRoute />,
-            children: [
-              {
-                path: ROUTES.SHARED,
-                lazy: () =>
-                  import(
-                    "@/features/dashboard/pages/dashboard-shared.page.tsx"
-                  ),
-                HydrateFallback: DefaultLoader,
-              },
-              {
-                path: ROUTES.BOOKED,
-                lazy: () =>
-                  import(
-                    "@/features/dashboard/pages/dashboard-booked.page.tsx"
-                  ),
-                HydrateFallback: DefaultLoader,
-              },
-              {
-                path: ROUTES.BOOKMARKS,
-                lazy: () =>
-                  import(
-                    "@/features/dashboard/pages/dashboard-bookmarks.page.tsx"
-                  ),
-                HydrateFallback: DefaultLoader,
-              },
-              {
-                path: ROUTES.ARCHIVED,
-                lazy: () =>
-                  import(
-                    "@/features/dashboard/pages/dashboard-archived.page.tsx"
-                  ),
-                HydrateFallback: DefaultLoader,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        path: ROUTES.WISHLIST,
-        lazy: () => import("@/features/wishlist/list.page"),
+        path: ROUTES.WISHES,
+        lazy: () =>
+          import("@/features/dashboard/pages/dashboard-wishes.page.tsx"),
         HydrateFallback: DefaultLoader,
       },
       {
-        path: ROUTES.WISH,
-        lazy: () => import("@/features/wish/wish.page"),
+        path: ROUTES.WISHLISTS,
+        lazy: () =>
+          import("@/features/dashboard/pages/dashboard-lists.page.tsx"),
         HydrateFallback: DefaultLoader,
       },
       {
         element: <ProtectedRoute />,
         children: [
+          {
+            path: ROUTES.SHARED,
+            lazy: () =>
+              import("@/features/dashboard/pages/dashboard-shared.page.tsx"),
+            HydrateFallback: DefaultLoader,
+          },
+          {
+            path: ROUTES.BOOKED,
+            lazy: () =>
+              import("@/features/dashboard/pages/dashboard-booked.page.tsx"),
+            HydrateFallback: DefaultLoader,
+          },
+          {
+            path: ROUTES.BOOKMARKS,
+            lazy: () =>
+              import("@/features/dashboard/pages/dashboard-bookmarks.page.tsx"),
+            HydrateFallback: DefaultLoader,
+          },
+          {
+            path: ROUTES.ARCHIVED,
+            lazy: () =>
+              import("@/features/dashboard/pages/dashboard-archived.page.tsx"),
+            HydrateFallback: DefaultLoader,
+          },
           {
             path: ROUTES.PROFILE,
             lazy: () => import("@/features/profile/profile.page"),
@@ -111,6 +72,17 @@ export const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: ROUTES.WISHLIST,
+        lazy: () => import("@/features/wishlist/list.page"),
+        HydrateFallback: DefaultLoader,
+      },
+      {
+        path: ROUTES.WISH,
+        lazy: () => import("@/features/wish/wish.page"),
+        HydrateFallback: DefaultLoader,
+      },
+
       {
         element: <UnauthOnlyRoute />,
         children: [

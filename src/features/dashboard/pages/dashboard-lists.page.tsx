@@ -2,6 +2,7 @@ import { useWishlists } from "@/features/wishlist";
 import { useDashboardToolbar } from "../model/useDashboardToolbar";
 import { useDashboardContext } from "../ui/DashboardLayout";
 import WishlistsPageLayout from "../ui/main-content/wishlists/WishlistsPageLayout";
+import { wrapDashboardPage } from "../model/wrapDashboardPage";
 
 function WishlistsPage() {
   const { dashboardUserId } = useDashboardContext();
@@ -24,4 +25,4 @@ function WishlistsPage() {
   );
 }
 
-export const Component = WishlistsPage;
+export const Component = wrapDashboardPage(WishlistsPage);

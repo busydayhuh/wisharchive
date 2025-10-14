@@ -2,6 +2,7 @@ import { useWishlists } from "@/features/wishlist";
 import { useDashboardToolbar } from "../model/useDashboardToolbar";
 import { useDashboardContext } from "../ui/DashboardLayout";
 import WishlistsPageLayout from "../ui/main-content/wishlists/WishlistsPageLayout";
+import { wrapDashboardPage } from "../model/wrapDashboardPage";
 
 function BookmarksPage() {
   const { dashboardUserId } = useDashboardContext();
@@ -28,4 +29,4 @@ function BookmarksPage() {
   );
 }
 
-export const Component = BookmarksPage;
+export const Component = wrapDashboardPage(BookmarksPage);

@@ -1,4 +1,4 @@
-import { DashboardToolbar, useWishlistcardMeta } from "@/features/dashboard";
+import { DashboardLayout, useWishlistcardMeta } from "@/features/dashboard";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { WishlistContent } from "./WishlistContent";
 import { WishlistHeader } from "./WishlistHeader";
@@ -12,8 +12,8 @@ export function WishlistLayout({
     useWishlistcardMeta(wishlist);
 
   return (
-    <>
-      <div className="flex flex-col gap-4 md:gap-6 mt-2 md:mt-4 px-2 md:px-0">
+    <DashboardLayout
+      header={
         <WishlistHeader
           wishlistId={wishlist.$id}
           title={wishlist.title}
@@ -25,9 +25,9 @@ export function WishlistLayout({
           userRoles={userRoles}
           openWishlistEditor={openWishlistEditor}
         />
-        <DashboardToolbar isOwner={false} />
-      </div>
+      }
+    >
       <WishlistContent wishlistId={wishlist.$id} />
-    </>
+    </DashboardLayout>
   );
 }

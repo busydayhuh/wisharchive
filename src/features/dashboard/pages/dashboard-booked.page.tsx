@@ -2,6 +2,7 @@ import { useWishes } from "@/features/wish";
 import { useDashboardToolbar } from "../model/useDashboardToolbar";
 import { useDashboardContext } from "../ui/DashboardLayout";
 import { WishesPageLayout } from "../ui/main-content/wishes/WishesPageLayout";
+import { wrapDashboardPage } from "../model/wrapDashboardPage";
 
 function BookedPage() {
   const { dashboardUserId } = useDashboardContext();
@@ -25,4 +26,4 @@ function BookedPage() {
   );
 }
 
-export const Component = BookedPage;
+export const Component = wrapDashboardPage(BookedPage);

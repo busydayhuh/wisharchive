@@ -1,8 +1,4 @@
-import {
-  DashboardContentContainer,
-  useDashboardToolbar,
-  WishesPageLayout,
-} from "@/features/dashboard";
+import { useDashboardToolbar, WishesPageLayout } from "@/features/dashboard";
 import { useWishes } from "@/features/wish";
 
 export function WishlistContent({ wishlistId }: { wishlistId: string }) {
@@ -16,13 +12,11 @@ export function WishlistContent({ wishlistId }: { wishlistId: string }) {
     filters: toolbarState.filters,
   });
   return (
-    <DashboardContentContainer>
-      <WishesPageLayout
-        wishes={wishes}
-        isLoading={isLoading}
-        error={error}
-        viewMode={toolbarState.viewMode}
-      />
-    </DashboardContentContainer>
+    <WishesPageLayout
+      wishes={wishes}
+      isLoading={isLoading}
+      error={error}
+      viewMode={toolbarState.viewMode}
+    />
   );
 }

@@ -7,6 +7,8 @@ import {
   Eye,
   EyeClosed,
   Pencil,
+  Users2,
+  X,
 } from "lucide-react";
 import { href, Link } from "react-router";
 import { cn } from "../lib/css";
@@ -63,8 +65,31 @@ export const ROLES = {
   owner: {
     title: "владелец",
     icon: <Crown />,
-    colors: "bg-chart-1 text-foreground",
+    colors: "bg-chart-4 text-foreground",
   },
+};
+
+export const PRIVACY_ICONS = {
+  default: (
+    <span className="bg-chart-4 p-2 rounded-sm [&_svg]:size-3 text-foreground">
+      <Eye />
+    </span>
+  ),
+  private: (
+    <span className="bg-chart-1 p-2 rounded-sm [&_svg]:size-3">
+      <EyeClosed />
+    </span>
+  ),
+  collab: (
+    <span className="bg-chart-3 p-2 rounded-sm [&_svg]:size-3">
+      <Users2 />
+    </span>
+  ),
+  none: (
+    <span className="bg-muted p-2 rounded-sm [&_svg]:size-3 text-muted-foreground">
+      <X />
+    </span>
+  ),
 };
 
 export function PriorityBadge({

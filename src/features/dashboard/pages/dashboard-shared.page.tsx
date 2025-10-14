@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useCollabWishlists } from "../model/useCollabWishlists";
 import { useDashboardToolbar } from "../model/useDashboardToolbar";
+import { wrapDashboardPage } from "../model/wrapDashboardPage";
 import WishlistsPageLayout from "../ui/main-content/wishlists/WishlistsPageLayout";
 
 function SharedPage() {
@@ -30,4 +31,4 @@ function SharedPage() {
   );
 }
 
-export const Component = SharedPage;
+export const Component = wrapDashboardPage(SharedPage);

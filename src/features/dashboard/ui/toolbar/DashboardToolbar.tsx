@@ -40,7 +40,7 @@ export function DashboardToolbar({ isOwner }: { isOwner: boolean }) {
   }
 
   return (
-    <div className="top-0 z-20 sticky flex justify-between items-end gap-5 bg-background mr-6 pb-3 w-full">
+    <div className="top-0 z-20 sticky flex justify-between items-end gap-2 bg-background mr-6 pb-3 w-full">
       {!onArchivedPage && (
         <>
           <SortingSelect />

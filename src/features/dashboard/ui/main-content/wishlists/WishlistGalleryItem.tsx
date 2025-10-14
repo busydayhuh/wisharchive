@@ -3,8 +3,7 @@ import { useWishlistcardMeta } from "@/features/dashboard/model/useWishlistcardM
 import { BookmarkButton, EditWishlistButton } from "@/features/wishlist";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
-import { RoleBadge } from "@/shared/ui/Badges";
-import { EyeClosed } from "lucide-react";
+import { PRIVACY_ICONS, RoleBadge } from "@/shared/ui/Badges";
 import { memo } from "react";
 import { href, Link } from "react-router-dom";
 import ImageTiles from "./ImageTiles";
@@ -55,9 +54,9 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
               <p className="max-w-[10ch] sm:max-w-[20ch] font-medium truncate leading-tight">
                 {wishlist.title}
               </p>
-              {wishlist.isPrivate && (
-                <EyeClosed className="size-3 md:size-4 text-muted-foreground" />
-              )}
+              {wishlist.isPrivate &&
+                //
+                PRIVACY_ICONS.private}
             </div>
 
             {/* Соавторы */}

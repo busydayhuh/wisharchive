@@ -36,7 +36,7 @@ export function WishlistSelect({
       </span>
     ),
     collab: (
-      <span className="bg-chart-3 p-2 rounded-sm [&_svg]:size-3 text-sky-800">
+      <span className="bg-chart-3 p-2 rounded-sm [&_svg]:size-3">
         <Users2 />
       </span>
     ),

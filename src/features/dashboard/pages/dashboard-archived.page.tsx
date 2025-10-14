@@ -1,5 +1,6 @@
 import { useWishes } from "@/features/wish";
 import { useDashboardToolbar } from "../model/useDashboardToolbar";
+import { wrapDashboardPage } from "../model/wrapDashboardPage";
 import { useDashboardContext } from "../ui/DashboardLayout";
 import { WishesPageLayout } from "../ui/main-content/wishes/WishesPageLayout";
 
@@ -25,4 +26,4 @@ function ArchivedWishesPage() {
   );
 }
 
-export const Component = ArchivedWishesPage;
+export const Component = wrapDashboardPage(ArchivedWishesPage);

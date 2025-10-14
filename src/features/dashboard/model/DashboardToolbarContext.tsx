@@ -29,6 +29,11 @@ export function DashboardToolbarProvider({
       viewMode: "gallery",
     }
   );
+  console.log(
+    "🚀 ~ DashboardToolbarProvider ~ toolbarState, dashboardType",
+    toolbarState,
+    dashboardType
+  );
 
   const [searchString, setSearchString] = useState("");
 

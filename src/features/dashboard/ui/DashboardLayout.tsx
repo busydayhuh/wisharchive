@@ -1,66 +1,67 @@
 /* eslint-disable react-refresh/only-export-components */
-import { Outlet, useOutletContext } from "react-router";
+import { cn } from "@/shared/lib/css";
+import DefaultLoader from "@/shared/ui/DefaultLoader";
+import { createContext, Suspense, useContext } from "react";
 import { DashboardToolbarProvider } from "../model/DashboardToolbarContext";
-import type { DashboardType } from "../model/toolbarConfig";
-import { useDashboardMeta } from "../model/useDashboardMeta";
+import {
+  useDashboardMeta,
+  type DashboardMeta,
+} from "../model/useDashboardMeta";
 import DashboardHeader from "./header/DashboardHeader";
 import { DashboardContentContainer } from "./main-content/DashboardContentContainer";
 import { DashboardToolbar } from "./toolbar/DashboardToolbar";
-import type { ViewModeSwitchType } from "./toolbar/ViewModeSwitch";
 
-export type OutletContextType = ViewModeSwitchType & {
-  searchString: string;
-  viewMode: "gallery" | "table";
-  dashboardUserId: string;
-};
+const DashboardContext = createContext<DashboardMeta | null>(null);
 
-export function DashboardLayoutWrapper({
-  dashboardType,
+export function DashboardLayout({
+  header,
+  children,
 }: {
-  dashboardType: DashboardType;
+  header?: React.ReactElement;
+  children: React.ReactNode;
 }) {
-  return (
-    <DashboardToolbarProvider dashboardType={dashboardType}>
-      <DashboardLayout />
-    </DashboardToolbarProvider>
+  const meta = useDashboardMeta();
+
+  const defaultDashboardHeader = (
+    <DashboardHeader
+      title={meta.title}
+      showDashboardOwner={meta.showDashboardOwner}
+      dashboardUserId={meta.dashboardUserId}
+      isDashboardOwner={meta.isDashboardOwner}
+    />
   );
-}
-
-export function DashboardLayout() {
-  const {
-    dashboardUserId,
-    title,
-    showDashboardOwner,
-    dashboardType,
-    isDashboardOwner,
-  } = useDashboardMeta();
 
   return (
-    <DashboardToolbarProvider dashboardType={dashboardType as DashboardType}>
-      <div className="mt-1 md:mt-8 px-1 md:px-0">
-        <div className="flex flex-col gap-1 md:gap-6 lg:gap-10">
-          <DashboardHeader
-            title={title}
-            showDashboardOwner={showDashboardOwner}
-            dashboardUserId={dashboardUserId}
-            isDashboardOwner={isDashboardOwner}
-          />
+    <DashboardContext.Provider value={meta}>
+      <DashboardToolbarProvider
+        dashboardType={meta.dashboardType}
+        key={meta.dashboardType}
+      >
+        <div className="mt-1 md:mt-8 px-1 md:px-0">
+          <div
+            className={cn(
+              "flex flex-col",
+              !header && "gap-1 md:gap-6 lg:gap-10",
+              header && "gap-2"
+            )}
+          >
+            {header ? header : defaultDashboardHeader}
 
-          <DashboardToolbar isOwner={isDashboardOwner} />
+            <DashboardToolbar isOwner={meta.isDashboardOwner} />
+          </div>
+
+          <DashboardContentContainer>
+            <Suspense fallback={<DefaultLoader />}>{children}</Suspense>
+          </DashboardContentContainer>
         </div>
-
-        <DashboardContentContainer>
-          <Outlet
-            context={{
-              dashboardUserId,
-            }}
-          />
-        </DashboardContentContainer>
-      </div>
-    </DashboardToolbarProvider>
+      </DashboardToolbarProvider>
+    </DashboardContext.Provider>
   );
 }
 
 export function useDashboardContext() {
-  return useOutletContext<OutletContextType>();
+  const ctx = useContext(DashboardContext);
+  if (!ctx)
+    throw new Error("useDashboardContext must be used inside DashboardLayout");
+  return ctx;
 }

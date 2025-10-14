@@ -2,6 +2,7 @@ import type { Roles } from "@/features/collaborators";
 import { useIsMobile } from "@/shared/lib/react/use-mobile";
 import type { WishDocumentType } from "@/shared/model/types";
 import ExpandableText from "@/shared/ui/ExpandableText";
+import { Button } from "@/shared/ui/kit/button";
 import { BookmarkButton } from "./BookmarkButton";
 import { EditWishlistButton } from "./EditWishlistButton";
 import { WishlistCollaborators } from "./WishlistCollaborators";
@@ -66,7 +67,7 @@ export function WishlistHeader({
     );
 
   return (
-    <div className="space-y-4 lg:space-y-6 lg:mb-3 pr-6">
+    <div className="space-y-4 lg:mb-3 pr-6">
       <div className="flex justify-between items-start gap-4 lg:gap-2">
         <div className="flex items-baseline gap-4">
           <WishlistName
@@ -81,13 +82,21 @@ export function WishlistHeader({
         <WishlistCollaborators wishlistId={wishlistId} isPrivate={isPrivate} />
       </div>
       <div className="flex justify-between items-start gap-2">
-        {description && (
+        {description ? (
           <ExpandableText
             text={description}
             className="max-w-[70%] text-xs lg:text-sm"
             lines={3}
             buttonTextSize="text-xs lg:text-sm"
           />
+        ) : (
+          <Button
+            variant="link"
+            className="px-0 text-muted-foreground"
+            onClick={openWishlistEditor}
+          >
+            + Добавить описание
+          </Button>
         )}
 
         <BookmarkButton

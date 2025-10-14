@@ -10,7 +10,7 @@ function MainContainer({ children }: { children: ReactNode }) {
   return (
     <main
       className={cn(
-        "relative px-1 md:px-4 md:pr-5 md:pb-4 lg:pl-6 w-full min-w-0",
+        "relative px-1 md:px-4 md:pr-5 md:pb-4 lg:pl-12 w-full min-w-0",
         isOutside && "px-0 py-0"
       )}
     >
