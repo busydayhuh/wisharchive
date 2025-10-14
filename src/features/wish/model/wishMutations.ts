@@ -34,7 +34,7 @@ async function updateWishMutation(wishId: string, payload: UpdateWishProps) {
   const wishlistChanged = payload.wishlist !== undefined;
   const wishlistReplacement =
     payload.wishlist !== null
-      ? { $id: payload.wishlistId, title: "", isPrivate: false }
+      ? { $id: payload.wishlist, title: "", isPrivate: false }
       : null;
 
   return performMutation(

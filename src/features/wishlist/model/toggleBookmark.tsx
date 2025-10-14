@@ -1,4 +1,4 @@
-import { mutate } from "swr";
+import { mutateByKeyword } from "@/shared/model/mutateByKeyword";
 import { wishlistMutations } from "./wishlistMutations";
 
 export async function toggleBookmark(
@@ -17,7 +17,7 @@ export async function toggleBookmark(
       bookmarkedBy: updatedList,
     });
 
-    mutate((key) => Array.isArray(key) && key[0] === "wishlists");
+    await mutateByKeyword("wishlists");
   } catch {
     console.log("Не удалось обновить закладки");
   }

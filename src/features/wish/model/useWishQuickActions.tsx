@@ -1,8 +1,8 @@
 import { useAuth } from "@/features/auth";
+import { mutateByKeyword } from "@/shared/model/mutateByKeyword";
 import { ROUTES } from "@/shared/model/routes";
 import { useCallback } from "react";
 import { href, useNavigate } from "react-router";
-import { mutate } from "swr";
 import { wishMutations } from "./wishMutations";
 
 export function useWishQuickActions(wishId: string) {
@@ -35,7 +35,7 @@ export function useWishQuickActions(wishId: string) {
           wishlistId: null,
         });
 
-        mutate((key) => Array.isArray(key) && key[0] === "wishes");
+        await mutateByKeyword("wishes");
       } catch {
         console.log("Не удалось изменить статус архива");
       }
@@ -63,7 +63,7 @@ export function useWishQuickActions(wishId: string) {
         wishlist: null,
       });
 
-      await mutate((key) => Array.isArray(key) && key[0] === "wishes");
+      await mutateByKeyword("wishes");
     } catch {
       console.log("Не удалось исключить желание из списка");
     }
@@ -78,8 +78,8 @@ export function useWishQuickActions(wishId: string) {
         });
 
         await Promise.all([
-          mutate((key) => Array.isArray(key) && key[0] === "wishes"),
-          mutate((key) => Array.isArray(key) && key[0] === "wishlists"),
+          mutateByKeyword("wishes"),
+          mutateByKeyword("wishlists"),
         ]);
       } catch {
         console.log("Не удалось изменить список");
