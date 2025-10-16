@@ -11,7 +11,7 @@ import {
 } from "@/shared/ui/kit/select";
 import { Check, ChevronDown, Loader2 } from "lucide-react";
 import { cn } from "../lib/css";
-import { useIsMobile } from "../lib/react/use-mobile";
+import { useIsMobile } from "../lib/react/useIsMobile";
 import {
   Drawer,
   DrawerClose,
@@ -89,7 +89,7 @@ export function ResponsiveSelect({
           <Button
             variant="outline"
             className={cn(
-              "justify-between bg-secondary border-0 outline-0 w-full font-normal",
+              "justify-between bg-secondary border-0 outline-0 w-fit font-normal",
               triggerCSS
             )}
           >
@@ -111,7 +111,7 @@ export function ResponsiveSelect({
             {options.map((opt) => (
               <DrawerClose asChild key={opt.value}>
                 <Button
-                  variant={opt.value === value ? "default" : "ghost"}
+                  variant={opt.value === value ? "muted" : "ghost"}
                   disabled={opt.disabled}
                   onClick={() => {
                     return optionsMap[opt.value].additional

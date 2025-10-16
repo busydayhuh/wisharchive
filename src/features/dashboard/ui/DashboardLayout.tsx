@@ -1,17 +1,11 @@
-/* eslint-disable react-refresh/only-export-components */
-import { cn } from "@/shared/lib/css";
 import DefaultLoader from "@/shared/ui/DefaultLoader";
-import { createContext, Suspense, useContext } from "react";
+import { Suspense } from "react";
 import { DashboardToolbarProvider } from "../model/DashboardToolbarContext";
-import {
-  useDashboardMeta,
-  type DashboardMeta,
-} from "../model/useDashboardMeta";
+import { DashboardContext } from "../model/useDashboardContext";
+import { useDashboardMeta } from "../model/useDashboardMeta";
 import DashboardHeader from "./header/DashboardHeader";
 import { DashboardContentContainer } from "./main-content/DashboardContentContainer";
 import { DashboardToolbar } from "./toolbar/DashboardToolbar";
-
-const DashboardContext = createContext<DashboardMeta | null>(null);
 
 export function DashboardLayout({
   header,
@@ -35,20 +29,14 @@ export function DashboardLayout({
     <DashboardContext.Provider value={meta}>
       <DashboardToolbarProvider
         dashboardType={meta.dashboardType}
+        localStorageKey={meta.localStorageKey}
         key={meta.dashboardType}
       >
-        <div className="mt-1 md:mt-8 px-1 md:px-0">
-          <div
-            className={cn(
-              "flex flex-col",
-              !header && "gap-1 md:gap-6 lg:gap-10",
-              header && "gap-2"
-            )}
-          >
+        <div className="relative mt-1 md:mt-8 px-1 md:px-0">
+          <div className="mb-2 md:mb-4 lg:mb-8">
             {header ? header : defaultDashboardHeader}
-
-            <DashboardToolbar isOwner={meta.isDashboardOwner} />
           </div>
+          <DashboardToolbar isOwner={meta.isDashboardOwner} />
 
           <DashboardContentContainer>
             <Suspense fallback={<DefaultLoader />}>{children}</Suspense>
@@ -57,11 +45,4 @@ export function DashboardLayout({
       </DashboardToolbarProvider>
     </DashboardContext.Provider>
   );
-}
-
-export function useDashboardContext() {
-  const ctx = useContext(DashboardContext);
-  if (!ctx)
-    throw new Error("useDashboardContext must be used inside DashboardLayout");
-  return ctx;
 }

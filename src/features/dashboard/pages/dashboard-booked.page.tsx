@@ -1,8 +1,8 @@
 import { useWishes } from "@/features/wish";
+import { useDashboardContext } from "../model/useDashboardContext";
 import { useDashboardToolbar } from "../model/useDashboardToolbar";
-import { useDashboardContext } from "../ui/DashboardLayout";
-import { WishesPageLayout } from "../ui/main-content/wishes/WishesPageLayout";
 import { wrapDashboardPage } from "../model/wrapDashboardPage";
+import { WishesPageLayout } from "../ui/main-content/wishes/WishesPageLayout";
 
 function BookedPage() {
   const { dashboardUserId } = useDashboardContext();

@@ -10,7 +10,7 @@ import { ru } from "date-fns/locale";
 import { EyeClosed } from "lucide-react";
 import { memo, useMemo } from "react";
 import { href, Link } from "react-router";
-import ImageTiles from "./ImageTiles";
+import { ImageTiles } from "./ImageTiles";
 
 interface WishlistTableItemProps {
   wishlist: WishlistDocumentType;

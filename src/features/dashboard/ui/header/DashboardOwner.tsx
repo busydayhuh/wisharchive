@@ -6,8 +6,10 @@ import { memo } from "react";
 
 const DashboardOwner = memo(function DashboardOwner({
   userId,
+  isOwner,
 }: {
   userId?: string;
+  isOwner?: boolean;
 }) {
   const { user, isLoading, error } = useUser(userId);
 
@@ -16,7 +18,7 @@ const DashboardOwner = memo(function DashboardOwner({
   if (error)
     return <div>Не удалось загрузить информацию о пользователе ☹️</div>;
 
-  if (user)
+  if (user && !isOwner)
     return (
       <div className="flex items-center gap-3">
         <Avatar className="p-0.5 border-1 border-foreground rounded-full w-9 md:w-11 h-9 md:h-11 overflow-visible">
@@ -41,6 +43,16 @@ const DashboardOwner = memo(function DashboardOwner({
           <Share2 className="size-3" />
         </Button>
       </div>
+    );
+
+  if (user && isOwner)
+    return (
+      <Avatar className="p-0.5 border-1 border-muted rounded-full w-9 md:w-12 h-9 md:h-12 overflow-visible">
+        <AvatarImage src={user.avatarURL ?? undefined} alt={user.userName} />
+        <AvatarFallback className="rounded-full text-sm md:text-base">
+          ВП
+        </AvatarFallback>
+      </Avatar>
     );
 });
 

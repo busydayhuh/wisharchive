@@ -3,7 +3,7 @@ import { getFallbackColor } from "@/shared/lib/getFallbackColor";
 import type { WishDocumentType } from "@/shared/model/types";
 import { ID } from "appwrite";
 
-function ImageTiles({
+export function ImageTiles({
   wishes,
   variant = "gallery",
 }: {
@@ -81,5 +81,3 @@ function ImageTiles({
     </div>
   );
 }
-
-export default ImageTiles;

@@ -13,6 +13,7 @@ export type DashboardToolbarContext = {
   toolbarState: ToolbarState;
   setToolbarState: Dispatch<SetStateAction<ToolbarState>>;
   dashboardType: DashboardType;
+  localStorageKey: string;
 };
 
 export const DashboardToolbarContext =

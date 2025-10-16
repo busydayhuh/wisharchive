@@ -1,7 +1,7 @@
 import { useWishes } from "@/features/wish";
+import { useDashboardContext } from "../model/useDashboardContext";
 import { useDashboardToolbar } from "../model/useDashboardToolbar";
 import { wrapDashboardPage } from "../model/wrapDashboardPage";
-import { useDashboardContext } from "../ui/DashboardLayout";
 import { WishesPageLayout } from "../ui/main-content/wishes/WishesPageLayout";
 
 function ArchivedWishesPage() {

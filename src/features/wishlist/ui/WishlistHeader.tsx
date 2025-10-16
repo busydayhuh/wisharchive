@@ -1,5 +1,5 @@
 import type { Roles } from "@/features/collaborators";
-import { useIsMobile } from "@/shared/lib/react/use-mobile";
+import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import type { WishDocumentType } from "@/shared/model/types";
 import ExpandableText from "@/shared/ui/ExpandableText";
 import { Button } from "@/shared/ui/kit/button";

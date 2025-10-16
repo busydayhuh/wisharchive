@@ -6,7 +6,7 @@ import type { WishlistDocumentType } from "@/shared/model/types";
 import { PRIVACY_ICONS, RoleBadge } from "@/shared/ui/Badges";
 import { memo } from "react";
 import { href, Link } from "react-router-dom";
-import ImageTiles from "./ImageTiles";
+import { ImageTiles } from "./ImageTiles";
 
 const WishlistGalleryItem = memo(function WishlistGalleryItem({
   wishlist,

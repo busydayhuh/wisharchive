@@ -1,3 +1,4 @@
+import { GlobalSearchDialog } from "@/features/global-search";
 import { memo } from "react";
 import DashboardOwner from "./DashboardOwner";
 
@@ -15,13 +16,18 @@ const DashboardHeader = memo(function DashboardHeader({
   isDashboardOwner = true,
 }: DashboardHeaderProps) {
   return (
-    <div className="flex md:flex-row flex-col justify-between md:items-center gap-4 md:gap-6">
+    <div className="flex justify-between md:items-center gap-4 md:gap-6">
       {title && isDashboardOwner && (
         <p className="font-bold text-2xl md:text-4xl lg:text-5xl leading-8">
           {title}
         </p>
       )}
-      {showDashboardOwner && <DashboardOwner userId={dashboardUserId} />}
+      <div className="flex items-center gap-4">
+        <GlobalSearchDialog />
+        {showDashboardOwner && (
+          <DashboardOwner userId={dashboardUserId} isOwner={isDashboardOwner} />
+        )}
+      </div>
     </div>
   );
 });

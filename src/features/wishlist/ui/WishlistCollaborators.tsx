@@ -3,7 +3,7 @@ import {
   useCollaboratorsDialog,
   useTeamCollaborators,
 } from "@/features/collaborators";
-import { useIsMobile } from "@/shared/lib/react/use-mobile";
+import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import { Button } from "@/shared/ui/kit/button";
 import { PlusIcon } from "lucide-react";
 

@@ -1,7 +1,7 @@
 import { useAuth } from "@/features/auth";
 import { useCollabWishlists } from "@/features/dashboard";
 import { cn } from "@/shared/lib/css";
-import { useIsMobile } from "@/shared/lib/react/use-mobile";
+import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
 import { ArrowLeftRightIcon, Eye, EyeClosed, Users2, X } from "lucide-react";
 

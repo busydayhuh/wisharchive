@@ -13,13 +13,15 @@ export type ToolbarState = {
 
 export function DashboardToolbarProvider({
   dashboardType,
+  localStorageKey,
   children,
 }: {
   dashboardType: DashboardType;
+  localStorageKey: string;
   children: ReactNode;
 }) {
   const [toolbarState, setToolbarState] = useLocalStorage<ToolbarState>(
-    dashboardType,
+    localStorageKey,
     {
       sort: {
         direction: "desc",
@@ -28,11 +30,6 @@ export function DashboardToolbarProvider({
       filters: [],
       viewMode: "gallery",
     }
-  );
-  console.log(
-    "🚀 ~ DashboardToolbarProvider ~ toolbarState, dashboardType",
-    toolbarState,
-    dashboardType
   );
 
   const [searchString, setSearchString] = useState("");
@@ -45,6 +42,7 @@ export function DashboardToolbarProvider({
         searchString,
         setSearchString,
         dashboardType,
+        localStorageKey,
       }}
     >
       {children}

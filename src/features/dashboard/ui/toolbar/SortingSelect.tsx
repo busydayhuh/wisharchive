@@ -1,5 +1,5 @@
 import { cn } from "@/shared/lib/css";
-import { useIsMobile } from "@/shared/lib/react/use-mobile";
+import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
 import { ChevronDown } from "lucide-react";
 import type { SortState } from "../../model/DashboardToolbarContext";
@@ -36,16 +36,12 @@ export function SortingSelect() {
       onChange={setSort}
       options={options}
       renderTrigger={(selected) => (
-        <p className="flex items-center w-full">
+        <p className="flex items-center gap-2 w-full text-xs md:text-sm">
           <span className="flex items-center gap-1.5">
             {selected?.icon}
             {selected?.label}
-          </span>{" "}
-          {isMobile && (
-            <span className="ms-auto">
-              <ChevronDown className="size-3" />
-            </span>
-          )}
+          </span>
+          {isMobile && <ChevronDown className="size-3" />}
         </p>
       )}
       triggerCSS={cn(

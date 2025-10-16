@@ -94,7 +94,7 @@
   --muted-backdrop: oklch(70.302% 0.05773 262.137 / 0.696);
   --accent: oklch(0.88 0 none);
   --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(70.302% 0.05773 262.137);
+  --destructive: oklch(0.52 0.2 4);
 
   --border: oklch(0.87 0 0);
   --input: oklch(0.922 0 0);
@@ -191,6 +191,15 @@
 
   .selection-menu {
     @apply bg-secondary rounded-2xl **:first:hover:rounded-tl-xl **:first:focus:rounded-tl-xl **:first:hover:rounded-tr-xl **:first:focus:rounded-tr-xl **:last:hover:rounded-bl-xl **:last:focus:rounded-bl-xl **:last:hover:rounded-br-xl **:last:focus:rounded-br-xl **:cursor-pointer;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 }
 

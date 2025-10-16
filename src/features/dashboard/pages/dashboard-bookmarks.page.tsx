@@ -1,8 +1,8 @@
 import { useWishlists } from "@/features/wishlist";
+import { useDashboardContext } from "../model/useDashboardContext";
 import { useDashboardToolbar } from "../model/useDashboardToolbar";
-import { useDashboardContext } from "../ui/DashboardLayout";
-import WishlistsPageLayout from "../ui/main-content/wishlists/WishlistsPageLayout";
 import { wrapDashboardPage } from "../model/wrapDashboardPage";
+import WishlistsPageLayout from "../ui/main-content/wishlists/WishlistsPageLayout";
 
 function BookmarksPage() {
   const { dashboardUserId } = useDashboardContext();

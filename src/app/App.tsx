@@ -1,7 +1,7 @@
 import { useAuth } from "@/features/auth";
 import { AppSidebar } from "@/features/sidebar";
 import { WishlistDialogProvider } from "@/features/wishlist";
-import { useIsMobile } from "@/shared/lib/react/use-mobile";
+import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import { SidebarTrigger } from "@/shared/ui/kit/sidebar";
 import MainContainer from "@/shared/ui/MainContainer";
 import { Outlet } from "react-router-dom";

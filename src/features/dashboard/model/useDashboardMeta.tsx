@@ -1,5 +1,5 @@
 import { useAuth } from "@/features/auth";
-import { useIsMobile } from "@/shared/lib/react/use-mobile";
+import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import { ROUTES } from "@/shared/model/routes";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { matchRoutes, useLocation, useParams } from "react-router";
@@ -13,6 +13,7 @@ export type DashboardMeta = {
   showDashboardOwner: boolean;
   showNavigation: boolean;
   dashboardType: DashboardType;
+  localStorageKey: string;
 };
 
 const DASHBOARD_HEADERS = {
@@ -38,7 +39,7 @@ export function useDashboardMeta(): DashboardMeta {
   const isMobile = useIsMobile();
 
   const { current: authUser } = useAuth();
-  const { userId: paramUserId } = useParams();
+  const { userId: paramUserId, listId: paramListId } = useParams();
 
   const { pathname } = useLocation();
 
@@ -77,6 +78,11 @@ export function useDashboardMeta(): DashboardMeta {
     [setDashboardType, getDashboardType, pathname]
   );
 
+  const localStorageKey = useMemo(() => {
+    const param = paramUserId || paramListId || null;
+    return param ? `${dashboardType}+${param}` : dashboardType;
+  }, [dashboardType, paramListId, paramUserId]);
+
   // Отображать ли инфо о владельце дашборда
   const showDashboardOwner = !isMobile || !isDashboardOwner;
   const showTitle = isDashboardOwner;
@@ -93,5 +99,6 @@ export function useDashboardMeta(): DashboardMeta {
     showDashboardOwner,
     showNavigation,
     dashboardType,
+    localStorageKey,
   };
 }

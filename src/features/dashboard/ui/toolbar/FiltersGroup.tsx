@@ -1,6 +1,6 @@
 import { useAuth } from "@/features/auth";
 import { cn } from "@/shared/lib/css";
-import { useIsMobile } from "@/shared/lib/react/use-mobile";
+import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import { Button } from "@/shared/ui/kit/button";
 import {
   Popover,
@@ -63,7 +63,11 @@ function FiltersGroup({ isOwner }: { isOwner: boolean }) {
       <FiltersPopover toggles={toggles} isActive={toolbarFilters.length > 0} />
     );
 
-  return <div className="flex gap-2 max-w-xl overflow-x-scroll">{toggles}</div>;
+  return (
+    <div className="flex gap-2 max-w-xl overflow-x-scroll no-scrollbar">
+      {toggles}
+    </div>
+  );
 }
 
 function FilterToggle({
@@ -103,7 +107,7 @@ function FilterToggle({
       defaultPressed={isPressed}
       onPressedChange={toggleFilter}
       className={cn(
-        "data-[state=on]:bg-primary hover:bg-accent px-2.5 rounded-md font-medium data-[state=on]:text-background hover:text-foreground cursor-pointer shrink-0"
+        "data-[state=on]:bg-primary hover:bg-accent px-2.5 rounded-md font-medium data-[state=on]:text-background hover:text-foreground text-xs md:text-sm cursor-pointer shrink-0"
       )}
     >
       {label}
@@ -121,7 +125,11 @@ function FiltersPopover({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button size="icon" variant={isActive ? "destructive" : "muted"}>
+        <Button
+          size="icon"
+          variant={isActive ? "default" : "muted"}
+          className={cn(isActive && "relative has-active-filter")}
+        >
           <ListFilterPlus />
         </Button>
       </PopoverTrigger>

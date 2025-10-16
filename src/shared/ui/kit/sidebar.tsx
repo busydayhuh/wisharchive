@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight, Menu } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/shared/lib/css";
-import { useIsMobile } from "@/shared/lib/react/use-mobile";
+import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import { Button } from "@/shared/ui/kit/button";
 import { Input } from "@/shared/ui/kit/input";
 import { Separator } from "@/shared/ui/kit/separator";
@@ -138,7 +138,7 @@ function SidebarProvider({
             } as React.CSSProperties
           }
           className={cn(
-            "group/sidebar-wrapper flex has-data-[variant=inset]:bg-sidebar w-full overflow-clip",
+            "group/sidebar-wrapper flex has-data-[variant=inset]:bg-sidebar w-full",
             className
           )}
           {...props}
