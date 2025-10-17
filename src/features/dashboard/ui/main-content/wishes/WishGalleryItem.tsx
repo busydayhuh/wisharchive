@@ -7,12 +7,11 @@ import {
   WishQuickActions,
 } from "@/features/wish";
 import { cn } from "@/shared/lib/css";
-import { ROUTES } from "@/shared/model/routes";
-import type { WishDocumentType } from "@/shared/model/types";
+import type { LinkParams, WishDocumentType } from "@/shared/model/types";
 import { PriorityBadge } from "@/shared/ui/Badges";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { memo, type ReactNode } from "react";
-import { href, Link } from "react-router";
+import { Link } from "react-router";
 import { WishlistControl } from "./WishlistControl";
 
 // Обертка для считывания состояния hover и focus-within
@@ -38,7 +37,8 @@ const WishGalleryItem = memo(function WishGalleryItem({
 }: {
   wish: WishDocumentType;
 }) {
-  const { onBookedPage, onListPage, userRoles } = useWishcardMeta(wish);
+  const { onBookedPage, onListPage, userRoles, linkParams } =
+    useWishcardMeta(wish);
 
   return (
     <div
@@ -46,7 +46,7 @@ const WishGalleryItem = memo(function WishGalleryItem({
         "relative flex flex-col gap-2 md:gap-2 mb-4 md:mb-8 overflow-hidden"
       )}
     >
-      <WishCover wish={wish} userRoles={userRoles} />
+      <WishCover wish={wish} userRoles={userRoles} linkParams={linkParams} />
       {!wish.isArchived && (
         <WishlistControl
           className={cn(
@@ -62,7 +62,8 @@ const WishGalleryItem = memo(function WishGalleryItem({
       )}
 
       <Link
-        to={href(ROUTES.WISH, { wishId: wish.$id })}
+        to={linkParams.to}
+        state={linkParams.state}
         className="flex lg:flex-row flex-col lg:justify-between px-1"
       >
         <p className="pr-1 font-medium text-base lg:text-base xl:text-lg truncate">
@@ -97,13 +98,15 @@ const WishGalleryItem = memo(function WishGalleryItem({
 const WishCover = memo(function WishCover({
   wish,
   userRoles,
+  linkParams,
 }: {
   wish: WishDocumentType;
   userRoles?: WishRoles;
+  linkParams: LinkParams;
 }) {
   return (
     <div className={cn("relative rounded-2xl overflow-hidden")}>
-      <Link to={href(ROUTES.WISH, { wishId: wish.$id })}>
+      <Link to={linkParams.to} state={linkParams.state}>
         <WishImage
           wishId={wish.$id}
           url={wish.imageURL}

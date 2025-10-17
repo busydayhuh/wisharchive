@@ -71,6 +71,7 @@ export function WishlistControl({
         title={wishlist.title}
         className={className}
         isPrivate={wishlist.isPrivate}
+        ownerId={wishlist.ownerId}
       />
     );
 

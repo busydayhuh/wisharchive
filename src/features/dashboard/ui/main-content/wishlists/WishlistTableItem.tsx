@@ -2,14 +2,13 @@ import { CollaboratorsAvatars } from "@/features/collaborators";
 import { useWishlistcardMeta } from "@/features/dashboard/model/useWishlistcardMeta";
 import { BookmarkButton, EditWishlistButton } from "@/features/wishlist";
 import "@/shared/assets/custom.css";
-import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { RoleBadge } from "@/shared/ui/Badges";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 import { EyeClosed } from "lucide-react";
 import { memo, useMemo } from "react";
-import { href, Link } from "react-router";
+import { Link } from "react-router";
 import { ImageTiles } from "./ImageTiles";
 
 interface WishlistTableItemProps {
@@ -26,6 +25,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
     onSharedPage,
     openWishlistEditor,
     userRoles,
+    linkParams,
   } = useWishlistcardMeta(wishlist);
 
   const createdAt = useMemo(
@@ -41,12 +41,12 @@ const WishlistTableItem = memo(function WishlistTableItem({
   return (
     <div className="wl-table-grid relative items-center py-2 pl-2 md:pl-0">
       {/* Превью желаний */}
-      <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
+      <Link {...linkParams}>
         <ImageTiles wishes={wishlist.wishes} variant="table" />
       </Link>
 
       {/* Заголовок и счетчик желаний */}
-      <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
+      <Link {...linkParams}>
         <div className="flex flex-col gap-1 lg:basis-2xs">
           <div className="flex items-center gap-2 pr-1 font-medium text-base 2xl:text-lg">
             <p className="max-w-[42ch] truncate">{wishlist.title}</p>

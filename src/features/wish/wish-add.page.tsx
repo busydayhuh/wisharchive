@@ -24,7 +24,10 @@ function WishAddPage() {
 
     const response = await wishMutations.create(wish);
 
-    if (response) navigate(href(ROUTES.WISH, { wishId: response.$id }));
+    if (response)
+      navigate(
+        href(ROUTES.WISH, { userId: wish.ownerId, wishId: response.$id })
+      );
   }
 
   if (isLoading) return "Загрузка...";

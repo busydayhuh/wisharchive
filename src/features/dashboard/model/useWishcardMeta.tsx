@@ -1,18 +1,25 @@
 import { useAuth } from "@/features/auth";
+import { useRoute } from "@/features/breadcrumbs";
 import { resolveVisibility, resolveWishRoles } from "@/features/collaborators";
 import { useWishQuickActions } from "@/features/wish";
 import { ROUTES } from "@/shared/model/routes";
-import type { WishDocumentType } from "@/shared/model/types";
+import type { LinkParams, WishDocumentType } from "@/shared/model/types";
 import { useMemo } from "react";
-import { useMatch } from "react-router-dom";
+import { href, useMatch } from "react-router-dom";
 
 export function useWishcardMeta({
   wishlist,
   ownerId,
+  owner,
+  title,
   bookerId,
   $id,
-}: Pick<WishDocumentType, "ownerId" | "bookerId" | "$id" | "wishlist">) {
+}: Pick<
+  WishDocumentType,
+  "ownerId" | "bookerId" | "$id" | "wishlist" | "owner" | "title"
+>) {
   const { current: authUser } = useAuth();
+  const { location, params } = useRoute();
 
   const roles = useMemo(
     () => resolveWishRoles(wishlist, ownerId, bookerId, authUser?.$id),
@@ -31,11 +38,25 @@ export function useWishcardMeta({
   const onBookedPage = useMatch(ROUTES.BOOKED);
   const onListPage = useMatch(ROUTES.WISHLIST);
 
+  const linkParams: LinkParams = {
+    to: href(ROUTES.WISH, { wishId: $id, userId: ownerId }),
+    state: {
+      prevLocation: location.pathname,
+      prevParams: params,
+      data: {
+        userName: owner.userName,
+        wishTitle: title,
+        wlTitle: wishlist?.title,
+      },
+    },
+  };
+
   return {
     userRoles: roles,
     quickActions,
     onBookedPage,
     onListPage,
     hasAccess,
+    linkParams,
   };
 }

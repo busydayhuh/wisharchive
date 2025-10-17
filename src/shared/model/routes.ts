@@ -4,10 +4,11 @@ export const ROUTES = {
   HOME: "/",
   LOGIN: "/login",
   SIGNUP: "/signup",
-  WISHES: "/wishes/:userId",
-  WISHLISTS: "/lists/:userId",
-  WISHLIST: "/list/:listId",
-  WISH: "/wish/:wishId",
+  DASHBOARD: "/:userId",
+  WISHES: "/:userId/wishes",
+  WISHLISTS: "/:userId/lists/",
+  WISHLIST: "/:userId/lists/:listId",
+  WISH: "/:userId/wishes/:wishId",
   /* PROTECTED */
   SHARED: "/shared",
   BOOKMARKS: "/bookmarks",
@@ -19,6 +20,9 @@ export const ROUTES = {
 } as const;
 
 export type PathParams = {
+  [ROUTES.DASHBOARD]: {
+    userId: string;
+  };
   [ROUTES.WISHES]: {
     userId: string;
   };
@@ -26,9 +30,11 @@ export type PathParams = {
     userId: string;
   };
   [ROUTES.WISHLIST]: {
+    userId: string;
     listId: string;
   };
   [ROUTES.WISH]: {
+    userId: string;
     wishId: string;
   };
   [ROUTES.EDIT]: {

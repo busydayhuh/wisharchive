@@ -5,7 +5,7 @@ import ExpandableText from "@/shared/ui/ExpandableText";
 import { memo } from "react";
 
 function getBasicInfo(
-  priority: "high" | "medium" | "low",
+  priority: "0" | "1" | "2",
   wishlist?: WishlistDocumentType | null,
   shopURL?: string | null
 ) {
@@ -17,6 +17,7 @@ function getBasicInfo(
           id={wishlist.$id}
           title={wishlist.title}
           isPrivate={wishlist.isPrivate}
+          ownerId={wishlist.ownerId}
         />
       ),
     },
@@ -33,13 +34,13 @@ function getBasicInfo(
 
 export const WishDetails = memo(function WishDetails({
   wishlist,
-  priority = "medium",
+  priority = "2",
   description,
   shopURL,
   className,
 }: {
   wishlist?: WishlistDocumentType | null;
-  priority: "high" | "medium" | "low";
+  priority: "0" | "1" | "2";
   description?: string | null;
   shopURL?: string | null;
   className?: string;

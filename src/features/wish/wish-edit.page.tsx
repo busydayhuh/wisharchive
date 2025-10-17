@@ -24,7 +24,8 @@ function WishEditPage() {
     const wishUpdates = normalizeWishData(formData);
     const updatedWish = await wishMutations.update(wishId, wishUpdates);
 
-    if (updatedWish) navigate(href(ROUTES.WISH, { wishId }));
+    if (updatedWish)
+      navigate(href(ROUTES.WISH, { wishId, userId: updatedWish.ownerId }));
   }
 
   if (wish && authUser?.$id !== wish.ownerId)

@@ -1,18 +1,21 @@
 import { useAuth } from "@/features/auth";
+import { useRoute } from "@/features/breadcrumbs";
 import {
   resolveWishlistRoles,
   useDashboardCollaborators,
 } from "@/features/collaborators";
 import { toggleBookmark, useWishlistDialog } from "@/features/wishlist";
 import { ROUTES } from "@/shared/model/routes";
-import type { WishlistDocumentType } from "@/shared/model/types";
+import type { LinkParams, WishlistDocumentType } from "@/shared/model/types";
 import { useCallback } from "react";
-import { useMatch } from "react-router";
+import { href, useMatch } from "react-router";
 
 export function useWishlistcardMeta(wishlist: WishlistDocumentType) {
-  const { editorsIds, readersIds, bookmarkedBy, ownerId, $id } = wishlist;
+  const { editorsIds, readersIds, bookmarkedBy, ownerId, $id, owner, title } =
+    wishlist;
 
   const { current: authUser } = useAuth();
+  const { location, params } = useRoute();
   const { collaborators } = useDashboardCollaborators(editorsIds, readersIds);
 
   const { openDialog } = useWishlistDialog();
@@ -35,6 +38,14 @@ export function useWishlistcardMeta(wishlist: WishlistDocumentType) {
 
   const onSharedPage = useMatch(ROUTES.SHARED);
 
+  const linkParams: LinkParams = {
+    to: href(ROUTES.WISHLIST, { listId: $id, userId: ownerId }),
+    state: {
+      prevLocation: location.pathname,
+      prevParams: params,
+      data: { userName: owner.userName, wlTitle: title },
+    },
+  };
   return {
     collaborators,
     bookmarkWishlist,
@@ -42,5 +53,6 @@ export function useWishlistcardMeta(wishlist: WishlistDocumentType) {
     isFavorite,
     onSharedPage,
     openWishlistEditor,
+    linkParams,
   };
 }

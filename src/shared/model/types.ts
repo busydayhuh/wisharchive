@@ -1,4 +1,5 @@
 import { type Models } from "appwrite";
+import type { Params } from "react-router";
 
 export type WishDocumentType = Models.Document & {
   title: string;
@@ -41,3 +42,16 @@ export type UserDocumentType = Models.Document & {
 };
 
 export type Setter<T> = React.Dispatch<React.SetStateAction<T>>;
+
+export type LinkParams = {
+  to: string;
+  state: {
+    prevLocation: string;
+    prevParams: Params;
+    data?: {
+      userName?: string;
+      wlTitle?: string;
+      wishTitle?: string;
+    };
+  };
+};

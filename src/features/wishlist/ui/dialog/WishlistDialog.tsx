@@ -84,7 +84,12 @@ export function WishlistDialog({
 
         setTimeout(() => {
           document.body.style.pointerEvents = "auto";
-          navigate(href(ROUTES.WISHLIST, { listId: newWishlist.$id }));
+          navigate(
+            href(ROUTES.WISHLIST, {
+              listId: newWishlist.$id,
+              userId: newWishlist.ownerId,
+            })
+          );
         }, 200);
       }
     }

@@ -118,18 +118,25 @@ export function WishlistBadge({
   id,
   title,
   isPrivate = false,
+  ownerId,
   size,
   className,
 }: {
   id: string;
   title: string;
   isPrivate?: boolean;
+  ownerId: string;
   size?: Size;
   className?: string;
 }) {
   return (
     <Link
-      to={href(ROUTES.WISHLIST, { listId: id })}
+      to={href(ROUTES.WISHLIST, { listId: id, userId: ownerId })}
+      state={{
+        data: {
+          wlTitle: title,
+        },
+      }}
       className={cn(
         badgesVariants({ size, className }),
         "bg-secondary hover:bg-secondary/90 hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 cursor-pointer "

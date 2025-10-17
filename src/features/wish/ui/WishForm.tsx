@@ -218,7 +218,9 @@ function WishForm({
                 await wishMutations.delete(wish.$id);
 
                 setBlockNavigate(false);
-                navigate(href(ROUTES.WISH, { wishId: wish.$id }));
+                navigate(
+                  href(ROUTES.WISH, { wishId: wish.$id, userId: wish.ownerId })
+                );
               }}
               buttonText="Удалить желание"
             />

@@ -225,9 +225,11 @@ function ResultItem({
 
   function handleNavigation() {
     if (category === "wishes")
-      navigate(href(ROUTES.WISH, { wishId: item.$id }));
+      navigate(href(ROUTES.WISH, { userId: item.ownerId, wishId: item.$id }));
     if (category === "wishlists")
-      navigate(href(ROUTES.WISHLIST, { listId: item.$id }));
+      navigate(
+        href(ROUTES.WISHLIST, { userId: item.ownerId, listId: item.$id })
+      );
     if (category === "users")
       navigate(href(ROUTES.WISHES, { userId: item.userId }));
   }

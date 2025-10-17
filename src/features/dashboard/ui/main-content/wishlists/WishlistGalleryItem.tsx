@@ -1,11 +1,10 @@
 import { CollaboratorsAvatars } from "@/features/collaborators";
 import { useWishlistcardMeta } from "@/features/dashboard/model/useWishlistcardMeta";
 import { BookmarkButton, EditWishlistButton } from "@/features/wishlist";
-import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { PRIVACY_ICONS, RoleBadge } from "@/shared/ui/Badges";
 import { memo } from "react";
-import { href, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ImageTiles } from "./ImageTiles";
 
 const WishlistGalleryItem = memo(function WishlistGalleryItem({
@@ -20,6 +19,7 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
     onSharedPage,
     openWishlistEditor,
     userRoles,
+    linkParams,
   } = useWishlistcardMeta(wishlist);
 
   return (
@@ -42,12 +42,12 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
           )}
 
           {/* Стопка картинок */}
-          <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
+          <Link {...linkParams}>
             <ImageTiles wishes={wishlist.wishes} />
           </Link>
         </div>
 
-        <Link to={href(ROUTES.WISHLIST, { listId: wishlist.$id })}>
+        <Link {...linkParams}>
           <div className="flex flex-wrap justify-between items-center mt-1 px-2">
             {/* Название */}
             <div className="flex items-center gap-2 pr-2 text-base md:text-lg">

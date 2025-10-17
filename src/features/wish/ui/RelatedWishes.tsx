@@ -19,6 +19,11 @@ export const RelatedWishes = memo(function RelatedWishes({
   const { wishes, isLoading, error } = useWishes({
     ownerId: userId,
     archived: false,
+    sort: {
+      field: "$sequence",
+      direction: "desc",
+    },
+    filters: [],
   });
 
   const relatedWishes = useMemo(
@@ -58,7 +63,19 @@ export const RelatedWishes = memo(function RelatedWishes({
               className="group-card-wrapper transition-all duration-300"
               key={wish.$id}
             >
-              <Link to={href(ROUTES.WISH, { wishId: wish.$id })}>
+              <Link
+                to={href(ROUTES.WISH, {
+                  wishId: wish.$id,
+                  userId: wish.ownerId,
+                })}
+                state={{
+                  data: {
+                    userName: wish.owner.userName,
+                    wishTitle: wish.title,
+                    wlTitle: wish.wishlist?.title,
+                  },
+                }}
+              >
                 <div className="flex flex-col gap-1">
                   <WishImage
                     wishId={wish.$id}

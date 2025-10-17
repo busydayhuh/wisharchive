@@ -7,12 +7,11 @@ import {
 } from "@/features/wish";
 import "@/shared/assets/custom.css";
 import { cn } from "@/shared/lib/css";
-import { ROUTES } from "@/shared/model/routes";
 import type { WishDocumentType } from "@/shared/model/types";
 import { PriorityBadge, ShopBadge } from "@/shared/ui/Badges";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { memo } from "react";
-import { href, Link } from "react-router";
+import { Link } from "react-router";
 import { WishlistControl } from "./WishlistControl";
 
 const WishTableItem = memo(function WishTableItem({
@@ -20,7 +19,7 @@ const WishTableItem = memo(function WishTableItem({
 }: {
   wish: WishDocumentType;
 }) {
-  const { userRoles, onBookedPage, onListPage, hasAccess } =
+  const { userRoles, onBookedPage, onListPage, hasAccess, linkParams } =
     useWishcardMeta(wish);
 
   if (!hasAccess) return null;
@@ -33,7 +32,8 @@ const WishTableItem = memo(function WishTableItem({
     >
       {/* Картинка */}
       <Link
-        to={href(ROUTES.WISH, { wishId: wish.$id })}
+        to={linkParams.to}
+        state={linkParams.state}
         className="group-card-wrapper flex items-center"
       >
         <WishImage

@@ -1,8 +1,9 @@
 import { useAuth } from "@/features/auth";
+import { useRoute } from "@/features/breadcrumbs";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import { ROUTES } from "@/shared/model/routes";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { matchRoutes, useLocation, useParams } from "react-router";
+import { matchPath, matchRoutes } from "react-router";
 import type { DashboardType } from "./toolbarConfig";
 
 export type DashboardMeta = {
@@ -14,6 +15,7 @@ export type DashboardMeta = {
   showNavigation: boolean;
   dashboardType: DashboardType;
   localStorageKey: string;
+  pathname?: string;
 };
 
 const DASHBOARD_HEADERS = {
@@ -21,8 +23,8 @@ const DASHBOARD_HEADERS = {
   [ROUTES.ARCHIVED]: "Архив желаний",
   [ROUTES.SHARED]: "Совместные списки",
   [ROUTES.BOOKMARKS]: "Закладки",
-  "/wishes/": "Мои желания",
-  "/lists/": "Мои списки",
+  [ROUTES.WISHES]: "Мои желания",
+  [ROUTES.WISHLISTS]: "Мои списки",
 };
 
 const DASHBOARD_TYPES: Record<string, DashboardType> = {
@@ -30,18 +32,19 @@ const DASHBOARD_TYPES: Record<string, DashboardType> = {
   [ROUTES.ARCHIVED]: "archived",
   [ROUTES.SHARED]: "shared",
   [ROUTES.BOOKMARKS]: "bookmarks",
-  "/wishes/": "wishes",
-  "/lists/": "lists",
-  "/list/": "list",
+  [ROUTES.DASHBOARD]: "wishes",
+  [ROUTES.WISHES]: "wishes",
+  [ROUTES.WISHLISTS]: "lists",
+  [ROUTES.WISHLIST]: "list",
 };
 
 export function useDashboardMeta(): DashboardMeta {
   const isMobile = useIsMobile();
 
   const { current: authUser } = useAuth();
-  const { userId: paramUserId, listId: paramListId } = useParams();
 
-  const { pathname } = useLocation();
+  const { location, params } = useRoute();
+  const { userId: paramUserId, listId: paramListId } = params;
 
   // Кому принадлежит дашборд
   const dashboardUserId = useMemo(() => {
@@ -54,9 +57,10 @@ export function useDashboardMeta(): DashboardMeta {
     : false;
 
   // Какой заголовок отображать
+
   const title =
     Object.entries(DASHBOARD_HEADERS).find(([path]) =>
-      pathname.startsWith(path)
+      matchPath({ path: path, end: true }, location.pathname)
     )?.[1] ?? "Мой дашборд";
 
   // Тип дашборда для фильтров тулбара
@@ -64,9 +68,9 @@ export function useDashboardMeta(): DashboardMeta {
   const getDashboardType = useCallback(
     (): DashboardType =>
       Object.entries(DASHBOARD_TYPES).find(([path]) =>
-        pathname.startsWith(path)
+        matchPath({ path: path, end: true }, location.pathname)
       )?.[1] ?? "wishes",
-    [pathname]
+    [location.pathname]
   );
 
   const [dashboardType, setDashboardType] = useState<DashboardType>(() =>
@@ -75,7 +79,7 @@ export function useDashboardMeta(): DashboardMeta {
 
   useEffect(
     () => setDashboardType(getDashboardType()),
-    [setDashboardType, getDashboardType, pathname]
+    [setDashboardType, getDashboardType, location.pathname]
   );
 
   const localStorageKey = useMemo(() => {
@@ -89,7 +93,7 @@ export function useDashboardMeta(): DashboardMeta {
 
   // Отображать ли навигацию
   const routes = [{ path: ROUTES.WISHES }, { path: ROUTES.WISHLISTS }];
-  const showNavigation = Boolean(matchRoutes(routes, pathname));
+  const showNavigation = Boolean(matchRoutes(routes, location.pathname));
 
   return {
     dashboardUserId,
