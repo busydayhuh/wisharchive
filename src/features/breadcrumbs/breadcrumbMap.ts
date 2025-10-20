@@ -9,33 +9,23 @@ export type Crumb = {
 export const breadcrumbMap: Record<string, Crumb> = {
   [ROUTES.WISHES]: {
     label: (params, data) => `Желания ${params.userId || data?.userId}`,
-    parents: ["/:userId"],
+    parents: [ROUTES.DASHBOARD],
   },
   [ROUTES.WISHLISTS]: {
     label: (params, data) => `Списки ${params.userId || data?.userId}`,
-    parents: ["/:userId"],
+    parents: [ROUTES.DASHBOARD],
   },
   [ROUTES.WISH]: {
     label: (params, data) => data?.wishTitle || params.wishId || "",
-    parents: [
-      "/:userId/wishes",
-      "/:userId/lists/:listId",
-      "/booked",
-      "/archived",
-    ],
+    parents: [ROUTES.WISHES, ROUTES.WISHLIST, ROUTES.BOOKED, ROUTES.ARCHIVED],
   },
   [ROUTES.WISHLIST]: {
     label: (params, data) => data?.wlTitle || params.listId || "",
-    parents: ["/:userId/lists/", "/shared", "/bookmarks"],
+    parents: [ROUTES.WISHLISTS, ROUTES.SHARED, ROUTES.BOOKMARKS],
   },
   [ROUTES.EDIT]: {
     label: "Редактировать",
-    parents: [
-      "/:userId/wishes/:wishId",
-      "/:userId/wishes",
-      "/:userId/lists/:listId",
-      "/archived",
-    ],
+    parents: [ROUTES.WISH, ROUTES.WISHES, ROUTES.WISHLIST, ROUTES.ARCHIVED],
   },
   [ROUTES.BOOKMARKS]: {
     label: "Закладки",

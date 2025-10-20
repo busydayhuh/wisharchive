@@ -1,9 +1,9 @@
 import type { Filter, SortState } from "@/features/dashboard/";
 import db from "@/shared/model/databases";
 import type { WishDocumentType } from "@/shared/model/types";
-import { Query } from "appwrite";
+import { Query, type Models } from "appwrite";
 import stableStringify from "fast-json-stable-stringify";
-import useSWR from "swr";
+import useSWRInfinite from "swr/infinite";
 
 type QueryFilters = {
   ownerId?: string;
@@ -15,30 +15,49 @@ type QueryFilters = {
   filters: Filter[] | [];
 };
 
-async function fetcher(queries: string[]) {
-  const response = await db.wishes.list(queries);
+const QUANTITY_LIMIT = 10;
+
+async function fetcher(queries: string[], cursor: string | null) {
+  const withCursor = cursor
+    ? [...queries, Query.cursorAfter(cursor)]
+    : [...queries];
+
+  const response = await db.wishes.list(withCursor);
 
   return response.documents as WishDocumentType[];
 }
 
 export function useWishes(filters?: QueryFilters) {
   const queries = filters ? getWishQueries(filters) : null;
-  const key = filters ? ["wishes", stableStringify(filters)] : null;
+  //const key = filters ? ["wishes", stableStringify(filters)] : null;
 
-  if (filters?.filters?.some((f) => f.key === "isPrivate"))
-    console.log("Error filters in useWishes:", filters);
+  const getWishKey = (
+    pageIndex: number,
+    previousPageData: Models.Document[] | null
+  ) => {
+    if (!filters) return null;
 
-  const {
-    data: wishes,
-    isLoading,
-    error,
-  } = useSWR(key, () => fetcher(queries!)); // если queries null, то key = null и запроса не будет
+    // дошли до конца
+    if (previousPageData && previousPageData.length === 0) return null;
+    // первая страница, нет previousPageData
+    if (pageIndex === 0 && filters) return ["wishes", stableStringify(filters)];
+    // добавляем курсор к ключу
+    const cursor = previousPageData?.at(-1)?.$id ?? null;
 
-  return { wishes, isLoading, error };
+    return ["wishes", stableStringify(filters), cursor];
+  };
+
+  const { data, isLoading, error, size, setSize, isValidating } =
+    useSWRInfinite(getWishKey, ([, , cursor]) => fetcher(queries!, cursor)); // если queries null, то key = null и запроса не будет
+
+  const wishes = data?.flat();
+  const reachedEnd = data && (data.at(-1)?.length ?? 0) < QUANTITY_LIMIT;
+
+  return { wishes, isLoading, error, size, setSize, isValidating, reachedEnd };
 }
 
 function getWishQueries(filters?: QueryFilters): string[] {
-  const queries: string[] = [];
+  const queries: string[] = [Query.limit(QUANTITY_LIMIT)];
   const toolbarFilters =
     filters?.filters && filters?.filters.length > 0 ? filters.filters : null;
 

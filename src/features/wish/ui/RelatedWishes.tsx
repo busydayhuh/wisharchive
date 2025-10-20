@@ -27,7 +27,11 @@ export const RelatedWishes = memo(function RelatedWishes({
   });
 
   const relatedWishes = useMemo(
-    () => wishes?.filter((wish) => wish.$id !== wishId).slice(0, 4),
+    () =>
+      wishes
+        ?.flat()
+        .filter((wish) => wish.$id !== wishId)
+        .slice(0, 4),
     [wishes, wishId]
   );
 

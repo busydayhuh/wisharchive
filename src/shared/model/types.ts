@@ -56,3 +56,7 @@ export type LinkParams = {
     };
   };
 };
+
+export type PageData = {
+  documents: Models.Document[];
+};

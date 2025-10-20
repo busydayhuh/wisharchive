@@ -6,15 +6,18 @@ import WishTableItem from "./WishTableItem";
 export function WishesPageLayout({
   wishes,
   isLoading,
+  isValidating,
   error,
   viewMode,
 }: {
   wishes?: WishDocumentType[];
   isLoading: boolean;
+  isValidating: boolean;
   error?: unknown;
   viewMode: "gallery" | "table";
 }) {
   if (isLoading) return <div>Загрузка...</div>;
+
   if (error) return <div>Не удалось загрузить желания ☹️</div>;
 
   if (wishes && wishes.length === 0) {
@@ -33,6 +36,7 @@ export function WishesPageLayout({
               <WishGalleryItem wish={wish} />
             </CardWrapper>
           ))}
+          {isValidating && <div>Подгрузка...</div>}
         </Masonry>
       );
 

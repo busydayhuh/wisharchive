@@ -99,12 +99,12 @@
   --border: oklch(0.87 0 0);
   --input: oklch(0.922 0 0);
   --radius: 1rem;
-  --ring: oklch(0.708 0 0);
+  --ring: oklch(83.38% 0.04704 263.703);
 
   --chart-1: oklch(83.738% 0.07108 341.604);
   --chart-2: oklch(88.235% 0.11944 95.681);
   --chart-3: oklch(70.965% 0.0841 118.428);
-  --chart-4: #b9c9e8;
+  --chart-4: oklch(83.38% 0.04704 263.703);
 
   --sidebar: oklch(89.3% 0.00216 14.61);
   --sidebar-foreground: oklch(0.145 0 0);

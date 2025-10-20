@@ -26,7 +26,14 @@ function WishAddPage() {
 
     if (response)
       navigate(
-        href(ROUTES.WISH, { userId: wish.ownerId, wishId: response.$id })
+        href(ROUTES.WISH, { userId: wish.ownerId, wishId: response.$id }),
+        {
+          state: {
+            data: {
+              wishTitle: response.title,
+            },
+          },
+        }
       );
   }
 
