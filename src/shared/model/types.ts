@@ -50,6 +50,7 @@ export type LinkParams = {
     prevParams: Params;
     data?: {
       userName?: string;
+      userId?: string;
       wlTitle?: string;
       wishTitle?: string;
     };

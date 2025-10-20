@@ -1,6 +1,8 @@
+import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import type { PathParams } from "@/shared/model/routes";
 import {
   Breadcrumb,
+  BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
@@ -14,9 +16,10 @@ import { useRoute } from "./model/createRouteContext";
 
 type BreadcrumbKey = keyof typeof breadcrumbMap;
 
-export function Breadcrumbs() {
+export function Breadcrumbs({ className }: { className?: string }) {
   const { location, params } = useRoute();
   const { pathname, state } = location;
+  const isMobile = useIsMobile();
 
   // Ищем крошку в мапе крошек
   const currentEntry = Object.entries(breadcrumbMap).find(([pattern]) =>
@@ -53,7 +56,7 @@ export function Breadcrumbs() {
   buildChain(currentPathPattern);
 
   return (
-    <Breadcrumb>
+    <Breadcrumb className={className}>
       <BreadcrumbList>
         {chain.map((crumb, i) => {
           const isLast = i === chain.length - 1;
@@ -65,14 +68,29 @@ export function Breadcrumbs() {
             : params;
           const link = href(crumb.path as keyof PathParams, mergedParams);
 
+          if (isMobile && chain.length > 2 && i < 1)
+            return (
+              <Fragment key={crumb.path}>
+                <BreadcrumbEllipsis />
+                <BreadcrumbSeparator />
+              </Fragment>
+            );
+
           return (
             <Fragment key={crumb.path}>
               <BreadcrumbItem>
                 {isLast ? (
-                  <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
+                  <BreadcrumbPage className="max-w-[20ch] md:max-w-full truncate">
+                    {crumb.label}
+                  </BreadcrumbPage>
                 ) : (
                   <BreadcrumbLink asChild>
-                    <Link to={link}>{crumb.label}</Link>
+                    <Link
+                      to={link}
+                      className="max-w-[20ch] md:max-w-full truncate"
+                    >
+                      {crumb.label}
+                    </Link>
                   </BreadcrumbLink>
                 )}
               </BreadcrumbItem>

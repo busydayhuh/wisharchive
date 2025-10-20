@@ -11,7 +11,7 @@ export const WishInfo = memo(function WishInfo({
 }: {
   wish: WishDocumentType;
 }) {
-  const { userRoles, hasAccess } = useWishcardMeta(wish);
+  const { userRoles, hasAccess, linkParams } = useWishcardMeta(wish);
   const { editWish } = useWishQuickActions(wish.$id);
 
   if (!hasAccess) return null;
@@ -22,7 +22,7 @@ export const WishInfo = memo(function WishInfo({
         title={wish.title}
         owner={wish.owner}
         isEditor={userRoles?.isEditor}
-        editWish={editWish}
+        editWish={() => editWish(linkParams.state)}
       />
 
       <WishDetails

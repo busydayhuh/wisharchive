@@ -107,6 +107,7 @@ const WishTableItem = memo(function WishTableItem({
             side="bottom"
             align="end"
             isArchived={wish.isArchived}
+            linkState={linkParams.state}
           />
         ) : (
           <BookButton

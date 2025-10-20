@@ -225,10 +225,24 @@ function ResultItem({
 
   function handleNavigation() {
     if (category === "wishes")
-      navigate(href(ROUTES.WISH, { userId: item.ownerId, wishId: item.$id }));
+      navigate(href(ROUTES.WISH, { userId: item.ownerId, wishId: item.$id }), {
+        state: {
+          data: {
+            wishTitle: item.title,
+          },
+        },
+      });
+
     if (category === "wishlists")
       navigate(
-        href(ROUTES.WISHLIST, { userId: item.ownerId, listId: item.$id })
+        href(ROUTES.WISHLIST, { userId: item.ownerId, listId: item.$id }),
+        {
+          state: {
+            data: {
+              wlTitle: item.title,
+            },
+          },
+        }
       );
     if (category === "users")
       navigate(href(ROUTES.WISHES, { userId: item.userId }));

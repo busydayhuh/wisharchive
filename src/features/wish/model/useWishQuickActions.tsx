@@ -1,6 +1,7 @@
 import { useAuth } from "@/features/auth";
 import { mutateByKeyword } from "@/shared/model/mutateByKeyword";
 import { ROUTES } from "@/shared/model/routes";
+import type { LinkParams } from "@/shared/model/types";
 import { useCallback } from "react";
 import { href, useNavigate } from "react-router";
 import { wishMutations } from "./wishMutations";
@@ -44,7 +45,8 @@ export function useWishQuickActions(wishId: string) {
   );
 
   const editWish = useCallback(
-    () => navigate(href(ROUTES.EDIT, { wishId })),
+    (linkState: LinkParams["state"]) =>
+      navigate(href(ROUTES.EDIT, { wishId }), { state: linkState }),
     [wishId, navigate]
   );
 

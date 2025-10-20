@@ -129,11 +129,13 @@ export function WishlistBadge({
   size?: Size;
   className?: string;
 }) {
+  console.log("🚀 ~ Badges.tsx:132 ~ WishlistBadge ~ ownerId:", ownerId);
   return (
     <Link
       to={href(ROUTES.WISHLIST, { listId: id, userId: ownerId })}
       state={{
         data: {
+          userId: ownerId,
           wlTitle: title,
         },
       }}

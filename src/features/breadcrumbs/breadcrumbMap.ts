@@ -8,11 +8,11 @@ export type Crumb = {
 
 export const breadcrumbMap: Record<string, Crumb> = {
   [ROUTES.WISHES]: {
-    label: (params, data) => data?.userName || params.userId || "",
+    label: (params, data) => `Желания ${params.userId || data?.userId}`,
     parents: ["/:userId"],
   },
   [ROUTES.WISHLISTS]: {
-    label: (params, data) => data?.userName || params.userId || "",
+    label: (params, data) => `Списки ${params.userId || data?.userId}`,
     parents: ["/:userId"],
   },
   [ROUTES.WISH]: {
@@ -29,8 +29,13 @@ export const breadcrumbMap: Record<string, Crumb> = {
     parents: ["/:userId/lists/", "/shared", "/bookmarks"],
   },
   [ROUTES.EDIT]: {
-    label: (params, data) => data?.wishTitle || params.wishId || "",
-    parents: ["/:userId/wishes/:wishId"],
+    label: "Редактировать",
+    parents: [
+      "/:userId/wishes/:wishId",
+      "/:userId/wishes",
+      "/:userId/lists/:listId",
+      "/archived",
+    ],
   },
   [ROUTES.BOOKMARKS]: {
     label: "Закладки",

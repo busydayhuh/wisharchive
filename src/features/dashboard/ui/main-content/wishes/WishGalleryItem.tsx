@@ -130,6 +130,7 @@ const WishCover = memo(function WishCover({
               align="start"
               isArchived={wish.isArchived}
               title={wish.title}
+              linkState={linkParams.state}
             />
           ) : (
             <BookButton

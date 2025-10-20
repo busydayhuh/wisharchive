@@ -1,7 +1,6 @@
 import { useAuth } from "@/features/auth";
 import { useRoute } from "@/features/breadcrumbs";
 import { resolveVisibility, resolveWishRoles } from "@/features/collaborators";
-import { useWishQuickActions } from "@/features/wish";
 import { ROUTES } from "@/shared/model/routes";
 import type { LinkParams, WishDocumentType } from "@/shared/model/types";
 import { useMemo } from "react";
@@ -25,7 +24,6 @@ export function useWishcardMeta({
     () => resolveWishRoles(wishlist, ownerId, bookerId, authUser?.$id),
     [wishlist, ownerId, bookerId, authUser?.$id]
   );
-  const quickActions = useWishQuickActions($id);
 
   const hasAccess = useMemo(() => {
     return resolveVisibility(
@@ -45,6 +43,7 @@ export function useWishcardMeta({
       prevParams: params,
       data: {
         userName: owner.userName,
+        userId: owner.userId,
         wishTitle: title,
         wlTitle: wishlist?.title,
       },
@@ -53,7 +52,7 @@ export function useWishcardMeta({
 
   return {
     userRoles: roles,
-    quickActions,
+
     onBookedPage,
     onListPage,
     hasAccess,

@@ -2,6 +2,7 @@ import { cn } from "@/shared/lib/css";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import { type Action } from "@/shared/model/confirmation-dialog/ConfirmationDialogContext";
 import { useConfirmationDialog } from "@/shared/model/confirmation-dialog/useConfirmationDialog";
+import type { LinkParams } from "@/shared/model/types";
 import { IconBtnWithTooltip } from "@/shared/ui/IconBtnWithTooltip";
 import { Button } from "@/shared/ui/kit/button";
 import {
@@ -46,6 +47,7 @@ type MenuItem = {
 type WishQuickActionsProps = {
   wishId: string;
   title: string;
+  linkState: LinkParams["state"];
   isArchived?: boolean;
   align?: "center" | "end" | "start";
   side?: "top" | "right" | "bottom" | "left";
@@ -55,6 +57,7 @@ type WishQuickActionsProps = {
 export function WishQuickActions({
   wishId,
   title,
+  linkState,
   isArchived = false,
   align = "end",
   side = "top",
@@ -91,7 +94,7 @@ export function WishQuickActions({
     {
       title: "Редактировать",
       icon: <Edit2 />,
-      action: editWish,
+      action: () => editWish(linkState),
       actionName: "edit" as Action,
       confirmation: false,
     },

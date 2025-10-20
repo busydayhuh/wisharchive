@@ -43,7 +43,7 @@ export function useWishlistcardMeta(wishlist: WishlistDocumentType) {
     state: {
       prevLocation: location.pathname,
       prevParams: params,
-      data: { userName: owner.userName, wlTitle: title },
+      data: { userName: owner.userName, userId: owner.userId, wlTitle: title },
     },
   };
   return {

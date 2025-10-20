@@ -71,6 +71,7 @@ export const RelatedWishes = memo(function RelatedWishes({
                 state={{
                   data: {
                     userName: wish.owner.userName,
+                    userId: wish.owner.userId,
                     wishTitle: wish.title,
                     wlTitle: wish.wishlist?.title,
                   },

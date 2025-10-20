@@ -15,7 +15,7 @@ export const ROUTES = {
   BOOKED: "/booked",
   ARCHIVED: "/archived",
   PROFILE: "/edit-profile",
-  EDIT: "/edit-wish/:wishId",
+  EDIT: "/wishes/:wishId/editor",
   ADD: "/add-wish",
 } as const;
 
