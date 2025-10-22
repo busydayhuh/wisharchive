@@ -6,11 +6,13 @@ import WishlistTableItem from "./WishlistTableItem";
 function WishlistsPageLayout({
   wishlists,
   isLoading,
+  isValidating,
   error,
   viewMode,
 }: {
   wishlists?: WishlistDocumentType[];
   isLoading: boolean;
+  isValidating: boolean;
   viewMode: "gallery" | "table";
   error?: unknown;
 }) {
@@ -31,6 +33,7 @@ function WishlistsPageLayout({
           {wishlists.map((wishlist) => (
             <WishlistGalleryItem wishlist={wishlist} key={wishlist.$id} />
           ))}
+          {isValidating && <div>Подгрузка...</div>}
         </Masonry>
       );
 
@@ -40,6 +43,7 @@ function WishlistsPageLayout({
           {wishlists.map((wishlist) => (
             <WishlistTableItem wishlist={wishlist} key={wishlist.$id} />
           ))}
+          {isValidating && <div>Подгрузка...</div>}
         </div>
       );
   }

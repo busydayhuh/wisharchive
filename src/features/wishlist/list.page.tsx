@@ -13,7 +13,10 @@ function WishlistPage() {
 
   if (wishlist)
     return (
-      <DashboardToolbarProvider dashboardType="list">
+      <DashboardToolbarProvider
+        dashboardType="list"
+        localStorageKey={`list+${listId}}`}
+      >
         <WishlistLayout wishlist={wishlist} />
       </DashboardToolbarProvider>
     );

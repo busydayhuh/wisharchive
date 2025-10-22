@@ -17,12 +17,31 @@ async function createWishlistMutation(payload: createWishlistProps) {
   const permissions = configureWishlistPermissions(payload.isPrivate, id);
 
   try {
-    const newTeam = await team.create(payload.title, id);
+    return performMutation(
+      (prev) => [
+        ...prev,
+        {
+          $id: id,
+          $collectionId: "wishlists",
+          $databaseId: "wisharchive",
+          $createdAt: "",
+          $updatedAt: "",
+          $permissions: [],
+          ...payload,
+        },
+      ],
 
-    return await db.wishlists.create(
-      payload,
-      permissions,
-      newTeam.$id // задаем вишлисту такой же id, как и у созданной под него команды
+      async () => {
+        const newTeam = await team.create(payload.title, id);
+        return await db.wishlists.create(
+          payload,
+          permissions,
+          newTeam.$id // задаем вишлисту такой же id, как и у созданной под него команды
+        );
+        // вместе с вишлистом удаляем и его команду
+      },
+
+      "wishlists"
     );
   } catch {
     console.log("Не удалось создать вишлист");

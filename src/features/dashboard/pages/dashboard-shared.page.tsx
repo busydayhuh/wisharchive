@@ -1,3 +1,4 @@
+import { useInfiniteScroll } from "@/shared/lib/react/useInfiniteScroll";
 import { useMemo } from "react";
 import { useCollabWishlists } from "../model/useCollabWishlists";
 import { useDashboardToolbar } from "../model/useDashboardToolbar";
@@ -7,10 +8,24 @@ import WishlistsPageLayout from "../ui/main-content/wishlists/WishlistsPageLayou
 function SharedPage() {
   const { searchString, toolbarState } = useDashboardToolbar();
 
-  const { wishlists, isLoading, error } = useCollabWishlists({
+  const {
+    wishlists,
+    isLoading,
+    error,
+    size,
+    setSize,
+    isValidating,
+    reachedEnd,
+  } = useCollabWishlists({
     searchString: searchString,
     sort: toolbarState.sort,
     filters: toolbarState.filters,
+  });
+
+  useInfiniteScroll({
+    loadMore: () => setSize(size + 1),
+    disabled: isValidating || reachedEnd,
+    offset: 0,
   });
 
   const collabWishlists = useMemo(
@@ -25,6 +40,7 @@ function SharedPage() {
     <WishlistsPageLayout
       wishlists={collabWishlists}
       isLoading={isLoading}
+      isValidating={isValidating}
       error={error}
       viewMode={toolbarState.viewMode}
     />

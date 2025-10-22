@@ -1,5 +1,4 @@
 import { wishlistFormSchema as formSchema } from "@/shared/model/formSchemas";
-import { ROUTES } from "@/shared/model/routes";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { useCurrentUser } from "@/shared/model/user/useCurrentUser";
 import { Button } from "@/shared/ui/kit/button";
@@ -16,7 +15,6 @@ import { Form } from "@/shared/ui/kit/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { href, useNavigate } from "react-router";
 import { z } from "zod";
 import { wishlistMutations } from "../../model/wishlistMutations";
 import CollaboratorsSection from "./CollaboratorsSection";
@@ -56,7 +54,7 @@ export function WishlistDialog({
     },
   });
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { user: currentUser } = useCurrentUser();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -69,29 +67,32 @@ export function WishlistDialog({
         values.isPrivate,
         privacyChanged
       );
-      setIsOpen(false);
+      //setIsOpen(false);
     }
 
     if (action === "create") {
-      const newWishlist = await wishlistMutations.create({
+      await wishlistMutations.create({
         ...values,
         ownerId: currentUser?.userId ?? "",
         owner: currentUser,
       });
 
-      if (newWishlist) {
-        setIsOpen(false);
+      document.body.style.pointerEvents = "auto";
 
-        setTimeout(() => {
-          document.body.style.pointerEvents = "auto";
-          navigate(
-            href(ROUTES.WISHLIST, {
-              listId: newWishlist.$id,
-              userId: newWishlist.ownerId,
-            })
-          );
-        }, 200);
-      }
+      // if (newWishlist) {
+      //   document.body.style.pointerEvents = "auto";
+      //   setIsOpen(false);
+
+      //   setTimeout(() => {
+      //     document.body.style.pointerEvents = "auto";
+      //     navigate(
+      //       href(ROUTES.WISHLIST, {
+      //         listId: newWishlist.$id,
+      //         userId: newWishlist.ownerId,
+      //       })
+      //     );
+      //   }, 200);
+      // }
     }
   }
 

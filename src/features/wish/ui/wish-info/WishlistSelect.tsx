@@ -22,6 +22,7 @@ export function WishlistSelect({
   const { wishlists, isLoading, error } = useCollabWishlists({
     sort: { field: "$sequence", direction: "desc" },
     filters: [],
+    limit: 100,
   });
 
   const icons = {

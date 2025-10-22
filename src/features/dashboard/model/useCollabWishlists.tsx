@@ -1,9 +1,8 @@
+import type { QueryFilters as WishlistFilters } from "@/features/wishlist";
 import { useWishlists } from "@/features/wishlist";
 import team from "@/shared/model/teams";
 import type { Models } from "appwrite";
 import useSWR from "swr";
-import type { SortState } from "./DashboardToolbarContext";
-import type { Filter } from "./toolbarConfig";
 
 async function fetcher() {
   const response = await team.list();
@@ -11,11 +10,7 @@ async function fetcher() {
   return response.teams as Models.Team<Models.Preferences>[];
 }
 
-export function useCollabWishlists(filters: {
-  searchString?: string;
-  sort: SortState;
-  filters: Filter[] | [];
-}) {
+export function useCollabWishlists(filters: WishlistFilters) {
   const {
     data: teams,
     isLoading: teamsLoading,
@@ -28,11 +23,19 @@ export function useCollabWishlists(filters: {
     wishlists,
     isLoading: wlLoading,
     error: wlError,
+    size,
+    setSize,
+    isValidating,
+    reachedEnd,
   } = useWishlists({ ...filters, teams: teamsIds });
 
   return {
     wishlists,
     isLoading: teamsLoading || wlLoading,
     error: teamsError || wlError,
+    size,
+    setSize,
+    isValidating,
+    reachedEnd,
   };
 }

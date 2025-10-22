@@ -29,7 +29,6 @@ async function fetcher(queries: string[], cursor: string | null) {
 
 export function useWishes(filters?: QueryFilters) {
   const queries = filters ? getWishQueries(filters) : null;
-  //const key = filters ? ["wishes", stableStringify(filters)] : null;
 
   const getWishKey = (
     pageIndex: number,
@@ -56,27 +55,26 @@ export function useWishes(filters?: QueryFilters) {
   return { wishes, isLoading, error, size, setSize, isValidating, reachedEnd };
 }
 
-function getWishQueries(filters?: QueryFilters): string[] {
+function getWishQueries(filters: QueryFilters): string[] {
   const queries: string[] = [Query.limit(QUANTITY_LIMIT)];
   const toolbarFilters =
-    filters?.filters && filters?.filters.length > 0 ? filters.filters : null;
+    filters.filters && filters.filters.length > 0 ? filters.filters : null;
 
   if (filters?.ownerId) queries.push(Query.equal("ownerId", filters.ownerId));
 
-  if (filters?.searchString)
+  if (filters.searchString)
     queries.push(Query.contains("title", filters.searchString));
 
-  if (filters?.wishlistId)
+  if (filters.wishlistId)
     queries.push(Query.equal("wishlistId", filters.wishlistId));
 
-  if (filters?.bookerId)
-    queries.push(Query.equal("bookerId", filters.bookerId));
+  if (filters.bookerId) queries.push(Query.equal("bookerId", filters.bookerId));
 
-  if (filters?.archived !== undefined) {
+  if (filters.archived !== undefined) {
     queries.push(Query.equal("isArchived", filters.archived));
   }
 
-  if (filters?.sort) {
+  if (filters.sort) {
     queries.push(
       filters.sort.direction === "desc"
         ? Query.orderDesc(filters.sort.field)

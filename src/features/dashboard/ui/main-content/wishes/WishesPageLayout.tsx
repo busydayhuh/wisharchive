@@ -46,6 +46,7 @@ export function WishesPageLayout({
           {wishes.map((wish) => (
             <WishTableItem wish={wish} key={wish.$id} />
           ))}
+          {isValidating && <div>Подгрузка...</div>}
         </div>
       );
   }
