@@ -3,7 +3,6 @@ import {
   useCollaboratorsDialog,
   useTeamCollaborators,
 } from "@/features/collaborators";
-import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import { Button } from "@/shared/ui/kit/button";
 import { PlusIcon } from "lucide-react";
 
@@ -16,17 +15,16 @@ export function WishlistCollaborators({
 }) {
   const { collaborators, isLoading, error } = useTeamCollaborators(wishlistId);
   const { openCollabDialog } = useCollaboratorsDialog();
-  const isMobile = useIsMobile();
 
   if (collaborators)
     return (
-      <div className="flex lg:flex-row-reverse items-center gap-2">
+      <div className="flex items-center gap-2">
         <CollaboratorsAvatars
           collaborators={collaborators}
           isLoading={isLoading}
           error={error}
           maxVisible={5}
-          size={isMobile ? "default" : "lg"}
+          size={"default"}
         />
         <Button
           type="button"

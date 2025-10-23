@@ -1,8 +1,13 @@
 import type { Roles } from "@/features/collaborators";
+import { cn } from "@/shared/lib/css";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
-import type { WishDocumentType } from "@/shared/model/types";
-import ExpandableText from "@/shared/ui/ExpandableText";
-import { Button } from "@/shared/ui/kit/button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/shared/ui/kit/accordion";
+import ShareOnSocials from "@/shared/ui/ShareOnSocials";
 import { BookmarkButton } from "./BookmarkButton";
 import { EditWishlistButton } from "./EditWishlistButton";
 import { WishlistCollaborators } from "./WishlistCollaborators";
@@ -10,7 +15,7 @@ import { WishlistCollaborators } from "./WishlistCollaborators";
 export function WishlistHeader({
   wishlistId,
   title,
-  wishes,
+
   isPrivate,
   description,
   bookmarkWishlist,
@@ -20,7 +25,7 @@ export function WishlistHeader({
 }: {
   wishlistId: string;
   title: string;
-  wishes: WishDocumentType[] | null;
+
   isPrivate: boolean;
   description?: string | null;
   bookmarkWishlist: (pressed: boolean) => Promise<void>;
@@ -33,12 +38,8 @@ export function WishlistHeader({
   if (isMobile)
     return (
       <div className="space-y-4">
-        <div className="flex justify-between items-baseline gap-2">
-          <WishlistName
-            title={title}
-            isPrivate={isPrivate}
-            wishesCount={wishes ? wishes.length : 0}
-          />
+        <div className="flex justify-between items-center gap-2">
+          <WishlistName title={title} isPrivate={isPrivate} />
           {(userRoles?.isEditor || userRoles?.isWishlistOwner) && (
             <EditWishlistButton onClick={openWishlistEditor} variant="page" />
           )}
@@ -48,57 +49,34 @@ export function WishlistHeader({
             wishlistId={wishlistId}
             isPrivate={isPrivate}
           />
-          <BookmarkButton
-            variant="page"
-            isFavorite={isFavorite}
-            onPressed={bookmarkWishlist}
-          />
+          <div className="flex items-center gap-1.5">
+            <ShareOnSocials />
+            <BookmarkButton
+              variant="page"
+              isFavorite={isFavorite}
+              onPressed={bookmarkWishlist}
+            />
+          </div>
         </div>
 
-        {description && (
-          <ExpandableText
-            text={description}
-            className="text-xs"
-            lines={3}
-            buttonTextSize="text-xs"
-          />
-        )}
+        {description && <HiddenDescription text={description} />}
       </div>
     );
 
   return (
-    <div className="space-y-4 lg:mb-3 pr-6">
-      <div className="flex justify-between items-start gap-4 lg:gap-2">
-        <div className="flex items-baseline gap-4">
-          <WishlistName
-            title={title}
-            isPrivate={isPrivate}
-            wishesCount={wishes ? wishes.length : 0}
-          />
+    <div className="space-y-4 lg:mb-3 px-2">
+      <div className="flex justify-between items-center gap-4">
+        <WishlistName title={title} isPrivate={isPrivate} />
+
+        <div className="flex items-center gap-2">
           {(userRoles?.isEditor || userRoles?.isWishlistOwner) && (
             <EditWishlistButton onClick={openWishlistEditor} variant="page" />
           )}
+          <ShareOnSocials />
         </div>
-        <WishlistCollaborators wishlistId={wishlistId} isPrivate={isPrivate} />
       </div>
-      <div className="flex justify-between items-start gap-2">
-        {description ? (
-          <ExpandableText
-            text={description}
-            className="max-w-[70%] text-xs lg:text-sm"
-            lines={3}
-            buttonTextSize="text-xs lg:text-sm"
-          />
-        ) : (
-          <Button
-            variant="link"
-            className="px-0 text-muted-foreground"
-            onClick={openWishlistEditor}
-          >
-            + Добавить описание
-          </Button>
-        )}
-
+      <div className="flex justify-between items-center">
+        <WishlistCollaborators wishlistId={wishlistId} isPrivate={isPrivate} />
         <BookmarkButton
           variant="page"
           isFavorite={isFavorite}
@@ -106,31 +84,45 @@ export function WishlistHeader({
           className="ms-auto"
         />
       </div>
+
+      {description && <HiddenDescription text={description} />}
     </div>
   );
 }
 
 export function WishlistName({
   title,
-  wishesCount,
+
   isPrivate,
 }: {
   title: string;
-  wishesCount: number;
+
   isPrivate: boolean;
 }) {
   return (
-    <div className="flex flex-col gap-2">
-      <p className="font-bold text-2xl lg:text-3xl 2xl:text-4xl leading-6 lg:leading-8">
+    <div className="flex items-center gap-3 lg:gap-5">
+      <p className="font-bold text-2xl lg:text-3xl 2xl:text-4xl line-clamp-2 lg:line-clamp-none leading-6 lg:leading-8">
         {title}
       </p>
-      <p className="inline-flex items-center gap-2 text-muted-foreground text-xs md:text-sm">
-        <span>{wishesCount} жел.</span>
-        <span>|</span>
-        <span className="flex items-center gap-2">
-          {isPrivate ? "приватный" : "публичный"}
-        </span>
+      <p
+        className={cn(
+          "inline-flex px-1.5 py-1 rounded-sm text-xs",
+          isPrivate ? "bg-chart-1" : "bg-chart-4"
+        )}
+      >
+        {isPrivate ? "приватный" : "публичный"}
       </p>
     </div>
+  );
+}
+
+function HiddenDescription({ text }: { text: string }) {
+  return (
+    <Accordion type="single" collapsible>
+      <AccordionItem value="item-1">
+        <AccordionTrigger>Показать описание</AccordionTrigger>
+        <AccordionContent>{text}</AccordionContent>
+      </AccordionItem>
+    </Accordion>
   );
 }
