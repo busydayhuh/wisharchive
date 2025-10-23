@@ -5,7 +5,7 @@ import { useState } from "react";
 import type z from "zod";
 import { uploadToStorage } from "../model/uploadToStorage";
 import BackButton from "./buttons/BackButton";
-import WishForm from "./WishForm";
+import { WishForm } from "./WishForm";
 import WishImageUpload from "./WishImageUpload";
 import { WishLayout } from "./WishLayout";
 

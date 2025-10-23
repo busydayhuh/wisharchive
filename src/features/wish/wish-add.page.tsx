@@ -4,11 +4,12 @@ import { useCurrentUser } from "@/shared/model/user/useCurrentUser";
 import { href, useNavigate } from "react-router";
 import type z from "zod";
 import { normalizeWishData } from "./model/normalizeWishData";
-import { wishMutations } from "./model/wishMutations";
+import { useWishMutations } from "./model/useWishMutations";
 import WishEditor from "./ui/WishEditor";
 
 function WishAddPage() {
   const { user, isLoading, error } = useCurrentUser();
+  const { create } = useWishMutations();
   const navigate = useNavigate();
 
   async function createWish(
@@ -22,7 +23,7 @@ function WishAddPage() {
       owner: user.$id,
     };
 
-    const response = await wishMutations.create(wish);
+    const response = await create(wish);
 
     if (response)
       navigate(

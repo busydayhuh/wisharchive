@@ -14,7 +14,7 @@ function CreateButtonWithDropdown() {
   const navigate = useNavigate();
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <div className="right-[50%] bottom-8 z-20 fixed flex justify-center items-center translate-x-[50%] cursor-pointer">
           <Plus className="z-10 absolute stroke-[1.5px] text-background" />

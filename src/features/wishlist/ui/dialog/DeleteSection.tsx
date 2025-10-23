@@ -1,6 +1,6 @@
 import DeleteButton from "@/shared/ui/DeleteButton";
 import { FormLabel } from "@/shared/ui/kit/form";
-import { wishlistMutations } from "../../model/wishlistMutations";
+import { useWishlistMutations } from "../../model/useWishlistMutations";
 
 type DeleteSectionProps = {
   wishlistId: string;
@@ -13,8 +13,10 @@ export function DeleteSection({
   wishlistTitle,
   setDialogOpen,
 }: DeleteSectionProps) {
+  const actions = useWishlistMutations();
+
   async function onConfirm() {
-    await wishlistMutations.delete(wishlistId);
+    await actions.delete(wishlistId);
     setDialogOpen(false);
   }
 

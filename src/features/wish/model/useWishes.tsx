@@ -47,7 +47,9 @@ export function useWishes(filters?: QueryFilters) {
   };
 
   const { data, isLoading, error, size, setSize, isValidating } =
-    useSWRInfinite(getWishKey, ([, , cursor]) => fetcher(queries!, cursor)); // если queries null, то key = null и запроса не будет
+    useSWRInfinite(getWishKey, ([, , cursor]) => fetcher(queries!, cursor), {
+      revalidateAll: true,
+    }); // если queries null, то key = null и запроса не будет
 
   const wishes = data?.flat();
   const reachedEnd = data && (data.at(-1)?.length ?? 0) < QUANTITY_LIMIT;

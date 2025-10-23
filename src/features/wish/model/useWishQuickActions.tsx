@@ -1,21 +1,23 @@
 import { useAuth } from "@/features/auth";
-import { mutateByKeyword } from "@/shared/model/mutateByKeyword";
 import { ROUTES } from "@/shared/model/routes";
 import type { LinkParams } from "@/shared/model/types";
+import { useRevalidationByKeyword } from "@/shared/model/useRevalidationByKeyword";
 import { useCallback } from "react";
 import { href, useNavigate } from "react-router";
-import { wishMutations } from "./wishMutations";
+import { useWishMutations } from "./useWishMutations";
 
 export function useWishQuickActions(wishId: string) {
   const { current } = useAuth();
   const navigate = useNavigate();
+  const { revalidateByKeyword } = useRevalidationByKeyword();
+  const actions = useWishMutations();
 
   const bookWish = useCallback(
     async (pressed: boolean) => {
       if (!current) return navigate(ROUTES.LOGIN);
 
       try {
-        await wishMutations.update(wishId, {
+        await actions.update(wishId, {
           isBooked: pressed,
           bookerId: pressed ? current.$id : null,
           bookedBy: pressed ? current.$id : null,
@@ -24,24 +26,24 @@ export function useWishQuickActions(wishId: string) {
         console.log("Не удалось забронировать желание");
       }
     },
-    [current, navigate, wishId]
+    [current, navigate, wishId, actions]
   );
 
   const archiveWish = useCallback(
     async (archived: boolean) => {
       try {
-        await wishMutations.update(wishId, {
+        await actions.update(wishId, {
           isArchived: !archived,
           wishlist: null,
           wishlistId: null,
         });
 
-        await mutateByKeyword("wishes");
+        revalidateByKeyword("wishes");
       } catch {
         console.log("Не удалось изменить статус архива");
       }
     },
-    [wishId]
+    [wishId, revalidateByKeyword, actions]
   );
 
   const editWish = useCallback(
@@ -52,42 +54,42 @@ export function useWishQuickActions(wishId: string) {
 
   const deleteWish = useCallback(async () => {
     try {
-      await wishMutations.delete(wishId);
+      await actions.delete(wishId);
     } catch {
       console.log("Не удалось удалить желание");
     }
-  }, [wishId]);
+  }, [wishId, actions]);
 
   const removeFromWishlist = useCallback(async () => {
     try {
-      await wishMutations.update(wishId, {
+      await actions.update(wishId, {
         wishlistId: null,
         wishlist: null,
       });
 
-      await mutateByKeyword("wishes");
+      revalidateByKeyword("wishes");
     } catch {
       console.log("Не удалось исключить желание из списка");
     }
-  }, [wishId]);
+  }, [wishId, revalidateByKeyword, actions]);
 
   const changeWishlist = useCallback(
     async (newWlId: string | null) => {
       try {
-        await wishMutations.update(wishId, {
+        await actions.update(wishId, {
           wishlistId: newWlId,
           wishlist: newWlId,
         });
 
-        await Promise.all([
-          mutateByKeyword("wishes"),
-          mutateByKeyword("wishlists"),
+        Promise.all([
+          revalidateByKeyword("wishes"),
+          revalidateByKeyword("wishlists"),
         ]);
       } catch {
         console.log("Не удалось изменить список");
       }
     },
-    [wishId]
+    [wishId, revalidateByKeyword, actions]
   );
 
   return {

@@ -33,7 +33,7 @@ export function DashboardLayout({
         key={meta.dashboardType}
       >
         <div className="relative mt-1 md:mt-8 px-1 md:px-0">
-          <div className="mb-2 md:mb-4 lg:mb-8">
+          <div className="mb-2 md:mb-4">
             {header ? header : defaultDashboardHeader}
           </div>
           <DashboardToolbar isOwner={meta.isDashboardOwner} />

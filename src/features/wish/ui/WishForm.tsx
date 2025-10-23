@@ -1,8 +1,6 @@
-import { CURRENCY } from "@/shared/lib/currency";
 import { wishFormSchema as formSchema } from "@/shared/model/formSchemas";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishDocumentType } from "@/shared/model/types";
-import { PRIORITIES } from "@/shared/ui/Badges";
 import ConfirmationDialog from "@/shared/ui/ConfirmationDialog";
 import { Button } from "@/shared/ui/kit/button";
 import {
@@ -15,19 +13,20 @@ import {
 } from "@/shared/ui/kit/form";
 import { Input } from "@/shared/ui/kit/input";
 import { Textarea } from "@/shared/ui/kit/textarea";
-import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChevronDown, Loader2 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { Loader2 } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
 import { href, useBlocker, useNavigate } from "react-router";
 import type z from "zod";
 import DeleteButton from "../../../shared/ui/DeleteButton";
-import { wishMutations } from "../model/wishMutations";
+import { useWishMutations } from "../model/useWishMutations";
+import { CurrencySelect } from "./CurrencySelect";
+import { PrioritySelect } from "./PrioritySelect";
 import { WishlistSelect } from "./wish-info/WishlistSelect";
 
-function WishForm({
+export function WishForm({
   wish,
   onSubmit,
 }: {
@@ -35,6 +34,7 @@ function WishForm({
   onSubmit: (values: z.infer<typeof formSchema>, wishId?: string) => void;
 }) {
   const [blockNavigate, setBlockNavigate] = useState(true);
+  const actions = useWishMutations();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -75,11 +75,11 @@ function WishForm({
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="gap-1">
+              <FormLabel className="gap-1" htmlFor="title">
                 Название <span className="text-destructive">*</span>
               </FormLabel>
               <FormControl>
-                <Input {...field} className="text-sm md:text-base" />
+                <Input {...field} className="text-sm md:text-base" id="title" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -215,7 +215,7 @@ function WishForm({
               variant="button"
               wishTitle={wish.title}
               action={async () => {
-                await wishMutations.delete(wish.$id);
+                await actions.delete(wish.$id);
 
                 setBlockNavigate(false);
                 navigate(
@@ -248,80 +248,3 @@ function WishForm({
     </Form>
   );
 }
-
-function CurrencySelect({
-  onValueChange,
-  value,
-}: {
-  onValueChange: (value: string) => void;
-  value: string;
-}) {
-  const options = useMemo(
-    () =>
-      CURRENCY.map((c) => ({
-        value: c.abbr,
-        label: c.title,
-        icon: c.icon,
-      })),
-    []
-  );
-
-  return (
-    <ResponsiveSelect
-      options={options}
-      onChange={onValueChange}
-      value={value}
-      renderTrigger={(selected) => (
-        <span className="flex justify-between items-center gap-1">
-          {selected?.icon}
-          <ChevronDown className="md:hidden size-3" />
-        </span>
-      )}
-      triggerCSS="bg-muted/60 px-3 rounded-sm h-9 text-muted-foreground"
-      renderOption={(opt) => (
-        <span className="flex justify-between items-center gap-2 py-2 w-full">
-          {opt.label}
-          <span className="text-muted-foreground">{opt.icon}</span>
-        </span>
-      )}
-      title="Валюта"
-    />
-  );
-}
-
-function PrioritySelect({
-  onValueChange,
-  value = "1",
-}: {
-  onValueChange: (value: string) => void;
-  value: "2" | "1" | "0";
-}) {
-  const options = useMemo(
-    () =>
-      Object.entries(PRIORITIES).map((i) => ({
-        value: i[0],
-        label: i[1].title,
-        colors: i[1].colors,
-        icon: i[1].icon,
-      })),
-    []
-  );
-
-  return (
-    <ResponsiveSelect
-      options={options}
-      onChange={onValueChange}
-      value={value}
-      renderTrigger={(selected) => (
-        <span className="flex items-center gap-1.5">
-          {selected?.icon}
-          {selected?.label}
-        </span>
-      )}
-      triggerCSS="py-6"
-      title="Приоритет"
-    />
-  );
-}
-
-export default WishForm;

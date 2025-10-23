@@ -9,7 +9,6 @@ function getBasicInfo(
   wishlist?: WishlistDocumentType | null,
   shopURL?: string | null
 ) {
-  console.log("🚀 ~ WishDetails.tsx:12 ~ getBasicInfo ~ wishlist:", wishlist);
   return [
     {
       header: "вишлист",

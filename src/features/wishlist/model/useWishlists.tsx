@@ -36,10 +36,6 @@ export function useWishlists(filters?: QueryFilters) {
     if (!filters) return null;
 
     // дошли до конца
-    console.log(
-      "🚀 ~ useWishlists.tsx:41 ~ getWishlistKey ~ previousPageData:",
-      previousPageData
-    );
     if (previousPageData && previousPageData.length === 0) return null;
     // первая страница, нет previousPageData
     if (pageIndex === 0 && filters)
@@ -50,7 +46,7 @@ export function useWishlists(filters?: QueryFilters) {
     return ["wishlists", stableStringify(filters), cursor];
   };
 
-  const { data, isLoading, error, size, setSize, isValidating } =
+  const { data, isLoading, error, size, setSize, isValidating, mutate } =
     useSWRInfinite(
       getWishlistKey,
       ([, , cursor]) => fetcher(queries!, cursor),
@@ -58,6 +54,7 @@ export function useWishlists(filters?: QueryFilters) {
         onSuccess: (data) => {
           data.flat().forEach((wl) => (wl.wishes ? wl.wishes.reverse() : null));
         },
+        revalidateAll: true,
       }
     );
 
@@ -72,6 +69,7 @@ export function useWishlists(filters?: QueryFilters) {
     setSize,
     isValidating,
     reachedEnd,
+    infiniteMutate: mutate,
   };
 }
 

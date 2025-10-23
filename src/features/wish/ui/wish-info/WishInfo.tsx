@@ -23,6 +23,7 @@ export const WishInfo = memo(function WishInfo({
         owner={wish.owner}
         isEditor={userRoles?.isEditor}
         editWish={() => editWish(linkParams.state)}
+        imageURL={wish.imageURL ?? undefined}
       />
 
       <WishDetails

@@ -5,11 +5,12 @@ import type z from "zod";
 import { useAuth } from "../auth";
 import { normalizeWishData } from "./model/normalizeWishData";
 import { useWish } from "./model/useWish";
-import { wishMutations } from "./model/wishMutations";
+import { useWishMutations } from "./model/useWishMutations";
 import WishEditor from "./ui/WishEditor";
 
 function WishEditPage() {
   const { current: authUser } = useAuth();
+  const { update } = useWishMutations();
   const navigate = useNavigate();
 
   const { wishId } = useParams();
@@ -22,11 +23,7 @@ function WishEditPage() {
     if (!wishId) return;
 
     const wishUpdates = normalizeWishData(formData);
-    const updatedWish = await wishMutations.update(wishId, wishUpdates);
-    console.log(
-      "🚀 ~ wish-edit.page.tsx:26 ~ updateWish ~ updatedWish:",
-      updatedWish
-    );
+    const updatedWish = await update(wishId, wishUpdates);
 
     if (updatedWish)
       navigate(href(ROUTES.WISH, { wishId, userId: updatedWish.ownerId }), {

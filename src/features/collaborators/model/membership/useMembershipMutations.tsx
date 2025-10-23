@@ -1,10 +1,11 @@
-import { wishlistMutations } from "@/features/wishlist";
-import { useMemo } from "react";
+import { useWishlistMutations } from "@/features/wishlist/";
+import { useCallback, useMemo } from "react";
 import team from "../../../../shared/model/teams";
 import { useTeamMembers } from "./useTeamMembers";
 
 function useMembershipMutations(teamId: string) {
   const { members, mutate } = useTeamMembers(teamId);
+  const { update } = useWishlistMutations();
 
   const editors = useMemo(
     () => members?.filter((m) => m.roles.includes("editors")),
@@ -15,57 +16,66 @@ function useMembershipMutations(teamId: string) {
     [members]
   );
 
-  async function addMemberAsEditor(email: string, userId: string) {
-    try {
-      const response = await team.addEditor(teamId, email, userId);
+  const addMemberAsEditor = useCallback(
+    async (email: string, userId: string) => {
+      try {
+        const response = await team.addEditor(teamId, email, userId);
 
-      await wishlistMutations.update(teamId, {
-        editorsIds: [...(editors?.map((m) => m.userId) ?? []), userId],
-      });
+        await update(teamId, {
+          editorsIds: [...(editors?.map((m) => m.userId) ?? []), userId],
+        });
 
-      mutate();
+        mutate();
 
-      return response;
-    } catch {
-      alert("Не удалось добавить пользователя");
-    }
-  }
+        return response;
+      } catch {
+        alert("Не удалось добавить пользователя");
+      }
+    },
+    [editors, update, teamId, mutate]
+  );
 
-  async function addMemberAsReader(email: string, userId: string) {
-    try {
-      const response = await team.addReader(teamId, email, userId);
+  const addMemberAsReader = useCallback(
+    async (email: string, userId: string) => {
+      try {
+        const response = await team.addReader(teamId, email, userId);
 
-      await wishlistMutations.update(teamId, {
-        readersIds: [...(readers?.map((m) => m.userId) ?? []), userId],
-      });
+        await update(teamId, {
+          readersIds: [...(readers?.map((m) => m.userId) ?? []), userId],
+        });
 
-      mutate();
+        mutate();
 
-      return response;
-    } catch {
-      alert("Не удалось добавить пользователя");
-    }
-  }
+        return response;
+      } catch {
+        alert("Не удалось добавить пользователя");
+      }
+    },
+    [mutate, readers, teamId, update]
+  );
 
-  async function deleteMember(userId: string) {
-    const membership = members?.find(
-      ({ userId: memberId }) => memberId === userId
-    );
-    const membershipId = membership?.$id ?? "";
+  const deleteMember = useCallback(
+    async (userId: string) => {
+      const membership = members?.find(
+        ({ userId: memberId }) => memberId === userId
+      );
+      const membershipId = membership?.$id ?? "";
 
-    try {
-      await team.deleteMembership(teamId, membershipId);
+      try {
+        await team.deleteMembership(teamId, membershipId);
 
-      await wishlistMutations.update(teamId, {
-        editorsIds: editors?.filter((m) => m.userId !== userId),
-        readersIds: readers?.filter((m) => m.userId !== userId),
-      });
+        await update(teamId, {
+          editorsIds: editors?.filter((m) => m.userId !== userId),
+          readersIds: readers?.filter((m) => m.userId !== userId),
+        });
 
-      mutate();
-    } catch {
-      alert("Не удалось удалить пользователя");
-    }
-  }
+        mutate();
+      } catch {
+        alert("Не удалось удалить пользователя");
+      }
+    },
+    [editors, members, mutate, update, readers, teamId]
+  );
 
   return { addMemberAsEditor, addMemberAsReader, deleteMember };
 }

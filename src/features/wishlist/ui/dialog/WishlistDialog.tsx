@@ -16,7 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { wishlistMutations } from "../../model/wishlistMutations";
+import { useWishlistMutations } from "../../model/useWishlistMutations";
 import CollaboratorsSection from "./CollaboratorsSection";
 import { DeleteSection } from "./DeleteSection";
 import { WishlistFormFields } from "./WishlistFormFields";
@@ -54,6 +54,8 @@ export function WishlistDialog({
     },
   });
 
+  const actions = useWishlistMutations();
+
   // const navigate = useNavigate();
   const { user: currentUser } = useCurrentUser();
 
@@ -61,23 +63,24 @@ export function WishlistDialog({
     if (action === "edit") {
       const privacyChanged = form.getFieldState("isPrivate").isDirty;
 
-      await wishlistMutations.update(
+      await actions.update(
         wishlist!.$id,
         values,
         values.isPrivate,
         privacyChanged
       );
-      //setIsOpen(false);
+
+      setIsOpen(false);
     }
 
     if (action === "create") {
-      await wishlistMutations.create({
+      await actions.create({
         ...values,
         ownerId: currentUser?.userId ?? "",
         owner: currentUser,
       });
 
-      document.body.style.pointerEvents = "auto";
+      setIsOpen(false);
 
       // if (newWishlist) {
       //   document.body.style.pointerEvents = "auto";

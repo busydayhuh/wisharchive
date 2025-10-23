@@ -23,10 +23,6 @@ function WishlistsPage() {
     sort: toolbarState.sort,
     filters: toolbarState.filters,
   });
-  console.log(
-    "🚀 ~ dashboard-lists.page.tsx:26 ~ WishlistsPage ~ wishlists:",
-    wishlists
-  );
 
   useInfiniteScroll({
     loadMore: () => setSize(size + 1),
