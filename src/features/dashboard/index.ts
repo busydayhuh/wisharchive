@@ -9,5 +9,6 @@ export { useWishlistcardMeta } from "./model/useWishlistcardMeta";
 export { DashboardLayout } from "./ui/DashboardLayout";
 export { DashboardContentContainer } from "./ui/main-content/DashboardContentContainer";
 export { WishesPageLayout } from "./ui/main-content/wishes/WishesPageLayout";
+export { WishlistControl } from "./ui/main-content/wishes/WishlistControl";
 export { ImageTiles } from "./ui/main-content/wishlists/ImageTiles";
 export { DashboardToolbar } from "./ui/toolbar/DashboardToolbar";

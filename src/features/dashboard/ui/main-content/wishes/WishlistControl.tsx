@@ -1,4 +1,4 @@
-import { useWishQuickActions, WishlistSelect } from "@/features/wish";
+import { useWishQuickActions, WishlistChanger } from "@/features/wish";
 import { cn } from "@/shared/lib/css";
 import { useConfirmationDialog } from "@/shared/model/confirmation-dialog/useConfirmationDialog";
 import type { WishlistDocumentType } from "@/shared/model/types";
@@ -8,6 +8,7 @@ import { X } from "lucide-react";
 
 export function WishlistControl({
   isOwner,
+  isMobile,
   isEditor,
   wishlist,
   wishId,
@@ -16,6 +17,7 @@ export function WishlistControl({
   variant = "gallery",
 }: {
   isOwner: boolean;
+  isMobile?: boolean;
   isEditor: boolean;
   wishlist: WishlistDocumentType | null;
   wishId: string;
@@ -34,9 +36,11 @@ export function WishlistControl({
       isOwner: isOwner,
     });
 
-  if (isOwner && !onListPage)
+  if (isOwner && !onListPage) {
+    if (isMobile && variant === "gallery") return null;
+
     return (
-      <WishlistSelect
+      <WishlistChanger
         value={wishlist?.$id ?? "none"}
         onValueChange={(newWlId: string) => {
           changeWishlist(newWlId === "none" ? null : newWlId);
@@ -44,7 +48,7 @@ export function WishlistControl({
         className={className}
       />
     );
-
+  }
   if ((isEditor || isOwner) && onListPage)
     return (
       <Button

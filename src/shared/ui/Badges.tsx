@@ -24,7 +24,7 @@ const badgesVariants = cva(
       size: {
         sm: "h-7 rounded-sm gap-1.5 px-3 has-[>svg]:px-2.5 text-xs rounded-sm",
         md: "lg:h-9 lg:px-4 lg:py-2 lg:has-[>svg]:px-3 px-2 py-1 h-8 has-[>svg]:px-2 text-xs lg:text-sm",
-        lg: "h-12 rounded-xl px-6 has-[>svg]:px-4 text-sm 2xl:text-base ",
+        lg: "h-12 rounded-xl px-6 has-[>svg]:px-4 text-sm",
       },
     },
     defaultVariants: {

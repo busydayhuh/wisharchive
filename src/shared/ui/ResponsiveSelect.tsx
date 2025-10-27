@@ -21,13 +21,13 @@ import {
   DrawerTrigger,
 } from "./kit/drawer";
 
-type Option = {
+export type Option = {
   value: string;
   label: string;
   icon?: React.ReactNode;
   colors?: string;
   disabled?: boolean;
-  additional?: { isPrivate: boolean };
+  additional?: { ownerId: string };
 };
 
 type ResponsiveSelectProps = {
@@ -58,7 +58,7 @@ export function ResponsiveSelect({
   const isMobile = useIsMobile();
   const selected = options.find((o) => o.value === value);
 
-  const optionsMap = Object.fromEntries(options.map((o) => [o.value, o]));
+  // const optionsMap = Object.fromEntries(options.map((o) => [o.value, o]));
 
   if (error) {
     return (
@@ -114,9 +114,7 @@ export function ResponsiveSelect({
                   variant={opt.value === value ? "muted" : "ghost"}
                   disabled={opt.disabled}
                   onClick={() => {
-                    return optionsMap[opt.value].additional
-                      ? onChange(opt.value, opt.additional)
-                      : onChange(opt.value);
+                    return onChange(opt.value);
                   }}
                   className="justify-start py-6 font-normal"
                 >
@@ -142,9 +140,7 @@ export function ResponsiveSelect({
   return (
     <Select
       onValueChange={(value: string) => {
-        return optionsMap[value].additional
-          ? onChange(value, optionsMap[value].additional)
-          : onChange(value);
+        return onChange(value);
       }}
       value={value}
     >
@@ -154,6 +150,7 @@ export function ResponsiveSelect({
         </SelectValue>
       </SelectTrigger>
       <SelectContent
+        align="end"
         className={cn(
           "bg-secondary max-h-[26rem] overflow-y-scroll",
           contentCSS
@@ -174,7 +171,7 @@ export function ResponsiveSelect({
                   </span>
                 </SelectItem>
 
-                <SelectSeparator />
+                <SelectSeparator className="opacity-50" />
               </React.Fragment>
             );
           }

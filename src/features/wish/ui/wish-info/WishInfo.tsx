@@ -21,16 +21,18 @@ export const WishInfo = memo(function WishInfo({
       <WishHeader
         title={wish.title}
         owner={wish.owner}
-        isEditor={userRoles?.isEditor}
+        isEditor={userRoles?.isWishOwner}
         editWish={() => editWish(linkParams.state)}
         imageURL={wish.imageURL ?? undefined}
       />
 
       <WishDetails
+        wishId={wish.$id}
         wishlist={wish.wishlist}
         priority={wish.priority}
         description={wish.description}
         shopURL={wish.shopURL}
+        isOwner={userRoles?.isWishOwner ?? false}
       />
 
       <WishFooter
@@ -41,8 +43,8 @@ export const WishInfo = memo(function WishInfo({
         currency={wish.currency}
         shopURL={wish.shopURL}
         isArchived={wish.isArchived}
-        isBooker={userRoles?.isEditor ?? false}
-        isOwner={userRoles?.isEditor ?? false}
+        isBooker={userRoles?.isBooker ?? false}
+        isOwner={userRoles?.isWishOwner ?? false}
       />
     </div>
   );
