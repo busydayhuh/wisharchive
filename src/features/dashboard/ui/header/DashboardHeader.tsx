@@ -16,9 +16,9 @@ const DashboardHeader = memo(function DashboardHeader({
   isDashboardOwner = true,
 }: DashboardHeaderProps) {
   return (
-    <div className="flex justify-between md:items-center gap-4 md:gap-6">
+    <div className="flex justify-between md:items-center gap-4 md:gap-6 mb-1.5 md:mb-3 lg:mb-8 pt-1.5 md:pt-0">
       {title && isDashboardOwner && (
-        <p className="font-bold text-2xl md:text-4xl lg:text-5xl leading-8">
+        <p className="font-bold text-3xl md:text-4xl lg:text-5xl leading-8">
           {title}
         </p>
       )}

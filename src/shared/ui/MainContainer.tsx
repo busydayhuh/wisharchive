@@ -13,9 +13,9 @@ function MainContainer({
   return (
     <main
       className={cn(
-        "relative px-1 md:px-4 md:pr-5 md:pb-4 lg:pl-12 w-full min-w-0",
+        "relative mt-0 md:mt-2 lg:mt-4 px-1 md:px-5 md:pb-4 lg:pl-8 w-full",
         outside && "px-0 py-0",
-        slimLayout && "2xl:mx-auto max-w-[96rem]"
+        slimLayout && "mx-auto max-w-[100rem]"
       )}
     >
       {children}

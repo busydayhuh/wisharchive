@@ -42,12 +42,12 @@ export function DeleteButton({
   const extendedBtn = (
     <Button
       type="button"
-      variant="outline"
+      variant="muted"
       aria-label="Удалить"
       onClick={handleClick}
       size="lg"
       className={cn(
-        "bg-muted md:bg-transparent shadow-none text-muted-foreground md:text-foreground",
+        "bg-muted md:bg-transparent shadow-none h-14 md:h-12 text-foreground",
         className
       )}
     >

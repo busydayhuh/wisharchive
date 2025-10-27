@@ -67,9 +67,11 @@ export function WishForm({
           setBlockNavigate(false);
           await onSubmit(values, wish?.$id);
         })}
-        className="flex flex-col gap-4 md:gap-6 md:ml-4 px-2 md:px-0 pb-2"
+        className="flex flex-col gap-4 md:gap-6 mt-3 md:mt-0 md:ml-4 px-2 md:px-0 pb-2"
       >
-        <p className="font-bold text-lg md:text-2xl">{pageHeader}</p>
+        <p className="hidden md:block font-bold text-lg md:text-2xl">
+          {pageHeader}
+        </p>
         <FormField
           control={form.control}
           name="title"
@@ -200,6 +202,7 @@ export function WishForm({
             type="submit"
             disabled={form.formState.isSubmitting}
             size="lg"
+            className="h-14 md:h-12"
           >
             {form.formState.isSubmitting ? (
               <>

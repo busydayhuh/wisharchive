@@ -7,8 +7,9 @@ import {
   WishQuickActions,
 } from "@/features/wish";
 import { cn } from "@/shared/lib/css";
+import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import type { LinkParams, WishDocumentType } from "@/shared/model/types";
-import { PriorityBadge } from "@/shared/ui/Badges";
+import { PriorityBadge, PRIVACY_ICONS } from "@/shared/ui/Badges";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { memo, type ReactNode } from "react";
 import { Link } from "react-router";
@@ -39,6 +40,7 @@ const WishGalleryItem = memo(function WishGalleryItem({
 }) {
   const { onBookedPage, onListPage, userRoles, linkParams } =
     useWishcardMeta(wish);
+  const isMobile = useIsMobile();
 
   return (
     <div
@@ -46,13 +48,19 @@ const WishGalleryItem = memo(function WishGalleryItem({
         "relative flex flex-col gap-2 md:gap-2 mb-4 md:mb-8 overflow-hidden"
       )}
     >
-      <WishCover wish={wish} userRoles={userRoles} linkParams={linkParams} />
+      <WishCover
+        wish={wish}
+        userRoles={userRoles}
+        linkParams={linkParams}
+        isMobile={isMobile}
+      />
+
       {!wish.isArchived && (
         <WishlistControl
           className={cn(
-            "top-3 right-3 absolute hover:bg-muted md:py-5 w-fit max-w-[16ch] md:max-w-[24ch] font-medium md:text-sm 2xl:text-sm truncate",
-            !wish.wishlist && "show-actions"
+            "top-3 right-3 absolute w-fit font-medium md:text-sm 2xl:text-sm"
           )}
+          isMobile={isMobile}
           onListPage={!!onListPage}
           isOwner={userRoles?.isWishOwner ?? false}
           isEditor={userRoles?.isEditor ?? false}
@@ -99,10 +107,12 @@ const WishCover = memo(function WishCover({
   wish,
   userRoles,
   linkParams,
+  isMobile,
 }: {
   wish: WishDocumentType;
   userRoles?: WishRoles;
   linkParams: LinkParams;
+  isMobile: boolean;
 }) {
   return (
     <div className={cn("relative rounded-2xl overflow-hidden")}>
@@ -115,6 +125,12 @@ const WishCover = memo(function WishCover({
           isBooked={wish.isBooked}
         />
       </Link>
+
+      {wish.wishlist?.isPrivate && isMobile && (
+        <div className="top-2 left-2 absolute flex justify-center items-center rounded-full w-6 h-6 overflow-clip">
+          {PRIVACY_ICONS.private}
+        </div>
+      )}
 
       {userRoles && (
         <div

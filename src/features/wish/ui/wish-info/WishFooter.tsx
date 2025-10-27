@@ -38,7 +38,7 @@ export const WishFooter = memo(function WishFooter({
           variant="button"
           wishTitle={wishTitle}
           isArchived={isArchived}
-          className="w-full md:w-fit"
+          className="w-full md:w-fit h-14"
         />
       ) : (
         <BookButton
@@ -46,7 +46,7 @@ export const WishFooter = memo(function WishFooter({
           triggerVariant="page"
           isBooked={isBooked}
           isBookedByCurrentUser={isBooker}
-          className="w-full md:w-fit"
+          className="w-full md:w-fit h-14"
         />
       )}
     </div>

@@ -7,8 +7,9 @@ import {
 } from "@/features/wish";
 import "@/shared/assets/custom.css";
 import { cn } from "@/shared/lib/css";
+import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import type { WishDocumentType } from "@/shared/model/types";
-import { PriorityBadge, ShopBadge } from "@/shared/ui/Badges";
+import { PriorityBadge, PRIVACY_ICONS, ShopBadge } from "@/shared/ui/Badges";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { memo } from "react";
 import { Link } from "react-router";
@@ -21,6 +22,8 @@ const WishTableItem = memo(function WishTableItem({
 }) {
   const { userRoles, onBookedPage, onListPage, hasAccess, linkParams } =
     useWishcardMeta(wish);
+
+  const isMobile = useIsMobile();
 
   if (!hasAccess) return null;
 
@@ -36,13 +39,20 @@ const WishTableItem = memo(function WishTableItem({
         state={linkParams.state}
         className="group-card-wrapper flex items-center"
       >
-        <WishImage
-          wishId={wish.$id}
-          url={wish.imageURL}
-          alt={wish.title}
-          isBooked={wish.isBooked}
-          variant="table"
-        />
+        <div className="relative">
+          <WishImage
+            wishId={wish.$id}
+            url={wish.imageURL}
+            alt={wish.title}
+            isBooked={wish.isBooked}
+            variant="table"
+          />
+          {isMobile && wish.wishlist?.isPrivate && (
+            <div className="top-2 left-2 absolute flex justify-center items-center rounded-full w-6 h-6 overflow-clip">
+              {PRIVACY_ICONS.private}
+            </div>
+          )}
+        </div>
 
         {/* Название и цена */}
         <div className="flex flex-col gap-2 px-4 lg:px-8">
@@ -87,7 +97,7 @@ const WishTableItem = memo(function WishTableItem({
       {/* Отображается при w >= 768px */}
       <div className="hidden md:block justify-self-center">
         <WishlistControl
-          className="hover:bg-secondary/70 md:py-5 w-fit max-w-[16ch] lg:max-w-[24ch] h-9 font-medium text-xs lg:text-sm truncate"
+          className="w-fit h-9 font-medium text-xs lg:text-sm"
           isOwner={userRoles?.isWishOwner ?? false}
           onListPage={!!onListPage}
           isEditor={userRoles?.isEditor ?? false}

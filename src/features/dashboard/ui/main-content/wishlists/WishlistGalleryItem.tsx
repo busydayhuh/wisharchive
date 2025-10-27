@@ -1,6 +1,7 @@
 import { CollaboratorsAvatars } from "@/features/collaborators";
 import { useWishlistcardMeta } from "@/features/dashboard/model/useWishlistcardMeta";
 import { BookmarkButton, EditWishlistButton } from "@/features/wishlist";
+import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { PRIVACY_ICONS, RoleBadge } from "@/shared/ui/Badges";
 import { memo } from "react";
@@ -22,6 +23,8 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
     linkParams,
   } = useWishlistcardMeta(wishlist);
 
+  const isMobile = useIsMobile();
+
   return (
     <>
       <div className="group-card-wrapper flex flex-col gap-1 mb-4">
@@ -34,7 +37,7 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
           />
 
           {/* Редактировать */}
-          {(userRoles?.isWishlistOwner || userRoles?.isEditor) && (
+          {(userRoles?.isWishlistOwner || userRoles?.isEditor) && !isMobile && (
             <EditWishlistButton
               onClick={openWishlistEditor}
               className="right-2 bottom-2 absolute show-actions"
@@ -42,8 +45,13 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
           )}
 
           {/* Стопка картинок */}
-          <Link {...linkParams}>
+          <Link {...linkParams} className="relative">
             <ImageTiles wishes={wishlist.wishes} />
+            {wishlist.isPrivate && (
+              <div className="top-2 left-2 absolute flex justify-center items-center rounded-full w-6 md:w-8 h-6 md:h-8 overflow-clip">
+                {PRIVACY_ICONS.private}
+              </div>
+            )}
           </Link>
         </div>
 
@@ -54,9 +62,6 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
               <p className="max-w-[10ch] sm:max-w-[20ch] font-medium truncate leading-tight">
                 {wishlist.title}
               </p>
-              {wishlist.isPrivate &&
-                //
-                PRIVACY_ICONS.private}
             </div>
 
             {/* Соавторы */}

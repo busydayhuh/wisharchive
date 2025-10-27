@@ -15,7 +15,7 @@ const wishImageVariants = {
     icon: "w-6 h-6 md:w-10 md:h-10",
   },
   page: {
-    img: "rounded-3xl max-h-[24rem] md:max-h-[40rem] 2xl:max-h-[52rem]",
+    img: "lg:rounded-[3rem] rounded-3xl max-h-[24rem] md:max-h-[40rem] 2xl:max-h-[56rem]",
     fallback: "aspect-[4/5]",
     icon: "",
   },

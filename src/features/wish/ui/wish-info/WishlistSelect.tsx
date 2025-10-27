@@ -53,7 +53,6 @@ export function WishlistSelect({
       value: "none",
       label: "без списка",
       icon: icons.none,
-      additional: { isPrivate: false },
     },
     ...(wishlists ?? []).map((wl) => ({
       value: wl.$id,

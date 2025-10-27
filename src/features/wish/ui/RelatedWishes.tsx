@@ -40,7 +40,7 @@ export const RelatedWishes = memo(function RelatedWishes({
 
   if (relatedWishes)
     return (
-      <div className="space-y-3 md:space-y-6 mx-2 md:mx-auto mt-10 md:mt-20 md:max-w-[96%]">
+      <div className="space-y-3 md:space-y-6 mx-2 md:mx-auto md:max-w-[96%]">
         <div className="flex flex-wrap justify-between">
           <div className="font-bold text-lg md:text-xl 2xl:text-2xl">
             Другие желания пользователя {userName}

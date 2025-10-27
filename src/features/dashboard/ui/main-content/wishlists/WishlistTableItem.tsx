@@ -3,10 +3,9 @@ import { useWishlistcardMeta } from "@/features/dashboard/model/useWishlistcardM
 import { BookmarkButton, EditWishlistButton } from "@/features/wishlist";
 import "@/shared/assets/custom.css";
 import type { WishlistDocumentType } from "@/shared/model/types";
-import { RoleBadge } from "@/shared/ui/Badges";
+import { PRIVACY_ICONS, RoleBadge } from "@/shared/ui/Badges";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
-import { EyeClosed } from "lucide-react";
 import { memo, useMemo } from "react";
 import { Link } from "react-router";
 import { ImageTiles } from "./ImageTiles";
@@ -41,8 +40,13 @@ const WishlistTableItem = memo(function WishlistTableItem({
   return (
     <div className="wl-table-grid relative items-center py-2 pl-2 md:pl-0">
       {/* Превью желаний */}
-      <Link {...linkParams}>
+      <Link {...linkParams} className="relative">
         <ImageTiles wishes={wishlist.wishes} variant="table" />
+        {wishlist.isPrivate && (
+          <div className="top-4 left-0 absolute flex justify-center items-center rounded-full w-6 md:w-8 h-6 md:h-8 overflow-clip">
+            {PRIVACY_ICONS.private}
+          </div>
+        )}
       </Link>
 
       {/* Заголовок и счетчик желаний */}
@@ -50,9 +54,6 @@ const WishlistTableItem = memo(function WishlistTableItem({
         <div className="flex flex-col gap-1 lg:basis-2xs">
           <div className="flex items-center gap-2 pr-1 font-medium text-base 2xl:text-lg">
             <p className="max-w-[42ch] truncate">{wishlist.title}</p>
-            {wishlist.isPrivate && (
-              <EyeClosed className="size-3 md:size-4 text-muted-foreground" />
-            )}
           </div>
 
           {onSharedPage ? (

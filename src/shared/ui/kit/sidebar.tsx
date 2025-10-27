@@ -1,7 +1,7 @@
 import { Slot } from "@radix-ui/react-slot";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { ChevronLeft, ChevronRight, Menu } from "lucide-react";
+import { ChevronLeft, ChevronRight, PanelLeft } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/shared/lib/css";
@@ -268,7 +268,7 @@ function SidebarTrigger({
       className={cn(
         "hover:bg-sidebar",
         className,
-        isMobile && "has-[>svg]:px-1",
+        isMobile && "has-[>svg]:px-0",
         !isMobile &&
           "rounded-full rounded-tl-none rounded-bl-none bg-sidebar text-sidebar-foreground"
       )}
@@ -279,7 +279,7 @@ function SidebarTrigger({
       {...props}
     >
       {isMobile ? (
-        <Menu className="size-5" />
+        <PanelLeft className="size-4 text-muted-foreground" />
       ) : state === "collapsed" ? (
         <ChevronRight className="size-3" />
       ) : (

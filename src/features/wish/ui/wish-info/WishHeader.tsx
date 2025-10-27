@@ -19,7 +19,7 @@ export const WishHeader = memo(function WishHeader({
   imageURL?: string;
 }) {
   return (
-    <div className="flex flex-col gap-2 md:gap-4">
+    <div className="flex flex-col gap-2">
       <div className="flex justify-between items-baseline gap-4">
         <p className="font-bold text-xl md:text-2xl lg:text-3xl 2xl:text-4xl">
           {title}
