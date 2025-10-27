@@ -87,6 +87,12 @@ export function Breadcrumbs({ className }: { className?: string }) {
                   <BreadcrumbLink asChild>
                     <Link
                       to={link}
+                      state={{
+                        data: {
+                          wishTitle: crumb.label,
+                          wlTitle: crumb.label,
+                        },
+                      }}
                       className="max-w-[20ch] md:max-w-full truncate"
                     >
                       {crumb.label}
