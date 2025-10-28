@@ -108,7 +108,7 @@ const WishTableItem = memo(function WishTableItem({
       </div>
 
       {/* Быстрые действия / забронировать */}
-      <div className="justify-self-end md:justify-self-center">
+      <div className="justify-self-end lg:justify-self-center">
         {onListPage && (userRoles?.isWishOwner || userRoles?.isEditor) ? (
           <WishlistControl
             className="w-fit h-9 font-medium text-xs lg:text-sm"

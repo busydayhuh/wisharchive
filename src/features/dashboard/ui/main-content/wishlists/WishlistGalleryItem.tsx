@@ -56,7 +56,7 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
         </div>
 
         <Link {...linkParams}>
-          <div className="flex flex-wrap justify-between items-center mt-1 px-2">
+          <div className="flex justify-between items-center mt-1 px-2">
             {/* Название */}
             <div className="flex items-center gap-2 pr-2 text-base md:text-lg">
               <p className="max-w-[10ch] sm:max-w-[20ch] font-medium truncate leading-tight">
@@ -70,7 +70,6 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
                 collaborators={collaborators}
                 size="sm"
                 maxVisible={3}
-                className="mt-1"
                 hideOwner={true}
               />
             )}

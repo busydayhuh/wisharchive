@@ -36,7 +36,7 @@ export function SortingSelect() {
       onChange={setSort}
       options={options}
       renderTrigger={(selected) => (
-        <p className="flex items-center gap-2 w-full text-xs md:text-sm">
+        <p className="flex items-center gap-2 w-full text-xs lg:text-sm">
           <span className="flex items-center gap-1.5">
             {selected?.icon}
             {selected?.label}
