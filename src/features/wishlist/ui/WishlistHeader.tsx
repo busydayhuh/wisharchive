@@ -36,7 +36,7 @@ export function WishlistHeader({
 
   if (isMobile)
     return (
-      <div className="space-y-3 mt-3 mb-5">
+      <div className="space-y-3 mt-3 mb-1">
         <div className="flex justify-between items-center gap-2">
           <WishlistName title={title} isPrivate={isPrivate} />
         </div>
@@ -65,7 +65,7 @@ export function WishlistHeader({
     );
 
   return (
-    <div className="space-y-4 mt-2 lg:mb-5">
+    <div className="space-y-4 mt-2 mb-3 lg:mb-5">
       <div className="flex justify-between items-center gap-4">
         <WishlistName title={title} isPrivate={isPrivate} />
 

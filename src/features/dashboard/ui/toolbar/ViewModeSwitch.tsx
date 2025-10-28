@@ -12,7 +12,7 @@ function ViewModeSwitch({
   className,
 }: ViewModeSwitchType & React.ComponentProps<"div">) {
   const toggleStyles =
-    "cursor-pointer rounded-sm first:rounded-l-sm last:rounded-r-sm text-muted-foreground";
+    "cursor-pointer rounded-sm first:rounded-l-sm last:rounded-r-sm text-muted-foreground data-[state=on]:bg-primary data-[state=on]:text-background";
 
   return (
     <ToggleGroup
