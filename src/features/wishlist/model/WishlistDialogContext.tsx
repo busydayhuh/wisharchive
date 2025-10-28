@@ -1,4 +1,4 @@
-import WishlistDialog from "@/features/wishlist/ui/dialog/WishlistDialog";
+import WishlistDialog from "@/features/wishlist/ui/editor-dialog/WishlistDialog";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { useCallback, useState } from "react";
 

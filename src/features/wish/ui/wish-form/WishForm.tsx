@@ -20,11 +20,11 @@ import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
 import { href, useBlocker, useNavigate } from "react-router";
 import type z from "zod";
-import DeleteButton from "../../../shared/ui/DeleteButton";
-import { useWishMutations } from "../model/useWishMutations";
+import DeleteButton from "../../../../shared/ui/DeleteButton";
+import { useWishMutations } from "../../model/useWishMutations";
 import { CurrencySelect } from "./CurrencySelect";
 import { PrioritySelect } from "./PrioritySelect";
-import { WishlistSelect } from "./wish-info/WishlistSelect";
+import { WishlistSelect } from "./WishlistSelect";
 
 export function WishForm({
   wish,

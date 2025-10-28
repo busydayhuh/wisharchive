@@ -7,5 +7,5 @@ export {
 export { useWishlists } from "./model/useWishlists";
 export type { QueryFilters } from "./model/useWishlists";
 export { WishlistDialogProvider } from "./model/WishlistDialogContext";
-export { BookmarkButton } from "./ui/BookmarkButton";
-export { EditWishlistButton } from "./ui/EditWishlistButton";
+export { BookmarkButton } from "./ui/actions/BookmarkButton";
+export { EditWishlistButton } from "./ui/actions/EditWishlistButton";

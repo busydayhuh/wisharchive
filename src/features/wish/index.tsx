@@ -1,8 +1,8 @@
+export { useQuickActions } from "./model/useQuickActions";
 export { useWishes } from "./model/useWishes";
-export { useWishQuickActions } from "./model/useWishQuickActions";
-export { BookButton } from "./ui/buttons/BookButton";
+export { BookButton } from "./ui/actions/BookButton";
+export { QuickActions } from "./ui/actions/QuickActions";
 export { FormattedPrice } from "./ui/FormattedPrice";
+export { WishlistSelect } from "./ui/wish-form/WishlistSelect";
 export { WishlistChanger } from "./ui/wish-info/WishlistChanger";
-export { WishlistSelect } from "./ui/wish-info/WishlistSelect";
 export { WishImage } from "./ui/WishImage";
-export { WishQuickActions } from "./ui/WishQuickActions";

@@ -4,8 +4,8 @@ import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import type z from "zod";
 import { uploadToStorage } from "../model/uploadToStorage";
-import BackButton from "./buttons/BackButton";
-import { WishForm } from "./WishForm";
+import BackButton from "./actions/BackButton";
+import { WishForm } from "./wish-form/WishForm";
 import WishImageUpload from "./WishImageUpload";
 import { WishLayout } from "./WishLayout";
 

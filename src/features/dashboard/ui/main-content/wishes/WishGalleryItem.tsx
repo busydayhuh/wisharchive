@@ -3,8 +3,8 @@ import { useWishcardMeta } from "@/features/dashboard/model/useWishcardMeta";
 import {
   BookButton,
   FormattedPrice,
+  QuickActions,
   WishImage,
-  WishQuickActions,
 } from "@/features/wish";
 import { cn } from "@/shared/lib/css";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
@@ -139,7 +139,7 @@ const WishCover = memo(function WishCover({
           )}
         >
           {userRoles.isWishOwner ? (
-            <WishQuickActions
+            <QuickActions
               wishId={wish.$id}
               triggerVariant="gallery"
               side="top"

@@ -1,4 +1,4 @@
-import { useWishQuickActions, WishlistChanger } from "@/features/wish";
+import { useQuickActions, WishlistChanger } from "@/features/wish";
 import { cn } from "@/shared/lib/css";
 import { useConfirmationDialog } from "@/shared/model/confirmation-dialog/useConfirmationDialog";
 import type { WishlistDocumentType } from "@/shared/model/types";
@@ -25,7 +25,7 @@ export function WishlistControl({
   className?: string;
   variant?: "gallery" | "table";
 }) {
-  const { changeWishlist, removeFromWishlist } = useWishQuickActions(wishId);
+  const { changeWishlist, removeFromWishlist } = useQuickActions(wishId);
   const { openConfDialog } = useConfirmationDialog();
 
   const handleRemove = () =>

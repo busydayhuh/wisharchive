@@ -8,8 +8,8 @@ import {
   AccordionTrigger,
 } from "@/shared/ui/kit/accordion";
 import ShareOnSocials from "@/shared/ui/ShareOnSocials";
-import { BookmarkButton } from "./BookmarkButton";
-import { EditWishlistButton } from "./EditWishlistButton";
+import { BookmarkButton } from "./actions/BookmarkButton";
+import { EditWishlistButton } from "./actions/EditWishlistButton";
 import { WishlistCollaborators } from "./WishlistCollaborators";
 
 export function WishlistHeader({

@@ -15,9 +15,9 @@ import {
 import { cva, type VariantProps } from "class-variance-authority";
 import { Archive, ArchiveRestore, Edit2, Ellipsis, Trash2 } from "lucide-react";
 import { type JSX } from "react";
-import DeleteButton from "../../../shared/ui/DeleteButton";
-import { useWishQuickActions } from "../model/useWishQuickActions";
-import { ArchiveButton } from "./buttons/ArchiveButton";
+import DeleteButton from "../../../../shared/ui/DeleteButton";
+import { useQuickActions } from "../../model/useQuickActions";
+import { ArchiveButton } from "./ArchiveButton";
 
 const dropdownTriggerVariants = cva(
   "inline-flex justify-center items-center border-0 rounded-sm size-9 text-foreground text-sm transition duration-300 cursor-pointer shrink-0",
@@ -44,7 +44,7 @@ type MenuItem = {
   confirmation?: boolean;
 };
 
-type WishQuickActionsProps = {
+type QuickActionsProps = {
   wishId: string;
   title: string;
   linkState: LinkParams["state"];
@@ -54,7 +54,7 @@ type WishQuickActionsProps = {
 } & React.ComponentProps<"div"> &
   DropdownTriggerVariants;
 
-export function WishQuickActions({
+export function QuickActions({
   wishId,
   title,
   linkState,
@@ -63,10 +63,10 @@ export function WishQuickActions({
   side = "top",
   triggerVariant = "gallery",
   className,
-}: WishQuickActionsProps) {
+}: QuickActionsProps) {
   const isMobile = useIsMobile();
   const { openConfDialog } = useConfirmationDialog();
-  const { archiveWish, deleteWish, editWish } = useWishQuickActions(wishId);
+  const { archiveWish, deleteWish, editWish } = useQuickActions(wishId);
 
   const handleItemSelect = (item: MenuItem) => {
     if (item.confirmation) {

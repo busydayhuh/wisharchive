@@ -6,7 +6,7 @@ import { useCallback } from "react";
 import { href, useNavigate } from "react-router";
 import { useWishMutations } from "./useWishMutations";
 
-export function useWishQuickActions(wishId: string) {
+export function useQuickActions(wishId: string) {
   const { current } = useAuth();
   const navigate = useNavigate();
   const { revalidateByKeyword } = useRevalidationByKeyword();

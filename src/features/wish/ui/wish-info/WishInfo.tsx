@@ -1,7 +1,7 @@
 import { useWishcardMeta } from "@/features/dashboard";
 import type { WishDocumentType } from "@/shared/model/types";
 import { memo } from "react";
-import { useWishQuickActions } from "../../model/useWishQuickActions";
+import { useQuickActions } from "../../model/useQuickActions";
 import { WishDetails } from "./WishDetails";
 import { WishFooter } from "./WishFooter";
 import { WishHeader } from "./WishHeader";
@@ -12,7 +12,7 @@ export const WishInfo = memo(function WishInfo({
   wish: WishDocumentType;
 }) {
   const { userRoles, hasAccess, linkParams } = useWishcardMeta(wish);
-  const { editWish } = useWishQuickActions(wish.$id);
+  const { editWish } = useQuickActions(wish.$id);
 
   if (!hasAccess) return null;
 

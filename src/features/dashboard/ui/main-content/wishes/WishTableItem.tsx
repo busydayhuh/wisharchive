@@ -2,8 +2,8 @@ import { useWishcardMeta } from "@/features/dashboard/model/useWishcardMeta";
 import {
   BookButton,
   FormattedPrice,
+  QuickActions,
   WishImage,
-  WishQuickActions,
 } from "@/features/wish";
 import "@/shared/assets/custom.css";
 import { cn } from "@/shared/lib/css";
@@ -110,7 +110,7 @@ const WishTableItem = memo(function WishTableItem({
       {/* Быстрые действия / забронировать */}
       <div className="justify-self-end md:justify-self-center">
         {userRoles?.isWishOwner ? (
-          <WishQuickActions
+          <QuickActions
             wishId={wish.$id}
             title={wish.title}
             triggerVariant="table"

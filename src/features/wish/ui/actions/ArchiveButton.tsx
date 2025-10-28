@@ -3,7 +3,7 @@ import { useConfirmationDialog } from "@/shared/model/confirmation-dialog/useCon
 import { IconBtnWithTooltip } from "@/shared/ui/IconBtnWithTooltip";
 import { Button } from "@/shared/ui/kit/button";
 import { Archive, ArchiveRestore } from "lucide-react";
-import { useWishQuickActions } from "../../model/useWishQuickActions";
+import { useQuickActions } from "../../model/useQuickActions";
 
 type ArchiveButtonProps = {
   wishId: string;
@@ -20,7 +20,7 @@ export function ArchiveButton({
   className,
 }: ArchiveButtonProps) {
   const { openConfDialog } = useConfirmationDialog();
-  const { archiveWish } = useWishQuickActions(wishId);
+  const { archiveWish } = useQuickActions(wishId);
 
   const handleClick = () =>
     openConfDialog({

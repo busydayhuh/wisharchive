@@ -5,7 +5,7 @@ import { Toggle } from "@/shared/ui/kit/toggle";
 import { cva } from "class-variance-authority";
 import { LockKeyhole, LockKeyholeOpen } from "lucide-react";
 import { memo } from "react";
-import { useWishQuickActions } from "../../model/useWishQuickActions";
+import { useQuickActions } from "../../model/useQuickActions";
 
 const bookButtonVariants = cva(
   "inline-flex justify-center items-center border-0 transition duration-300 cursor-pointer shrink-0",
@@ -35,7 +35,7 @@ export const BookButton = memo(function BookButton({
   isBookedByCurrentUser: boolean;
 }) {
   const { openConfDialog } = useConfirmationDialog();
-  const { bookWish } = useWishQuickActions(wishId);
+  const { bookWish } = useQuickActions(wishId);
 
   const handlePress = () =>
     openConfDialog({

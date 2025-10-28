@@ -1,6 +1,6 @@
 import { memo } from "react";
-import { ArchiveButton } from "../buttons/ArchiveButton";
-import { BookButton } from "../buttons/BookButton";
+import { ArchiveButton } from "../actions/ArchiveButton";
+import { BookButton } from "../actions/BookButton";
 import { FormattedPrice } from "../FormattedPrice";
 
 export const WishFooter = memo(function WishFooter({
