@@ -95,7 +95,7 @@ const WishTableItem = memo(function WishTableItem({
 
       {/* Управление вишлистом */}
       {/* Отображается при w >= 768px */}
-      <div className="hidden md:block justify-self-center">
+      <div className="hidden md:block justify-self-end md:justify-self-center">
         <WishlistControl
           className="w-fit h-9 font-medium text-xs lg:text-sm"
           isOwner={userRoles?.isWishOwner ?? false}
@@ -109,7 +109,17 @@ const WishTableItem = memo(function WishTableItem({
 
       {/* Быстрые действия / забронировать */}
       <div className="justify-self-end md:justify-self-center">
-        {userRoles?.isWishOwner ? (
+        {onListPage && (userRoles?.isWishOwner || userRoles?.isEditor) ? (
+          <WishlistControl
+            className="w-fit h-9 font-medium text-xs lg:text-sm"
+            isOwner={userRoles?.isWishOwner ?? false}
+            onListPage={!!onListPage}
+            isEditor={userRoles?.isEditor ?? false}
+            wishlist={wish.wishlist}
+            wishId={wish.$id}
+            variant="table"
+          />
+        ) : userRoles?.isWishOwner ? (
           <QuickActions
             wishId={wish.$id}
             title={wish.title}
