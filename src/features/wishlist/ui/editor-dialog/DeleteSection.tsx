@@ -28,7 +28,7 @@ export function DeleteSection({
         wishTitle={wishlistTitle}
         action={onConfirm}
         buttonText="Удалить вишлист"
-        className="hover:bg-transparent has-[>svg]:px-0 py-0 hover:text-red-700"
+        className="mt-2 md:mt-0 h-12"
       />
     </div>
   );

@@ -5,7 +5,6 @@ import {
   Select,
   SelectContent,
   SelectItem,
-  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from "@/shared/ui/kit/select";
@@ -111,7 +110,7 @@ export function ResponsiveSelect({
             {options.map((opt) => (
               <DrawerClose asChild key={opt.value}>
                 <Button
-                  variant={opt.value === value ? "muted" : "ghost"}
+                  variant={opt.value === value ? "secondary" : "ghost"}
                   disabled={opt.disabled}
                   onClick={() => {
                     return onChange(opt.value);
@@ -159,20 +158,17 @@ export function ResponsiveSelect({
         {options.map((opt) => {
           if (opt.value === "none") {
             return (
-              <React.Fragment key={opt.value}>
-                <SelectItem
-                  value={opt.value}
-                  className="focus:bg-muted/50 py-1 cursor-pointer"
-                  disabled={opt.disabled}
-                >
-                  <span className="flex items-center gap-2">
-                    {opt.icon}
-                    {opt.label}
-                  </span>
-                </SelectItem>
-
-                <SelectSeparator className="opacity-50" />
-              </React.Fragment>
+              <SelectItem
+                key={opt.value}
+                value={opt.value}
+                className="focus:bg-muted/50 py-1 cursor-pointer"
+                disabled={opt.disabled}
+              >
+                <span className="flex items-center gap-2">
+                  {opt.icon}
+                  {opt.label}
+                </span>
+              </SelectItem>
             );
           }
 

@@ -107,7 +107,7 @@ function FilterToggle({
       defaultPressed={isPressed}
       onPressedChange={toggleFilter}
       className={cn(
-        "data-[state=on]:bg-primary hover:bg-accent px-2.5 rounded-md font-medium data-[state=on]:text-background hover:text-foreground text-xs lg:text-sm cursor-pointer shrink-0"
+        "data-[state=off]:bg-accent/60 data-[state=on]:bg-primary md:data-[state=off]:bg-transparent md:data-[state=off]:hover:bg-accent px-2.5 rounded-md font-medium data-[state=on]:text-background hover:text-foreground text-xs lg:text-sm cursor-pointer shrink-0"
       )}
     >
       {label}
@@ -127,7 +127,7 @@ function FiltersPopover({
       <PopoverTrigger asChild>
         <Button
           size="icon"
-          variant={isActive ? "default" : "muted"}
+          variant={isActive ? "default" : "secondary"}
           className={cn(isActive && "relative has-active-filter")}
         >
           <ListFilterPlus />

@@ -42,12 +42,17 @@ function ConfirmationDialog({
         </AlertDialogHeader>
         <AlertDialogFooter className="md:mt-6">
           <AlertDialogCancel asChild>
-            <Button onClick={onCancel} variant="outline" size="lg">
+            <Button onClick={onCancel} size="lg" className="cancel-button">
               Отмена
             </Button>
           </AlertDialogCancel>
           <AlertDialogAction asChild>
-            <Button onClick={onConfirm} variant="default" size="lg">
+            <Button
+              onClick={onConfirm}
+              variant="default"
+              size="lg"
+              className="h-12"
+            >
               {actionText}
             </Button>
           </AlertDialogAction>

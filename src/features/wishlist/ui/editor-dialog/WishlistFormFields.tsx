@@ -30,7 +30,7 @@ export function WishlistFormFields({ form }: FormFieldsProps) {
               Название <span className="text-destructive">*</span>
             </FormLabel>
             <FormControl>
-              <Input {...field} />
+              <Input {...field} className="text-sm md:text-base" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -45,7 +45,7 @@ export function WishlistFormFields({ form }: FormFieldsProps) {
             <FormControl>
               <Textarea
                 {...field}
-                className="rounded-xl h-24 md:h-28 resize-none"
+                className="rounded-xl h-24 md:h-28 text-sm md:text-base resize-none"
                 placeholder="Добавьте заметку к списку"
               />
             </FormControl>

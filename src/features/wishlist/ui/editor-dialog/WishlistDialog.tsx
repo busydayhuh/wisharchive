@@ -130,7 +130,7 @@ export function WishlistDialog({
 
             <DialogFooter className="mt-4">
               <DialogClose asChild>
-                <Button variant="outline" size="lg">
+                <Button size="lg" className="cancel-button">
                   Отмена
                 </Button>
               </DialogClose>
@@ -138,7 +138,7 @@ export function WishlistDialog({
                 type="submit"
                 size="lg"
                 disabled={form.formState.isSubmitting}
-                className="shadow-none rounded-md"
+                className="h-12"
               >
                 {form.formState.isSubmitting && (
                   <Loader2 className="animate-spin" />

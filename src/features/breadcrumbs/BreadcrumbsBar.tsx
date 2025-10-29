@@ -1,3 +1,4 @@
+import { cn } from "@/shared/lib/css";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import { ROUTES } from "@/shared/model/routes";
 import { useCurrentUser } from "@/shared/model/user/useCurrentUser";
@@ -25,9 +26,14 @@ export function BreadcrumbsBar({
   const { user } = useCurrentUser();
 
   return (
-    <div className="flex justify-between items-center gap-2.5 px-1 md:px-0 py-0.5">
+    <div
+      className={cn(
+        "flex items-center gap-2.5 px-1 md:px-0 py-0.5",
+        !showBreadcrumbs && "justify-between"
+      )}
+    >
       {isMobile && isUser && (
-        <div className="bg-secondary px-2 rounded-[0.5rem]">
+        <div className="px-2 rounded-[0.5rem]">
           <SidebarTrigger />
         </div>
       )}

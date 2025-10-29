@@ -1,7 +1,7 @@
 import { Slot } from "@radix-ui/react-slot";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { ChevronLeft, ChevronRight, PanelLeft } from "lucide-react";
+import { ChevronLeft, ChevronRight, Menu } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/shared/lib/css";
@@ -279,7 +279,7 @@ function SidebarTrigger({
       {...props}
     >
       {isMobile ? (
-        <PanelLeft className="size-4 text-muted-foreground" />
+        <Menu className="size-4 text-muted-foreground" />
       ) : state === "collapsed" ? (
         <ChevronRight className="size-3" />
       ) : (
