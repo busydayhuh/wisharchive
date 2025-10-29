@@ -8,7 +8,7 @@ import {
   PopoverTrigger,
 } from "@/shared/ui/kit/popover";
 import { Toggle } from "@/shared/ui/kit/toggle";
-import { ListFilterPlus } from "lucide-react";
+import { ListFilterPlus, X } from "lucide-react";
 import { useCallback, useMemo, type JSX } from "react";
 import type { ToolbarState } from "../../model/DashboardToolbarContext";
 import { toolbarConfigs } from "../../model/toolbarConfig";
@@ -107,10 +107,11 @@ function FilterToggle({
       defaultPressed={isPressed}
       onPressedChange={toggleFilter}
       className={cn(
-        "data-[state=off]:bg-accent/60 data-[state=on]:bg-primary md:data-[state=off]:bg-transparent md:data-[state=off]:hover:bg-accent px-2.5 rounded-md font-medium data-[state=on]:text-background hover:text-foreground text-xs lg:text-sm cursor-pointer shrink-0"
+        "items-center data-[state=off]:bg-accent/60 data-[state=on]:bg-primary md:data-[state=off]:bg-transparent md:data-[state=off]:hover:bg-accent px-2.5 rounded-md font-medium text-muted-foreground data-[state=on]:text-background hover:text-muted-foreground text-xs lg:text-sm cursor-pointer shrink-0"
       )}
     >
       {label}
+      {isPressed && <X className="size-3" />}
     </Toggle>
   );
 }

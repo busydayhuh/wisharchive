@@ -73,7 +73,7 @@ export function WishlistChanger({
     >
       <button
         className={cn(
-          "flex items-center gap-1.5 bg-secondary hover:bg-secondary/90 px-1.5 py-1 pr-2 border-r-1 border-r-border/60 rounded-l-md h-10",
+          "flex items-center gap-1.5 bg-secondary hover:bg-secondary/90 shadow-none px-1.5 py-1 pr-2 border-r-1 border-r-border/60 rounded-l-md h-10",
           selected?.value !== "none" && "cursor-pointer"
         )}
         onClick={handleNavigation}

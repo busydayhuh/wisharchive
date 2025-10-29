@@ -71,22 +71,22 @@ export const ROLES = {
 
 export const PRIVACY_ICONS = {
   default: (
-    <span className="bg-chart-4 p-2 rounded-sm [&_svg]:size-3 text-foreground">
+    <span className="bg-chart-4/30 p-2 rounded-sm [&_svg]:size-3.5 text-chart-4">
       <Eye />
     </span>
   ),
   private: (
-    <span className="bg-chart-1 p-2 rounded-sm [&_svg]:size-3">
+    <span className="bg-chart-1/30 p-2 rounded-sm [&_svg]:size-3 text-chart-1">
       <EyeClosed />
     </span>
   ),
   collab: (
-    <span className="bg-chart-3 p-2 rounded-sm [&_svg]:size-3">
+    <span className="bg-chart-3/30 p-2 rounded-sm [&_svg]:size-3 text-chart-3">
       <Users2 />
     </span>
   ),
   none: (
-    <span className="bg-muted p-2 rounded-sm [&_svg]:size-3 text-muted-foreground">
+    <span className="bg-muted/60 p-2 rounded-sm [&_svg]:size-3 text-muted-foreground">
       <X />
     </span>
   ),

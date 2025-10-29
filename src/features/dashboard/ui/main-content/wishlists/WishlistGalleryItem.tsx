@@ -59,7 +59,7 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
           <div className="flex justify-between items-center mt-1 px-2">
             {/* Название */}
             <div className="flex items-center gap-2 pr-2 text-base md:text-lg">
-              <p className="max-w-[10ch] sm:max-w-[20ch] font-medium truncate leading-tight">
+              <p className="max-w-[10ch] sm:max-w-[20ch] font-semibold truncate leading-tight">
                 {wishlist.title}
               </p>
             </div>

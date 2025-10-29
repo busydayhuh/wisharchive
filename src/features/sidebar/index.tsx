@@ -68,9 +68,9 @@ export const AppSidebar = memo(function AppSidebar() {
   ];
 
   return (
-    <Sidebar collapsible="icon" variant="floating">
+    <Sidebar collapsible="icon" variant="sidebar">
       <SidebarHeader className="flex flex-row justify-center items-center gap-2 mb-2 py-3">
-        <Logo />
+        <Logo variant="inverted" />
         {!isMobile && (
           <SidebarTrigger className="top-[50%] -right-2 absolute -translate-y-[100%]" />
         )}

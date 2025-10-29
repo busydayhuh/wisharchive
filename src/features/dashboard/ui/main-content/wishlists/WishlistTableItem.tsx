@@ -52,7 +52,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
       {/* Заголовок и счетчик желаний */}
       <Link {...linkParams}>
         <div className="flex flex-col gap-1 lg:basis-2xs">
-          <div className="flex items-center gap-2 pr-1 font-medium text-base 2xl:text-lg">
+          <div className="flex items-center gap-2 pr-1 font-semibold text-base 2xl:text-lg">
             <p className="max-w-[42ch] truncate">{wishlist.title}</p>
           </div>
 

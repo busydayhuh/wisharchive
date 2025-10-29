@@ -186,7 +186,7 @@ function Sidebar({
           data-sidebar="sidebar"
           data-slot="sidebar"
           data-mobile="true"
-          className="[&>button]:hidden bg-sidebar p-0 w-(--sidebar-width) text-sidebar-foreground border-r-sidebar-border"
+          className="[&>button]:hidden bg-sidebar p-0 w-(--sidebar-width) text-sidebar-foreground"
           style={
             {
               "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
@@ -243,7 +243,7 @@ function Sidebar({
         <div
           data-sidebar="sidebar"
           data-slot="sidebar-inner"
-          className="flex flex-col bg-sidebar group-data-[variant=floating]:shadow-none group-data-[variant=floating]:border border-sidebar-border group-data-[variant=floating]:border-sidebar-border border-r-1 group-data-[variant=floating]:rounded-lg w-full h-full"
+          className="flex flex-col bg-sidebar group-data-[variant=floating]:shadow-none group-data-[variant=floating]:rounded-lg w-full h-full"
         >
           {children}
         </div>

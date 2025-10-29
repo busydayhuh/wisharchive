@@ -36,16 +36,16 @@ export function SortingSelect() {
       onChange={setSort}
       options={options}
       renderTrigger={(selected) => (
-        <p className="flex items-center gap-2 w-full text-xs lg:text-sm">
+        <>
           <span className="flex items-center gap-1.5">
             {selected?.icon}
             {selected?.label}
           </span>
           {isMobile && <ChevronDown className="size-3" />}
-        </p>
+        </>
       )}
       triggerCSS={cn(
-        "bg-primary shadow-2xs max-w-[16rem] font-medium text-primary-foreground",
+        "gap-2 bg-primary w-fit max-w-[16rem] data-[size=default]:h-10 font-medium text-primary-foreground text-xs lg:text-sm",
         isMobile && "h-9 px-2.5"
       )}
       title="Сортировка"

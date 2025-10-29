@@ -57,7 +57,7 @@ const WishTableItem = memo(function WishTableItem({
         {/* Название и цена */}
         <div className="flex flex-col gap-2 px-4 lg:px-8">
           <div className="flex flex-col gap-1">
-            <p className="max-w-[40ch] overflow-hidden font-medium text-sm md:text-base break-words text-ellipsis line-clamp-2">
+            <p className="max-w-[40ch] overflow-hidden font-semibold text-sm md:text-base break-words text-ellipsis line-clamp-2">
               {wish.title}
             </p>
 

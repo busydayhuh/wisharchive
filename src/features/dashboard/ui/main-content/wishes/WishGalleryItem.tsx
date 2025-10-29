@@ -72,9 +72,9 @@ const WishGalleryItem = memo(function WishGalleryItem({
       <Link
         to={linkParams.to}
         state={linkParams.state}
-        className="flex lg:flex-row flex-col lg:justify-between px-1"
+        className="flex lg:flex-row flex-col lg:justify-between lg:items-center px-1"
       >
-        <p className="pr-1 font-medium text-base lg:text-base xl:text-lg truncate">
+        <p className="pr-1 font-semibold text-base lg:text-base xl:text-lg truncate">
           {wish.title}
         </p>
 
@@ -82,7 +82,7 @@ const WishGalleryItem = memo(function WishGalleryItem({
           <FormattedPrice
             price={wish.price}
             currency={wish.currency}
-            className="text-muted-foreground text-sm lg:text-base xl:text-lg"
+            className="text-muted-foreground text-sm lg:text-base"
           />
         ) : (
           <p className="text-transparent whitespace-nowrap">₽</p>
