@@ -1,5 +1,4 @@
 import { cn } from "@/shared/lib/css";
-import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import { ROUTES } from "@/shared/model/routes";
 import { useCurrentUser } from "@/shared/model/user/useCurrentUser";
 import { Avatar, AvatarFallback } from "@/shared/ui/kit/avatar";
@@ -10,13 +9,14 @@ import { matchRoutes } from "react-router-dom";
 import { Breadcrumbs } from "./Breadcrumbs";
 
 export function BreadcrumbsBar({
+  isMobile,
   path,
   isUser,
 }: {
+  isMobile: boolean;
   path: string | Partial<Location>;
   isUser: boolean;
 }) {
-  const isMobile = useIsMobile();
   const hasBreadcrumbs = [
     { path: ROUTES.WISH },
     { path: ROUTES.WISHLIST },
@@ -37,7 +37,11 @@ export function BreadcrumbsBar({
           <SidebarTrigger />
         </div>
       )}
-      {showBreadcrumbs ? <Breadcrumbs /> : isMobile && <Logo />}
+      {showBreadcrumbs ? (
+        <Breadcrumbs />
+      ) : (
+        isMobile && <Logo variant="default" />
+      )}
       {isMobile && user && !showBreadcrumbs && (
         <Avatar className="w-6 h-6">
           <AvatarImage

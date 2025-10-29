@@ -31,7 +31,7 @@ export function DashboardToolbar({ isOwner }: { isOwner: boolean }) {
   }
 
   return (
-    <div className="top-0 z-20 sticky flex justify-between items-center gap-2 bg-background mr-6 px-1.5 py-2 w-full">
+    <div className="flex justify-between items-center gap-2 mr-6 px-1.5 py-2 w-full">
       {!onArchivedPage && (
         <div className="flex items-center gap-2">
           <SortingSelect />

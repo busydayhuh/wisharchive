@@ -23,7 +23,7 @@ import {
   Orbit,
 } from "lucide-react";
 import { memo } from "react";
-import { href, matchPath, NavLink, useLocation } from "react-router-dom";
+import { href, Link, matchPath, NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "../auth";
 import { UserSb } from "./UserSb";
 
@@ -70,7 +70,9 @@ export const AppSidebar = memo(function AppSidebar() {
   return (
     <Sidebar collapsible="icon" variant="sidebar">
       <SidebarHeader className="flex flex-row justify-center items-center gap-2 mb-2 py-3">
-        <Logo variant="inverted" />
+        <Link to={ROUTES.HOME}>
+          <Logo variant="inverted" />
+        </Link>
         {!isMobile && (
           <SidebarTrigger className="top-[50%] -right-2 absolute -translate-y-[100%]" />
         )}

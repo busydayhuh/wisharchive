@@ -25,7 +25,7 @@ function Searchbar({
     <div className={cn("group/searchbar flex items-center gap-2", className)}>
       <Input
         className={cn(
-          "shadow-none border-0 outline-ring/60 h-9 placeholder:text-ring/90 text-sm",
+          "shadow-none border-0 outline-ring/60 h-9 placeholder:text-muted text-sm",
           grow &&
             "w-full md:w-full focus-visible:w-full transition-[width] duration-300 ease-linear",
           !searchString && grow && "md:w-48"
@@ -47,7 +47,7 @@ function Searchbar({
           <X />
         </Button>
       ) : (
-        <Search className="size-4 text-ring/80 group-has-[input:focus-visible]/searchbar:text-foreground" />
+        <Search className="size-4 text-muted group-has-[input:focus-visible]/searchbar:text-foreground" />
       )}
     </div>
   );
