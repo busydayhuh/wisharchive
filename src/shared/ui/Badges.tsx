@@ -37,12 +37,12 @@ export const PRIORITIES = {
   "2": {
     title: "высокий",
     icon: <ArrowUp />,
-    colors: "bg-chart-1",
+    colors: "bg-pink",
   },
   "1": {
     title: "средний",
     icon: <CircleDot />,
-    colors: "bg-chart-4",
+    colors: "bg-blue",
   },
   "0": {
     title: "низкий",
@@ -60,28 +60,28 @@ export const ROLES = {
   editor: {
     title: "редактор",
     icon: <Pencil />,
-    colors: "bg-chart-3 text-foreground",
+    colors: "bg-green text-foreground",
   },
   owner: {
     title: "владелец",
     icon: <Crown />,
-    colors: "bg-chart-4 text-foreground",
+    colors: "bg-blue text-foreground",
   },
 };
 
 export const PRIVACY_ICONS = {
   default: (
-    <span className="bg-chart-4/30 p-2 rounded-sm [&_svg]:size-3.5 text-chart-4">
+    <span className="bg-blue-bg p-2 rounded-sm [&_svg]:size-3.5 text-blue">
       <Eye />
     </span>
   ),
   private: (
-    <span className="bg-chart-1/30 p-2 rounded-sm [&_svg]:size-3 text-chart-1">
+    <span className="bg-pink-bg p-2 rounded-sm [&_svg]:size-3 text-pink">
       <EyeClosed />
     </span>
   ),
   collab: (
-    <span className="bg-chart-3/30 p-2 rounded-sm [&_svg]:size-3 text-chart-3">
+    <span className="bg-yellow-bg p-2 rounded-sm [&_svg]:size-3 text-yellow">
       <Users2 />
     </span>
   ),

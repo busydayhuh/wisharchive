@@ -27,11 +27,14 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
+  --color-pink: var(--pink);
+  --color-pink-bg: var(--pink-bg);
+  --color-yellow: var(--yellow);
+  --color-yellow-bg: var(--yellow-bg);
+  --color-green: var(--green);
+  --color-green-bg: var(--green-bg);
+  --color-blue: var(--blue);
+  --color-blue-bg: var(--blue-bg);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -90,7 +93,7 @@
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(1 0 0);
   --secondary-foreground: oklch(0.14 0 285.86);
-  --muted: oklch(86.378% 0.0001 271.152);
+  --muted: oklch(89.99% 0.00325 15.484);
   --muted-foreground: oklch(0.44 0 0);
   --accent: oklch(0.92 0 49);
   --accent-foreground: oklch(0.21 0.01 285.93);
@@ -100,11 +103,14 @@
   --input: oklch(0.92 0 286.61);
   --ring: oklch(0.93 0.03 273.66);
 
-  --chart-1: oklch(80.039% 0.10824 341.463);
-  --chart-2: oklch(0.88 0.12 95.66);
-  --chart-3: oklch(0.71 0.08 118.39);
-  --chart-4: oklch(78.764% 0.07856 263.634);
-  --chart-5: oklch(0.43 0.23 292.72);
+  --pink: oklch(68.697% 0.18145 343.783);
+  --pink-bg: oklch(86.308% 0.05322 339.974);
+  --yellow: oklch(77.263% 0.14126 94.542);
+  --yellow-bg: oklch(91.928% 0.06596 96.175);
+  --green: oklch(57.43% 0.12107 121.251);
+  --green-bg: oklch(83.115% 0.03193 119.07);
+  --blue: oklch(50.647% 0.12715 262.528);
+  --blue-bg: oklch(85.238% 0.04678 263.712);
 
   --sidebar: oklch(0.14 0 0);
   --sidebar-foreground: oklch(0.99 0 0);
@@ -142,11 +148,14 @@
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.93 0.03 273.66);
 
-  --chart-1: oklch(0.84 0.07 341.71);
-  --chart-2: oklch(0.88 0.12 95.66);
-  --chart-3: oklch(0.71 0.08 118.39);
-  --chart-4: oklch(0.83 0.05 263.68);
-  --chart-5: oklch(0.43 0.23 292.72);
+  --pink: oklch(80.039% 0.10824 341.463);
+  --pink-bg: oklch(86.308% 0.05322 339.974);
+  --yellow: oklch(0.88 0.12 95.66);
+  --yellow-bg: oklch(91.928% 0.06596 96.175);
+  --green: oklch(0.71 0.08 118.39);
+  --green-bg: oklch(83.115% 0.03193 119.07);
+  --blue: oklch(78.764% 0.07856 263.634);
+  --blue-bg: oklch(85.238% 0.04678 263.712);
 
   --sidebar: oklch(0.21 0.01 285.93);
   --sidebar-foreground: oklch(0.99 0 0);
