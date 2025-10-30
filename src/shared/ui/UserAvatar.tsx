@@ -8,8 +8,8 @@ export const AVATAR_SIZES = {
   lg: "w-12 h-12 text-sm",
 };
 
-const getInitials = (name: string) =>
-  name.split(" ").reduce((acc, part) => acc + part.charAt(0).toUpperCase(), "");
+// const getInitials = (name: string) =>
+//   name.split(" ").reduce((acc, part) => acc + part.charAt(0).toUpperCase(), "");
 
 export function UserAvatar({
   avatarURL,
@@ -42,10 +42,10 @@ export function UserAvatar({
         style={{
           background: fallbackText
             ? "var(--muted)"
-            : getFallbackColor(id, { dark: true }),
+            : getFallbackColor(id, { dark: false }),
         }}
       >
-        {fallbackText || size === "sm" ? "" : getInitials(name)}
+        {fallbackText || size === "sm" ? "" : "✨"}
       </AvatarFallback>
     </Avatar>
   );
