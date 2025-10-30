@@ -9,11 +9,15 @@ import {
 import { ToggleGroup, ToggleGroupItem } from "@/shared/ui/kit/toggle-group";
 import Searchbar from "@/shared/ui/Searchbar";
 
-import { ImageTiles } from "@/features/dashboard";
 import { cn } from "@/shared/lib/css";
 import { useDebounce } from "@/shared/lib/react/useDebounce";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import { ROUTES } from "@/shared/model/routes";
+import type {
+  UserDocumentType,
+  WishDocumentType,
+  WishlistDocumentType,
+} from "@/shared/model/types";
 import {
   Item,
   ItemContent,
@@ -22,14 +26,14 @@ import {
   ItemMedia,
   ItemTitle,
 } from "@/shared/ui/kit/item";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import type { Models } from "appwrite";
+import { UserAvatar } from "@/shared/ui/UserAvatar";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { href, useNavigate } from "react-router";
 import { useGlobalSearch } from "./model/useGlobalSearch";
 
 export type Category = "wishes" | "wishlists" | "users";
+type AnyDocument = WishDocumentType | WishlistDocumentType | UserDocumentType;
 
 export function GlobalSearchDialog() {
   const isMobile = useIsMobile();
@@ -190,7 +194,7 @@ function SearchResults({
           {results.length === 0 && <p>Нет результатов</p>}
           {results.map((r) => (
             <ResultItem
-              item={r}
+              item={r as AnyDocument}
               category={category}
               key={r.$id}
               isMobile={isMobile}
@@ -201,26 +205,37 @@ function SearchResults({
     );
 }
 
+function Media({ category, item }: { category: Category; item: AnyDocument }) {
+  if (category === "users")
+    return (
+      <UserAvatar
+        size="md"
+        avatarURL={item.avatarURL}
+        name={item.userName}
+        id={item.userId}
+      />
+    );
+  if (category === "wishes")
+    return <img src={item.imageURL} alt={item.title} />;
+  if (category === "wishlists")
+    return (
+      <img
+        src={item.wishes?.at(-1)?.imageURL}
+        alt={item.title[0] || ""}
+        className="flex justify-center items-center bg-muted font-medium"
+      />
+    );
+}
+
 function ResultItem({
   item,
   category,
   isMobile,
 }: {
-  item: Models.Document;
+  item: AnyDocument;
   category: Category;
   isMobile?: boolean;
 }) {
-  const media = {
-    users: (
-      <Avatar className="rounded-full size-10 overflow-clip">
-        <AvatarImage src={item.avatarURL} />
-        <AvatarFallback>ER</AvatarFallback>
-      </Avatar>
-    ),
-    wishlists: <ImageTiles wishes={item.wishes} variant="table" />,
-    wishes: <img src={item.imageURL} alt={item.title} />,
-  };
-
   const navigate = useNavigate();
 
   function handleNavigation() {
@@ -257,7 +272,9 @@ function ResultItem({
       )}
       onClick={handleNavigation}
     >
-      <ItemMedia variant="image">{media[category]}</ItemMedia>
+      <ItemMedia variant="image">
+        <Media item={item} category={category} />
+      </ItemMedia>
       <ItemContent>
         <ItemTitle>
           <span className="line-clamp-2">{item.title || item.userName}</span>
@@ -266,16 +283,6 @@ function ResultItem({
           {category === "users" ? `@${item.userId}` : item.description ?? ""}
         </ItemDescription>
       </ItemContent>
-      {/* <ItemActions>
-        <DialogClose asChild>
-          <Button
-            size={isMobile ? "icon" : "default"}
-            onClick={handleNavigation}
-          >
-            {isMobile ? <ArrowUpRight /> : "Перейти"}
-          </Button>
-        </DialogClose>
-      </ItemActions> */}
     </Item>
   );
 }

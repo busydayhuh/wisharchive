@@ -24,7 +24,7 @@ export function WishlistCollaborators({
           isLoading={isLoading}
           error={error}
           maxVisible={5}
-          size={"default"}
+          size="md"
         />
         <Button
           type="button"

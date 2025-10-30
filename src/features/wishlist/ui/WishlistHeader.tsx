@@ -107,7 +107,7 @@ export function WishlistName({
       <p
         className={cn(
           "inline-flex px-2 py-1 rounded-sm text-xs",
-          isPrivate ? "bg-chart-1" : "bg-chart-4"
+          isPrivate ? "bg-pink-bg" : "bg-blue-bg"
         )}
       >
         {isPrivate ? "приватный" : "публичный"}

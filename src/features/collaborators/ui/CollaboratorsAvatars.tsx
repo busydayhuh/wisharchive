@@ -1,6 +1,5 @@
 import { cn } from "@/shared/lib/css";
-import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/kit/avatar";
-import { ID } from "appwrite";
+import { AVATAR_SIZES, UserAvatar } from "@/shared/ui/UserAvatar";
 import { memo } from "react";
 import type { CollaboratorType } from "../model/types";
 
@@ -8,19 +7,13 @@ type CollaboratorsAvatarsProps = {
   collaborators?: CollaboratorType[];
   isLoading?: boolean;
   error?: Error;
-  size: "default" | "sm" | "lg";
+  size: "md" | "sm" | "lg";
   maxVisible: number;
   hideOwner?: boolean;
 } & React.ComponentProps<"div">;
 
-const SIZES = {
-  default: "w-8 h-8",
-  lg: "w-10 h-10",
-  sm: "w-5 h-5",
-};
-
 const SPACING = {
-  default: "-space-x-3",
+  md: "-space-x-3",
   lg: "-space-x-4",
   sm: "-space-x-2",
 };
@@ -51,22 +44,27 @@ export const CollaboratorsAvatars = memo(function CollaboratorsAvatars({
       <div
         className={cn(
           "flex *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background",
-          SPACING[size],
           className
         )}
       >
         {visible.map((c) => (
-          <Avatar className={SIZES[size]} key={ID.unique()}>
-            <AvatarImage src={c.avatarURL ?? undefined} alt={c.userName} />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+          <UserAvatar
+            size={size}
+            avatarURL={c.avatarURL ?? undefined}
+            name={c.userName}
+            id={c.userId}
+            key={c.userId}
+          />
         ))}
 
         {remaining > 0 && (
-          <Avatar className={SIZES[size]}>
-            <AvatarImage />
-            <AvatarFallback className="text-xs">+{remaining}</AvatarFallback>
-          </Avatar>
+          <UserAvatar
+            size={size}
+            name="remaining"
+            id="remaining"
+            className="text-xs"
+            fallbackText={`+${remaining}`}
+          />
         )}
       </div>
     );
@@ -89,7 +87,10 @@ export function CollaboratorsAvatarsSkeleton({
       {[...Array(maxVisible ?? 3)].map((_, i) => (
         <div
           key={i}
-          className={cn("bg-muted rounded-full animate-pulse", SIZES[size])}
+          className={cn(
+            "bg-muted rounded-full animate-pulse",
+            AVATAR_SIZES[size]
+          )}
         />
       ))}
     </div>

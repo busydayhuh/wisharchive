@@ -37,12 +37,12 @@ export const PRIORITIES = {
   "2": {
     title: "высокий",
     icon: <ArrowUp />,
-    colors: "bg-pink",
+    colors: "bg-pink-bg",
   },
   "1": {
     title: "средний",
     icon: <CircleDot />,
-    colors: "bg-blue",
+    colors: "bg-blue-bg",
   },
   "0": {
     title: "низкий",

@@ -2,47 +2,49 @@ import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { cn } from "../lib/css";
 import { getFallbackColor } from "../lib/getFallbackColor";
 
+export const AVATAR_SIZES = {
+  sm: "w-6 h-6 text-xs",
+  md: "w-9 h-9 text-xs",
+  lg: "w-12 h-12 text-sm",
+};
+
+const getInitials = (name: string) =>
+  name.split(" ").reduce((acc, part) => acc + part.charAt(0).toUpperCase(), "");
+
 export function UserAvatar({
   avatarURL,
   name,
   id,
   size = "md",
   className,
+  fallbackText,
 }: {
   avatarURL?: string;
   name: string;
   id: string;
   size?: "sm" | "md" | "lg";
   className?: string;
+  fallbackText?: string;
 }) {
-  const sizes = {
-    sm: "w-6 h-6",
-    md: "w-9 h-9",
-    lg: "w-12 h-12",
-  };
-
-  const fallbackColor = getFallbackColor(id);
-
   return (
-    <Avatar className={cn("block rounded-full", sizes[size], className)}>
+    <Avatar
+      className={cn(
+        "block border-1 border-border rounded-full",
+        AVATAR_SIZES[size],
+        className
+      )}
+    >
       <AvatarImage src={avatarURL} alt={id} className="rounded-full" />
       <AvatarFallback
         className={cn(
-          "flex justify-center items-center rounded-full w-full h-full"
+          "flex justify-center items-center rounded-full w-full h-full font-medium"
         )}
-        style={{ background: fallbackColor }}
+        style={{
+          background: fallbackText ? "var(--muted)" : getFallbackColor(id),
+        }}
       >
-        {getInitials(name)}
+        {fallbackText || size === "sm" ? "" : getInitials(name)}
       </AvatarFallback>
     </Avatar>
-  );
-}
-
-function getInitials(name: string) {
-  const initialsArr = name.split(" ");
-
-  return initialsArr.reduce(
-    (acc, part) => acc + part.charAt(0).toUpperCase(),
-    ""
   );
 }

@@ -1,7 +1,7 @@
 import type { CollaboratorType } from "@/features/collaborators/model/types";
 import { cn } from "@/shared/lib/css";
-import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/kit/avatar";
 import { Button } from "@/shared/ui/kit/button";
+import { UserAvatar } from "@/shared/ui/UserAvatar";
 import { Loader2, MailCheck, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useCollaboratorsDialogContext } from "../../model/CollaboratorsPanelContext";
@@ -26,10 +26,12 @@ export default function Collaborator({
 
   return (
     <div className="flex items-center gap-2">
-      <Avatar className="rounded-full w-10 h-10">
-        <AvatarImage src={avatarURL ?? undefined} alt={userId} />
-        <AvatarFallback>ER</AvatarFallback>
-      </Avatar>
+      <UserAvatar
+        size="md"
+        avatarURL={avatarURL ?? undefined}
+        id={userId}
+        name={userName}
+      />
 
       <div className="flex flex-col">
         <p className="font-medium text-sm md:text-base">{userName}</p>

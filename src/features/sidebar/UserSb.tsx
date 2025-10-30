@@ -1,7 +1,7 @@
 import { ChevronsUpDown } from "lucide-react";
 
 import { ROUTES } from "@/shared/model/routes";
-import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/kit/avatar";
+import { useUser } from "@/shared/model/user/useUser";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +17,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/shared/ui/kit/sidebar";
+import { UserAvatar } from "@/shared/ui/UserAvatar";
 import { GiFairyWand, GiOrbDirection, GiSun } from "react-icons/gi";
 import { Link } from "react-router";
 import { useAuth } from "../auth";
@@ -24,6 +25,7 @@ import { useAuth } from "../auth";
 export function UserSb() {
   const { current, logout } = useAuth();
   const { isMobile } = useSidebar();
+  const { user } = useUser(current?.$id ?? null);
 
   return (
     <SidebarMenu>
@@ -32,12 +34,15 @@ export function UserSb() {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className="data-[state=open]:bg-sidebar-accent rounded-full data-[state=open]:text-sidebar-accent-foreground cursor-pointer"
             >
-              <Avatar className="rounded-lg w-8 h-8">
-                <AvatarImage src={current!.prefs.avatar} alt={current!.name} />
-                <AvatarFallback className="rounded-lg">ВП</AvatarFallback>
-              </Avatar>
+              <UserAvatar
+                name={user?.userName ?? ""}
+                id={current?.$id ?? ""}
+                avatarURL={user?.avatarURL ?? undefined}
+                size="md"
+                className="border-0 w-8 h-8 text-foreground shrink-0"
+              />
               <div className="flex-1 grid text-sm text-left leading-tight">
                 <p className="font-medium truncate">{current!.name}</p>
                 <p className="text-xs truncate">{current!.email}</p>
@@ -53,13 +58,12 @@ export function UserSb() {
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-sm text-left">
-                <Avatar className="rounded-lg w-8 h-8">
-                  <AvatarImage
-                    src={current!.prefs.avatar}
-                    alt={current!.name}
-                  />
-                  <AvatarFallback className="rounded-lg">ВП</AvatarFallback>
-                </Avatar>
+                <UserAvatar
+                  name={user?.userName ?? ""}
+                  id={current?.$id ?? ""}
+                  avatarURL={user?.avatarURL ?? undefined}
+                  size="md"
+                />
                 <div className="flex-1 grid text-sm text-left leading-tight">
                   <p className="font-medium truncate">{current!.name}</p>
                   <p className="text-xs truncate">{current!.email}</p>
