@@ -37,10 +37,12 @@ export function UserAvatar({
       <AvatarImage src={avatarURL} alt={id} className="rounded-full" />
       <AvatarFallback
         className={cn(
-          "flex justify-center items-center rounded-full w-full h-full font-medium"
+          "flex justify-center items-center rounded-full w-full h-full font-medium text-neutral-200"
         )}
         style={{
-          background: fallbackText ? "var(--muted)" : getFallbackColor(id),
+          background: fallbackText
+            ? "var(--muted)"
+            : getFallbackColor(id, { dark: true }),
         }}
       >
         {fallbackText || size === "sm" ? "" : getInitials(name)}

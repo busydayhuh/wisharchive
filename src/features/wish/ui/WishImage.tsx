@@ -1,5 +1,5 @@
 import { cn } from "@/shared/lib/css";
-import { gradients } from "@/shared/lib/gradients";
+import { getFallbackColor } from "@/shared/lib/getFallbackColor";
 import { LockKeyhole } from "lucide-react";
 import { memo } from "react";
 
@@ -20,8 +20,6 @@ const wishImageVariants = {
     icon: "",
   },
 };
-
-const fallbackColorCache = new Map();
 
 export const WishImage = memo(function WishImage({
   wishId,
@@ -69,14 +67,3 @@ export const WishImage = memo(function WishImage({
     </div>
   );
 });
-
-function getFallbackColor(wishId: string) {
-  if (!fallbackColorCache.has(wishId)) {
-    const random = Math.floor(Math.random() * gradients.length);
-    const color = gradients[random];
-
-    fallbackColorCache.set(wishId, color);
-  }
-
-  return fallbackColorCache.get(wishId);
-}

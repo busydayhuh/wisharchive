@@ -2,8 +2,9 @@ import { useAuth } from "@/features/auth";
 import { useCollabWishlists } from "@/features/dashboard";
 import { cn } from "@/shared/lib/css";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
+import { PRIVACY_ICONS } from "@/shared/ui/Badges";
 import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
-import { ArrowLeftRightIcon, Eye, EyeClosed, Users2, X } from "lucide-react";
+import { ArrowLeftRightIcon } from "lucide-react";
 
 export function WishlistSelect({
   onValueChange,
@@ -25,34 +26,11 @@ export function WishlistSelect({
     limit: 100,
   });
 
-  const icons = {
-    default: (
-      <span className="bg-chart-4 p-2 rounded-sm [&_svg]:size-3 text-foreground">
-        <Eye />
-      </span>
-    ),
-    private: (
-      <span className="bg-chart-1 p-2 rounded-sm [&_svg]:size-3">
-        <EyeClosed />
-      </span>
-    ),
-    collab: (
-      <span className="bg-chart-3 p-2 rounded-sm [&_svg]:size-3">
-        <Users2 />
-      </span>
-    ),
-    none: (
-      <span className="bg-muted p-2 rounded-sm [&_svg]:size-3 text-muted-foreground">
-        <X />
-      </span>
-    ),
-  };
-
   const options = [
     {
       value: "none",
       label: "без списка",
-      icon: icons.none,
+      icon: PRIVACY_ICONS.none,
     },
     ...(wishlists ?? []).map((wl) => ({
       value: wl.$id,
@@ -60,9 +38,9 @@ export function WishlistSelect({
       icon:
         wl.ownerId === current?.$id
           ? wl.isPrivate
-            ? icons.private
-            : icons.default
-          : icons.collab,
+            ? PRIVACY_ICONS.private
+            : PRIVACY_ICONS.default
+          : PRIVACY_ICONS.collab,
     })),
   ];
 
