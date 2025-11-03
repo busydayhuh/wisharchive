@@ -216,7 +216,13 @@ function Media({ category, item }: { category: Category; item: AnyDocument }) {
       />
     );
   if (category === "wishes")
-    return <img src={item.imageURL} alt={item.title} />;
+    return (
+      <img
+        src={item.imageURL}
+        alt={item.title[0] || ""}
+        className="flex justify-center items-center bg-muted font-medium"
+      />
+    );
   if (category === "wishlists")
     return (
       <img

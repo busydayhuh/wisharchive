@@ -34,7 +34,7 @@ export function UserAvatar({
         className
       )}
     >
-      <AvatarImage src={avatarURL} alt={id} className="rounded-full" />
+      <AvatarImage src={avatarURL} alt={id + name} className="rounded-full" />
       <AvatarFallback
         className={cn(
           "flex justify-center items-center rounded-full w-full h-full font-medium text-neutral-200"
