@@ -40,7 +40,7 @@ function useProfileMutations() {
   );
 
   const changeAvatar = useCallback(
-    async (avatarURL: string, userDocumentId: string) => {
+    async (avatarURL: string | null, userDocumentId: string) => {
       try {
         await db.users.update(userDocumentId, { avatarURL });
 

@@ -141,7 +141,7 @@ function WishImageUpload({
       {errorMessages && (
         <div
           className={cn(
-            "bg-muted-backdrop/60 px-3.5 py-4 rounded-md font-medium text-blue-900 text-sm"
+            "bg-destructive/30 px-3.5 py-4 rounded-md font-medium text-destructive text-sm"
           )}
         >
           {errorMessages.map((m) => (

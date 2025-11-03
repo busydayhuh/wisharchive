@@ -100,6 +100,7 @@ function useImageDrop(
     isDragActive,
     open,
     isCompressing,
+    progress,
   };
 }
 

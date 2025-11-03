@@ -6,6 +6,8 @@ export const AVATAR_SIZES = {
   sm: "w-6 h-6 text-xs",
   md: "w-9 h-9 text-xs",
   lg: "w-12 h-12 text-sm",
+  xl: "w-16 h-16 text-sm",
+  "3xl": "w-24 h-24 text-base",
 };
 
 // const getInitials = (name: string) =>
@@ -22,7 +24,7 @@ export function UserAvatar({
   avatarURL?: string;
   name: string;
   id: string;
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "xl" | "3xl";
   className?: string;
   fallbackText?: string;
 }) {
@@ -34,7 +36,11 @@ export function UserAvatar({
         className
       )}
     >
-      <AvatarImage src={avatarURL} alt={id + name} className="rounded-full" />
+      <AvatarImage
+        src={avatarURL}
+        alt={id + name}
+        className={cn("rounded-full aspect-square", AVATAR_SIZES[size])}
+      />
       <AvatarFallback
         className={cn(
           "flex justify-center items-center rounded-full w-full h-full font-medium text-neutral-200"
