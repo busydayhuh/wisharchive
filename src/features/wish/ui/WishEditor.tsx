@@ -3,7 +3,7 @@ import type { WishDocumentType } from "@/shared/model/types";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import type z from "zod";
-import { uploadToStorage } from "../model/uploadToStorage";
+import { uploadToStorage } from "../../../shared/model/uploadToStorage";
 import BackButton from "./actions/BackButton";
 import { WishForm } from "./wish-form/WishForm";
 import WishImageUpload from "./WishImageUpload";
