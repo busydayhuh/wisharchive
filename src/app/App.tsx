@@ -14,9 +14,9 @@ function App() {
   const isMobile = useIsMobile();
   const { location } = useRoute();
 
-  const onWishPage = Boolean(
+  const slim = Boolean(
     matchRoutes(
-      [{ path: ROUTES.WISH }, { path: ROUTES.EDIT }],
+      [{ path: ROUTES.WISH }, { path: ROUTES.EDIT }, { path: ROUTES.PROFILE }],
       location.pathname
     )
   );
@@ -35,7 +35,7 @@ function App() {
       {current && <AppSidebar />}
       {!outside && !isMobile && <BlobsBackground />}
 
-      <MainContainer slimLayout={onWishPage} outside={outside}>
+      <MainContainer slimLayout={slim} outside={outside}>
         <BreadcrumbsBar
           isMobile={isMobile}
           path={location.pathname}
