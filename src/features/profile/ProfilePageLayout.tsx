@@ -1,11 +1,14 @@
 import type { UserDocumentType } from "@/shared/model/types";
+import type { KeyedMutator } from "swr";
 import { ProfileForm } from "./ProfileForm";
 import { ProfileImageUploader } from "./ProfileImageUploader";
 
 export function ProfilePageLayout({
   profileInfo,
+  mutateUser,
 }: {
   profileInfo: UserDocumentType;
+  mutateUser: KeyedMutator<UserDocumentType>;
 }) {
   return (
     <div className="space-y-10">
@@ -16,6 +19,7 @@ export function ProfilePageLayout({
           userId={profileInfo.userId}
           documentId={profileInfo.$id}
           name={profileInfo.userName}
+          mutateUser={mutateUser}
         />
         <ProfileForm />
       </div>

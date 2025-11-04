@@ -21,7 +21,8 @@ export function useCurrentUser() {
     data: user,
     isLoading,
     error,
+    mutate: mutateUser,
   } = useSWR(key, ([, userId]) => fetcher(userId));
 
-  return { user, isLoading, error };
+  return { user, isLoading, error, mutateUser };
 }

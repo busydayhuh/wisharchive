@@ -7,7 +7,7 @@ export const AVATAR_SIZES = {
   md: "w-9 h-9 text-xs",
   lg: "w-12 h-12 text-sm",
   xl: "w-16 h-16 text-sm",
-  "3xl": "w-24 h-24 text-base",
+  "3xl": "w-24 h-24 text-2xl",
 };
 
 // const getInitials = (name: string) =>
@@ -31,7 +31,7 @@ export function UserAvatar({
   return (
     <Avatar
       className={cn(
-        "block border-1 border-border rounded-full",
+        "block border-1 border-border rounded-full aspect-square overflow-hidden",
         AVATAR_SIZES[size],
         className
       )}
@@ -39,7 +39,7 @@ export function UserAvatar({
       <AvatarImage
         src={avatarURL}
         alt={id + name}
-        className={cn("rounded-full aspect-square", AVATAR_SIZES[size])}
+        className={cn("rounded-full w-full h-full object-cover")}
       />
       <AvatarFallback
         className={cn(

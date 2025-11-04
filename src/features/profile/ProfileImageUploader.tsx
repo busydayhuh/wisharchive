@@ -1,4 +1,5 @@
 import { cn } from "@/shared/lib/css";
+import type { UserDocumentType } from "@/shared/model/types";
 import { uploadToStorage } from "@/shared/model/uploadToStorage";
 import useImageDrop from "@/shared/model/useImageDrop";
 import { Button } from "@/shared/ui/kit/button";
@@ -10,45 +11,79 @@ import {
   ImagePlusIcon,
   Loader2,
   Trash2,
+  X,
 } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import type { KeyedMutator } from "swr";
 import useProfileMutations from "./model/useProfileMutations";
+
+type SavingState = {
+  isSuccess: boolean;
+  isError: boolean;
+  isSaving: boolean;
+};
 
 export function ProfileImageUploader({
   imageURL,
   userId,
   documentId,
   name,
+  mutateUser,
 }: {
   imageURL?: string;
   userId: string;
   documentId: string;
   name: string;
+  mutateUser: KeyedMutator<UserDocumentType>;
 }) {
   const [compressedAvatar, setCompressedAvatar] = useState<
     File | null | undefined
   >();
-  const [saving, setSaving] = useState({ success: false, isSaving: false });
+  const [saving, setSaving] = useState<SavingState>({
+    isSuccess: false,
+    isSaving: false,
+    isError: false,
+  });
 
   const { changeAvatar } = useProfileMutations();
 
   const handleAvatarChange = useCallback(async () => {
-    setSaving({ success: false, isSaving: true });
+    setSaving({ isSuccess: false, isSaving: true, isError: false });
 
     if (!compressedAvatar) {
       const response = await changeAvatar(null, documentId);
-      if (response.status === "ok")
-        setSaving({ success: true, isSaving: false });
-      return;
+      if (response.status === "ok") mutateUser();
+
+      return setSaving({
+        isSuccess: response.status === "ok",
+        isSaving: false,
+        isError: response.status === "error",
+      });
     }
 
     const uploadedURL = await uploadToStorage(compressedAvatar);
     if (uploadedURL) {
       const response = await changeAvatar(uploadedURL, documentId);
-      if (response.status === "ok")
-        setSaving({ success: true, isSaving: false });
+      if (response.status === "ok") mutateUser();
+
+      return setSaving({
+        isSuccess: response.status === "ok",
+        isSaving: false,
+        isError: response.status === "error",
+      });
+    } else {
+      return setSaving({
+        isSuccess: false,
+        isSaving: false,
+        isError: true,
+      });
     }
-  }, [changeAvatar, compressedAvatar, documentId]);
+  }, [changeAvatar, compressedAvatar, documentId, mutateUser]);
+
+  useEffect(
+    () => setSaving({ isSuccess: false, isSaving: false, isError: false }),
+    [compressedAvatar]
+  );
 
   const {
     preview,
@@ -61,7 +96,7 @@ export function ProfileImageUploader({
   } = useImageDrop(setCompressedAvatar, imageURL);
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col justify-center items-center gap-2.5 w-36">
       <div className="relative w-fit">
         <div {...getRootProps()}>
           {isDragActive || isCompressing ? (
@@ -79,7 +114,7 @@ export function ProfileImageUploader({
               )}
             </div>
           ) : (
-            <div className="group/avatar relative rounded-full hover:outline-2 hover:outline-muted w-fit overflow-clip cursor-pointer">
+            <div className="group/avatar relative rounded-full w-fit overflow-clip cursor-pointer">
               <UserAvatar
                 avatarURL={preview ?? undefined}
                 id={userId}
@@ -109,16 +144,8 @@ export function ProfileImageUploader({
       </div>
 
       <div className="flex items-center gap-1.5">
-        {compressedAvatar !== undefined && !errorMessages && (
-          <Button
-            disabled={saving.isSaving || saving.success}
-            variant={saving.success ? "ghost" : "default"}
-            onClick={handleAvatarChange}
-          >
-            {saving.isSaving && <Loader2 className="animate-spin" />}
-            {saving.success && <Check />}
-            {saving.success ? "Сохранено" : "Сохранить"}
-          </Button>
+        {compressedAvatar !== undefined && (
+          <SaveButton saving={saving} handleAvatarChange={handleAvatarChange} />
         )}
       </div>
 
@@ -136,5 +163,46 @@ export function ProfileImageUploader({
         </div>
       )}
     </div>
+  );
+}
+
+function SaveButton({
+  saving,
+  handleAvatarChange,
+}: {
+  saving: SavingState;
+  handleAvatarChange: () => void;
+}) {
+  const defaultState = !saving.isSaving && !saving.isSuccess;
+  const isLoading = saving.isSaving && !saving.isSuccess;
+  const isSuccess = !saving.isSaving && saving.isSuccess;
+  const isError = !saving.isSaving && saving.isError;
+
+  return (
+    <Button
+      disabled={isLoading || isSuccess}
+      variant={defaultState ? "default" : "ghost"}
+      onClick={handleAvatarChange}
+    >
+      {defaultState && <>Сохранить</>}
+      {isLoading && (
+        <>
+          <Loader2 className="animate-spin" />
+          Сохранение...
+        </>
+      )}
+      {isSuccess && (
+        <>
+          <Check />
+          Сохранено
+        </>
+      )}
+      {isError && (
+        <>
+          <X />
+          Не удалось сохранить
+        </>
+      )}
+    </Button>
   );
 }
