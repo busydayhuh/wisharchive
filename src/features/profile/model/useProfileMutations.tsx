@@ -1,16 +1,11 @@
-import { useAuth } from "@/features/auth";
 import { appwriteService } from "@/shared/model/appwrite";
 import db from "@/shared/model/databases";
+import type { UserDocumentType } from "@/shared/model/types";
 import { useCallback } from "react";
 
 function useProfileMutations() {
-  const { current } = useAuth();
-
   const changeEmail = useCallback(
     async (email: string, password: string, userDocumentId: string) => {
-      if (current?.password !== password)
-        return { status: "error", message: "Неверный пароль" };
-
       try {
         await appwriteService.account.updateEmail(email, password);
         await db.users.update(userDocumentId, { userEmail: email });
@@ -21,18 +16,29 @@ function useProfileMutations() {
         return { status: "error", message: e };
       }
     },
-    [current]
+    []
   );
 
-  const changeName = useCallback(
-    async (name: string, userDocumentId: string) => {
+  const changeName = useCallback(async (name: string) => {
+    try {
+      await appwriteService.account.updateName(name);
+      // await db.users.update(userDocumentId, { userName: name });
+
+      return { status: "ok", message: "" };
+    } catch (e) {
+      console.log("Не удалось изменить имя", e);
+      return { status: "error", message: e };
+    }
+  }, []);
+
+  const changePersonalInfo = useCallback(
+    async (payload: Partial<UserDocumentType>, userDocumentId: string) => {
       try {
-        await appwriteService.account.updateName(name);
-        await db.users.update(userDocumentId, { userName: name });
+        await db.users.update(userDocumentId, payload);
 
         return { status: "ok", message: "" };
       } catch (e) {
-        console.log("Не удалось изменить имя", e);
+        console.log("Не удалось сохранить изменения", e);
         return { status: "error", message: e };
       }
     },
@@ -55,9 +61,6 @@ function useProfileMutations() {
 
   const changePassword = useCallback(
     async (password: string, oldPassword: string) => {
-      if (current?.password !== oldPassword)
-        return { status: "error", message: "Неверный пароль" };
-
       try {
         await appwriteService.account.updatePassword(password, oldPassword);
 
@@ -67,25 +70,19 @@ function useProfileMutations() {
         return { status: "error", message: e };
       }
     },
-    [current]
+    []
   );
 
-  const deleteProfile = useCallback(
-    async (password: string) => {
-      if (current?.password !== password)
-        return { status: "error", message: "Неверный пароль" };
+  const deleteProfile = useCallback(async () => {
+    try {
+      await appwriteService.account.updateStatus();
 
-      try {
-        await appwriteService.account.updateStatus();
-
-        return { status: "ok", message: "" };
-      } catch (e) {
-        console.log("Не удалось удалить аккаунт");
-        return { status: "error", message: e };
-      }
-    },
-    [current]
-  );
+      return { status: "ok", message: "" };
+    } catch (e) {
+      console.log("Не удалось удалить аккаунт");
+      return { status: "error", message: e };
+    }
+  }, []);
 
   return {
     changeEmail,
@@ -93,6 +90,7 @@ function useProfileMutations() {
     changeAvatar,
     changePassword,
     deleteProfile,
+    changePersonalInfo,
   };
 }
 
