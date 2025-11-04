@@ -93,75 +93,84 @@ export function ProfileImageUploader({
     getRootProps,
     isDragActive,
     isCompressing,
+    open,
   } = useImageDrop(setCompressedAvatar, imageURL);
 
   return (
-    <div className="flex flex-col justify-center items-center gap-2.5 w-36">
-      <div className="relative w-fit">
-        <div {...getRootProps()}>
-          {isDragActive || isCompressing ? (
-            <div
-              className={cn(
-                "place-content-center grid bg-muted rounded-full w-24 h-24",
-                isDragActive && "outline-2 outline-muted"
-              )}
-            >
-              {isDragActive && (
-                <ImagePlusIcon className="size-5 text-muted-foreground" />
-              )}
-              {isCompressing && (
-                <Loader2 className="size-4 text-muted-foreground animate-spin" />
-              )}
-            </div>
-          ) : (
-            <div className="group/avatar relative rounded-full w-fit overflow-clip cursor-pointer">
-              <UserAvatar
-                avatarURL={preview ?? undefined}
-                id={userId}
-                name={name}
-                size="3xl"
-              />
-              <div className="-bottom-6 absolute place-content-center grid bg-muted/70 w-full h-6 text-muted-foreground transition-all group-hover/avatar:-translate-y-6 duration-250">
-                <Camera className="size-4" />
+    <div className="flex flex-col gap-4 md:gap-6 px-2 md:px-0 pb-2">
+      <p className="font-semibold text-2xl">Аватар</p>
+      <div className="flex items-center gap-4 w-36">
+        <div className="relative w-fit">
+          <div {...getRootProps()}>
+            {isDragActive || isCompressing ? (
+              <div
+                className={cn(
+                  "place-content-center grid bg-muted rounded-full w-24 h-24",
+                  isDragActive && "outline-2 outline-muted"
+                )}
+              >
+                {isDragActive && (
+                  <ImagePlusIcon className="size-5 text-muted-foreground" />
+                )}
+                {isCompressing && (
+                  <Loader2 className="size-4 text-muted-foreground animate-spin" />
+                )}
               </div>
-            </div>
-          )}
-          <input {...getInputProps()} id="image-dropzone" />
-        </div>
-        {(compressedAvatar || preview) && (
-          <Button
-            variant="secondary"
-            onClick={() => {
-              setCompressedAvatar(null);
-              setPreview(null);
-            }}
-            size="sm"
-            className="-right-2 -bottom-1 z-10 absolute"
-          >
-            <Trash2 className="size-3" />
-          </Button>
-        )}
-      </div>
-
-      <div className="flex items-center gap-1.5">
-        {compressedAvatar !== undefined && (
-          <SaveButton saving={saving} handleAvatarChange={handleAvatarChange} />
-        )}
-      </div>
-
-      {errorMessages && (
-        <div className="bg-destructive/30 px-4 py-2 rounded-md w-fit text-destructive text-sm">
-          {errorMessages.map((m) => (
-            <p
-              key={m}
-              className="inline-flex items-center gap-2 [&_svg]:size-4"
+            ) : (
+              <div className="group/avatar relative rounded-full w-fit overflow-clip cursor-pointer">
+                <UserAvatar
+                  avatarURL={preview ?? undefined}
+                  id={userId}
+                  name={name}
+                  size="3xl"
+                />
+                <div className="-bottom-6 absolute place-content-center grid bg-muted/70 w-full h-6 text-muted-foreground transition-all group-hover/avatar:-translate-y-6 duration-250">
+                  <Camera className="size-4" />
+                </div>
+              </div>
+            )}
+            <input {...getInputProps()} id="image-dropzone" />
+          </div>
+          {(compressedAvatar || preview) && (
+            <Button
+              variant="secondary"
+              onClick={() => {
+                setCompressedAvatar(null);
+                setPreview(null);
+              }}
+              size="sm"
+              className="-right-2 -bottom-1 z-10 absolute"
             >
-              <CircleX />
-              {m}
-            </p>
-          ))}
+              <Trash2 className="size-3" />
+            </Button>
+          )}
         </div>
-      )}
+
+        <div className="flex items-center gap-1.5">
+          {compressedAvatar !== undefined ? (
+            <SaveButton
+              saving={saving}
+              handleAvatarChange={handleAvatarChange}
+            />
+          ) : (
+            <Button onClick={() => open()}>Изменить</Button>
+          )}
+        </div>
+
+        {errorMessages && (
+          <div className="bg-destructive/30 px-4 py-2 rounded-md w-fit text-destructive text-sm">
+            {errorMessages.map((m) => (
+              <p
+                key={m}
+                className="inline-flex items-center gap-2 [&_svg]:size-4"
+              >
+                <CircleX />
+                {m}
+              </p>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
