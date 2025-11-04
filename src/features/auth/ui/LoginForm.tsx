@@ -13,16 +13,12 @@ import { ArrowRight } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useAuth } from "../model/authContext";
-import PassWithToggle from "./PassInputWithToggle";
+import { PassWithToggle } from "./PassInputWithToggle";
 
 const formSchema = z.object({
-  email: z
-    .string({
-      required_error: "Введите логин",
-    })
-    .email("Неверный email"),
+  email: z.email("Неверный email"),
   password: z
-    .string({ required_error: "Введите пароль" })
+    .string("Введите пароль")
     .min(8, "Пароль должен содержать не менее 8 символов"),
 });
 

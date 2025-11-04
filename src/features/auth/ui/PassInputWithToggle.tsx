@@ -4,7 +4,7 @@ import { Eye, EyeClosed } from "lucide-react";
 import { useState } from "react";
 import type { ControllerRenderProps } from "react-hook-form";
 
-export default function PassWithToggle(props: ControllerRenderProps) {
+export function PassWithToggle(props: ControllerRenderProps) {
   const [passVisible, setPassVisible] = useState(false);
   return (
     <div className="relative flex overflow-hidden">

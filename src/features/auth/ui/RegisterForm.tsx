@@ -14,7 +14,7 @@ import { ArrowRight } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useAuth } from "../model/authContext";
-import PassWithToggle from "./PassInputWithToggle";
+import { PassWithToggle } from "./PassInputWithToggle";
 
 const formSchema = z
   .object({
