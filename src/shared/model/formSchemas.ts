@@ -35,3 +35,22 @@ export const wishFormSchema = z.object({
   wishlist: z.string(),
   priority: z.enum(["2", "1", "0"]),
 });
+
+export const userFormSchema = z.object({
+  userName: z
+    .string()
+    .min(1, "это обязательное поле")
+    .max(100, "максимум 100 символов"),
+  sex: z.enum(["female", "male", "other"]).nullable(),
+  birthDate: z.date().nullable(),
+  bio: z.string().max(500, "максимум 500 символов").optional(),
+});
+
+export const accountInfoFormSchema = z.object({
+  userEmail: z.email("Не валидный email"),
+  password: z
+    .string()
+    .min(8, "Пароль должен содержать не менее 8 символов")
+    .optional(),
+  oldPassword: z.string().min(1, "Это обязательное поле"),
+});

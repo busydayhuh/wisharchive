@@ -161,7 +161,7 @@ export function ResponsiveSelect({
               <SelectItem
                 key={opt.value}
                 value={opt.value}
-                className="focus:bg-muted/50 py-1 cursor-pointer"
+                className="focus:bg-muted/50 px-2.5 py-2 cursor-pointer"
                 disabled={opt.disabled}
               >
                 <span className="flex items-center gap-2">
@@ -177,12 +177,12 @@ export function ResponsiveSelect({
               key={opt.value}
               value={opt.value}
               disabled={opt.disabled}
-              className="focus:bg-muted/50 py-1 cursor-pointer"
+              className="focus:bg-muted/50 px-2.5 py-2 cursor-pointer"
             >
               {renderOption ? (
                 renderOption(opt, opt.value === value)
               ) : (
-                <span className="flex items-center gap-2 py-2 [&_svg:text-muted-foreground]">
+                <span className="flex items-center gap-2 [&_svg:text-muted-foreground]">
                   {opt.icon}
                   {opt.label}
                 </span>
