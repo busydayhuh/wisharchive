@@ -1,4 +1,11 @@
-import { ChevronsUpDown } from "lucide-react";
+import {
+  ChevronsUpDown,
+  LogOut,
+  Moon,
+  Paintbrush,
+  Settings,
+  Sun,
+} from "lucide-react";
 
 import { ROUTES } from "@/shared/model/routes";
 import { useUser } from "@/shared/model/user/useUser";
@@ -8,7 +15,11 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuPortal,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/shared/ui/kit/dropdown-menu";
 import {
@@ -18,7 +29,6 @@ import {
   useSidebar,
 } from "@/shared/ui/kit/sidebar";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
-import { GiFairyWand, GiOrbDirection, GiSun } from "react-icons/gi";
 import { Link } from "react-router";
 import { useAuth } from "../auth";
 
@@ -51,7 +61,7 @@ export function UserSb() {
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg border-1 border-muted"
+            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg border-1 border-muted bg-sidebar-accent"
             side={isMobile ? "bottom" : "right"}
             align="end"
             sideOffset={4}
@@ -66,26 +76,45 @@ export function UserSb() {
                 />
                 <div className="flex-1 grid text-sm text-left leading-tight">
                   <p className="font-medium truncate">{current!.name}</p>
-                  <p className="text-xs truncate">{current!.email}</p>
+                  <p className="text-muted-foreground text-xs truncate">
+                    {current!.email}
+                  </p>
                 </div>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator className="bg-muted" />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <GiSun />
-                Выбрать тему
-              </DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <Sun className="size-4 text-muted-foreground" /> Выбрать тему
+                </DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent className="bg-sidebar-accent">
+                    <DropdownMenuItem>
+                      <Sun />
+                      Светлая
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Moon />
+                      Тёмная
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Paintbrush />
+                      Системная
+                    </DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
               <DropdownMenuItem asChild>
                 <Link to={ROUTES.PROFILE}>
-                  <GiFairyWand />
+                  <Settings />
                   Настройки аккаунта
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator className="bg-muted" />
             <DropdownMenuItem onClick={logout}>
-              <GiOrbDirection />
+              <LogOut />
               Выйти
             </DropdownMenuItem>
           </DropdownMenuContent>
