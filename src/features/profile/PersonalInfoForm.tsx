@@ -25,6 +25,7 @@ import { useForm } from "react-hook-form";
 import type { KeyedMutator } from "swr";
 import type z from "zod";
 import useProfileMutations from "./model/useProfileMutations";
+import { ProfileImageUploader } from "./ProfileImageUploader";
 
 export function PersonalInfoForm({
   userInfo,
@@ -69,6 +70,7 @@ export function PersonalInfoForm({
         className="flex flex-col gap-4 md:gap-6 mx-auto mt-3 md:mt-0 px-2 md:px-0 pb-2 lg:max-w-3xl max-w-4xl"
       >
         <p className="font-semibold text-xl lg:text-2xl">Личные данные</p>
+
         <FormField
           control={form.control}
           name="userName"
@@ -125,6 +127,17 @@ export function PersonalInfoForm({
             )}
           />
         </div>
+        <div className="space-y-4">
+          <p className="font-medium text-muted-foreground text-sm">Аватар</p>
+          <ProfileImageUploader
+            imageURL={userInfo.avatarURL ?? undefined}
+            userId={userInfo.userId}
+            documentId={userInfo.$id}
+            name={userInfo.userName}
+            mutateUser={mutateUser}
+          />
+        </div>
+
         <FormField
           control={form.control}
           name="bio"

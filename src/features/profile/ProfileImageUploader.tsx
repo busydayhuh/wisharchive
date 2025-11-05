@@ -98,7 +98,6 @@ export function ProfileImageUploader({
 
   return (
     <div className="flex flex-col gap-4 md:gap-6 px-2 md:px-0 pb-2">
-      <p className="font-semibold text-xl lg:text-2xl">Аватар</p>
       <div className="flex items-center gap-4 w-36">
         <div className="relative w-fit">
           <div {...getRootProps()}>
@@ -133,6 +132,7 @@ export function ProfileImageUploader({
           </div>
           {(compressedAvatar || preview) && (
             <Button
+              type="button"
               variant="secondary"
               onClick={() => {
                 setCompressedAvatar(null);
@@ -153,7 +153,9 @@ export function ProfileImageUploader({
               handleAvatarChange={handleAvatarChange}
             />
           ) : (
-            <Button onClick={() => open()}>Изменить</Button>
+            <Button type="button" onClick={() => open()}>
+              Выбрать
+            </Button>
           )}
         </div>
 
@@ -192,8 +194,9 @@ function SaveButton({
       disabled={isLoading || isSuccess}
       variant={defaultState ? "default" : "ghost"}
       onClick={handleAvatarChange}
+      type="button"
     >
-      {defaultState && <>Сохранить</>}
+      {defaultState && <>Обновить аватар</>}
       {isLoading && (
         <>
           <Loader2 className="animate-spin" />
@@ -203,7 +206,7 @@ function SaveButton({
       {isSuccess && (
         <>
           <Check />
-          Сохранено
+          Аватар обновлен
         </>
       )}
       {isError && (

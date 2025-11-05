@@ -21,7 +21,7 @@ export function UserInfoHeader({
           avatarURL={imageURL ?? undefined}
           id={userId}
           name={name}
-          size="3xl"
+          size="xl"
           className="shrink-0"
         />
         <div>

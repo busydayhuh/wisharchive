@@ -5,6 +5,7 @@ import {
   Paintbrush,
   Settings,
   Sun,
+  SunMoon,
 } from "lucide-react";
 
 import { ROUTES } from "@/shared/model/routes";
@@ -86,7 +87,8 @@ export function UserSb() {
             <DropdownMenuGroup>
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>
-                  <Sun className="size-4 text-muted-foreground" /> Выбрать тему
+                  <SunMoon className="size-4 text-muted-foreground" /> Выбрать
+                  тему
                 </DropdownMenuSubTrigger>
                 <DropdownMenuPortal>
                   <DropdownMenuSubContent className="bg-sidebar-accent">
