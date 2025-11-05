@@ -44,6 +44,7 @@ export const CollaboratorsAvatars = memo(function CollaboratorsAvatars({
       <div
         className={cn(
           "flex *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background",
+          SPACING[size],
           className
         )}
       >

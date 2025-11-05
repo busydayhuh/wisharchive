@@ -3,6 +3,7 @@ import { useCollabWishlists } from "@/features/dashboard";
 import { cn } from "@/shared/lib/css";
 import { ROUTES } from "@/shared/model/routes";
 import { PRIVACY_ICONS } from "@/shared/ui/Badges";
+import { Skeleton } from "@/shared/ui/kit/skeleton";
 import { ResponsiveSelect, type Option } from "@/shared/ui/ResponsiveSelect";
 import { ChevronDown } from "lucide-react";
 import { href, useNavigate } from "react-router";
@@ -67,41 +68,43 @@ export function WishlistChanger({
     );
   };
 
-  return (
-    <div
-      className={cn("flex items-center rounded-md overflow-clip", className)}
-    >
-      <button
-        className={cn(
-          "flex items-center gap-1.5 bg-secondary hover:bg-secondary/90 shadow-none px-1.5 py-1 pr-2 border-r-1 border-r-border/60 rounded-l-md h-10",
-          selected?.value !== "none" && "cursor-pointer"
-        )}
-        onClick={handleNavigation}
-      >
-        {selected?.icon}
-        <span className="max-w-[10ch] truncate">{selected?.label}</span>
-      </button>
+  if (isLoading) return <Skeleton className={cn("w-32 h-10", className)} />;
+  if (error) return null;
 
-      <ResponsiveSelect
-        options={options}
-        onChange={onValueChange}
-        value={value}
-        renderTrigger={() => (
-          <div className="md:hidden">
-            <ChevronDown className="size-4 text-muted-foreground" />
-          </div>
-        )}
-        triggerCSS="h-10 bg-secondary rounded-r-md rounded-l-none flex items-center justify-center md:pl-0 py-5 px-2 md:pr-2 hover:bg-secondary/90"
-        title="Выберите список"
-        contentCSS={cn("max-h-md", variant === "dashboard" && "w-xs")}
-        isLoading={isLoading}
-        error={error}
-        renderOption={(opt) => (
-          <span className={cn("flex items-center gap-2")}>
-            {opt.icon} {opt.label}
-          </span>
-        )}
-      />
-    </div>
-  );
+  if (wishlists)
+    return (
+      <div
+        className={cn("flex items-center rounded-md overflow-clip", className)}
+      >
+        <button
+          className={cn(
+            "flex items-center gap-1.5 bg-secondary hover:bg-secondary/90 shadow-none px-1.5 py-1 pr-2 border-r-1 border-r-border/60 rounded-l-md h-10",
+            selected?.value !== "none" && "cursor-pointer"
+          )}
+          onClick={handleNavigation}
+        >
+          {selected?.icon}
+          <span className="max-w-[10ch] truncate">{selected?.label}</span>
+        </button>
+
+        <ResponsiveSelect
+          options={options}
+          onChange={onValueChange}
+          value={value}
+          renderTrigger={() => (
+            <div className="md:hidden">
+              <ChevronDown className="size-4 text-muted-foreground" />
+            </div>
+          )}
+          triggerCSS="h-10 bg-secondary rounded-r-md rounded-l-none flex items-center justify-center md:pl-0 py-5 px-2 md:pr-2 hover:bg-secondary/90"
+          title="Выберите список"
+          contentCSS={cn("max-h-md", variant === "dashboard" && "w-xs")}
+          renderOption={(opt) => (
+            <span className={cn("flex items-center gap-2")}>
+              {opt.icon} {opt.label}
+            </span>
+          )}
+        />
+      </div>
+    );
 }

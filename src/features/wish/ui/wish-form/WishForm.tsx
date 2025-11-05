@@ -197,7 +197,7 @@ export function WishForm({
             </FormItem>
           )}
         />
-        <div className="flex sm:flex-row flex-col sm:justify-between gap-2 mt-2 w-full">
+        <div className="flex sm:flex-row flex-col sm:justify-between gap-2 mt-2 lg:mt-8 w-full">
           <Button
             type="submit"
             disabled={form.formState.isSubmitting}
