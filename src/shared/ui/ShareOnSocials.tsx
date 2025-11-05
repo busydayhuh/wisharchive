@@ -13,6 +13,7 @@ import {
 
 import {} from "@radix-ui/react-dialog";
 import { LucideLink, Share2 } from "lucide-react";
+import { copyLink } from "../lib/copyLink";
 import { useIsMobile } from "../lib/react/useIsMobile";
 import { Button } from "./kit/button";
 import {
@@ -111,13 +112,4 @@ export default function ShareOnSocials({ media }: { media?: string }) {
       </PopoverContent>
     </Popover>
   );
-}
-
-async function copyLink(link: string) {
-  try {
-    await navigator.clipboard.writeText(link);
-    console.log("Content copied to clipboard");
-  } catch (err) {
-    console.error("Failed to copy: ", err);
-  }
 }
