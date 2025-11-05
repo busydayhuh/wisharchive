@@ -9,7 +9,7 @@ type PassWithToggleProps = ControllerRenderProps & { className?: string };
 export function PassWithToggle(props: PassWithToggleProps) {
   const [passVisible, setPassVisible] = useState(false);
   return (
-    <div className="relative flex overflow-hidden">
+    <div className="relative">
       <Input
         placeholder="**************"
         type={passVisible ? "text" : "password"}
