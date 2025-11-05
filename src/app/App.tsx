@@ -3,11 +3,10 @@ import { BreadcrumbsBar, useRoute } from "@/features/breadcrumbs";
 import { AppSidebar } from "@/features/sidebar";
 import { cn } from "@/shared/lib/css";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
-import { ROUTES } from "@/shared/model/routes";
 import { BlobsBackground } from "@/shared/ui/BlobsBackground";
 import DefaultLoader from "@/shared/ui/DefaultLoader";
 import MainContainer from "@/shared/ui/MainContainer";
-import { matchRoutes, Outlet, useNavigation } from "react-router-dom";
+import { Outlet, useNavigation } from "react-router-dom";
 import { Toaster } from "sonner";
 
 function App() {
@@ -15,28 +14,15 @@ function App() {
   const isMobile = useIsMobile();
   const { location } = useRoute();
 
-  const slim = Boolean(
-    matchRoutes(
-      [{ path: ROUTES.WISH }, { path: ROUTES.EDIT }, { path: ROUTES.PROFILE }],
-      location.pathname
-    )
-  );
-  const outside = Boolean(
-    matchRoutes(
-      [{ path: ROUTES.HOME }, { path: ROUTES.LOGIN }, { path: ROUTES.SIGNUP }],
-      location.pathname
-    )
-  );
-
   const navigation = useNavigation();
   const isLoading = navigation.state === "loading";
 
   return (
     <>
       {current && <AppSidebar />}
-      {!outside && !isMobile && <BlobsBackground />}
+      {!isMobile && <BlobsBackground />}
 
-      <MainContainer slimLayout={slim} outside={outside}>
+      <MainContainer>
         <BreadcrumbsBar
           isMobile={isMobile}
           path={location.pathname}
