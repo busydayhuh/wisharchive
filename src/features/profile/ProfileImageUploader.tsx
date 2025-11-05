@@ -98,7 +98,7 @@ export function ProfileImageUploader({
 
   return (
     <div className="flex flex-col gap-4 md:gap-6 px-2 md:px-0 pb-2">
-      <p className="font-semibold text-2xl">Аватар</p>
+      <p className="font-semibold text-xl lg:text-2xl">Аватар</p>
       <div className="flex items-center gap-4 w-36">
         <div className="relative w-fit">
           <div {...getRootProps()}>

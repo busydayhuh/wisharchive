@@ -93,9 +93,9 @@ export function AccountInfoForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(async (values) => saveAccountInfo(values))}
-        className="flex flex-col gap-4 md:gap-6 mt-3 md:mt-0 px-2 md:px-0 pb-2 max-w-3xl"
+        className="flex flex-col gap-4 md:gap-6 mx-auto mt-3 md:mt-0 px-2 md:px-0 pb-2 w-full lg:max-w-3xl max-w-4xl"
       >
-        <p className="font-semibold text-2xl">Логин и пароль</p>
+        <p className="font-semibold text-xl lg:text-2xl">Логин и пароль</p>
         <FormField
           control={form.control}
           name="userEmail"
@@ -122,7 +122,7 @@ export function AccountInfoForm({
             <FormItem>
               <FormLabel htmlFor="password">Новый пароль</FormLabel>
               <FormControl>
-                <PassWithToggle {...field} />
+                <PassWithToggle {...field} className="text-sm md:text-base" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -131,7 +131,7 @@ export function AccountInfoForm({
         {isDirty && (
           <>
             <FormMessage className="text-muted-foreground">
-              Для подтверждения изменений введите текущий пароль
+              Для подтверждения изменений введите текущий пароль:
             </FormMessage>
             <FormField
               control={form.control}
@@ -142,7 +142,10 @@ export function AccountInfoForm({
                     Текущий пароль <span className="text-destructive">*</span>
                   </FormLabel>
                   <FormControl>
-                    <PassWithToggle {...field} />
+                    <PassWithToggle
+                      {...field}
+                      className="text-sm md:text-base"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -66,9 +66,9 @@ export function PersonalInfoForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(async (values) => savePersonalInfo(values))}
-        className="flex flex-col gap-4 md:gap-6 mt-3 md:mt-0 px-2 md:px-0 pb-2 max-w-3xl"
+        className="flex flex-col gap-4 md:gap-6 mx-auto mt-3 md:mt-0 px-2 md:px-0 pb-2 lg:max-w-3xl max-w-4xl"
       >
-        <p className="font-semibold text-2xl">Личные данные</p>
+        <p className="font-semibold text-xl lg:text-2xl">Личные данные</p>
         <FormField
           control={form.control}
           name="userName"

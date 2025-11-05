@@ -15,17 +15,22 @@ export function UserInfoHeader({
   name: string;
 }) {
   return (
-    <div className="flex justify-between">
+    <div className="flex flex-wrap sm:justify-between gap-y-3 px-2 lg:px-0">
       <div className="flex items-center gap-4">
         <UserAvatar
           avatarURL={imageURL ?? undefined}
           id={userId}
           name={name}
           size="3xl"
+          className="shrink-0"
         />
         <div>
-          <p className="font-semibold text-xl">{name}</p>
-          <p className="text-muted-foreground text-base">@{userId}</p>
+          <p className="mb-1 font-semibold text-lg lg:text-xl leading-4">
+            {name}
+          </p>
+          <p className="text-muted-foreground text-sm lg:text-base">
+            @{userId}
+          </p>
         </div>
       </div>
       <div className="flex items-center gap-4">
