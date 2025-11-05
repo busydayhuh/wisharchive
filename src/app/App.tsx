@@ -8,6 +8,7 @@ import { BlobsBackground } from "@/shared/ui/BlobsBackground";
 import DefaultLoader from "@/shared/ui/DefaultLoader";
 import MainContainer from "@/shared/ui/MainContainer";
 import { matchRoutes, Outlet, useNavigation } from "react-router-dom";
+import { Toaster } from "sonner";
 
 function App() {
   const { current } = useAuth();
@@ -55,6 +56,15 @@ function App() {
           </div>
         )}
       </MainContainer>
+      <Toaster
+        position="top-right"
+        richColors
+        toastOptions={{
+          classNames: {
+            toast: "!rounded-lg",
+          },
+        }}
+      />
     </>
   );
 }

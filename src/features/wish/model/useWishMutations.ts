@@ -2,6 +2,7 @@ import db from "@/shared/model/databases";
 import { useOptimisticMutation } from "@/shared/model/useOptimisticMutation";
 import type { Models } from "appwrite";
 import { useCallback } from "react";
+import { toast } from "sonner";
 
 type CreateWishProps = {
   title: string;
@@ -30,7 +31,9 @@ export function useWishMutations() {
     try {
       return await db.wishes.create(payload);
     } catch {
-      console.log("Не удалось создать желание");
+      toast.error("Не удалось создать желание", {
+        description: "Повторите попытку позже",
+      });
     }
   }, []);
 

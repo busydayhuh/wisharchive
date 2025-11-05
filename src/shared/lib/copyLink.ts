@@ -1,8 +1,10 @@
+import { toast } from "sonner";
+
 export async function copyLink(link: string) {
   try {
     await navigator.clipboard.writeText(link);
-    console.log("Content copied to clipboard");
-  } catch (err) {
-    console.error("Failed to copy: ", err);
+    toast.success("Ссылка скопирована в буфер обмена");
+  } catch {
+    toast.error("Не удалось скопировать ссылку");
   }
 }

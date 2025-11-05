@@ -15,6 +15,7 @@ import { Form } from "@/shared/ui/kit/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 import { useWishlistMutations } from "../../model/useWishlistMutations";
 import CollaboratorsSection from "./CollaboratorsSection";
@@ -63,39 +64,34 @@ export function WishlistDialog({
     if (action === "edit") {
       const privacyChanged = form.getFieldState("isPrivate").isDirty;
 
-      await actions.update(
+      const updatedList = await actions.update(
         wishlist!.$id,
         values,
         values.isPrivate,
         privacyChanged
       );
 
+      if (updatedList) {
+        toast.success("Изменения сохранены");
+      } else {
+        toast.error("Не удалось сохранить изменения");
+      }
       setIsOpen(false);
     }
 
     if (action === "create") {
-      await actions.create({
+      const newList = await actions.create({
         ...values,
         ownerId: currentUser?.userId ?? "",
         owner: currentUser,
       });
 
+      if (newList) {
+        toast.success("Список создан");
+      } else {
+        toast.error("Не удалось сохранить список");
+      }
       setIsOpen(false);
-
-      // if (newWishlist) {
-      //   document.body.style.pointerEvents = "auto";
-      //   setIsOpen(false);
-
-      //   setTimeout(() => {
-      //     document.body.style.pointerEvents = "auto";
-      //     navigate(
-      //       href(ROUTES.WISHLIST, {
-      //         listId: newWishlist.$id,
-      //         userId: newWishlist.ownerId,
-      //       })
-      //     );
-      //   }, 200);
-      // }
     }
   }
 

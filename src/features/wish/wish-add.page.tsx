@@ -2,6 +2,7 @@ import type { wishFormSchema } from "@/shared/model/formSchemas";
 import { ROUTES } from "@/shared/model/routes";
 import { useCurrentUser } from "@/shared/model/user/useCurrentUser";
 import { href, useNavigate } from "react-router";
+import { toast } from "sonner";
 import type z from "zod";
 import { normalizeWishData } from "./model/normalizeWishData";
 import { useWishMutations } from "./model/useWishMutations";
@@ -25,7 +26,11 @@ function WishAddPage() {
 
     const response = await create(wish);
 
-    if (response)
+    if (response) {
+      toast.success("Желание создано", {
+        description: response.title,
+      });
+
       navigate(
         href(ROUTES.WISH, { userId: wish.ownerId, wishId: response.$id }),
         {
@@ -36,6 +41,7 @@ function WishAddPage() {
           },
         }
       );
+    }
   }
 
   if (isLoading) return "Загрузка...";

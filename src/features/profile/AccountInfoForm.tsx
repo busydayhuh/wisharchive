@@ -10,9 +10,10 @@ import {
 } from "@/shared/ui/kit/form";
 import { Input } from "@/shared/ui/kit/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Check, Loader2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Loader2 } from "lucide-react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import type z from "zod";
 import { PassWithToggle } from "../auth";
 import useProfileMutations from "./model/useProfileMutations";
@@ -35,8 +36,6 @@ export function AccountInfoForm({
       oldPassword: "",
     },
   });
-
-  const [submitted, setSubmitted] = useState(false);
 
   const { isSubmitting, isDirty, isSubmitSuccessful } = form.formState;
 
@@ -61,8 +60,8 @@ export function AccountInfoForm({
           { type: "custom", message: "Неверный пароль" },
           { shouldFocus: true }
         );
-
-        return;
+      } else {
+        toast.success("Email успешно обновлён");
       }
     }
 
@@ -78,15 +77,10 @@ export function AccountInfoForm({
           { type: "custom", message: "Неверный пароль" },
           { shouldFocus: true }
         );
-
-        return;
+      } else {
+        toast.success("Пароль успешно обновлён");
       }
     }
-
-    setSubmitted(true);
-
-    const timer = setTimeout(() => setSubmitted(false), 3000);
-    return () => clearTimeout(timer);
   };
 
   return (
@@ -171,12 +165,6 @@ export function AccountInfoForm({
               "Сохранить"
             )}
           </Button>
-          {submitted && (
-            <p className="inline-flex items-center gap-1.5 text-muted-foreground text-sm">
-              <Check className="size-4" />
-              Сохранено
-            </p>
-          )}
         </div>
       </form>
     </Form>

@@ -1,5 +1,6 @@
 import { useWishlistMutations } from "@/features/wishlist/";
 import { useCallback, useMemo } from "react";
+import { toast } from "sonner";
 import team from "../../../../shared/model/teams";
 import { useTeamMembers } from "./useTeamMembers";
 
@@ -26,10 +27,13 @@ function useMembershipMutations(teamId: string) {
         });
 
         mutate();
+        toast.success("Приглашение отправлено");
 
         return response;
       } catch {
-        alert("Не удалось добавить пользователя");
+        toast.error("Не удалось пригласить пользователя", {
+          description: "Повторите попытку позже",
+        });
       }
     },
     [editors, update, teamId, mutate]
@@ -45,10 +49,13 @@ function useMembershipMutations(teamId: string) {
         });
 
         mutate();
+        toast.success("Приглашение отправлено");
 
         return response;
       } catch {
-        alert("Не удалось добавить пользователя");
+        toast.error("Не удалось пригласить пользователя", {
+          description: "Повторите попытку позже",
+        });
       }
     },
     [mutate, readers, teamId, update]
@@ -70,8 +77,11 @@ function useMembershipMutations(teamId: string) {
         });
 
         mutate();
+        toast.success("Пользователь удален из команды");
       } catch {
-        alert("Не удалось удалить пользователя");
+        toast.error("Не удалось удалить пользователя", {
+          description: "Повторите попытку позже",
+        });
       }
     },
     [editors, members, mutate, update, readers, teamId]

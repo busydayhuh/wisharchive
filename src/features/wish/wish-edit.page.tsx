@@ -1,6 +1,7 @@
 import type { wishFormSchema } from "@/shared/model/formSchemas";
 import { ROUTES } from "@/shared/model/routes";
 import { href, useNavigate, useParams } from "react-router";
+import { toast } from "sonner";
 import type z from "zod";
 import { useAuth } from "../auth";
 import { normalizeWishData } from "./model/normalizeWishData";
@@ -25,7 +26,9 @@ function WishEditPage() {
     const wishUpdates = normalizeWishData(formData);
     const updatedWish = await update(wishId, wishUpdates);
 
-    if (updatedWish)
+    if (updatedWish) {
+      toast.success("Изменения сохранены");
+
       navigate(href(ROUTES.WISH, { wishId, userId: updatedWish.ownerId }), {
         state: {
           data: {
@@ -34,6 +37,7 @@ function WishEditPage() {
           },
         },
       });
+    }
   }
 
   if (wish && authUser?.$id !== wish.ownerId)

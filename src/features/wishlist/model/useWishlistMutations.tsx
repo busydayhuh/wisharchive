@@ -21,38 +21,34 @@ export function useWishlistMutations() {
       const id = ID.unique(); // id для нового вишлиста и его команды
       const permissions = configureWishlistPermissions(payload.isPrivate, id);
 
-      try {
-        return performMutation(
-          (prev) => [
-            {
-              $id: id,
-              $collectionId: "wishlists",
-              $databaseId: "wisharchive",
-              $createdAt: "",
-              $updatedAt: "",
-              $permissions: [],
-              editorsIds: [],
-              readersIds: [],
-              ...payload,
-            },
-            ...prev,
-          ],
-
-          async () => {
-            await team.create(payload.title, id);
-
-            return await db.wishlists.create(
-              payload,
-              permissions,
-              id // задаем вишлисту такой же id, как и у созданной под него команды
-            );
+      return performMutation(
+        (prev) => [
+          {
+            $id: id,
+            $collectionId: "wishlists",
+            $databaseId: "wisharchive",
+            $createdAt: "",
+            $updatedAt: "",
+            $permissions: [],
+            editorsIds: [],
+            readersIds: [],
+            ...payload,
           },
+          ...prev,
+        ],
 
-          "wishlists"
-        );
-      } catch {
-        console.log("Не удалось создать вишлист");
-      }
+        async () => {
+          await team.create(payload.title, id);
+
+          return await db.wishlists.create(
+            payload,
+            permissions,
+            id // задаем вишлисту такой же id, как и у созданной под него команды
+          );
+        },
+
+        "wishlists"
+      );
     },
     [performMutation]
   );

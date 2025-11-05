@@ -22,6 +22,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronDownIcon, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import type { KeyedMutator } from "swr";
 import type z from "zod";
 import useProfileMutations from "./model/useProfileMutations";
@@ -60,7 +61,14 @@ export function PersonalInfoForm({
     if (form.getFieldState("userName").isDirty) changeName(values.userName);
 
     const response = await changePersonalInfo(values, userInfo.$id);
-    if (response.status === "ok") mutateUser();
+    if (response.status === "ok") {
+      mutateUser();
+      toast.success("Профиль успешно обновлён");
+    } else {
+      toast.error("Не удалось обновить профиль", {
+        description: "Повторите попытку позже",
+      });
+    }
   };
 
   return (

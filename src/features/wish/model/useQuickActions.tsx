@@ -4,6 +4,7 @@ import type { LinkParams } from "@/shared/model/types";
 import { useRevalidationByKeyword } from "@/shared/model/useRevalidationByKeyword";
 import { useCallback } from "react";
 import { href, useNavigate } from "react-router";
+import { toast } from "sonner";
 import { useWishMutations } from "./useWishMutations";
 
 export function useQuickActions(wishId: string) {
@@ -22,8 +23,15 @@ export function useQuickActions(wishId: string) {
           bookerId: pressed ? current.$id : null,
           bookedBy: pressed ? current.$id : null,
         });
+
+        toast.success(
+          pressed ? "Желание забронировано" : "Бронирование отменено"
+        );
       } catch {
-        console.log("Не удалось забронировать желание");
+        toast.error(
+          pressed ? "Ошибка бронирования" : "Не удалось отменить бронь",
+          { description: "Повторите попытку позже" }
+        );
       }
     },
     [current, navigate, wishId, actions]
@@ -39,8 +47,13 @@ export function useQuickActions(wishId: string) {
         });
 
         revalidateByKeyword("wishes");
+        toast.success(
+          archived ? "Желание восстановлено" : "Желание архивировано"
+        );
       } catch {
-        console.log("Не удалось изменить статус архива");
+        toast.error("Не удалось переместить желание", {
+          description: "Повторите попытку позже",
+        });
       }
     },
     [wishId, revalidateByKeyword, actions]
@@ -55,8 +68,11 @@ export function useQuickActions(wishId: string) {
   const deleteWish = useCallback(async () => {
     try {
       await actions.delete(wishId);
+      toast.success("Желание удалено");
     } catch {
-      console.log("Не удалось удалить желание");
+      toast.error("Не удалось удалить желание", {
+        description: "Повторите попытку позже",
+      });
     }
   }, [wishId, actions]);
 
@@ -68,8 +84,11 @@ export function useQuickActions(wishId: string) {
       });
 
       revalidateByKeyword("wishes");
+      toast.success("Желание исключено из списка");
     } catch {
-      console.log("Не удалось исключить желание из списка");
+      toast.error("Не удалось исключить желание из списка", {
+        description: "Повторите попытку позже",
+      });
     }
   }, [wishId, revalidateByKeyword, actions]);
 
@@ -85,8 +104,12 @@ export function useQuickActions(wishId: string) {
           revalidateByKeyword("wishes"),
           revalidateByKeyword("wishlists"),
         ]);
+
+        toast.success("Желание перемещено");
       } catch {
-        console.log("Не удалось изменить список");
+        toast.error("Не удалось переместить желание", {
+          description: "Повторите попытку позже",
+        });
       }
     },
     [wishId, revalidateByKeyword, actions]
