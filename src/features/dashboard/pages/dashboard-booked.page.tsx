@@ -1,9 +1,9 @@
 import { useWishes } from "@/features/wish";
+import { useInfiniteScroll } from "@/shared/lib/react/useInfiniteScroll";
 import { useDashboardContext } from "../model/useDashboardContext";
 import { useDashboardToolbar } from "../model/useDashboardToolbar";
 import { wrapDashboardPage } from "../model/wrapDashboardPage";
 import { WishesPageLayout } from "../ui/main-content/wishes/WishesPageLayout";
-import { useInfiniteScroll } from "@/shared/lib/react/useInfiniteScroll";
 
 function BookedPage() {
   const { dashboardUserId } = useDashboardContext();
@@ -35,4 +35,4 @@ function BookedPage() {
   );
 }
 
-export const Component = wrapDashboardPage(BookedPage);
+export const BookedPageWithLayout = wrapDashboardPage(BookedPage);

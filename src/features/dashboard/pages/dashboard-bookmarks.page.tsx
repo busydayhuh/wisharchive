@@ -41,4 +41,4 @@ function BookmarksPage() {
   );
 }
 
-export const Component = wrapDashboardPage(BookmarksPage);
+export const BookmarksPageWithLayout = wrapDashboardPage(BookmarksPage);

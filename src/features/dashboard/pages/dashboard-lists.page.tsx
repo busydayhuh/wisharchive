@@ -41,4 +41,4 @@ function WishlistsPage() {
   );
 }
 
-export const Component = wrapDashboardPage(WishlistsPage);
+export const WishlistPageWithLayout = wrapDashboardPage(WishlistsPage);

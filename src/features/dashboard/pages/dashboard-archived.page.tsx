@@ -35,4 +35,4 @@ function ArchivedWishesPage() {
   );
 }
 
-export const Component = wrapDashboardPage(ArchivedWishesPage);
+export const ArchivedPageWithLayout = wrapDashboardPage(ArchivedWishesPage);

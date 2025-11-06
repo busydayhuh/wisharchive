@@ -47,4 +47,4 @@ function SharedPage() {
   );
 }
 
-export const Component = wrapDashboardPage(SharedPage);
+export const SharedPageWithLayout = wrapDashboardPage(SharedPage);

@@ -1,3 +1,11 @@
+import {
+  ArchivedPageWithLayout,
+  BookedPageWithLayout,
+  BookmarksPageWithLayout,
+  SharedPageWithLayout,
+  WishesPageWithLayout,
+  WishlistPageWithLayout,
+} from "@/features/dashboard/";
 import { ROUTES } from "@/shared/model/routes.ts";
 import DefaultLoader from "@/shared/ui/DefaultLoader.tsx";
 import { createBrowserRouter } from "react-router-dom";
@@ -26,35 +34,19 @@ export const router = createBrowserRouter([
     children: [
       {
         path: ROUTES.DASHBOARD,
-        lazy: () =>
-          import("@/features/dashboard/pages/dashboard-wishes.page.tsx"),
+        element: <WishesPageWithLayout />,
         HydrateFallback: DefaultLoader,
-        handle: {
-          breadcrumb: (params, data) =>
-            data?.name || `Дашборд ${params.userId}`,
-        } as BreadcrumbHandle,
       },
 
       {
         path: ROUTES.WISHES,
-        lazy: () =>
-          import("@/features/dashboard/pages/dashboard-wishes.page.tsx"),
+        element: <WishesPageWithLayout />,
         HydrateFallback: DefaultLoader,
-        handle: {
-          breadcrumb: (params, data) =>
-            data?.name || `Желания ${params.userId}`,
-          parents: ["/:userId"],
-        } as BreadcrumbHandle,
       },
       {
         path: ROUTES.WISHLISTS,
-        lazy: () =>
-          import("@/features/dashboard/pages/dashboard-lists.page.tsx"),
+        element: <WishlistPageWithLayout />,
         HydrateFallback: DefaultLoader,
-        handle: {
-          breadcrumb: (params, data) => data?.name || `Списки ${params.userId}`,
-          parents: ["/:userId"],
-        } as BreadcrumbHandle,
       },
 
       {
@@ -62,29 +54,22 @@ export const router = createBrowserRouter([
         children: [
           {
             path: ROUTES.SHARED,
-            lazy: () =>
-              import("@/features/dashboard/pages/dashboard-shared.page.tsx"),
+            element: <SharedPageWithLayout />,
             HydrateFallback: DefaultLoader,
-            handle: {
-              breadcrumb: () => "Совместные списки",
-            } as BreadcrumbHandle,
           },
           {
             path: ROUTES.BOOKED,
-            lazy: () =>
-              import("@/features/dashboard/pages/dashboard-booked.page.tsx"),
+            element: <BookedPageWithLayout />,
             HydrateFallback: DefaultLoader,
           },
           {
             path: ROUTES.BOOKMARKS,
-            lazy: () =>
-              import("@/features/dashboard/pages/dashboard-bookmarks.page.tsx"),
+            element: <BookmarksPageWithLayout />,
             HydrateFallback: DefaultLoader,
           },
           {
             path: ROUTES.ARCHIVED,
-            lazy: () =>
-              import("@/features/dashboard/pages/dashboard-archived.page.tsx"),
+            element: <ArchivedPageWithLayout />,
             HydrateFallback: DefaultLoader,
           },
           {
