@@ -43,11 +43,11 @@ function App() {
         )}
       </MainContainer>
       <Toaster
-        position="top-right"
-        richColors
+        position={isMobile ? "top-center" : "bottom-right"}
+        closeButton
         toastOptions={{
           classNames: {
-            toast: "!rounded-lg",
+            toast: "!rounded-xl !shadow-xs",
           },
         }}
       />
