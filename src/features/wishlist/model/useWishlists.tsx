@@ -55,6 +55,7 @@ export function useWishlists(filters?: QueryFilters) {
           data.flat().forEach((wl) => (wl.wishes ? wl.wishes.reverse() : null));
         },
         revalidateAll: true,
+        keepPreviousData: true,
       }
     );
 

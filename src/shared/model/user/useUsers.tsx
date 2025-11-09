@@ -33,6 +33,7 @@ export function useUsers(searchStrings: string[] | null) {
       console.error("Ошибка SWR хук useUsers для ключа", searchStrings, err);
       console.trace();
     },
+    keepPreviousData: true,
   });
   return { users, isLoading, error };
 }

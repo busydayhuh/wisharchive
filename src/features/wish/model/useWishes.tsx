@@ -49,6 +49,7 @@ export function useWishes(filters?: QueryFilters) {
   const { data, isLoading, error, size, setSize, isValidating } =
     useSWRInfinite(getWishKey, ([, , cursor]) => fetcher(queries!, cursor), {
       revalidateAll: true,
+      keepPreviousData: true,
     }); // если queries null, то key = null и запроса не будет
 
   const wishes = data?.flat();
