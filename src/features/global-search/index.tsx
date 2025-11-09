@@ -26,11 +26,13 @@ import {
   ItemMedia,
   ItemTitle,
 } from "@/shared/ui/kit/item";
+import { Skeleton } from "@/shared/ui/kit/skeleton";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
-import { Search } from "lucide-react";
+import { Angry, Leaf, Search, Wind } from "lucide-react";
 import { useEffect, useState } from "react";
 import { href, useNavigate } from "react-router";
 import { useGlobalSearch } from "./model/useGlobalSearch";
+import { GlobalSearchSkeletons } from "./ui/Skeletons";
 
 export type Category = "wishes" | "wishlists" | "users";
 type AnyDocument = WishDocumentType | WishlistDocumentType | UserDocumentType;
@@ -123,7 +125,7 @@ function CategoryPicker({
   setCategory: (category: Category) => void;
 }) {
   const styles =
-    "text-xs font-medium data-[state=on]:bg-primary data-[state=on]:text-primary-foreground cursor-pointer first:pl-2.5 last:pr-2.5 rounded-sm hover:text-foreground h-8";
+    "text-xs text-muted-foreground font-medium data-[state=on]:bg-primary data-[state=on]:text-primary-foreground cursor-pointer first:pl-2.5 px-2.5 last:pr-2.5 rounded-sm hover:text-foreground h-8";
 
   return (
     <ToggleGroup type="single" value={category} onValueChange={setCategory}>
@@ -174,8 +176,27 @@ function SearchResults({
     users: "Пользователи",
   };
 
-  if (isLoading) return <p>⌛ Загрузка...</p>;
-  if (error) return <p>⛔ Ошибка</p>;
+  if (isLoading)
+    return (
+      <div className="flex flex-col h-96 max-h-96 overflow-y-scroll">
+        <Skeleton className="w-36 h-5 shrink-0" />
+        {[...Array(5)].map((_, index) => (
+          <GlobalSearchSkeletons
+            category={category}
+            key={"search-loading" + index}
+            size={isMobile ? "sm" : "default"}
+          />
+        ))}
+      </div>
+    );
+
+  if (error)
+    return (
+      <p className="flex flex-col items-center gap-1 mt-2 md:mt-4 text-muted-foreground text-sm">
+        <Angry />
+        Что-то пошло не так. Повторите запрос позже
+      </p>
+    );
 
   if (results)
     return (
@@ -194,7 +215,15 @@ function SearchResults({
         </p>
 
         <ItemGroup>
-          {results.length === 0 && <p>Нет результатов</p>}
+          {results.length === 0 && (
+            <p className="flex flex-col items-center gap-1 mt-2 md:mt-4 text-muted-foreground text-sm">
+              <p className="inline-flex items-center">
+                <Wind className="stroke-[1.5px]" />
+                <Leaf className="size-4" />
+              </p>
+              Нет результатов
+            </p>
+          )}
           {results.map((r) => (
             <ResultItem
               item={r as AnyDocument}
@@ -202,6 +231,7 @@ function SearchResults({
               key={r.$id}
               isMobile={isMobile}
               setOpen={setOpen}
+              className={cn(isLoading && "opacity-60")}
             />
           ))}
         </ItemGroup>
@@ -242,11 +272,13 @@ function ResultItem({
   category,
   isMobile,
   setOpen,
+  className,
 }: {
   item: AnyDocument;
   category: Category;
   isMobile?: boolean;
   setOpen: (value: React.SetStateAction<boolean>) => void;
+  className?: string;
 }) {
   const navigate = useNavigate();
 
@@ -282,7 +314,8 @@ function ResultItem({
       size={isMobile ? "sm" : "default"}
       className={cn(
         isMobile && "px-1 py-2",
-        "hover:bg-muted/50 cursor-pointer"
+        "hover:bg-muted/50 cursor-pointer",
+        className
       )}
       onClick={handleNavigation}
     >

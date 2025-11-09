@@ -33,7 +33,9 @@ export function useGlobalSearch(searchParams: GlobalSearchParams) {
     data: results,
     isLoading,
     error,
-  } = useSWR(key, () => fetcher(searchParams.category, queries!)); // если queries null, то key = null и запроса не будет
+  } = useSWR(key, () => fetcher(searchParams.category, queries!), {
+    keepPreviousData: true,
+  }); // если queries null, то key = null и запроса не будет
 
   return { results, isLoading, error };
 }
