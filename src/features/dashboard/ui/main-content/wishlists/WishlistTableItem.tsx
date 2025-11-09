@@ -71,7 +71,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
         {collaborators && (
           <CollaboratorsAvatars
             collaborators={collaborators}
-            size="default"
+            size="md"
             maxVisible={5}
             className="mt-1"
             hideOwner
@@ -80,13 +80,13 @@ const WishlistTableItem = memo(function WishlistTableItem({
       </div>
 
       {/* Даты */}
-      <div className="hidden lg:flex flex-col items-center gap-0.5 text-muted-foreground text-xs xl:text-sm">
-        <p className="bg-muted px-1.5 py-0.5 rounded-lg">создан</p>
-        <p>{createdAt}</p>
+      <div className="hidden lg:flex flex-col items-center gap-0.5 text-muted-foreground">
+        <p className="bg-muted px-1.5 py-0.5 rounded-lg text-xs">создан</p>
+        <p className="text-sm">{createdAt}</p>
       </div>
-      <div className="hidden lg:flex flex-col items-center gap-0.5 text-muted-foreground text-xs xl:text-sm">
-        <p className="bg-muted px-1.5 py-0.5 rounded-lg">изменён</p>
-        <p>{updatedAt}</p>
+      <div className="hidden lg:flex flex-col items-center gap-0.5 text-muted-foreground">
+        <p className="bg-muted px-1.5 py-0.5 rounded-lg text-xs">изменён</p>
+        <p className="text-sm">{updatedAt}</p>
       </div>
 
       {/* Кнопки */}
