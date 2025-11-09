@@ -7,6 +7,7 @@ import { useAuth } from "../auth";
 import { normalizeWishData } from "./model/normalizeWishData";
 import { useWish } from "./model/useWish";
 import { useWishMutations } from "./model/useWishMutations";
+import { WishEditorSkeleton } from "./ui/WishEditorSkeleton";
 import WishEditor from "./ui/WishEditor";
 
 function WishEditPage() {
@@ -44,7 +45,8 @@ function WishEditPage() {
     return "Нет прав на доступ к этой странице.";
 
   if (error) return "Ошибка";
-  if (isLoading) return "Загрузка...";
+  if (isLoading) return <WishEditorSkeleton />;
+
   if (wish && authUser)
     return (
       <WishEditor

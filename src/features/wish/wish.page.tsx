@@ -2,6 +2,7 @@ import { ROUTES } from "@/shared/model/routes";
 import { href, useNavigate, useParams } from "react-router";
 import { useAuth } from "../auth";
 import { useWish } from "./model/useWish";
+import { WishPageSkeleton } from "./ui/WishPageSkeleton";
 import { RelatedWishes } from "./ui/RelatedWishes";
 import { WishInfo } from "./ui/wish-info/WishInfo";
 import { WishImage } from "./ui/WishImage";
@@ -15,7 +16,8 @@ function WishPage() {
   const { current: authUser } = useAuth();
 
   if (error) navigate(href(ROUTES.WISHES, { userId: authUser?.$id ?? "" }));
-  if (isLoading) return <>"Загрузка..."</>;
+  if (isLoading) return <WishPageSkeleton />;
+
   if (wish)
     return (
       <WishLayout
