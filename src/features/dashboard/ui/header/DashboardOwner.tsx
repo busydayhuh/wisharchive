@@ -1,7 +1,8 @@
 import { useUser } from "@/shared/model/user/useUser";
 import { Button } from "@/shared/ui/kit/button";
+import { Skeleton } from "@/shared/ui/kit/skeleton";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
-import { Share2 } from "lucide-react";
+import { Meh, Share2 } from "lucide-react";
 import { memo } from "react";
 
 const DashboardOwner = memo(function DashboardOwner({
@@ -13,10 +14,34 @@ const DashboardOwner = memo(function DashboardOwner({
 }) {
   const { user, isLoading, error } = useUser(userId);
 
-  if (isLoading) return <div>Загрузка...</div>;
+  if (isLoading)
+    return isOwner ? (
+      <Skeleton className="rounded-full size-12" />
+    ) : (
+      <div className="flex items-center gap-3">
+        <Skeleton className="rounded-full size-12" />
+        <div className="space-y-1">
+          <Skeleton className="w-36 h-6" />
+          <Skeleton className="w-30 h-6" />
+        </div>
+      </div>
+    );
 
   if (error)
-    return <div>Не удалось загрузить информацию о пользователе ☹️</div>;
+    return isOwner ? (
+      <div className="place-content-center grid bg-muted/80 rounded-full size-12">
+        <Meh className="text-muted-foreground" />
+      </div>
+    ) : (
+      <div className="flex items-center gap-3">
+        <div className="place-content-center grid bg-muted/80 rounded-full size-12">
+          <Meh className="text-muted-foreground" />
+        </div>
+        <p className="font-semibold text-xl md:text-2xl truncate leading-tight">
+          Пользователь не найден
+        </p>
+      </div>
+    );
 
   if (user && !isOwner)
     return (
