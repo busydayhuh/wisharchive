@@ -2,6 +2,7 @@ import type { WishDocumentType } from "@/shared/model/types";
 import Masonry from "react-masonry-css";
 import WishGalleryItem, { CardWrapper } from "./WishGalleryItem";
 import WishTableItem from "./WishTableItem";
+import { WishesSkeleton } from "./WishesSkeleton";
 
 export function WishesPageLayout({
   wishes,
@@ -16,7 +17,24 @@ export function WishesPageLayout({
   error?: unknown;
   viewMode: "gallery" | "table";
 }) {
-  if (isLoading) return <div>Загрузка...</div>;
+  if (isLoading && !wishes)
+    return viewMode === "gallery" ? (
+      <Masonry
+        breakpointCols={{ default: 5, 1470: 4, 1280: 3, 768: 2 }}
+        className="my-masonry-grid"
+        columnClassName="my-masonry-grid_column"
+      >
+        {[...Array(5)].map((_, index) => (
+          <WishesSkeleton viewMode={viewMode} key={"wish-skeleton-" + index} />
+        ))}
+      </Masonry>
+    ) : (
+      <div className="flex flex-col gap-1 md:gap-2 -mt-2">
+        {[...Array(5)].map((_, index) => (
+          <WishesSkeleton viewMode={viewMode} key={"wish-skeleton-" + index} />
+        ))}
+      </div>
+    );
 
   if (error) return <div>Не удалось загрузить желания ☹️</div>;
 
@@ -36,7 +54,7 @@ export function WishesPageLayout({
               <WishGalleryItem wish={wish} />
             </CardWrapper>
           ))}
-          {isValidating && <div>Подгрузка...</div>}
+          {isValidating && <WishesSkeleton viewMode={viewMode} />}
         </Masonry>
       );
 
@@ -46,7 +64,7 @@ export function WishesPageLayout({
           {wishes.map((wish) => (
             <WishTableItem wish={wish} key={wish.$id} />
           ))}
-          {isValidating && <div>Подгрузка...</div>}
+          {isValidating && <WishesSkeleton viewMode={viewMode} />}
         </div>
       );
   }

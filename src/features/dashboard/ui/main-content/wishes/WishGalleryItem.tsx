@@ -45,7 +45,7 @@ const WishGalleryItem = memo(function WishGalleryItem({
   return (
     <div
       className={cn(
-        "relative flex flex-col gap-2 md:gap-2 mb-4 md:mb-8 overflow-hidden"
+        "relative flex flex-col gap-2 mb-4 md:mb-8 overflow-hidden"
       )}
     >
       <WishCover

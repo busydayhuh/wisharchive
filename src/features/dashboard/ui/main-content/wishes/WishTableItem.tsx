@@ -55,20 +55,18 @@ const WishTableItem = memo(function WishTableItem({
         </div>
 
         {/* Название и цена */}
-        <div className="flex flex-col gap-2 px-4 lg:px-8">
-          <div className="flex flex-col gap-1">
-            <p className="max-w-[40ch] overflow-hidden font-semibold text-sm md:text-base break-words text-ellipsis line-clamp-2">
-              {wish.title}
-            </p>
+        <div className="flex flex-col gap-1 px-4 lg:px-8">
+          <p className="max-w-[40ch] overflow-hidden font-semibold text-sm md:text-base break-words text-ellipsis line-clamp-2">
+            {wish.title}
+          </p>
 
-            {!!wish.price && (
-              <FormattedPrice
-                price={wish.price}
-                currency={wish.currency}
-                className="text-muted-foreground text-sm lg:text-base"
-              />
-            )}
-          </div>
+          {!!wish.price && (
+            <FormattedPrice
+              price={wish.price}
+              currency={wish.currency}
+              className="text-muted-foreground text-sm lg:text-base"
+            />
+          )}
         </div>
       </Link>
       <PriorityBadge
