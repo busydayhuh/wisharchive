@@ -107,6 +107,7 @@ export function GlobalSearchDialog() {
             category={category}
             searchString={debouncedSearch}
             isMobile={isMobile}
+            setOpen={setOpen}
           />
         </div>
       </DialogContent>
@@ -155,10 +156,12 @@ function SearchResults({
   category,
   searchString,
   isMobile,
+  setOpen,
 }: {
   category: Category;
   searchString: string;
   isMobile?: boolean;
+  setOpen: (value: React.SetStateAction<boolean>) => void;
 }) {
   const { results, isLoading, error } = useGlobalSearch({
     category,
@@ -198,6 +201,7 @@ function SearchResults({
               category={category}
               key={r.$id}
               isMobile={isMobile}
+              setOpen={setOpen}
             />
           ))}
         </ItemGroup>
@@ -237,10 +241,12 @@ function ResultItem({
   item,
   category,
   isMobile,
+  setOpen,
 }: {
   item: AnyDocument;
   category: Category;
   isMobile?: boolean;
+  setOpen: (value: React.SetStateAction<boolean>) => void;
 }) {
   const navigate = useNavigate();
 
@@ -267,6 +273,8 @@ function ResultItem({
       );
     if (category === "users")
       navigate(href(ROUTES.WISHES, { userId: item.userId }));
+
+    setOpen(false);
   }
 
   return (
