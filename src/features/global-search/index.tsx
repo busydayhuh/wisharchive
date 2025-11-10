@@ -74,7 +74,7 @@ export function GlobalSearchDialog() {
         className="justify-between items-center pr-1.5 w-9 md:w-48 h-9 text-muted-foreground/50"
       >
         поиск
-        <span className="bg-blue-bg px-1.5 py-1 rounded-[0.5rem] font-mono font-medium text-[0.6rem] text-foreground">
+        <span className="bg-blue-bg px-1.5 py-1 rounded-[0.5rem] font-mono font-medium text-[0.6rem] text-blue">
           Ctrl+K
         </span>
       </Button>

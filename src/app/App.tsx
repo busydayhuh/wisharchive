@@ -5,9 +5,9 @@ import { cn } from "@/shared/lib/css";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import { BlobsBackground } from "@/shared/ui/BlobsBackground";
 import DefaultLoader from "@/shared/ui/DefaultLoader";
+import { Toaster } from "@/shared/ui/kit/sonner";
 import MainContainer from "@/shared/ui/MainContainer";
 import { Outlet, useNavigation } from "react-router-dom";
-import { Toaster } from "sonner";
 
 function App() {
   const { isLoggedIn } = useAuth();

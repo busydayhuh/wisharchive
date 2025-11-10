@@ -25,6 +25,7 @@ export function DashboardToolbar({ isOwner }: { isOwner: boolean }) {
           setViewMode={(value: "gallery" | "table") =>
             setToolbarState((prev) => ({ ...prev, viewMode: value }))
           }
+          className="ms-auto"
         />
       </div>
     );
@@ -44,6 +45,7 @@ export function DashboardToolbar({ isOwner }: { isOwner: boolean }) {
         setViewMode={(value: "gallery" | "table") =>
           setToolbarState((prev) => ({ ...prev, viewMode: value }))
         }
+        className="ms-auto"
       />
     </div>
   );

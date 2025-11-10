@@ -60,12 +60,12 @@ export const ROLES = {
   editor: {
     title: "редактор",
     icon: <Pencil />,
-    colors: "bg-green text-foreground",
+    colors: "bg-green-bg text-foreground text-green",
   },
   owner: {
     title: "владелец",
     icon: <Crown />,
-    colors: "bg-blue text-foreground",
+    colors: "bg-blue-bg text-blue",
   },
 };
 

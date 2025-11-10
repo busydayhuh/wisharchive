@@ -107,7 +107,7 @@ function FilterToggle({
       defaultPressed={isPressed}
       onPressedChange={toggleFilter}
       className={cn(
-        "items-center data-[state=off]:bg-accent/60 data-[state=on]:bg-primary md:data-[state=off]:bg-transparent md:data-[state=off]:hover:bg-accent px-2.5 rounded-md font-medium text-muted-foreground data-[state=on]:text-background hover:text-muted-foreground text-xs lg:text-sm cursor-pointer shrink-0"
+        "items-center data-[state=on]:bg-primary hover:bg-muted/60 px-2.5 border-1 border-muted-foreground/60 data-[state=on]:border-none rounded-md font-medium text-muted-foreground data-[state=on]:text-background hover:text-muted-foreground text-xs lg:text-sm cursor-pointer shrink-0"
       )}
     >
       {label}
