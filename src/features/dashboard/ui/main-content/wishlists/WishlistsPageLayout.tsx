@@ -1,5 +1,8 @@
+import { useDashboardContext } from "@/features/dashboard/model/useDashboardContext";
+import { useWishlistDialog } from "@/features/wishlist";
 import { cn } from "@/shared/lib/css";
 import type { WishlistDocumentType } from "@/shared/model/types";
+import { ErrorMessage } from "@/shared/ui/ErrorMessage";
 import Masonry from "react-masonry-css";
 import WishlistGalleryItem from "./WishlistGalleryItem";
 import { WishlistsSkeleton } from "./WishlistsSkeleton";
@@ -18,6 +21,9 @@ function WishlistsPageLayout({
   viewMode: "gallery" | "table";
   error?: unknown;
 }) {
+  const { isDashboardOwner } = useDashboardContext();
+  const { openDialog } = useWishlistDialog();
+
   // изначальная загрузка (скелетон)
   if (isLoading && !wishlists)
     return viewMode === "gallery" ? (
@@ -45,11 +51,31 @@ function WishlistsPageLayout({
     );
 
   // ошибка запроса
-  if (error) return <div>Не удалось загрузить вишлисты ☹️</div>;
+  if (error)
+    return (
+      <ErrorMessage
+        variant="default-error"
+        message="Что-то пошло не так"
+        description="Не удалось загрузить списки желаний, повторите попытку позже"
+      />
+    );
 
   // нет вишлистов
   if (wishlists && wishlists.length === 0) {
-    return <div>Нет вишлистов 😶</div>;
+    return (
+      <ErrorMessage
+        variant="no-items"
+        message="Нет списков"
+        description={
+          isDashboardOwner
+            ? "Нет списков, соответствующих вашему запросу, или вы ещё не создали ни одного списка желаний"
+            : "Нет списков, соответствующих вашему запросу"
+        }
+        withButton={isDashboardOwner}
+        buttonText="Создать список"
+        action={() => openDialog("create")}
+      />
+    );
   }
 
   // вишлисты (при повторном loading при поиске/сортировке оставляет старые значения с opacity-60)

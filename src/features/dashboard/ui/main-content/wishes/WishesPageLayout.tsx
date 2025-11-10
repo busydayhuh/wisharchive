@@ -1,6 +1,10 @@
+import { useDashboardContext } from "@/features/dashboard/model/useDashboardContext";
 import { cn } from "@/shared/lib/css";
+import { ROUTES } from "@/shared/model/routes";
 import type { WishDocumentType } from "@/shared/model/types";
+import { ErrorMessage } from "@/shared/ui/ErrorMessage";
 import Masonry from "react-masonry-css";
+import { useNavigate } from "react-router";
 import WishGalleryItem, { CardWrapper } from "./WishGalleryItem";
 import WishTableItem from "./WishTableItem";
 import { WishesSkeleton } from "./WishesSkeleton";
@@ -18,6 +22,9 @@ export function WishesPageLayout({
   error?: unknown;
   viewMode: "gallery" | "table";
 }) {
+  const { isDashboardOwner } = useDashboardContext();
+  const navigate = useNavigate();
+
   // изначальная загрузка (скелетон)
   if (isLoading && !wishes)
     return viewMode === "gallery" ? (
@@ -39,11 +46,31 @@ export function WishesPageLayout({
     );
 
   // ошибка
-  if (error) return <div>Не удалось загрузить желания ☹️</div>;
+  if (error)
+    return (
+      <ErrorMessage
+        variant="default-error"
+        message="Что-то пошло не так"
+        description="Не удалось загрузить желания, повторите попытку позже"
+      />
+    );
 
   // нет желаний
   if (wishes && wishes.length === 0) {
-    return <div>Нет желаний 😶</div>;
+    return (
+      <ErrorMessage
+        variant="no-items"
+        message="Нет желаний"
+        description={
+          isDashboardOwner
+            ? "Нет желаний, соответствующих вашему запросу, или вы ещё не создали ни одного желания"
+            : "Нет желаний, соответствующих вашему запросу"
+        }
+        withButton={isDashboardOwner}
+        buttonText="Создать желание"
+        action={() => navigate(ROUTES.ADD)}
+      />
+    );
   }
 
   // желания (при повторном loading при поиске/сортировке оставляет старые значения с opacity-60)

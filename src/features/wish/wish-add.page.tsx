@@ -1,9 +1,11 @@
 import type { wishFormSchema } from "@/shared/model/formSchemas";
 import { ROUTES } from "@/shared/model/routes";
 import { useCurrentUser } from "@/shared/model/user/useCurrentUser";
+import { ErrorMessage } from "@/shared/ui/ErrorMessage";
 import { href } from "react-router";
 import { toast } from "sonner";
 import type z from "zod";
+import { useAuth } from "../auth";
 import { useRoute } from "../breadcrumbs";
 import { normalizeWishData } from "./model/normalizeWishData";
 import { useWishMutations } from "./model/useWishMutations";
@@ -11,6 +13,7 @@ import WishEditor from "./ui/WishEditor";
 import { WishEditorSkeleton } from "./ui/WishEditorSkeleton";
 
 function WishAddPage() {
+  const { current: authUser, isLoggedIn } = useAuth();
   const { user, isLoading, error } = useCurrentUser();
   const { create } = useWishMutations();
   const { navigateWithState } = useRoute();
@@ -41,7 +44,19 @@ function WishAddPage() {
   }
 
   if (isLoading) return <WishEditorSkeleton />;
-  if (error) return "Ошибка";
+  if (error)
+    return (
+      <ErrorMessage
+        variant="default-error"
+        message="Что-то пошло не так"
+        description="Повторите попытку позже"
+        withButton={isLoggedIn}
+        buttonText="К моим желаниям"
+        action={() =>
+          navigateWithState(href(ROUTES.WISHES, { userId: authUser!.$id }))
+        }
+      />
+    );
 
   return <WishEditor onSubmit={createWish} />;
 }

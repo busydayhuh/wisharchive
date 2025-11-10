@@ -1,5 +1,6 @@
 import type { wishFormSchema } from "@/shared/model/formSchemas";
 import { ROUTES } from "@/shared/model/routes";
+import { ErrorMessage } from "@/shared/ui/ErrorMessage";
 import { href, useParams } from "react-router";
 import { toast } from "sonner";
 import type z from "zod";
@@ -12,7 +13,7 @@ import WishEditor from "./ui/WishEditor";
 import { WishEditorSkeleton } from "./ui/WishEditorSkeleton";
 
 function WishEditPage() {
-  const { current: authUser } = useAuth();
+  const { current: authUser, isLoggedIn } = useAuth();
   const { update } = useWishMutations();
   const { navigateWithState } = useRoute();
 
@@ -44,7 +45,19 @@ function WishEditPage() {
   if (wish && authUser?.$id !== wish.ownerId)
     return "Нет прав на доступ к этой странице.";
 
-  if (error) return "Ошибка";
+  if (error)
+    return (
+      <ErrorMessage
+        variant="default-error"
+        message="Что-то пошло не так"
+        description="Не удалось загрузить желание, повторите попытку позже"
+        withButton={isLoggedIn}
+        buttonText="К моим желаниям"
+        action={() =>
+          navigateWithState(href(ROUTES.WISHES, { userId: authUser!.$id }))
+        }
+      />
+    );
   if (isLoading) return <WishEditorSkeleton />;
 
   if (wish)

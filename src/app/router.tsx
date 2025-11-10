@@ -8,6 +8,7 @@ import {
 } from "@/features/dashboard/";
 import { ROUTES } from "@/shared/model/routes.ts";
 import DefaultLoader from "@/shared/ui/DefaultLoader.tsx";
+import { NotFound } from "@/shared/ui/NotFound.tsx";
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
 import { ProtectedRoute, UnauthOnlyRoute } from "./protected-route.tsx";
@@ -119,6 +120,10 @@ export const router = createBrowserRouter([
             HydrateFallback: DefaultLoader,
           },
         ],
+      },
+      {
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },
