@@ -47,7 +47,7 @@ function WishEditPage() {
   if (error) return "Ошибка";
   if (isLoading) return <WishEditorSkeleton />;
 
-  if (wish && authUser)
+  if (wish)
     return (
       <WishEditor
         wish={wish}

@@ -71,19 +71,15 @@ export function useOptimisticMutation() {
           );
         });
 
-        const actionResult = await action();
-
-        // при успехе refetch из appwrite
-        //updateCache();
-
-        return actionResult;
+        return await action();
       } catch (error) {
         console.log("Ошибка мутации", error);
 
         // запрашиваем актуальные данные для отката
         updateCache();
-
         extraKeys.forEach((key) => mutate(key));
+
+        return null;
       }
     },
     [cache, mutate]
