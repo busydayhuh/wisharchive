@@ -81,18 +81,11 @@ export const router = createBrowserRouter([
             path: ROUTES.EDIT,
             lazy: () => import("@/features/wish/wish-edit.page"),
             HydrateFallback: DefaultLoader,
-            handle: {
-              breadcrumb: (params, data) =>
-                data?.name || `Редактировать ${params.wishId}`,
-            } as BreadcrumbHandle,
           },
           {
             path: ROUTES.ADD,
             lazy: () => import("@/features/wish/wish-add.page"),
             HydrateFallback: DefaultLoader,
-            handle: {
-              breadcrumb: () => "Новое желание",
-            } as BreadcrumbHandle,
           },
         ],
       },
@@ -100,18 +93,11 @@ export const router = createBrowserRouter([
         path: ROUTES.WISHLIST,
         lazy: () => import("@/features/wishlist/list.page"),
         HydrateFallback: DefaultLoader,
-        handle: {
-          breadcrumb: (params, data) => data?.name || `${params.wishId}`,
-          parents: ["/:userId/lists/", "/shared", "/bookmarks"],
-        } as BreadcrumbHandle,
       },
       {
         path: ROUTES.WISH,
         lazy: () => import("@/features/wish/wish.page"),
         HydrateFallback: DefaultLoader,
-        handle: {
-          breadcrumb: (params, data) => data?.name || `${params.wishId}`,
-        } as BreadcrumbHandle,
       },
 
       {
