@@ -1,7 +1,6 @@
 import { wishFormSchema as formSchema } from "@/shared/model/formSchemas";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishDocumentType } from "@/shared/model/types";
-import ConfirmationDialog from "@/shared/ui/ConfirmationDialog";
 import { Button } from "@/shared/ui/kit/button";
 import {
   Form,
@@ -15,10 +14,10 @@ import { Input } from "@/shared/ui/kit/input";
 import { Textarea } from "@/shared/ui/kit/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
-import { href, useBlocker, useNavigate } from "react-router";
+import { href, useNavigate } from "react-router";
+import { toast } from "sonner";
 import type z from "zod";
 import DeleteButton from "../../../../shared/ui/DeleteButton";
 import { useWishMutations } from "../../model/useWishMutations";
@@ -29,11 +28,12 @@ import { WishlistSelect } from "./WishlistSelect";
 export function WishForm({
   wish,
   onSubmit,
+  setBlockNavigate,
 }: {
   wish?: WishDocumentType;
   onSubmit: (values: z.infer<typeof formSchema>, wishId?: string) => void;
+  setBlockNavigate: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const [blockNavigate, setBlockNavigate] = useState(true);
   const actions = useWishMutations();
 
   const form = useForm({
@@ -54,10 +54,6 @@ export function WishForm({
 
   const pageHeader = wish ? "Редактировать желание" : "Новое желание";
 
-  const blocker = useBlocker(
-    ({ currentLocation, nextLocation }) =>
-      currentLocation.pathname !== nextLocation.pathname && blockNavigate
-  );
   const navigate = useNavigate();
 
   return (
@@ -219,35 +215,16 @@ export function WishForm({
               wishTitle={wish.title}
               action={async () => {
                 await actions.delete(wish.$id);
+                toast.success("Желание удалено");
 
                 setBlockNavigate(false);
-                navigate(
-                  href(ROUTES.WISH, { wishId: wish.$id, userId: wish.ownerId })
-                );
+                navigate(href(ROUTES.WISHES, { userId: wish.ownerId }));
               }}
               buttonText="Удалить желание"
             />
           )}
         </div>
       </form>
-      {blocker.state === "blocked" && (
-        <ConfirmationDialog
-          title="Покинуть страницу?"
-          description={
-            <p>
-              Вы точно хотите покинуть эту страницу? Изменения не будут
-              сохранены.
-            </p>
-          }
-          actionText="Покинуть"
-          onConfirm={() => {
-            setBlockNavigate(false);
-            blocker.proceed();
-          }}
-          onCancel={blocker.reset}
-          open={true}
-        />
-      )}
     </Form>
   );
 }

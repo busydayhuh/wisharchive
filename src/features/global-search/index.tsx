@@ -30,7 +30,8 @@ import { Skeleton } from "@/shared/ui/kit/skeleton";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
 import { Angry, Leaf, Search, Wind } from "lucide-react";
 import { useEffect, useState } from "react";
-import { href, useNavigate } from "react-router";
+import { href } from "react-router";
+import { useRoute } from "../breadcrumbs";
 import { useGlobalSearch } from "./model/useGlobalSearch";
 import { GlobalSearchSkeletons } from "./ui/Skeletons";
 
@@ -280,31 +281,23 @@ function ResultItem({
   setOpen: (value: React.SetStateAction<boolean>) => void;
   className?: string;
 }) {
-  const navigate = useNavigate();
+  const { navigateWithState } = useRoute();
 
   function handleNavigation() {
     if (category === "wishes")
-      navigate(href(ROUTES.WISH, { userId: item.ownerId, wishId: item.$id }), {
-        state: {
-          data: {
-            wishTitle: item.title,
-          },
-        },
-      });
+      navigateWithState(
+        href(ROUTES.WISH, { userId: item.ownerId, wishId: item.$id }),
+        { wishTitle: item.title }
+      );
 
     if (category === "wishlists")
-      navigate(
+      navigateWithState(
         href(ROUTES.WISHLIST, { userId: item.ownerId, listId: item.$id }),
-        {
-          state: {
-            data: {
-              wlTitle: item.title,
-            },
-          },
-        }
+        { wlTitle: item.title }
       );
+
     if (category === "users")
-      navigate(href(ROUTES.WISHES, { userId: item.userId }));
+      navigateWithState(href(ROUTES.WISHES, { userId: item.userId }));
 
     setOpen(false);
   }

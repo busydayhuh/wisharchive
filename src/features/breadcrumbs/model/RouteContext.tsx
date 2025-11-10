@@ -1,6 +1,6 @@
-import { useMemo } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { RouteContext } from "./createRouteContext";
+import { useCallback, useMemo } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { RouteContext, type NavigateWithState } from "./createRouteContext";
 
 export function RouteContextProvider({
   children,
@@ -9,8 +9,23 @@ export function RouteContextProvider({
 }) {
   const location = useLocation();
   const params = useParams();
+  const navigate = useNavigate();
 
-  const value = useMemo(() => ({ location, params }), [location, params]);
+  const navigateWithState: NavigateWithState = useCallback(
+    (path, stateData) => {
+      navigate(path, {
+        state: {
+          data: stateData,
+        },
+      });
+    },
+    [navigate]
+  );
+
+  const value = useMemo(
+    () => ({ location, params, navigateWithState }),
+    [location, params, navigateWithState]
+  );
 
   return (
     <RouteContext.Provider value={value}>{children}</RouteContext.Provider>

@@ -56,8 +56,6 @@ export function WishlistDialog({
   });
 
   const actions = useWishlistMutations();
-
-  // const navigate = useNavigate();
   const { user: currentUser } = useCurrentUser();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {

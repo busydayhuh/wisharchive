@@ -1,17 +1,19 @@
 import type { wishFormSchema } from "@/shared/model/formSchemas";
 import { ROUTES } from "@/shared/model/routes";
 import { useCurrentUser } from "@/shared/model/user/useCurrentUser";
-import { href, useNavigate } from "react-router";
+import { href } from "react-router";
 import { toast } from "sonner";
 import type z from "zod";
+import { useRoute } from "../breadcrumbs";
 import { normalizeWishData } from "./model/normalizeWishData";
 import { useWishMutations } from "./model/useWishMutations";
 import WishEditor from "./ui/WishEditor";
+import { WishEditorSkeleton } from "./ui/WishEditorSkeleton";
 
 function WishAddPage() {
   const { user, isLoading, error } = useCurrentUser();
   const { create } = useWishMutations();
-  const navigate = useNavigate();
+  const { navigateWithState } = useRoute();
 
   async function createWish(
     formData: z.infer<typeof wishFormSchema> & { imageURL?: string | null }
@@ -31,20 +33,14 @@ function WishAddPage() {
         description: response.title,
       });
 
-      navigate(
+      navigateWithState(
         href(ROUTES.WISH, { userId: wish.ownerId, wishId: response.$id }),
-        {
-          state: {
-            data: {
-              wishTitle: response.title,
-            },
-          },
-        }
+        { wishTitle: response.title }
       );
     }
   }
 
-  if (isLoading) return "Загрузка...";
+  if (isLoading) return <WishEditorSkeleton />;
   if (error) return "Ошибка";
 
   return <WishEditor onSubmit={createWish} />;

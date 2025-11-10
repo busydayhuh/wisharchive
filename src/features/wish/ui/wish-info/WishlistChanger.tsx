@@ -1,4 +1,5 @@
 import { useAuth } from "@/features/auth";
+import { useRoute } from "@/features/breadcrumbs";
 import { useCollabWishlists } from "@/features/dashboard";
 import { cn } from "@/shared/lib/css";
 import { ROUTES } from "@/shared/model/routes";
@@ -6,7 +7,7 @@ import { PRIVACY_ICONS } from "@/shared/ui/Badges";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
 import { ResponsiveSelect, type Option } from "@/shared/ui/ResponsiveSelect";
 import { ChevronDown } from "lucide-react";
-import { href, useNavigate } from "react-router";
+import { href } from "react-router";
 
 export function WishlistChanger({
   onValueChange,
@@ -20,7 +21,7 @@ export function WishlistChanger({
   className?: string;
 }) {
   const { current } = useAuth();
-  const navigate = useNavigate();
+  const { navigateWithState } = useRoute();
 
   const { wishlists, isLoading, error } = useCollabWishlists({
     sort: { field: "$sequence", direction: "desc" },
@@ -52,18 +53,14 @@ export function WishlistChanger({
     if (!selected || selected.value === "none") {
       return undefined;
     }
-    return navigate(
+    return navigateWithState(
       href(ROUTES.WISHLIST, {
         userId: selected.additional!.ownerId,
         listId: selected!.value,
       }),
       {
-        state: {
-          data: {
-            userId: selected.additional!.ownerId,
-            wlTitle: selected.label,
-          },
-        },
+        userId: selected.additional!.ownerId,
+        wlTitle: selected.label,
       }
     );
   };

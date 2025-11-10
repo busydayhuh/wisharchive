@@ -1,19 +1,20 @@
 import type { wishFormSchema } from "@/shared/model/formSchemas";
 import { ROUTES } from "@/shared/model/routes";
-import { href, useNavigate, useParams } from "react-router";
+import { href, useParams } from "react-router";
 import { toast } from "sonner";
 import type z from "zod";
 import { useAuth } from "../auth";
+import { useRoute } from "../breadcrumbs";
 import { normalizeWishData } from "./model/normalizeWishData";
 import { useWish } from "./model/useWish";
 import { useWishMutations } from "./model/useWishMutations";
-import { WishEditorSkeleton } from "./ui/WishEditorSkeleton";
 import WishEditor from "./ui/WishEditor";
+import { WishEditorSkeleton } from "./ui/WishEditorSkeleton";
 
 function WishEditPage() {
   const { current: authUser } = useAuth();
   const { update } = useWishMutations();
-  const navigate = useNavigate();
+  const { navigateWithState } = useRoute();
 
   const { wishId } = useParams();
   const { wish, isLoading, error } = useWish(wishId ?? null);
@@ -30,14 +31,13 @@ function WishEditPage() {
     if (updatedWish) {
       toast.success("Изменения сохранены");
 
-      navigate(href(ROUTES.WISH, { wishId, userId: updatedWish.ownerId }), {
-        state: {
-          data: {
-            userId: updatedWish.ownerId,
-            wishTitle: updatedWish.title,
-          },
-        },
-      });
+      navigateWithState(
+        href(ROUTES.WISH, { wishId, userId: updatedWish.ownerId }),
+        {
+          userId: updatedWish.ownerId,
+          wishTitle: updatedWish.title,
+        }
+      );
     }
   }
 
