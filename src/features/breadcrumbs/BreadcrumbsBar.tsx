@@ -6,22 +6,25 @@ import Logo from "@/shared/ui/Logo";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
 import { matchRoutes } from "react-router-dom";
 import { Breadcrumbs } from "./Breadcrumbs";
+import { useRoute } from "./model/createRouteContext";
 
 export function BreadcrumbsBar({
   isMobile,
-  path,
   isUser,
 }: {
   isMobile: boolean;
-  path: string | Partial<Location>;
   isUser: boolean;
 }) {
+  const { location } = useRoute();
+
   const hasBreadcrumbs = [
     { path: ROUTES.WISH },
     { path: ROUTES.WISHLIST },
     { path: ROUTES.EDIT },
   ];
-  const showBreadcrumbs = Boolean(matchRoutes(hasBreadcrumbs, path));
+  const showBreadcrumbs = Boolean(
+    matchRoutes(hasBreadcrumbs, location.pathname)
+  );
   const { user } = useCurrentUser();
 
   return (

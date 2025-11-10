@@ -43,6 +43,7 @@ type UserContextType = {
   logout: () => void;
   register: (data: FormValues["register"]) => void;
   status: Status;
+  isLoggedIn: boolean;
 };
 
 const UserContext = createContext<UserContextType>({} as UserContextType);
@@ -131,7 +132,15 @@ export function UserProvider(props: { children: ReactNode }) {
 
   return (
     <UserContext.Provider
-      value={{ current: user, login, logout, register, status, session }}
+      value={{
+        current: user,
+        login,
+        logout,
+        register,
+        status,
+        session,
+        isLoggedIn: Boolean(user),
+      }}
     >
       {props.children}
     </UserContext.Provider>

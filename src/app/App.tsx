@@ -1,5 +1,5 @@
 import { useAuth } from "@/features/auth";
-import { BreadcrumbsBar, useRoute } from "@/features/breadcrumbs";
+import { BreadcrumbsBar } from "@/features/breadcrumbs";
 import { AppSidebar } from "@/features/sidebar";
 import { cn } from "@/shared/lib/css";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
@@ -10,24 +10,18 @@ import { Outlet, useNavigation } from "react-router-dom";
 import { Toaster } from "sonner";
 
 function App() {
-  const { current } = useAuth();
+  const { isLoggedIn } = useAuth();
   const isMobile = useIsMobile();
-  const { location } = useRoute();
 
-  const navigation = useNavigation();
-  const isLoading = navigation.state === "loading";
+  const isLoading = useNavigation().state === "loading";
 
   return (
     <>
-      {current && <AppSidebar />}
+      {isLoggedIn && <AppSidebar />}
       {!isMobile && <BlobsBackground />}
 
       <MainContainer>
-        <BreadcrumbsBar
-          isMobile={isMobile}
-          path={location.pathname}
-          isUser={Boolean(current?.$id)}
-        />
+        <BreadcrumbsBar isMobile={isMobile} isUser={isLoggedIn} />
         <Outlet />
         {isLoading && (
           <div
