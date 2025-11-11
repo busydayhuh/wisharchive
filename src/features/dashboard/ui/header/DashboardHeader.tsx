@@ -27,7 +27,7 @@ const DashboardHeader = memo(function DashboardHeader({
           {title}
         </p>
         <div className="flex items-center gap-4 ms-auto">
-          {isLoggedIn ? <GlobalSearchDialog /> : <Button>Войти</Button>}
+          <GlobalSearchDialog />
           {showDashboardOwner && (
             <DashboardOwner
               userId={dashboardUserId}
@@ -46,59 +46,11 @@ const DashboardHeader = memo(function DashboardHeader({
           <Navigation />
         </div>
         <div className="justify-self-end">
-          {isLoggedIn && <GlobalSearchDialog />}
+          {isLoggedIn ? <GlobalSearchDialog /> : <Button>Войти</Button>}
         </div>
       </div>
     );
   }
-
-  // return (
-  //   <div className="flex justify-between gap-4 md:gap-6 mt-1.5 md:mt-4 mb-1.5 md:mb-3 lg:mb-8">
-  //     {title && isDashboardOwner && (
-  //       <p className="font-bold text-3xl md:text-4xl lg:text-5xl leading-8">
-  //         {title}
-  //       </p>
-  //     )}
-  //     {isLoggedIn ? (
-  //       <div
-  //         className={cn(
-  //           "flex items-center gap-4 w-full",
-  //           !isDashboardOwner &&
-  //             "flex-row-reverse justify-between items-start relative"
-  //         )}
-  //       >
-  //         <GlobalSearchDialog />
-  //         {showDashboardOwner && (
-  //           <div
-  //             className={cn(
-  //               "flex flex-col gap-3 lg:gap-5",
-  //               !isDashboardOwner &&
-  //                 "absolute left-1/2 -translate-x-1/2 items-center"
-  //             )}
-  //           >
-  //             <DashboardOwner
-  //               userId={dashboardUserId}
-  //               isOwner={isDashboardOwner}
-  //             />
-  //             {!isDashboardOwner && <Navigation />}
-  //           </div>
-  //         )}
-  //       </div>
-  //     ) : (
-  //       <div className="justify-between items-center w-full">
-  //         {showDashboardOwner && (
-  //           <div className="flex flex-col gap-3 lg:gap-5">
-  //             <DashboardOwner
-  //               userId={dashboardUserId}
-  //               isOwner={isDashboardOwner}
-  //             />
-  //             {!isDashboardOwner && <Navigation />}
-  //           </div>
-  //         )}
-  //       </div>
-  //     )}
-  //   </div>
-  // );
 });
 
 export default DashboardHeader;

@@ -112,7 +112,7 @@ function CollaboratorActionButton({
     return (
       <Button
         type="button"
-        variant={variant === "remove" ? "default" : "destructive"}
+        variant="default"
         size="default"
         className={cn(
           "ms-auto rounded-sm w-9 md:w-auto h-9 md:h-11",

@@ -63,7 +63,6 @@ export function WishlistFormFields({ form }: FormFieldsProps) {
                 <Switch
                   checked={field.value}
                   onCheckedChange={field.onChange}
-                  className="data-[state=unchecked]:bg-ring"
                 />
               </FormControl>
               <div className="flex flex-col gap-1">

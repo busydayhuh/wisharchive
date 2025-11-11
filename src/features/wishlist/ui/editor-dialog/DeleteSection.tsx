@@ -28,7 +28,7 @@ export function DeleteSection({
         wishTitle={wishlistTitle}
         action={onConfirm}
         buttonText="Удалить вишлист"
-        className="mt-2 md:mt-0 h-12"
+        className="bg-transparent mt-1 md:mt-0 !px-0 h-12"
       />
     </div>
   );
