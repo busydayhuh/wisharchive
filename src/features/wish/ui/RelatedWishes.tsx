@@ -45,7 +45,7 @@ export const RelatedWishes = memo(function RelatedWishes({
           columnClassName="my-masonry-grid_column"
         >
           {[...Array(5)].map((_, index) => (
-            <Skeleton key={"related" + index} />
+            <Skeleton key={"related" + index} className="mb-4" />
           ))}
         </Masonry>
       </div>
@@ -95,7 +95,7 @@ export const RelatedWishes = memo(function RelatedWishes({
                   },
                 }}
               >
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1 mb-4">
                   <WishImage
                     wishId={wish.$id}
                     url={wish.imageURL}
