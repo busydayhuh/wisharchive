@@ -6,6 +6,7 @@ import type { WishlistDocumentType } from "@/shared/model/types";
 import { PRIVACY_ICONS, RoleBadge } from "@/shared/ui/Badges";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
+import { motion } from "motion/react";
 import { memo, useMemo } from "react";
 import { Link } from "react-router";
 import { ImageTiles } from "./ImageTiles";
@@ -38,7 +39,12 @@ const WishlistTableItem = memo(function WishlistTableItem({
   );
 
   return (
-    <div className="wl-table-grid relative items-center py-2 pl-2 md:pl-0">
+    <motion.div
+      className="wl-table-grid relative items-center py-2 pl-2 md:pl-0"
+      layout
+      exit={{ opacity: 0, scale: 0.8, y: -10 }}
+      transition={{ duration: 0.3 }}
+    >
       {/* Превью желаний */}
       <Link {...linkParams} className="relative">
         <ImageTiles wishes={wishlist.wishes} variant="table" />
@@ -103,7 +109,7 @@ const WishlistTableItem = memo(function WishlistTableItem({
           onPressed={bookmarkWishlist}
         />
       </div>
-    </div>
+    </motion.div>
   );
 });
 

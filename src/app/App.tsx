@@ -42,7 +42,7 @@ function App() {
         toastOptions={{
           classNames: {
             toast:
-              "!rounded-xl !shadow-xs !bg-primary !text-primary-foreground !border-0",
+              "!rounded-xl !shadow-xs !bg-primary !text-primary-foreground !border-background",
           },
         }}
       />

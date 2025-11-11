@@ -1,3 +1,4 @@
+import { motion } from "motion/react";
 import alienError from "../assets/images/alien-error.svg";
 import alienUrl from "../assets/images/alien.svg";
 import { Button } from "./kit/button";
@@ -23,7 +24,14 @@ export function ErrorMessage({
   action?: () => void;
 }) {
   return (
-    <div className="flex flex-col justify-center items-center gap-2 lg:gap-5 pt-5 md:pt-10 lg:pt-16 w-full">
+    <motion.div
+      className="flex flex-col justify-center items-center gap-2 lg:gap-5 pt-5 md:pt-10 lg:pt-16 w-full"
+      layout
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.8, y: -10 }}
+      transition={{ duration: 0.3 }}
+    >
       <img
         src={ERROR_IMAGES[variant]}
         alt={message}
@@ -44,6 +52,6 @@ export function ErrorMessage({
           {buttonText}
         </Button>
       )}
-    </div>
+    </motion.div>
   );
 }

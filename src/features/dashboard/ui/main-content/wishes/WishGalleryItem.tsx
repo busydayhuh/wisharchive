@@ -11,6 +11,7 @@ import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import type { LinkParams, WishDocumentType } from "@/shared/model/types";
 import { PriorityBadge, PRIVACY_ICONS } from "@/shared/ui/Badges";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
+import { motion } from "motion/react";
 import { memo, type ReactNode } from "react";
 import { Link } from "react-router";
 import { WishlistControl } from "./WishlistControl";
@@ -30,7 +31,18 @@ export const CardWrapper = memo(function CardWrapper({
     return null;
   }
 
-  return <div className="group-card-wrapper">{children}</div>;
+  return (
+    <motion.div
+      className="group-card-wrapper"
+      layout
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.8, y: -10 }}
+      transition={{ duration: 0.3 }}
+    >
+      {children}
+    </motion.div>
+  );
 });
 
 const WishGalleryItem = memo(function WishGalleryItem({
