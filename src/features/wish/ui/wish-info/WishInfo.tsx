@@ -28,6 +28,7 @@ export const WishInfo = memo(function WishInfo({
 
       <WishDetails
         wishId={wish.$id}
+        isArchived={wish.isArchived}
         wishlist={wish.wishlist}
         priority={wish.priority}
         description={wish.description}

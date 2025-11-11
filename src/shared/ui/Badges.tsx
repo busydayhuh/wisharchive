@@ -6,6 +6,7 @@ import {
   Crown,
   Eye,
   EyeClosed,
+  List,
   Pencil,
   Users2,
   X,
@@ -140,10 +141,10 @@ export function WishlistBadge({
       }}
       className={cn(
         badgesVariants({ size, className }),
-        "bg-secondary hover:bg-secondary/90 hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 cursor-pointer "
+        "bg-secondary hover:bg-secondary/90 hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 cursor-pointer [&_svg]:size-4"
       )}
     >
-      {isPrivate && <EyeClosed />}
+      {isPrivate ? <EyeClosed /> : <List />}
       <span className="max-w-[20ch] truncate">{title}</span>
     </Link>
   );

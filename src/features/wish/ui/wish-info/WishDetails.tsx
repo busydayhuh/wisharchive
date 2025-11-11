@@ -7,6 +7,7 @@ import { memo } from "react";
 
 function getBasicInfo(
   wishId: string,
+  isArchived: boolean,
   priority: "0" | "1" | "2",
   isOwner: boolean,
   wishlist?: WishlistDocumentType | null,
@@ -16,7 +17,7 @@ function getBasicInfo(
     {
       header: "вишлист",
       element:
-        !isOwner && !wishlist ? null : (
+        (!isOwner && !wishlist) || isArchived ? null : (
           <WishlistControl
             isOwner={isOwner}
             isEditor={false}
@@ -40,6 +41,7 @@ function getBasicInfo(
 export const WishDetails = memo(function WishDetails({
   wishId,
   wishlist,
+  isArchived,
   priority = "2",
   description,
   shopURL,
@@ -48,13 +50,21 @@ export const WishDetails = memo(function WishDetails({
 }: {
   wishId: string;
   wishlist?: WishlistDocumentType | null;
+  isArchived: boolean;
   priority: "0" | "1" | "2";
   description?: string | null;
   shopURL?: string | null;
   isOwner: boolean;
   className?: string;
 }) {
-  const basicInfo = getBasicInfo(wishId, priority, isOwner, wishlist, shopURL);
+  const basicInfo = getBasicInfo(
+    wishId,
+    isArchived,
+    priority,
+    isOwner,
+    wishlist,
+    shopURL
+  );
 
   return (
     <div className="flex flex-col gap-6 lg:gap-10 2xl:gap-12 max-w-3xl">

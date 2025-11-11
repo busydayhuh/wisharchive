@@ -176,23 +176,25 @@ export function WishForm({
           </FormMessage>
         </div>
 
-        <FormField
-          control={form.control}
-          name="wishlist"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="mb-1">Выберите вишлист</FormLabel>
-              <WishlistSelect
-                variant="form"
-                value={field.value}
-                onValueChange={field.onChange}
-                className="py-6 pl-2 w-full md:w-[24rem] text-sm md:text-base"
-              />
+        {!wish?.isArchived && (
+          <FormField
+            control={form.control}
+            name="wishlist"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="mb-1">Выберите вишлист</FormLabel>
+                <WishlistSelect
+                  variant="form"
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  className="py-6 pl-2 w-full md:w-[24rem] text-sm md:text-base"
+                />
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
         <div className="flex sm:flex-row flex-col sm:justify-between gap-2 mt-2 lg:mt-8 w-full">
           <Button
             type="submit"
