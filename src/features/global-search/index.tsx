@@ -28,7 +28,7 @@ import {
 } from "@/shared/ui/kit/item";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
-import { Angry, Leaf, Search, Wind } from "lucide-react";
+import { Frown, Leaf, Search, Wind } from "lucide-react";
 import { useEffect, useState } from "react";
 import { href } from "react-router";
 import { useRoute } from "../breadcrumbs";
@@ -194,7 +194,7 @@ function SearchResults({
   if (error)
     return (
       <p className="flex flex-col items-center gap-1 mt-2 md:mt-4 text-muted-foreground text-sm">
-        <Angry />
+        <Frown />
         Что-то пошло не так. Повторите запрос позже
       </p>
     );

@@ -1,5 +1,6 @@
 import { cn } from "@/shared/lib/css";
 import { AVATAR_SIZES, UserAvatar } from "@/shared/ui/UserAvatar";
+import { Frown } from "lucide-react";
 import { memo } from "react";
 import type { CollaboratorType } from "../model/types";
 
@@ -30,7 +31,13 @@ export const CollaboratorsAvatars = memo(function CollaboratorsAvatars({
   const visible = collaborators?.slice(0, maxVisible) ?? [];
   const remaining = (collaborators?.length ?? 0) - maxVisible;
 
-  if (error) return "☹️ Не удалось загрузить соавторов";
+  if (error)
+    return (
+      <p className="inline-flex gap-1 text-muted-foreground text-xs">
+        <Frown className="stroke-1 size-4" /> Ошибка
+      </p>
+    );
+
   if (isLoading)
     return <CollaboratorsAvatarsSkeleton size={size} maxVisible={maxVisible} />;
 

@@ -9,7 +9,7 @@ import {
 import { ROUTES } from "@/shared/model/routes.ts";
 import DefaultLoader from "@/shared/ui/DefaultLoader.tsx";
 import { NotFound } from "@/shared/ui/NotFound.tsx";
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import App from "./App.tsx";
 import { ProtectedRoute, UnauthOnlyRoute } from "./protected-route.tsx";
 import Providers from "./providers.tsx";
@@ -121,9 +121,10 @@ export const router = createBrowserRouter([
           },
         ],
       },
+      { path: "/not-found", element: <NotFound /> },
       {
         path: "*",
-        element: <NotFound />,
+        element: <Navigate to={"/not-found"} />,
       },
     ],
   },

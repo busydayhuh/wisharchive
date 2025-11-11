@@ -2,6 +2,7 @@ import type { CollaboratorType } from "@/features/collaborators/model/types";
 import type { UserDocumentType } from "@/shared/model/types";
 import { useUsers } from "@/shared/model/user/useUsers";
 import { ScrollArea } from "@/shared/ui/kit/scroll-area";
+import { Frown, Loader2, Wind } from "lucide-react";
 import Collaborator from "./Collaborator";
 
 export default function CollaboratorsList({
@@ -26,14 +27,15 @@ export default function CollaboratorsList({
   if (!searchString) {
     if (collaboratorsLoading)
       return (
-        <div className="flex justify-center items-center bg-background p-4 rounded-sm">
-          Загрузка...
+        <div className="flex justify-center items-center bg-background p-4 rounded-sm text-muted-foreground">
+          <Loader2 className="size-4 animate-spin" />
         </div>
       );
 
     if (collaboratorsError)
       return (
-        <div className="flex justify-center items-center bg-background p-4 rounded-sm">
+        <div className="flex justify-center items-center gap-2 bg-background p-4 rounded-sm text-muted-foreground">
+          <Frown className="size-4" />
           Ошибка
         </div>
       );
@@ -59,9 +61,26 @@ export default function CollaboratorsList({
 
   // результаты поиска
   if (searchString) {
-    if (isLoading) return <>Загрузка...</>;
-    if (error) return <>Не удалось загрузить пользователей ☹️</>;
-    if (users?.length === 0) return <>Пользователь не найден 😶</>;
+    if (isLoading)
+      return (
+        <div className="flex justify-center items-center bg-background p-4 rounded-sm text-muted-foreground">
+          <Loader2 className="size-4 animate-spin" />
+        </div>
+      );
+    if (error)
+      return (
+        <div className="flex justify-center items-center gap-2 bg-background p-4 rounded-sm text-muted-foreground">
+          <Frown className="size-4" />
+          Ошибка
+        </div>
+      );
+    if (users?.length === 0)
+      return (
+        <div className="flex justify-center items-center gap-2 bg-background p-4 rounded-sm text-muted-foreground">
+          <Wind className="size-4" />
+          Пользователь не найден
+        </div>
+      );
 
     return (
       <ScrollArea className="max-h-[16rem]">

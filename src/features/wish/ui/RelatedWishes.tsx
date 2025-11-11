@@ -1,5 +1,6 @@
 import { ROUTES } from "@/shared/model/routes";
 import { Button } from "@/shared/ui/kit/button";
+import { Skeleton } from "@/shared/ui/kit/skeleton";
 import { ChevronRight } from "lucide-react";
 import { memo, useMemo } from "react";
 import Masonry from "react-masonry-css";
@@ -35,7 +36,20 @@ export const RelatedWishes = memo(function RelatedWishes({
     [wishes, wishId]
   );
 
-  if (isLoading) return "Загрузка...";
+  if (isLoading)
+    return (
+      <div className="mx-2 md:mx-auto md:max-w-[96%]">
+        <Masonry
+          breakpointCols={{ default: 4, 1100: 3, 768: 2 }}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column"
+        >
+          {[...Array(5)].map((_, index) => (
+            <Skeleton key={"related" + index} />
+          ))}
+        </Masonry>
+      </div>
+    );
   if (error) return null;
 
   if (relatedWishes)
@@ -47,7 +61,7 @@ export const RelatedWishes = memo(function RelatedWishes({
           </div>
           <Button
             variant="link"
-            className="has-[>svg]:px-0 text-destructive"
+            className="has-[>svg]:px-0 text-muted-foreground"
             asChild
             aria-label="Смотреть все желания пользователя"
           >
@@ -88,7 +102,7 @@ export const RelatedWishes = memo(function RelatedWishes({
                     alt={wish.title}
                     variant="gallery"
                   />
-                  <div className="font-medium text-base">{wish.title}</div>
+                  <div className="font-medium text-sm">{wish.title}</div>
                 </div>
               </Link>
             </div>

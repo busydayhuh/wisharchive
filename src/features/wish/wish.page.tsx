@@ -16,15 +16,15 @@ function WishPage() {
 
   const { current: authUser, isLoggedIn } = useAuth();
 
-  if (error)
-    <ErrorMessage
-      variant="default-error"
-      message="Что-то пошло не так"
-      description="Не удалось загрузить желание, повторите попытку позже"
-      withButton={isLoggedIn}
-      buttonText="К моим желаниям"
-      action={() => navigate(href(ROUTES.WISHES, { userId: authUser!.$id }))}
-    />;
+  if (error) return;
+  <ErrorMessage
+    variant="default-error"
+    message="Что-то пошло не так"
+    description="Не удалось загрузить желание, повторите попытку позже"
+    withButton={isLoggedIn}
+    buttonText="К моим желаниям"
+    action={() => navigate(href(ROUTES.WISHES, { userId: authUser!.$id }))}
+  />;
   if (isLoading) return <WishPageSkeleton />;
 
   if (wish)
