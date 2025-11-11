@@ -34,6 +34,10 @@ function WishAddPage() {
     if (response) {
       toast.success("Желание создано", {
         description: response.title,
+        action: {
+          label: "Создать ещё",
+          onClick: () => navigateWithState(ROUTES.ADD),
+        },
       });
 
       navigateWithState(

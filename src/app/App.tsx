@@ -39,10 +39,13 @@ function App() {
       <Toaster
         position={isMobile ? "top-center" : "bottom-center"}
         closeButton
+        richColors
         toastOptions={{
           classNames: {
-            toast:
-              "!rounded-xl !shadow-xs !bg-primary !text-primary-foreground !border-background",
+            toast: "!rounded-xl !shadow-xs !text-background",
+            title: "!font-semibold",
+            actionButton: "!bg-background !text-foreground",
+            closeButton: "!text-background",
           },
         }}
       />
