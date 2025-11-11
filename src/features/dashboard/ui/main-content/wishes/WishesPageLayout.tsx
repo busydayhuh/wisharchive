@@ -1,4 +1,5 @@
 import { useDashboardContext } from "@/features/dashboard/model/useDashboardContext";
+import { useDashboardToolbar } from "@/features/dashboard/model/useDashboardToolbar";
 import { cn } from "@/shared/lib/css";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishDocumentType } from "@/shared/model/types";
@@ -23,6 +24,7 @@ export function WishesPageLayout({
   viewMode: "gallery" | "table";
 }) {
   const { isDashboardOwner } = useDashboardContext();
+  const { hasActiveFilters } = useDashboardToolbar();
   const navigate = useNavigate();
 
   // изначальная загрузка (скелетон)
@@ -63,8 +65,10 @@ export function WishesPageLayout({
         message="Нет желаний"
         description={
           isDashboardOwner
-            ? "Нет желаний, соответствующих вашему запросу, или вы ещё не создали ни одного желания"
-            : "Нет желаний, соответствующих вашему запросу"
+            ? hasActiveFilters
+              ? "Нет желаний, соответствующих вашему запросу"
+              : "Вы не создали ни одного желания"
+            : ""
         }
         withButton={isDashboardOwner}
         buttonText="Создать желание"

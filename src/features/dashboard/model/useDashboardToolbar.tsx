@@ -11,6 +11,7 @@ export type DashboardToolbarContext = {
   searchString: string;
   setSearchString: Dispatch<SetStateAction<string>>;
   toolbarState: ToolbarState;
+  hasActiveFilters: boolean;
   setToolbarState: Dispatch<SetStateAction<ToolbarState>>;
   dashboardType: DashboardType;
   localStorageKey: string;

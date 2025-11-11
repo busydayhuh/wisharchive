@@ -7,6 +7,7 @@ import Masonry from "react-masonry-css";
 import WishlistGalleryItem from "./WishlistGalleryItem";
 import { WishlistsSkeleton } from "./WishlistsSkeleton";
 import WishlistTableItem from "./WishlistTableItem";
+import { useDashboardToolbar } from "@/features/dashboard/model/useDashboardToolbar";
 
 function WishlistsPageLayout({
   wishlists,
@@ -22,6 +23,7 @@ function WishlistsPageLayout({
   error?: unknown;
 }) {
   const { isDashboardOwner } = useDashboardContext();
+  const { hasActiveFilters } = useDashboardToolbar();
   const { openDialog } = useWishlistDialog();
 
   // изначальная загрузка (скелетон)
@@ -68,8 +70,10 @@ function WishlistsPageLayout({
         message="Нет списков"
         description={
           isDashboardOwner
-            ? "Нет списков, соответствующих вашему запросу, или вы ещё не создали ни одного списка желаний"
-            : "Нет списков, соответствующих вашему запросу"
+            ? hasActiveFilters
+              ? "Нет списков, соответствующих вашему запросу"
+              : "Вы не создали ни одного списка желаний"
+            : ""
         }
         withButton={isDashboardOwner}
         buttonText="Создать список"

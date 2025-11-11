@@ -63,12 +63,12 @@ export function GlobalSearchDialog() {
   }, []);
 
   const mobileTrigger = (
-    <Button variant="secondary" size="icon">
+    <Button variant="secondary" size="icon" className="ms-auto">
       <Search />
     </Button>
   );
   const desktopTrigger = (
-    <div className="flex items-center gap-2">
+    <div className="flex justify-self-end items-center gap-2">
       <Button
         variant="secondary"
         className="justify-between items-center pr-1.5 w-9 md:w-48 h-9 text-muted-foreground/50"

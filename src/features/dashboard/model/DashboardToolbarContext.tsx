@@ -43,6 +43,7 @@ export function DashboardToolbarProvider({
         setSearchString,
         dashboardType,
         localStorageKey,
+        hasActiveFilters: toolbarState.filters.length > 0,
       }}
     >
       {children}

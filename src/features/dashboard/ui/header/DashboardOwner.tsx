@@ -1,16 +1,18 @@
+import { cn } from "@/shared/lib/css";
 import { useUser } from "@/shared/model/user/useUser";
-import { Button } from "@/shared/ui/kit/button";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
-import { Meh, Share2 } from "lucide-react";
+import { Ghost, Meh } from "lucide-react";
 import { memo } from "react";
 
 const DashboardOwner = memo(function DashboardOwner({
   userId,
   isOwner,
+  className,
 }: {
   userId?: string;
   isOwner?: boolean;
+  className?: string;
 }) {
   const { user, isLoading, error } = useUser(userId);
 
@@ -27,7 +29,7 @@ const DashboardOwner = memo(function DashboardOwner({
       </div>
     );
 
-  if (error)
+  if (error || !user)
     return isOwner ? (
       <div className="place-content-center grid bg-muted/80 rounded-full size-12">
         <Meh className="text-muted-foreground" />
@@ -35,9 +37,9 @@ const DashboardOwner = memo(function DashboardOwner({
     ) : (
       <div className="flex items-center gap-3">
         <div className="place-content-center grid bg-muted/80 rounded-full size-12">
-          <Meh className="text-muted-foreground" />
+          <Ghost className="stroke-1 text-muted-foreground" />
         </div>
-        <p className="font-semibold text-xl md:text-2xl truncate leading-tight">
+        <p className="font-semibold text-lg md:text-2xl truncate leading-tight">
           Пользователь не найден
         </p>
       </div>
@@ -45,25 +47,22 @@ const DashboardOwner = memo(function DashboardOwner({
 
   if (user && !isOwner)
     return (
-      <div className="flex items-center gap-3">
+      <div className={cn("flex md:flex-col items-center gap-3", className)}>
         <UserAvatar
           name={user.userName}
           id={user.userId}
           avatarURL={user.avatarURL ?? undefined}
           className="p-0.5 border-1 border-muted/90"
-          size="lg"
+          size="xl"
         />
-        <div className="grid text-left">
+        <div className="flex flex-col md:items-center">
           <p className="font-semibold text-xl md:text-2xl truncate leading-tight">
             {user.userName}
           </p>
-          <p className="text-xs md:text-sm truncate leading-tight">
+          <p className="text-muted-foreground text-xs md:text-sm truncate leading-tight">
             @{user.userId}
           </p>
         </div>
-        <Button size="sm" className="shadow-0 rounded-full w-7 h-7">
-          <Share2 className="size-3" />
-        </Button>
       </div>
     );
 

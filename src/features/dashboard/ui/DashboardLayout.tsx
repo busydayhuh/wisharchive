@@ -1,7 +1,5 @@
-import { useUser } from "@/shared/model/user/useUser";
 import DefaultLoader from "@/shared/ui/DefaultLoader";
-import { Suspense, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { Suspense } from "react";
 import { DashboardToolbarProvider } from "../model/DashboardToolbarContext";
 import { DashboardContext } from "../model/useDashboardContext";
 import { useDashboardMeta } from "../model/useDashboardMeta";
@@ -17,14 +15,6 @@ export function DashboardLayout({
   children: React.ReactNode;
 }) {
   const meta = useDashboardMeta();
-  const { user, isLoading, error } = useUser(meta.dashboardUserId);
-  const navigate = useNavigate();
-
-  const noUser = !isLoading && !error && !user;
-
-  useEffect(() => {
-    if (noUser) navigate("/not-found");
-  }, [noUser, navigate]);
 
   const defaultDashboardHeader = (
     <DashboardHeader

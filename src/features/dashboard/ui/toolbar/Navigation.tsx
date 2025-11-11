@@ -4,18 +4,19 @@ import { memo } from "react";
 import { href, NavLink, useParams } from "react-router";
 
 const Navigation = memo(function Navigation() {
-  const userId = useParams().userId;
+  const { userId } = useParams();
 
   const styles = ({ isActive }: { isActive: boolean }) =>
     cn(
-      "px-4 pt-0.5 pb-1.5 border-1 border-foreground rounded-xl text-sm transition",
-      isActive && "pointer-events-none bg-foreground text-background",
-      !isActive && "hover:bg-ring/20"
+      "px-2 py-1 text-sm transition",
+      isActive &&
+        "pointer-events-none border-b-3 border-b-foreground font-semibold",
+      !isActive && "hover:bg-ring/20 text-muted-foreground font-semibold"
     );
 
   if (userId)
     return (
-      <div className="flex gap-1 px-1 rounded-3xl w-fit">
+      <div className="flex gap-1 px-1 w-fit">
         <NavLink
           className={styles}
           to={href(ROUTES.WISHES, { userId: userId })}
@@ -26,7 +27,7 @@ const Navigation = memo(function Navigation() {
           className={styles}
           to={href(ROUTES.WISHLISTS, { userId: userId })}
         >
-          вишлисты
+          списки
         </NavLink>
       </div>
     );
