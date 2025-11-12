@@ -1,8 +1,8 @@
-import { copyLink } from "@/shared/lib/copyLink";
 import { ROUTES } from "@/shared/model/routes";
+import { CopyProfileLinkBtn } from "@/shared/ui/CopyProfileLinkBtn";
 import { Button } from "@/shared/ui/kit/button";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
-import { ArrowUpRight, Link as LinkIcon } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { href, Link } from "react-router-dom";
 
 export function UserInfoHeader({
@@ -34,13 +34,7 @@ export function UserInfoHeader({
         </div>
       </div>
       <div className="flex items-center gap-4">
-        <Button
-          variant="secondary"
-          onClick={() => copyLink(`http://localhost:5173/${userId}`)}
-        >
-          <LinkIcon />
-          Копировать ссылку
-        </Button>
+        <CopyProfileLinkBtn variant="secondary" userId={userId} />
         <Link to={href(ROUTES.DASHBOARD, { userId: userId })}>
           <Button variant="secondary">
             <ArrowUpRight />К профилю

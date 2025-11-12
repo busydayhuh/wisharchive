@@ -2,8 +2,10 @@ import { cn } from "@/shared/lib/css";
 import { useUser } from "@/shared/model/user/useUser";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
-import { Ghost, Meh } from "lucide-react";
+import { CakeIcon, Ghost, Meh } from "lucide-react";
 import { memo } from "react";
+import { getUserBirthday } from "../../model/getUserBirthday";
+import { OwnerInfoPopover } from "./OwnerInfoPopover";
 
 const DashboardOwner = memo(function DashboardOwner({
   userId,
@@ -62,18 +64,23 @@ const DashboardOwner = memo(function DashboardOwner({
           <p className="text-muted-foreground text-xs md:text-sm truncate leading-tight">
             @{user.userId}
           </p>
+          {user.birthDate && (
+            <p className="inline-flex items-center text-muted-foreground text-xs md:text-sm leading-none">
+              <CakeIcon className="size-3" />
+              {getUserBirthday(user.birthDate)}
+            </p>
+          )}
         </div>
       </div>
     );
 
   if (user && isOwner)
     return (
-      <UserAvatar
+      <OwnerInfoPopover
         name={user.userName}
         id={user.userId}
         avatarURL={user.avatarURL ?? undefined}
-        className="p-0.5 border-1 border-muted/90"
-        size="lg"
+        birthDate={user.birthDate}
       />
     );
 });
