@@ -1,6 +1,3 @@
-import DefaultLoader from "@/shared/ui/DefaultLoader";
-import { AnimatePresence, motion } from "motion/react";
-import { Suspense } from "react";
 import { DashboardToolbarProvider } from "../model/DashboardToolbarContext";
 import { DashboardContext } from "../model/useDashboardContext";
 import { useDashboardMeta } from "../model/useDashboardMeta";
@@ -33,17 +30,11 @@ export function DashboardLayout({
         localStorageKey={meta.localStorageKey}
         key={meta.dashboardType}
       >
-        <motion.div layout className="relative mt-4 md:mt-0 px-1 md:px-0">
+        <div className="relative mt-4 md:mt-0 px-1 md:px-0">
           {header ? header : defaultDashboardHeader}
-
           <DashboardToolbar isOwner={meta.isDashboardOwner} />
-
-          <DashboardContentContainer>
-            <AnimatePresence>
-              <Suspense fallback={<DefaultLoader />}>{children}</Suspense>
-            </AnimatePresence>
-          </DashboardContentContainer>
-        </motion.div>
+          <DashboardContentContainer>{children}</DashboardContentContainer>
+        </div>
       </DashboardToolbarProvider>
     </DashboardContext.Provider>
   );

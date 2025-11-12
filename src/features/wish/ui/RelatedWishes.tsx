@@ -1,9 +1,9 @@
+import { DashboardGrid } from "@/features/dashboard/";
 import { ROUTES } from "@/shared/model/routes";
 import { Button } from "@/shared/ui/kit/button";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
 import { ChevronRight } from "lucide-react";
 import { memo, useMemo } from "react";
-import Masonry from "react-masonry-css";
 import { Link, href } from "react-router";
 import { useWishes } from "../model/useWishes";
 import { WishImage } from "./WishImage";
@@ -39,15 +39,11 @@ export const RelatedWishes = memo(function RelatedWishes({
   if (isLoading)
     return (
       <div className="mx-2 md:mx-auto md:max-w-[96%]">
-        <Masonry
-          breakpointCols={{ default: 4, 1100: 3, 768: 2 }}
-          className="my-masonry-grid"
-          columnClassName="my-masonry-grid_column"
-        >
+        <DashboardGrid viewMode="gallery">
           {[...Array(5)].map((_, index) => (
             <Skeleton key={"related" + index} className="mb-4" />
           ))}
-        </Masonry>
+        </DashboardGrid>
       </div>
     );
   if (error) return null;
@@ -71,11 +67,7 @@ export const RelatedWishes = memo(function RelatedWishes({
           </Button>
         </div>
 
-        <Masonry
-          breakpointCols={{ default: 4, 1100: 3, 768: 2 }}
-          className="my-masonry-grid"
-          columnClassName="my-masonry-grid_column"
-        >
+        <DashboardGrid viewMode="gallery">
           {relatedWishes.map((wish) => (
             <div
               className="group-card-wrapper transition-all duration-300"
@@ -107,7 +99,7 @@ export const RelatedWishes = memo(function RelatedWishes({
               </Link>
             </div>
           ))}
-        </Masonry>
+        </DashboardGrid>
       </div>
     );
 });

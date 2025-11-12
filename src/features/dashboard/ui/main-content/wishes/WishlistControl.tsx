@@ -68,7 +68,7 @@ export function WishlistControl({
       </Button>
     );
 
-  if (wishlist)
+  if (wishlist && !onListPage)
     return (
       <WishlistBadge
         id={wishlist.$id}

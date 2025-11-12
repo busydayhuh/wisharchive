@@ -23,6 +23,8 @@ export function WishlistLayout({
           isFavorite={isFavorite}
           userRoles={userRoles}
           openWishlistEditor={openWishlistEditor}
+          editors={wishlist.editorsIds}
+          readers={wishlist.readersIds}
         />
       }
     >

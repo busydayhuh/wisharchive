@@ -11,7 +11,6 @@ import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import type { WishDocumentType } from "@/shared/model/types";
 import { PriorityBadge, PRIVACY_ICONS, ShopBadge } from "@/shared/ui/Badges";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
-import { motion } from "motion/react";
 import { memo } from "react";
 import { Link } from "react-router";
 import { WishlistControl } from "./WishlistControl";
@@ -21,21 +20,16 @@ const WishTableItem = memo(function WishTableItem({
 }: {
   wish: WishDocumentType;
 }) {
-  const { userRoles, onBookedPage, onListPage, hasAccess, linkParams } =
+  const { userRoles, onBookedPage, onListPage, linkParams } =
     useWishcardMeta(wish);
 
   const isMobile = useIsMobile();
 
-  if (!hasAccess) return null;
-
   return (
-    <motion.div
+    <div
       className={cn(
         "relative items-center gap-2 grid grid-cols-[3fr_1fr] md:grid-cols-[22rem_1fr_1fr_0.5fr] lg:grid-cols-[28rem_1fr_1fr_1fr_0.5fr] 2xl:grid-cols-[54rem_1fr_1fr_1fr_0.5fr] xl:grid-cols-[40rem_1fr_1fr_1fr_0.5fr] md:px-1 py-1 md:py-2 w-full transition"
       )}
-      layout
-      exit={{ opacity: 0, scale: 0.8, y: -10 }}
-      transition={{ duration: 0.3 }}
     >
       {/* Картинка */}
       <Link
@@ -140,7 +134,7 @@ const WishTableItem = memo(function WishTableItem({
           />
         )}
       </div>
-    </motion.div>
+    </div>
   );
 });
 

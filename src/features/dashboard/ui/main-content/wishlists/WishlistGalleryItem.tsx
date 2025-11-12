@@ -4,7 +4,6 @@ import { BookmarkButton, EditWishlistButton } from "@/features/wishlist";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { PRIVACY_ICONS, RoleBadge } from "@/shared/ui/Badges";
-import { motion } from "motion/react";
 import { memo } from "react";
 import { Link } from "react-router-dom";
 import { ImageTiles } from "./ImageTiles";
@@ -27,14 +26,7 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
   const isMobile = useIsMobile();
 
   return (
-    <motion.div
-      className="group-card-wrapper flex flex-col gap-1 mb-4"
-      layout
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.8, y: -10 }}
-      transition={{ duration: 0.3 }}
-    >
+    <div className="group-card-wrapper flex flex-col gap-1 mb-4">
       <div className="relative">
         {/* Добавить в закладки */}
         <BookmarkButton
@@ -89,7 +81,7 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
           {wishlist.wishes?.length ?? 0} жел.
         </p>
       )}
-    </motion.div>
+    </div>
   );
 });
 

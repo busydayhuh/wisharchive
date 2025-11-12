@@ -107,6 +107,7 @@ export function configureWishlistPermissions(
   teamId: string
 ) {
   const editingPermissions = [
+    Permission.read(Role.team(teamId)),
     Permission.update(Role.team(teamId, "owner")),
     Permission.update(Role.team(teamId, "editors")),
     Permission.delete(Role.team(teamId, "owner")),
@@ -116,9 +117,5 @@ export function configureWishlistPermissions(
     return [Permission.read(Role.any()), ...editingPermissions];
   }
 
-  return [
-    Permission.read(Role.team(teamId, "readers")),
-    Permission.read(Role.team(teamId, "owner")),
-    ...editingPermissions,
-  ];
+  return editingPermissions;
 }

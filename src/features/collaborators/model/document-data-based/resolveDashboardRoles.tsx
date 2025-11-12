@@ -55,7 +55,7 @@ export function resolveWishRoles(
 export function resolveVisibility(
   isPrivate: boolean,
   currentUserId?: string,
-  roles?: WishRoles
+  roles?: Partial<WishRoles>
 ) {
   if (!isPrivate) return true; // желания в открытых списках и без списка показываем всегда
 

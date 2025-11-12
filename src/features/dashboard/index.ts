@@ -14,6 +14,7 @@ export { SharedPageWithLayout } from "./pages/dashboard-shared.page";
 export { WishesPageWithLayout } from "./pages/dashboard-wishes.page";
 export { DashboardLayout } from "./ui/DashboardLayout";
 export { DashboardContentContainer } from "./ui/main-content/DashboardContentContainer";
+export { DashboardGrid } from "./ui/main-content/DashboardGrid";
 export { WishesPageLayout } from "./ui/main-content/wishes/WishesPageLayout";
 export { WishesSkeleton } from "./ui/main-content/wishes/WishesSkeleton";
 export { WishlistControl } from "./ui/main-content/wishes/WishlistControl";

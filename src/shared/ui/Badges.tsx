@@ -123,16 +123,21 @@ export function WishlistBadge({
   size,
   className,
 }: {
-  id: string;
-  title: string;
+  id?: string;
+  title?: string;
   isPrivate?: boolean;
-  ownerId: string;
+  ownerId?: string;
   size?: Size;
   className?: string;
 }) {
+  const linkTo =
+    id && ownerId
+      ? href(ROUTES.WISHLIST, { listId: id, userId: ownerId })
+      : "/#";
+
   return (
     <Link
-      to={href(ROUTES.WISHLIST, { listId: id, userId: ownerId })}
+      to={linkTo}
       state={{
         data: {
           userId: ownerId,

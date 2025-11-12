@@ -1,6 +1,6 @@
 import { useAuth } from "@/features/auth";
 import { useRoute } from "@/features/breadcrumbs";
-import { resolveVisibility, resolveWishRoles } from "@/features/collaborators";
+import { resolveWishRoles } from "@/features/collaborators";
 import { ROUTES } from "@/shared/model/routes";
 import type { LinkParams, WishDocumentType } from "@/shared/model/types";
 import { useMemo } from "react";
@@ -25,14 +25,6 @@ export function useWishcardMeta({
     [wishlist, ownerId, bookerId, authUser?.$id]
   );
 
-  const hasAccess = useMemo(() => {
-    return resolveVisibility(
-      wishlist?.isPrivate ?? false,
-      authUser?.$id,
-      roles
-    );
-  }, [authUser?.$id, roles, wishlist?.isPrivate]);
-
   const onBookedPage = useMatch(ROUTES.BOOKED);
   const onListPage = useMatch(ROUTES.WISHLIST);
 
@@ -52,10 +44,8 @@ export function useWishcardMeta({
 
   return {
     userRoles: roles,
-
     onBookedPage,
     onListPage,
-    hasAccess,
     linkParams,
   };
 }

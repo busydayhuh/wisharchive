@@ -1,7 +1,7 @@
 import {
   CollaboratorsAvatars,
   useCollaboratorsDialog,
-  useTeamCollaborators,
+  useDashboardCollaborators,
 } from "@/features/collaborators";
 import { Button } from "@/shared/ui/kit/button";
 import { PlusIcon } from "lucide-react";
@@ -9,12 +9,23 @@ import { PlusIcon } from "lucide-react";
 export function WishlistCollaborators({
   wishlistId,
   isPrivate,
+  editors,
+  readers,
+  isOwner,
 }: {
   wishlistId: string;
   isPrivate: boolean;
+  editors: string[];
+  readers: string[];
+  isOwner: boolean;
 }) {
-  const { collaborators, isLoading, error } = useTeamCollaborators(wishlistId);
+  const { collaborators, isLoading, error } = useDashboardCollaborators(
+    editors,
+    readers
+  );
   const { openCollabDialog } = useCollaboratorsDialog();
+
+  console.log(collaborators);
 
   if (collaborators)
     return (
@@ -26,14 +37,16 @@ export function WishlistCollaborators({
           maxVisible={5}
           size="md"
         />
-        <Button
-          type="button"
-          variant="ghost"
-          className="bg-transparent rounded-full w-8 h-8"
-          onClick={() => openCollabDialog(wishlistId, isPrivate)}
-        >
-          <PlusIcon />
-        </Button>
+        {isOwner && (
+          <Button
+            type="button"
+            variant="ghost"
+            className="bg-transparent rounded-full w-8 h-8"
+            onClick={() => openCollabDialog(wishlistId, isPrivate)}
+          >
+            <PlusIcon />
+          </Button>
+        )}
       </div>
     );
 }

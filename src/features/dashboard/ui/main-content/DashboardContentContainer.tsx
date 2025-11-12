@@ -1,4 +1,5 @@
 import CreateButtonWithDropdown from "@/features/create";
+import { AnimatePresence, motion } from "motion/react";
 import { type ReactNode } from "react";
 
 export function DashboardContentContainer({
@@ -7,12 +8,10 @@ export function DashboardContentContainer({
   children: ReactNode;
 }) {
   return (
-    // <div className="relative border-foreground border-t-1 md:border-r-1 min-h-[calc(100vh-15rem)]">
     <div className="relative pt-3 2xl:pr-2">
-      {/* <div className="hidden -top-6 -right-6 z-100 absolute place-content-center md:grid bg-transparent w-12 h-12">
-        <Star />
-      </div> */}
-      {children}
+      <motion.div layout>
+        <AnimatePresence>{children}</AnimatePresence>
+      </motion.div>
       <CreateButtonWithDropdown />
     </div>
   );

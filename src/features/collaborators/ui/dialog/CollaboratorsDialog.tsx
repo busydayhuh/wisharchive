@@ -25,16 +25,6 @@ export function CollaboratorsDialog({
 }: CollaboratorsDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      {/* <DialogTrigger asChild>
-        <Button
-          type="button"
-          variant="ghost"
-          className="bg-transparent rounded-full w-8 h-8"
-        >
-          <PlusIcon />
-        </Button>
-      </DialogTrigger> */}
-
       <DialogContent className="rounded-xl w-full md:max-w-md" forceMount>
         <DialogHeader className="mb-3">
           <DialogTitle>Изменить список соавторов</DialogTitle>

@@ -1,7 +1,6 @@
 import { CollaboratorsAvatarsSkeleton } from "@/features/collaborators";
-import { WishesSkeleton } from "@/features/dashboard";
+import { DashboardGrid, WishesSkeleton } from "@/features/dashboard";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
-import Masonry from "react-masonry-css";
 
 export function WishlistSkeleton() {
   return (
@@ -23,15 +22,11 @@ export function WishlistSkeleton() {
           <Skeleton className="size-9" />
         </div>
       </div>
-      <Masonry
-        breakpointCols={{ default: 5, 1470: 4, 1280: 3, 768: 2 }}
-        className="my-masonry-grid"
-        columnClassName="my-masonry-grid_column"
-      >
+      <DashboardGrid viewMode="gallery">
         {[...Array(5)].map((_, index) => (
           <WishesSkeleton viewMode="gallery" key={"wish-skeleton-" + index} />
         ))}
-      </Masonry>
+      </DashboardGrid>
     </div>
   );
 }

@@ -21,16 +21,19 @@ export function WishlistHeader({
   userRoles,
   isFavorite,
   openWishlistEditor,
+  editors,
+  readers,
 }: {
   wishlistId: string;
   title: string;
-
   isPrivate: boolean;
   description?: string | null;
   bookmarkWishlist: (pressed: boolean) => Promise<void>;
   userRoles: Roles | undefined;
   isFavorite: boolean;
   openWishlistEditor: () => void;
+  editors: string[];
+  readers: string[];
 }) {
   const isMobile = useIsMobile();
 
@@ -45,6 +48,9 @@ export function WishlistHeader({
           <WishlistCollaborators
             wishlistId={wishlistId}
             isPrivate={isPrivate}
+            editors={editors}
+            readers={readers}
+            isOwner={userRoles?.isWishlistOwner ?? false}
           />
 
           <div className="flex items-center gap-1.5">
@@ -78,7 +84,13 @@ export function WishlistHeader({
       </div>
 
       <div className="flex justify-between items-center">
-        <WishlistCollaborators wishlistId={wishlistId} isPrivate={isPrivate} />
+        <WishlistCollaborators
+          wishlistId={wishlistId}
+          isPrivate={isPrivate}
+          editors={editors}
+          readers={readers}
+          isOwner={userRoles?.isWishlistOwner ?? false}
+        />
         <BookmarkButton
           variant="page"
           isFavorite={isFavorite}
