@@ -14,6 +14,7 @@ import { WishlistCollaborators } from "./WishlistCollaborators";
 
 export function WishlistHeader({
   wishlistId,
+  ownerId,
   title,
   isPrivate,
   description,
@@ -25,6 +26,7 @@ export function WishlistHeader({
   readers,
 }: {
   wishlistId: string;
+  ownerId: string;
   title: string;
   isPrivate: boolean;
   description?: string | null;
@@ -46,6 +48,7 @@ export function WishlistHeader({
 
         <div className="flex justify-between items-center">
           <WishlistCollaborators
+            ownerId={ownerId}
             wishlistId={wishlistId}
             isPrivate={isPrivate}
             editors={editors}
@@ -85,6 +88,7 @@ export function WishlistHeader({
 
       <div className="flex justify-between items-center">
         <WishlistCollaborators
+          ownerId={ownerId}
           wishlistId={wishlistId}
           isPrivate={isPrivate}
           editors={editors}

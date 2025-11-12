@@ -16,6 +16,7 @@ export function WishlistLayout({
       header={
         <WishlistHeader
           wishlistId={wishlist.$id}
+          ownerId={wishlist.ownerId}
           title={wishlist.title}
           isPrivate={wishlist.isPrivate}
           description={wishlist.description}

@@ -1,24 +1,22 @@
-import { Query } from "appwrite";
 import { useMemo } from "react";
 import useSWR from "swr";
 import team from "../../../../shared/model/teams";
 
-async function fetcher(wishlistId: string, userId: string) {
-  const response = await team.listMembers(wishlistId, [
-    Query.equal("userId", userId),
-  ]);
+async function fetcher(teamId: string, membershipId: string) {
+  const response = await team.getMember(teamId, membershipId);
 
-  return response.memberships[0];
+  return response;
 }
 
-export function useMembership(wishlistId: string | null, userId: string) {
+export function useMembership(teamId?: string, membershipId?: string) {
   const key = useMemo(
-    () => (wishlistId ? ["membership", wishlistId, userId] : null),
-    [wishlistId, userId]
+    () =>
+      membershipId && teamId ? ["membership", teamId, membershipId] : null,
+    [membershipId, teamId]
   );
 
-  const { data: membership } = useSWR(key, ([, wishlistId, userId]) =>
-    fetcher(wishlistId, userId)
+  const { data: membership } = useSWR(key, ([, teamId, membershipId]) =>
+    fetcher(teamId, membershipId)
   );
 
   return { membership };

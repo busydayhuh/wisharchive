@@ -8,18 +8,21 @@ import { PlusIcon } from "lucide-react";
 
 export function WishlistCollaborators({
   wishlistId,
+  ownerId,
   isPrivate,
   editors,
   readers,
   isOwner,
 }: {
   wishlistId: string;
+  ownerId: string;
   isPrivate: boolean;
   editors: string[];
   readers: string[];
   isOwner: boolean;
 }) {
   const { collaborators, isLoading, error } = useDashboardCollaborators(
+    ownerId,
     editors,
     readers
   );

@@ -1,4 +1,5 @@
 export { useToggleBookmark } from "./model/useToggleBookmark";
+export { useWishlist } from "./model/useWishlist";
 export { useWishlistDialog } from "./model/useWishlistDialog";
 export {
   configureWishlistPermissions,

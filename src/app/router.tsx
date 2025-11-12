@@ -100,6 +100,11 @@ export const router = createBrowserRouter([
         lazy: () => import("@/features/wish/wish.page"),
         HydrateFallback: DefaultLoader,
       },
+      {
+        path: ROUTES.INVITE,
+        lazy: () => import("@/features/collaborators/invitation.page.tsx"),
+        HydrateFallback: DefaultLoader,
+      },
 
       {
         element: <UnauthOnlyRoute />,

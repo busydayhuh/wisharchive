@@ -16,7 +16,11 @@ export function useWishlistcardMeta(wishlist: WishlistDocumentType) {
 
   const { current: authUser } = useAuth();
   const { location, params } = useRoute();
-  const { collaborators } = useDashboardCollaborators(editorsIds, readersIds);
+  const { collaborators } = useDashboardCollaborators(
+    ownerId,
+    editorsIds,
+    readersIds
+  );
 
   const { openDialog } = useWishlistDialog();
   const openWishlistEditor = useCallback(

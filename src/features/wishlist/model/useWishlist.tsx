@@ -9,7 +9,7 @@ async function fetcher(wishlistId: string) {
   return response as WishlistDocumentType;
 }
 
-export function useWishlist(wishlistId: string | null) {
+export function useWishlist(wishlistId?: string | null) {
   const {
     data: wishlist,
     isLoading,

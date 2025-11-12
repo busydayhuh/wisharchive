@@ -3,7 +3,6 @@ import { BreadcrumbsBar } from "@/features/breadcrumbs";
 import { AppSidebar } from "@/features/sidebar";
 import { cn } from "@/shared/lib/css";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
-import { BlobsBackground } from "@/shared/ui/BlobsBackground";
 import DefaultLoader from "@/shared/ui/DefaultLoader";
 import { Toaster } from "@/shared/ui/kit/sonner";
 import MainContainer from "@/shared/ui/MainContainer";
@@ -18,7 +17,7 @@ function App() {
   return (
     <>
       {isLoggedIn && <AppSidebar />}
-      {!isMobile && <BlobsBackground />}
+      {/* {!isMobile && <BlobsBackground />} */}
 
       <MainContainer>
         <BreadcrumbsBar isMobile={isMobile} isUser={isLoggedIn} />
