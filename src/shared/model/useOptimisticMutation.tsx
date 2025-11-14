@@ -1,6 +1,6 @@
 import type { Models } from "appwrite";
 import { useCallback } from "react";
-import { useSWRConfig } from "swr";
+import { useSWRConfig, type Cache, type ScopedMutator } from "swr";
 
 type OptimisticUpdater = (prev: Models.Document[]) => Models.Document[];
 type ServerAction = () => Promise<Models.Document | void>;
@@ -10,6 +10,55 @@ type SWRCacheData =
   | Models.Document[]
   | Models.Document[][]
   | undefined;
+
+const applyToKeywordCaches = (
+  cache: Cache,
+  mutate: ScopedMutator,
+  keyword: string,
+  updater?: OptimisticUpdater,
+  options?: { rollbackOnError?: boolean; revalidate?: boolean }
+) => {
+  for (const key of cache.keys()) {
+    if (!key.includes(keyword)) continue;
+
+    mutate(
+      key,
+      updater
+        ? (prev: SWRCacheData) => {
+            if (!prev) return prev;
+            // Страницы ([][])
+            if (Array.isArray(prev) && Array.isArray(prev[0])) {
+              return (prev as Models.Document[][]).map((page) => updater(page));
+            }
+            // Один массив ([])
+            if (Array.isArray(prev)) {
+              return updater(prev as Models.Document[]);
+            }
+            // Один документ
+            return updater([prev])[0];
+          }
+        : undefined,
+      options
+    );
+  }
+};
+
+const applyToExtraKeysCaches = (
+  mutate: ScopedMutator,
+  updater: OptimisticUpdater,
+  extraKeys: string[] = []
+) => {
+  for (const key of extraKeys) {
+    mutate(
+      key,
+      (prev?: Models.Document) => (prev ? updater([prev])[0] : prev),
+      {
+        rollbackOnError: true,
+        revalidate: true,
+      }
+    );
+  }
+};
 
 export function useOptimisticMutation() {
   const { mutate, cache } = useSWRConfig();
@@ -21,65 +70,24 @@ export function useOptimisticMutation() {
       keyword: string, // для массива всех документов (dashboard view)
       extraKeys: string[] = []
     ) => {
-      const updateCache = (
-        updater?: OptimisticUpdater,
-        options?: { rollbackOnError?: boolean; revalidate?: boolean }
-      ) => {
-        for (const key of cache.keys()) {
-          if (key.includes(keyword)) {
-            mutate(
-              key,
-              updater
-                ? (prev: SWRCacheData) => {
-                    if (!prev) return prev;
-
-                    // массив страниц ([][])
-                    if (Array.isArray(prev) && Array.isArray(prev[0])) {
-                      return (prev as Models.Document[][]).map((page) =>
-                        updater(page)
-                      );
-                    }
-
-                    // один массив ([])
-                    if (Array.isArray(prev)) {
-                      return updater(prev as Models.Document[]);
-                    }
-
-                    // документ
-                    return updater([prev])[0];
-                  }
-                : undefined,
-              options
-            );
-          }
-        }
-      };
-
       try {
-        updateCache(updater, { rollbackOnError: true, revalidate: false });
-
-        // если кэш по одиночному extra key есть, то обновляем его, если нет — оставляем undefined
-
-        extraKeys.forEach((key) => {
-          mutate(
-            key,
-            (prev?: Models.Document) => (prev ? updater([prev])[0] : prev),
-            {
-              rollbackOnError: true,
-              revalidate: true,
-            }
-          );
+        // обновляем кеш по основному ключу
+        applyToKeywordCaches(cache, mutate, keyword, updater, {
+          rollbackOnError: true,
+          revalidate: false,
         });
+        // обновляем кеш по доп. ключам, если есть (ключи одиночных документов)
+        applyToExtraKeysCaches(mutate, updater, extraKeys);
 
         return await action();
       } catch (error) {
         console.log("Ошибка мутации", error);
 
         // запрашиваем актуальные данные для отката
-        updateCache();
+        applyToKeywordCaches(cache, mutate, keyword);
         extraKeys.forEach((key) => mutate(key));
 
-        return null;
+        throw error;
       }
     },
     [cache, mutate]
