@@ -18,11 +18,11 @@ type WishSubmitHandlerType = (
 
 type WishEditorProps = {
   wish?: WishDocumentType;
-  onSubmit: WishSubmitHandlerType;
+  saveChanges: WishSubmitHandlerType;
   storageImageURL?: string | null;
 };
 
-function WishEditor({ wish, onSubmit, storageImageURL }: WishEditorProps) {
+function WishEditor({ wish, saveChanges, storageImageURL }: WishEditorProps) {
   const [newImage, setNewImage] = useState<File | null | undefined>(undefined);
   const [blockNavigate, setBlockNavigate] = useState(true);
 
@@ -30,6 +30,17 @@ function WishEditor({ wish, onSubmit, storageImageURL }: WishEditorProps) {
     ({ currentLocation, nextLocation }) =>
       currentLocation.pathname !== nextLocation.pathname && blockNavigate
   );
+
+  const saveWishWithImage = async (
+    values: z.infer<typeof wishFormSchema>,
+    id?: string
+  ) => {
+    const imageURL = newImage
+      ? await uploadToStorage(newImage)
+      : storageImageURL;
+
+    await saveChanges({ ...values, imageURL }, id);
+  };
 
   return (
     <>
@@ -51,13 +62,7 @@ function WishEditor({ wish, onSubmit, storageImageURL }: WishEditorProps) {
           <WishForm
             setBlockNavigate={setBlockNavigate}
             wish={wish}
-            onSubmit={async (values, id) => {
-              const imageURL = newImage
-                ? await uploadToStorage(newImage)
-                : storageImageURL;
-
-              await onSubmit({ ...values, imageURL }, id);
-            }}
+            onSubmit={saveWishWithImage}
           />
         }
       />

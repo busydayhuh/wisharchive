@@ -19,7 +19,7 @@ import {
 import { Textarea } from "@/shared/ui/kit/textarea";
 import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChevronDownIcon, Loader2 } from "lucide-react";
+import { ChevronDownIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -27,6 +27,7 @@ import type { KeyedMutator } from "swr";
 import type z from "zod";
 import useProfileMutations from "./model/useProfileMutations";
 import { ProfileImageUploader } from "./ProfileImageUploader";
+import { SubmitBtn } from "@/shared/ui/SubmitBtn";
 
 export function PersonalInfoForm({
   userInfo,
@@ -165,22 +166,13 @@ export function PersonalInfoForm({
           )}
         />
 
-        <Button
-          type="submit"
-          variant={isSubmitting ? "ghost" : "default"}
-          disabled={isSubmitting || !isDirty}
-          size="lg"
-          className="w-fit h-14"
-        >
-          {isSubmitting ? (
-            <>
-              <Loader2 className="animate-spin" />
-              Сохранение...
-            </>
-          ) : (
-            "Сохранить"
-          )}
-        </Button>
+        <SubmitBtn
+          text="Сохранить"
+          loaderText="Сохранение..."
+          isSubmitting={isSubmitting}
+          isDirty={isDirty}
+          className="w-fit"
+        />
       </form>
     </Form>
   );

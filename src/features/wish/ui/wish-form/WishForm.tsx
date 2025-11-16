@@ -1,7 +1,6 @@
 import { wishFormSchema as formSchema } from "@/shared/model/formSchemas";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishDocumentType } from "@/shared/model/types";
-import { Button } from "@/shared/ui/kit/button";
 import {
   Form,
   FormControl,
@@ -12,12 +11,11 @@ import {
 } from "@/shared/ui/kit/form";
 import { Input } from "@/shared/ui/kit/input";
 import { Textarea } from "@/shared/ui/kit/textarea";
+import { SubmitBtn } from "@/shared/ui/SubmitBtn";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
 import { href, useNavigate } from "react-router";
-import { toast } from "sonner";
 import type z from "zod";
 import DeleteButton from "../../../../shared/ui/DeleteButton";
 import { useWishMutations } from "../../model/useWishMutations";
@@ -31,7 +29,10 @@ export function WishForm({
   setBlockNavigate,
 }: {
   wish?: WishDocumentType;
-  onSubmit: (values: z.infer<typeof formSchema>, wishId?: string) => void;
+  onSubmit: (
+    values: z.infer<typeof formSchema>,
+    wishId?: string
+  ) => Promise<void>;
   setBlockNavigate: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const actions = useWishMutations();
@@ -51,18 +52,25 @@ export function WishForm({
   });
 
   const { errors } = form.formState;
-
   const pageHeader = wish ? "Редактировать желание" : "Новое желание";
+
+  const onSave = async (values: z.infer<typeof formSchema>) => {
+    await onSubmit(values, wish!.$id);
+    setBlockNavigate(false);
+  };
+
+  const onDelete = async () => {
+    await actions.delete(wish!.$id);
+    setBlockNavigate(false);
+    navigate(href(ROUTES.WISHES, { userId: wish!.ownerId }));
+  };
 
   const navigate = useNavigate();
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(async (values) => {
-          setBlockNavigate(false);
-          await onSubmit(values, wish?.$id);
-        })}
+        onSubmit={form.handleSubmit(onSave)}
         className="flex flex-col gap-4 md:gap-6 mt-3 md:mt-0 md:ml-4 px-2 md:px-0 pb-2 max-w-3xl"
       >
         <p className="hidden md:block font-bold text-lg md:text-2xl">
@@ -196,32 +204,16 @@ export function WishForm({
           />
         )}
         <div className="flex sm:flex-row flex-col sm:justify-between gap-2 mt-2 lg:mt-8 w-full">
-          <Button
-            type="submit"
-            disabled={form.formState.isSubmitting}
-            size="lg"
-            className="h-14"
-          >
-            {form.formState.isSubmitting ? (
-              <>
-                <Loader2 className="animate-spin" />
-                Сохранение...
-              </>
-            ) : (
-              "Сохранить"
-            )}
-          </Button>
+          <SubmitBtn
+            text="Сохранить"
+            loaderText="Сохранение..."
+            isSubmitting={form.formState.isSubmitting}
+          />
           {wish && (
             <DeleteButton
               variant="button"
               wishTitle={wish.title}
-              action={async () => {
-                await actions.delete(wish.$id);
-                toast.success("Желание удалено");
-
-                setBlockNavigate(false);
-                navigate(href(ROUTES.WISHES, { userId: wish.ownerId }));
-              }}
+              action={onDelete}
               buttonText="Удалить желание"
             />
           )}

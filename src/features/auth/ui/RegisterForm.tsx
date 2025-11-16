@@ -1,5 +1,4 @@
 import { ROUTES } from "@/shared/model/routes";
-import { Button } from "@/shared/ui/kit/button";
 import {
   Form,
   FormControl,
@@ -10,8 +9,8 @@ import {
   FormMessage,
 } from "@/shared/ui/kit/form";
 import { Input } from "@/shared/ui/kit/input";
+import { SubmitBtn } from "@/shared/ui/SubmitBtn";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowRight, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { href, useNavigate } from "react-router";
 import { z } from "zod";
@@ -146,10 +145,10 @@ function RegisterForm() {
             {form.formState.errors.root?.message}
           </div>
         )}
-        <Button type="submit" size="lg" disabled={form.formState.isSubmitting}>
-          {form.formState.isSubmitting && <Loader2 className="animate-spin" />}
-          Зарегистрироваться <ArrowRight />
-        </Button>
+        <SubmitBtn
+          isSubmitting={form.formState.isSubmitting}
+          text="Зарегистрироваться"
+        />
       </form>
     </Form>
   );

@@ -1,5 +1,4 @@
 import { accountInfoFormSchema as formSchema } from "@/shared/model/formSchemas";
-import { Button } from "@/shared/ui/kit/button";
 import {
   Form,
   FormControl,
@@ -9,8 +8,8 @@ import {
   FormMessage,
 } from "@/shared/ui/kit/form";
 import { Input } from "@/shared/ui/kit/input";
+import { SubmitBtn } from "@/shared/ui/SubmitBtn";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -149,22 +148,13 @@ export function AccountInfoForm({
         )}
 
         <div className="flex items-center gap-5">
-          <Button
-            type="submit"
-            variant={isSubmitting ? "ghost" : "default"}
-            disabled={isSubmitting || !isDirty}
-            size="lg"
-            className="w-fit h-14"
-          >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="animate-spin" />
-                Сохранение...
-              </>
-            ) : (
-              "Сохранить"
-            )}
-          </Button>
+          <SubmitBtn
+            text="Сохранить"
+            loaderText="Сохранение..."
+            isSubmitting={isSubmitting}
+            isDirty={isDirty}
+            className="w-fit"
+          />
         </div>
       </form>
     </Form>
