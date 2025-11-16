@@ -22,8 +22,10 @@ function WishlistPage() {
         message="Что-то пошло не так"
         description="Не удалось загрузить список, повторите попытку позже"
         withButton={isLoggedIn}
-        buttonText="К моим желаниям"
-        action={() => navigate(href(ROUTES.WISHES, { userId: current!.$id }))}
+        buttonText="К моим спискам"
+        action={() =>
+          navigate(href(ROUTES.WISHLISTS, { userId: current!.$id }))
+        }
       />
     );
 
