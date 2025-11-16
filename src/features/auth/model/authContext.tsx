@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { appwriteService } from "@/shared/model/appwrite";
 import db from "@/shared/model/databases";
+import { handleError, type ResponseType } from "@/shared/model/handleError";
 import { ROUTES } from "@/shared/model/routes";
 import { type Models } from "appwrite";
 import {
@@ -27,22 +28,15 @@ export type FormValues = {
   };
 };
 
-type Status = {
-  status: "success" | "error";
-  login_error_message?: string | null;
-  register_error_message?: string | null;
-};
-
 type User = Models.User<{ theme?: "light" | "dark" }> | null;
 type Session = Models.Session | null;
 
 type UserContextType = {
   current: User;
   session: Session;
-  login: (data: FormValues["login"]) => void;
-  logout: () => void;
-  register: (data: FormValues["register"]) => void;
-  status: Status;
+  login: (data: FormValues["login"]) => Promise<ResponseType>;
+  logout: () => Promise<ResponseType>;
+  register: (data: FormValues["register"]) => Promise<ResponseType>;
   isLoggedIn: boolean;
 };
 
@@ -57,11 +51,6 @@ export function UserProvider(props: { children: ReactNode }) {
 
   const [session, setSession] = useState<Session>(null);
   const [user, setUser] = useState<User>(null);
-  const [status, setStatus] = useState<Status>({
-    status: "success",
-    login_error_message: null,
-    register_error_message: null,
-  });
 
   async function login(data: FormValues["login"]) {
     try {
@@ -72,12 +61,11 @@ export function UserProvider(props: { children: ReactNode }) {
       setSession(loggedIn);
       navigate(href(ROUTES.WISHES, { userId: loggedIn.userId }));
       init();
+
+      return { ok: true };
     } catch (error) {
-      setStatus({
-        status: "error",
-        login_error_message: "Неверный логин или пароль",
-      });
       console.log("Не получилось войти", error);
+      return handleError(error);
     }
   }
 
@@ -87,8 +75,11 @@ export function UserProvider(props: { children: ReactNode }) {
       setSession(null);
       setUser(null);
       navigate("/login");
+
+      return { ok: true };
     } catch (error) {
       console.log("Не получилось выйти", error);
+      return handleError(error);
     }
   }
 
@@ -108,12 +99,10 @@ export function UserProvider(props: { children: ReactNode }) {
       });
 
       await login(data);
+      return { ok: true };
     } catch (error) {
-      setStatus({
-        status: "error",
-        register_error_message: "Не удалось зарегистрироваться",
-      });
       console.log("Не удалось зарегистрироваться", error);
+      return handleError(error);
     }
   }
 
@@ -137,7 +126,6 @@ export function UserProvider(props: { children: ReactNode }) {
         login,
         logout,
         register,
-        status,
         session,
         isLoggedIn: Boolean(user),
       }}

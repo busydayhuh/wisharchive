@@ -57,7 +57,7 @@ const DashboardOwner = memo(function DashboardOwner({
           className="p-0.5 border-1 border-muted/90"
           size="xl"
         />
-        <div className="flex flex-col md:items-center">
+        <div className="flex flex-col md:items-center gap-2">
           <p className="font-semibold text-xl md:text-2xl truncate leading-tight">
             {user.userName}
           </p>
@@ -65,9 +65,9 @@ const DashboardOwner = memo(function DashboardOwner({
             @{user.userId}
           </p>
           {user.birthDate && (
-            <p className="inline-flex items-center text-muted-foreground text-xs md:text-sm leading-none">
+            <p className="inline-flex items-center gap-1 text-muted-foreground text-xs leading-none">
               <CakeIcon className="size-3" />
-              {getUserBirthday(user.birthDate)}
+              {getUserBirthday(user.birthDate as string)}
             </p>
           )}
         </div>
@@ -80,7 +80,7 @@ const DashboardOwner = memo(function DashboardOwner({
         name={user.userName}
         id={user.userId}
         avatarURL={user.avatarURL ?? undefined}
-        birthDate={user.birthDate}
+        birthDate={user.birthDate as string}
       />
     );
 });

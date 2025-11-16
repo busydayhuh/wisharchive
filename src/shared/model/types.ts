@@ -41,7 +41,7 @@ export type UserDocumentType = Models.Document & {
   wishlists: WishDocumentType[] | null;
   bio: string | null;
   sex: "female" | "male" | "other" | null;
-  birthDate?: string;
+  birthDate?: string | Date | null;
 };
 
 export type Setter<T> = React.Dispatch<React.SetStateAction<T>>;
