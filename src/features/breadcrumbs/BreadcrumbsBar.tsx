@@ -1,12 +1,10 @@
 import { cn } from "@/shared/lib/css";
-import { ROUTES } from "@/shared/model/routes";
+import { useDepartment } from "@/shared/lib/react/useDepartment";
 import { useCurrentUser } from "@/shared/model/user/useCurrentUser";
 import { SidebarTrigger } from "@/shared/ui/kit/sidebar";
 import Logo from "@/shared/ui/Logo";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
-import { matchRoutes } from "react-router-dom";
 import { Breadcrumbs } from "./Breadcrumbs";
-import { useRoute } from "./model/createRouteContext";
 
 export function BreadcrumbsBar({
   isMobile,
@@ -15,23 +13,16 @@ export function BreadcrumbsBar({
   isMobile: boolean;
   isUser: boolean;
 }) {
-  const { location } = useRoute();
-
-  const hasBreadcrumbs = [
-    { path: ROUTES.WISH },
-    { path: ROUTES.WISHLIST },
-    { path: ROUTES.EDIT },
-  ];
-  const showBreadcrumbs = Boolean(
-    matchRoutes(hasBreadcrumbs, location.pathname)
-  );
+  const { outside, hasBreadcrumbs } = useDepartment();
   const { user } = useCurrentUser();
+
+  if (outside) return null;
 
   return (
     <div
       className={cn(
         "flex items-center gap-2.5 px-1 md:px-0 py-0.5",
-        !showBreadcrumbs && "justify-between"
+        !hasBreadcrumbs && "justify-between"
       )}
     >
       {isMobile && isUser && (
@@ -39,12 +30,12 @@ export function BreadcrumbsBar({
           <SidebarTrigger />
         </div>
       )}
-      {showBreadcrumbs ? (
+      {hasBreadcrumbs ? (
         <Breadcrumbs />
       ) : (
         isMobile && <Logo variant="default" />
       )}
-      {isMobile && user && !showBreadcrumbs && (
+      {isMobile && user && !hasBreadcrumbs && (
         <UserAvatar
           size="sm"
           id={user.userId}

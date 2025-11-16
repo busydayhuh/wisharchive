@@ -22,23 +22,25 @@ function AuthLayout({
 }) {
   return (
     <GradientBg>
-      <div className="w-full lg:max-w-1/2 h-dvh flex flex-col items-center bg-card">
-        <Card className="w-[95%] max-w-lg mx-auto mt-50 shadow-none">
-          <CardHeader>
-            <CardTitle className="uppercase text-2xl font-bold ">
-              {title}
-            </CardTitle>
-            <CardDescription className="text-base">
-              {description}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>{form}</CardContent>
-          <CardFooter>
-            <div className="flex items-baseline mt-20 [&_button]:text-base [&_button]:px-2 ">
-              {footerText}
-            </div>
-          </CardFooter>
-        </Card>
+      <div className="grid grid-cols-1 lg:grid-cols-2 w-full h-screen">
+        <div className="flex justify-center items-center bg-background">
+          <Card className="bg-background shadow-none border-0 w-full max-w-xl">
+            <CardHeader>
+              <CardTitle className="font-bold text-2xl lg:text-3xl">
+                {title}
+              </CardTitle>
+              <CardDescription className="text-sm">
+                {description}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>{form}</CardContent>
+            <CardFooter>
+              <div className="flex items-baseline mt-20 [&_button]:px-2 text-sm">
+                {footerText}
+              </div>
+            </CardFooter>
+          </Card>
+        </div>
       </div>
     </GradientBg>
   );

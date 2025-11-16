@@ -1,3 +1,4 @@
+import { ROUTES } from "@/shared/model/routes";
 import { Button } from "@/shared/ui/kit/button";
 import {
   Form,
@@ -10,32 +11,25 @@ import {
 } from "@/shared/ui/kit/form";
 import { Input } from "@/shared/ui/kit/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { href, useNavigate } from "react-router";
 import { z } from "zod";
 import { useAuth } from "../model/authContext";
 import { PassWithToggle } from "./PassInputWithToggle";
 
 const formSchema = z
   .object({
-    email: z
-      .string({
-        required_error: "Введите логин",
-      })
-      .email("Неверный email"),
-    nickname: z.string({
-      required_error: "Это обязательное поле",
-    }),
+    email: z.email("Неверный email"),
+    nickname: z.string().min(1, "Это обязательное поле"),
     name: z
-      .string({
-        required_error:
-          "Введите имя. Позднее вы сможете изменить его в настройках аккаунта",
-      })
-      .optional(),
-    password: z
-      .string({ required_error: "Введите пароль" })
-      .min(8, "Пароль должен содержать не менее 8 символов"),
-    confirmPassword: z.string().optional(),
+      .string()
+      .min(
+        1,
+        "Введите имя. Позднее вы сможете изменить его в настройках аккаунта"
+      ),
+    password: z.string().min(8, "Пароль должен содержать не менее 8 символов"),
+    confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     path: ["confirmPassword"],
@@ -53,17 +47,27 @@ function RegisterForm() {
       confirmPassword: "",
     },
   });
-  const user = useAuth();
+  const { current, register } = useAuth();
+  const navigate = useNavigate();
+
+  const onRegister = async (values: z.infer<typeof formSchema>) => {
+    const { ok, errorMessage } = await register(values);
+
+    if (!ok) form.setError("root", { type: "custom", message: errorMessage });
+    if (current) navigate(href(ROUTES.WISHES, { userId: current.$id }));
+  };
 
   return (
     <Form {...form}>
-      <form className="space-y-4" onSubmit={form.handleSubmit(user.register)}>
+      <form className="space-y-6" onSubmit={form.handleSubmit(onRegister)}>
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email*</FormLabel>
+              <FormLabel>
+                Email<span className="text-destructive">*</span>
+              </FormLabel>
               <FormControl>
                 <Input placeholder="example@gmail.com" {...field} />
               </FormControl>
@@ -76,7 +80,9 @@ function RegisterForm() {
           name="nickname"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Никнейм*</FormLabel>
+              <FormLabel>
+                Никнейм<span className="text-destructive">*</span>
+              </FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -92,7 +98,9 @@ function RegisterForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Полное имя</FormLabel>
+              <FormLabel>
+                Полное имя<span className="text-destructive">*</span>
+              </FormLabel>
               <FormControl>
                 <Input placeholder="Василиса Премудрая" {...field} />
               </FormControl>
@@ -108,7 +116,9 @@ function RegisterForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Пароль*</FormLabel>
+              <FormLabel>
+                Пароль<span className="text-destructive">*</span>
+              </FormLabel>
               <FormControl>
                 <PassWithToggle {...field} />
               </FormControl>
@@ -121,7 +131,9 @@ function RegisterForm() {
           name="confirmPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Повторите пароль*</FormLabel>
+              <FormLabel>
+                Повторите пароль<span className="text-destructive">*</span>
+              </FormLabel>
               <FormControl>
                 <PassWithToggle {...field} />
               </FormControl>
@@ -129,12 +141,13 @@ function RegisterForm() {
             </FormItem>
           )}
         />
-        {user.status.status === "error" && (
-          <div className="text-destructive">
-            {user.status.register_error_message}
+        {form.formState.errors && (
+          <div className="text-destructive text-sm">
+            {form.formState.errors.root?.message}
           </div>
         )}
-        <Button type="submit" size="lg">
+        <Button type="submit" size="lg" disabled={form.formState.isSubmitting}>
+          {form.formState.isSubmitting && <Loader2 className="animate-spin" />}
           Зарегистрироваться <ArrowRight />
         </Button>
       </form>

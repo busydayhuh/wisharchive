@@ -17,8 +17,6 @@ function App() {
   return (
     <>
       {isLoggedIn && <AppSidebar />}
-      {/* {!isMobile && <BlobsBackground />} */}
-
       <MainContainer>
         <BreadcrumbsBar isMobile={isMobile} isUser={isLoggedIn} />
         <Outlet />
