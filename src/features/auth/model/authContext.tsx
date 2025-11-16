@@ -2,7 +2,6 @@
 import { appwriteService } from "@/shared/model/appwrite";
 import db from "@/shared/model/databases";
 import { handleError, type ResponseType } from "@/shared/model/handleError";
-import { ROUTES } from "@/shared/model/routes";
 import { type Models } from "appwrite";
 import {
   createContext,
@@ -11,7 +10,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { href, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 export type FormValues = {
   login: {
@@ -59,7 +58,6 @@ export function UserProvider(props: { children: ReactNode }) {
         data.password
       );
       setSession(loggedIn);
-      navigate(href(ROUTES.WISHES, { userId: loggedIn.userId }));
       init();
 
       return { ok: true };
@@ -74,6 +72,7 @@ export function UserProvider(props: { children: ReactNode }) {
       await appwriteService.account.deleteSession("current");
       setSession(null);
       setUser(null);
+
       navigate("/login");
 
       return { ok: true };
@@ -99,6 +98,7 @@ export function UserProvider(props: { children: ReactNode }) {
       });
 
       await login(data);
+
       return { ok: true };
     } catch (error) {
       console.log("Не удалось зарегистрироваться", error);

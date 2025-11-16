@@ -15,7 +15,7 @@ export function DeleteSection({
 }: DeleteSectionProps) {
   const actions = useWishlistMutations();
 
-  async function onConfirm() {
+  async function onDelete() {
     await actions.delete(wishlistId);
     setDialogOpen(false);
   }
@@ -26,7 +26,7 @@ export function DeleteSection({
       <DeleteButton
         variant="button"
         wishTitle={wishlistTitle}
-        action={onConfirm}
+        action={onDelete}
         buttonText="Удалить вишлист"
         className="bg-transparent mt-1 md:mt-0 !px-0 h-12"
       />

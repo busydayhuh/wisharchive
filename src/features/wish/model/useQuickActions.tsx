@@ -13,48 +13,50 @@ export function useQuickActions(wishId: string) {
   const { revalidateByKeyword } = useRevalidationByKeyword();
   const actions = useWishMutations();
 
+  const showErrorToast = (text: string) =>
+    toast.error(text, { description: "Повторите попытку позже" });
+
   const bookWish = useCallback(
     async (pressed: boolean) => {
       if (!current) return navigate(ROUTES.LOGIN);
 
-      try {
-        await actions.update(wishId, {
-          isBooked: pressed,
-          bookerId: pressed ? current.$id : null,
-          bookedBy: pressed ? current.$id : null,
-        });
+      const { ok } = await actions.update(wishId, {
+        isBooked: pressed,
+        bookerId: pressed ? current.$id : null,
+        bookedBy: pressed ? current.$id : null,
+      });
 
-        toast.success(
-          pressed ? "Желание забронировано" : "Бронирование отменено"
+      if (!ok) {
+        showErrorToast(
+          pressed ? "Ошибка бронирования" : "Не удалось отменить бронь"
         );
-      } catch {
-        toast.error(
-          pressed ? "Ошибка бронирования" : "Не удалось отменить бронь",
-          { description: "Повторите попытку позже" }
-        );
+        return;
       }
+
+      toast.success(
+        pressed ? "Желание забронировано" : "Бронирование отменено"
+      );
     },
     [current, navigate, wishId, actions]
   );
 
   const archiveWish = useCallback(
     async (archived: boolean) => {
-      try {
-        await actions.update(wishId, {
-          isArchived: !archived,
-          wishlist: null,
-          wishlistId: null,
-        });
+      const { ok } = await actions.update(wishId, {
+        isArchived: !archived,
+        wishlist: null,
+        wishlistId: null,
+      });
 
-        revalidateByKeyword("wishes");
-        toast.success(
-          archived ? "Желание восстановлено" : "Желание архивировано"
-        );
-      } catch {
-        toast.error("Не удалось переместить желание", {
-          description: "Повторите попытку позже",
-        });
+      if (!ok) {
+        showErrorToast("Не удалось переместить желание");
+        return;
       }
+
+      revalidateByKeyword("wishes");
+      toast.success(
+        archived ? "Желание восстановлено" : "Желание архивировано"
+      );
     },
     [wishId, revalidateByKeyword, actions]
   );
@@ -66,51 +68,47 @@ export function useQuickActions(wishId: string) {
   );
 
   const deleteWish = useCallback(async () => {
-    try {
-      await actions.delete(wishId);
-      toast.success("Желание удалено");
-    } catch {
-      toast.error("Не удалось удалить желание", {
-        description: "Повторите попытку позже",
-      });
+    const { ok } = await actions.delete(wishId);
+
+    if (!ok) {
+      showErrorToast("Не удалось удалить желание");
+      return;
     }
+    toast.success("Желание удалено");
   }, [wishId, actions]);
 
   const removeFromWishlist = useCallback(async () => {
-    try {
-      await actions.update(wishId, {
-        wishlistId: null,
-        wishlist: null,
-      });
+    const { ok } = await actions.update(wishId, {
+      wishlistId: null,
+      wishlist: null,
+    });
 
-      revalidateByKeyword("wishes");
-      toast.success("Желание исключено из списка");
-    } catch {
-      toast.error("Не удалось исключить желание из списка", {
-        description: "Повторите попытку позже",
-      });
+    if (!ok) {
+      showErrorToast("Не удалось исключить желание из списка");
+      return;
     }
+    revalidateByKeyword("wishes");
+    toast.success("Желание исключено из списка");
   }, [wishId, revalidateByKeyword, actions]);
 
   const changeWishlist = useCallback(
     async (newWlId: string | null) => {
-      try {
-        await actions.update(wishId, {
-          wishlistId: newWlId,
-          wishlist: newWlId,
-        });
+      const { ok } = await actions.update(wishId, {
+        wishlistId: newWlId,
+        wishlist: newWlId,
+      });
 
-        Promise.all([
-          revalidateByKeyword("wishes"),
-          revalidateByKeyword("wishlists"),
-        ]);
-
-        toast.success("Желание перемещено");
-      } catch {
-        toast.error("Не удалось переместить желание", {
-          description: "Повторите попытку позже",
-        });
+      if (!ok) {
+        showErrorToast("Не удалось переместить желание");
+        return;
       }
+
+      Promise.all([
+        revalidateByKeyword("wishes"),
+        revalidateByKeyword("wishlists"),
+      ]);
+
+      toast.success("Желание перемещено");
     },
     [wishId, revalidateByKeyword, actions]
   );

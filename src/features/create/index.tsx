@@ -30,7 +30,6 @@ function CreateButtonWithDropdown() {
         <DropdownMenuItem
           onSelect={(e) => {
             e.preventDefault();
-
             navigate(ROUTES.ADD);
           }}
         >

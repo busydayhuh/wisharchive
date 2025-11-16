@@ -27,12 +27,13 @@ function useMembershipMutations(teamId: string) {
         if (role === "readers") await team.addReader(teamId, email, userId);
 
         // Обновляем список в БД
-        await update(teamId, {
+        const { ok, errorMessage } = await update(teamId, {
           editorsIds:
             role === "editors" ? [...(editors ?? []), userId] : editors,
           readersIds:
             role === "readers" ? [...(readers ?? []), userId] : readers,
         });
+        if (!ok) throw new Error(errorMessage);
 
         mutate();
 
@@ -55,10 +56,11 @@ function useMembershipMutations(teamId: string) {
         // удаляем членство в Team API
         await team.deleteMembership(teamId, membershipId);
         // редактируем список редакторов и читателей вишлиста в БД
-        await update(teamId, {
+        const { ok } = await update(teamId, {
           editorsIds: editors?.filter((e) => e !== userId),
           readersIds: readers?.filter((r) => r !== userId),
         });
+        if (!ok) throw Error;
 
         mutate();
 

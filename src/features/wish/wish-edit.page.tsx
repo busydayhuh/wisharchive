@@ -20,26 +20,28 @@ function WishEditPage() {
   const { wishId } = useParams();
   const { wish, isLoading, error } = useWish(wishId ?? null);
 
-  async function updateWish(
+  async function onUpdateWish(
     formData: z.infer<typeof wishFormSchema>,
     wishId?: string
   ) {
     if (!wishId) return;
 
     const wishUpdates = normalizeWishData(formData);
-    const updatedWish = await update(wishId, wishUpdates);
+    const { ok, response } = await update(wishId, wishUpdates);
 
-    if (updatedWish) {
-      toast.success("Изменения сохранены");
-
-      navigateWithState(
-        href(ROUTES.WISH, { wishId, userId: updatedWish.ownerId }),
-        {
-          userId: updatedWish.ownerId,
-          wishTitle: updatedWish.title,
-        }
-      );
+    if (!ok) {
+      toast.error("Не удалось сохранить изменения");
+      return;
     }
+
+    toast.success("Изменения сохранены");
+    navigateWithState(
+      href(ROUTES.WISH, { wishId, userId: response!.ownerId }),
+      {
+        userId: response!.ownerId,
+        wishTitle: response!.title,
+      }
+    );
   }
 
   if (wish && authUser?.$id !== wish.ownerId)
@@ -64,7 +66,7 @@ function WishEditPage() {
     return (
       <WishEditor
         wish={wish}
-        onSubmit={updateWish}
+        saveChanges={onUpdateWish}
         storageImageURL={wish.imageURL}
       />
     );

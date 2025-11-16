@@ -18,7 +18,7 @@ function WishAddPage() {
   const { create } = useWishMutations();
   const { navigateWithState } = useRoute();
 
-  async function createWish(
+  async function onAddWish(
     formData: z.infer<typeof wishFormSchema> & { imageURL?: string | null }
   ) {
     if (!user) return;
@@ -29,22 +29,27 @@ function WishAddPage() {
       owner: user.$id,
     };
 
-    const response = await create(wish);
+    const { ok, response } = await create(wish);
 
-    if (response) {
-      toast.success("Желание создано", {
-        description: response.title,
-        action: {
-          label: "Создать ещё",
-          onClick: () => navigateWithState(ROUTES.ADD),
-        },
+    if (!ok) {
+      toast.error("Не удалось создать желание", {
+        description: "Повторите попытку позже",
       });
-
-      navigateWithState(
-        href(ROUTES.WISH, { userId: wish.ownerId, wishId: response.$id }),
-        { wishTitle: response.title }
-      );
+      return;
     }
+
+    toast.success("Желание создано", {
+      description: response!.title,
+      action: {
+        label: "Создать ещё",
+        onClick: () => navigateWithState(ROUTES.ADD),
+      },
+    });
+
+    navigateWithState(
+      href(ROUTES.WISH, { userId: wish.ownerId, wishId: response!.$id }),
+      { wishTitle: response!.title }
+    );
   }
 
   if (isLoading) return <WishEditorSkeleton />;
@@ -62,7 +67,7 @@ function WishAddPage() {
       />
     );
 
-  return <WishEditor onSubmit={createWish} />;
+  return <WishEditor saveChanges={onAddWish} />;
 }
 
 export const Component = WishAddPage;

@@ -1,6 +1,10 @@
-import { AppwriteException } from "appwrite";
+import { AppwriteException, type Models } from "appwrite";
 
-export type ResponseType = { ok: boolean; errorMessage?: string };
+export type ResponseType = {
+  ok: boolean;
+  errorMessage?: string;
+  response?: Models.Document;
+};
 
 export function handleError(err: unknown): ResponseType {
   if (err instanceof AppwriteException) {

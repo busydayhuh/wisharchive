@@ -1,7 +1,11 @@
 import db from "@/shared/model/databases";
+import { handleError } from "@/shared/model/handleError";
 import team from "@/shared/model/teams";
 import type { UserDocumentType } from "@/shared/model/types";
-import { useOptimisticMutation } from "@/shared/model/useOptimisticMutation";
+import {
+  useOptimisticMutation,
+  type OptimisticUpdater,
+} from "@/shared/model/useOptimisticMutation";
 import { ID, Permission, Role, type Models } from "appwrite";
 import { useCallback } from "react";
 
@@ -21,34 +25,41 @@ export function useWishlistMutations() {
       const id = ID.unique(); // id для нового вишлиста и его команды
       const permissions = configureWishlistPermissions(payload.isPrivate, id);
 
-      return performMutation(
-        (prev) => [
-          {
-            $id: id,
-            $collectionId: "wishlists",
-            $databaseId: "wisharchive",
-            $createdAt: "",
-            $updatedAt: "",
-            $permissions: [],
-            editorsIds: [],
-            readersIds: [],
-            ...payload,
-          },
-          ...prev,
-        ],
+      const mockWishlist = {
+        $id: id,
+        $collectionId: "wishlists",
+        $databaseId: "wisharchive",
+        $createdAt: "",
+        $updatedAt: "",
+        $permissions: [],
+        editorsIds: [],
+        readersIds: [],
+        ...payload,
+      };
 
-        async () => {
-          await team.create(payload.title, id);
+      const createWishlist = async () => {
+        await team.create(payload.title, id);
 
-          return await db.wishlists.create(
-            payload,
-            permissions,
-            id // задаем вишлисту такой же id, как и у созданной под него команды
-          );
-        },
+        return await db.wishlists.create(
+          payload,
+          permissions,
+          id // задаем вишлисту такой же id, как и у созданной под него команды
+        );
+      };
 
-        "wishlists"
-      );
+      const updateCache: OptimisticUpdater = (prev) => [mockWishlist, ...prev];
+
+      try {
+        const newWishlist = await performMutation({
+          updater: updateCache,
+          action: createWishlist,
+          keyword: "wishlists",
+        });
+
+        return { ok: true, response: newWishlist };
+      } catch (error) {
+        return handleError(error);
+      }
     },
     [performMutation]
   );
@@ -64,37 +75,52 @@ export function useWishlistMutations() {
         ? configureWishlistPermissions(isPrivate, wishlistId)
         : undefined;
 
-      return performMutation(
-        (prev) =>
-          prev.map((wl: Models.Document) =>
-            wl.$id === wishlistId ? { ...wl, ...payload } : wl
-          ),
+      const updateCache: OptimisticUpdater = (prev) =>
+        prev.map((wl: Models.Document) =>
+          wl.$id === wishlistId ? { ...wl, ...payload } : wl
+        );
 
-        async () =>
-          await db.wishlists.update(wishlistId, payload, updatedPermissions),
+      const updateWishlist = async () =>
+        await db.wishlists.update(wishlistId, payload, updatedPermissions);
 
-        "wishlists",
-        [wishlistId]
-      );
+      try {
+        await performMutation({
+          updater: updateCache,
+          action: updateWishlist,
+          keyword: "wishlists",
+          extraKeys: [wishlistId],
+        });
+
+        return { ok: true };
+      } catch (error) {
+        return handleError(error);
+      }
     },
     [performMutation]
   );
 
   const deleteWl = useCallback(
     async (wishlistId: string) => {
-      return performMutation(
-        (prev) => {
-          return prev.filter((wl: Models.Document) => wl.$id !== wishlistId);
-        },
+      const updateCache: OptimisticUpdater = (prev) =>
+        prev.filter((wl: Models.Document) => wl.$id !== wishlistId);
 
-        async () => {
-          await db.wishlists.delete(wishlistId);
-          await team.delete(wishlistId); // вместе с вишлистом удаляем и его команду
-        },
+      const deleteWishlist = async () => {
+        await db.wishlists.delete(wishlistId);
+        await team.delete(wishlistId); // вместе с вишлистом удаляем и его команду
+      };
 
-        "wishlists",
-        [wishlistId]
-      );
+      try {
+        await performMutation({
+          updater: updateCache,
+          action: deleteWishlist,
+          keyword: "wishlists",
+          extraKeys: [wishlistId],
+        });
+
+        return { ok: true };
+      } catch (error) {
+        return handleError(error);
+      }
     },
     [performMutation]
   );

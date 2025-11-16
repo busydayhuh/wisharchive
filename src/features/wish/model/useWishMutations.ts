@@ -1,8 +1,11 @@
 import db from "@/shared/model/databases";
-import { useOptimisticMutation } from "@/shared/model/useOptimisticMutation";
+import { handleError } from "@/shared/model/handleError";
+import {
+  useOptimisticMutation,
+  type OptimisticUpdater,
+} from "@/shared/model/useOptimisticMutation";
 import type { Models } from "appwrite";
 import { useCallback } from "react";
-import { toast } from "sonner";
 
 type CreateWishProps = {
   title: string;
@@ -29,55 +32,71 @@ export function useWishMutations() {
 
   const create = useCallback(async (payload: CreateWishProps) => {
     try {
-      return await db.wishes.create(payload);
-    } catch {
-      toast.error("Не удалось создать желание", {
-        description: "Повторите попытку позже",
-      });
+      const newWish = await db.wishes.create(payload);
+      return { ok: true, response: newWish };
+    } catch (error) {
+      return handleError(error);
     }
   }, []);
 
   const update = useCallback(
     async (wishId: string, payload: UpdateWishProps) => {
       const wishlistChanged = payload.wishlist !== undefined;
-      const wishlistReplacement =
-        payload.wishlist !== null
-          ? { $id: payload.wishlist, title: "", isPrivate: false, ownerId: "" }
-          : null;
+      // моковый вишлист для кеша до рефетча реальных данных
+      const mockWishlist =
+        payload.wishlist === null
+          ? payload.wishlist
+          : {
+              $id: payload.wishlist,
+              title: "",
+              isPrivate: false,
+              ownerId: "",
+            };
 
-      return performMutation(
-        (prev) =>
-          prev.map((wish: Models.Document) =>
-            wish.$id === wishId
-              ? {
-                  ...wish,
-                  ...payload,
-                  ...(wishlistChanged ? { wishlist: wishlistReplacement } : {}),
-                }
-              : wish
-          ),
+      const updateCache: OptimisticUpdater = (prev) =>
+        prev.map((wish: Models.Document) =>
+          wish.$id === wishId
+            ? {
+                ...wish,
+                ...payload,
+                ...(wishlistChanged ? mockWishlist : {}),
+              }
+            : wish
+        );
 
-        async () => await db.wishes.update(wishId, payload),
+      try {
+        const updatedWish = await performMutation({
+          updater: updateCache,
+          action: async () => await db.wishes.update(wishId, payload),
+          keyword: "wishes",
+          extraKeys: [wishId],
+        });
 
-        "wishes",
-        [wishId]
-      );
+        return { ok: true, response: updatedWish };
+      } catch (error) {
+        return handleError(error);
+      }
     },
     [performMutation]
   );
 
   const deleteW = useCallback(
     async (wishId: string) => {
-      return performMutation(
-        (prev) => prev.filter((wish: Models.Document) => wish.$id !== wishId),
+      try {
+        await performMutation({
+          updater: (prev) =>
+            prev.filter((wish: Models.Document) => wish.$id !== wishId),
+          action: async () => {
+            await db.wishes.delete(wishId);
+          },
+          keyword: "wishes",
+          extraKeys: [wishId],
+        });
 
-        async () => {
-          await db.wishes.delete(wishId);
-        },
-
-        "wishes",
-        [wishId]
-      );
+        return { ok: true };
+      } catch (error) {
+        return handleError(error);
+      }
     },
     [performMutation]
   );

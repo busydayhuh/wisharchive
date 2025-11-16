@@ -6,7 +6,6 @@ import useSWR from "swr";
 
 async function fetcher() {
   const response = await team.list();
-
   return response.teams as Models.Team<Models.Preferences>[];
 }
 

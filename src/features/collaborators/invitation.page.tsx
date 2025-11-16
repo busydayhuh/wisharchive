@@ -9,6 +9,7 @@ import {
 } from "@/shared/ui/kit/card";
 
 import { useWishlist } from "@/features/wishlist";
+import { handleError } from "@/shared/model/handleError";
 import { ROUTES } from "@/shared/model/routes";
 import team from "@/shared/model/teams";
 import { ErrorMessage } from "@/shared/ui/ErrorMessage";
@@ -19,7 +20,6 @@ import {
   ItemMedia,
   ItemTitle,
 } from "@/shared/ui/kit/item";
-import { AppwriteException } from "appwrite";
 import { Loader } from "lucide-react";
 import { useMemo } from "react";
 import { href, useSearchParams } from "react-router";
@@ -41,7 +41,7 @@ function InvitationPage() {
 
   const { navigateWithState } = useRoute();
 
-  const acceptInvite = async () => {
+  const onAcceptInvite = async () => {
     try {
       const membershipUpdate = await team.acceptInvite(
         params.teamId!,
@@ -49,6 +49,7 @@ function InvitationPage() {
         params.userId!,
         params.secret!
       );
+
       if (membershipUpdate) {
         navigateWithState(
           href(ROUTES.WISHLIST, {
@@ -57,13 +58,14 @@ function InvitationPage() {
           }),
           { wlTitle: params.teamName }
         );
+
         return toast.success("Приглашение принято");
       }
     } catch (error) {
-      if (error instanceof AppwriteException && error.code === 401)
-        return toast.error("Приглашение не принадлежит пользователю", {
-          description: "Не удалось принять приглашение",
-        });
+      const { errorMessage } = handleError(error);
+      return toast.error(errorMessage, {
+        description: "Не удалось принять приглашение",
+      });
     }
   };
 
@@ -123,7 +125,7 @@ function InvitationPage() {
             </Item>
           </CardContent>
           <CardFooter>
-            <Button onClick={acceptInvite} className="h-14">
+            <Button onClick={onAcceptInvite} className="h-14">
               Принять и перейти к списку
             </Button>
           </CardFooter>

@@ -3,7 +3,7 @@ import { useRoute } from "@/features/breadcrumbs";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import { ROUTES } from "@/shared/model/routes";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { matchPath, matchRoutes } from "react-router";
+import { matchPath } from "react-router";
 import type { DashboardType } from "./toolbarConfig";
 
 export type DashboardMeta = {
@@ -12,7 +12,6 @@ export type DashboardMeta = {
   title: string;
   showTitle: boolean;
   showDashboardOwner: boolean;
-  showNavigation: boolean;
   dashboardType: DashboardType;
   localStorageKey: string;
   pathname?: string;
@@ -57,14 +56,13 @@ export function useDashboardMeta(): DashboardMeta {
     : false;
 
   // Какой заголовок отображать
-
   const title =
     Object.entries(DASHBOARD_HEADERS).find(([path]) =>
       matchPath({ path: path, end: true }, location.pathname)
     )?.[1] ?? "Мой дашборд";
+  const showTitle = isDashboardOwner;
 
   // Тип дашборда для фильтров тулбара
-
   const getDashboardType = useCallback(
     (): DashboardType =>
       Object.entries(DASHBOARD_TYPES).find(([path]) =>
@@ -89,11 +87,6 @@ export function useDashboardMeta(): DashboardMeta {
 
   // Отображать ли инфо о владельце дашборда
   const showDashboardOwner = !isMobile || !isDashboardOwner;
-  const showTitle = isDashboardOwner;
-
-  // Отображать ли навигацию
-  const routes = [{ path: ROUTES.WISHES }, { path: ROUTES.WISHLISTS }];
-  const showNavigation = Boolean(matchRoutes(routes, location.pathname));
 
   return {
     dashboardUserId,
@@ -101,7 +94,6 @@ export function useDashboardMeta(): DashboardMeta {
     title,
     showTitle,
     showDashboardOwner,
-    showNavigation,
     dashboardType,
     localStorageKey,
   };

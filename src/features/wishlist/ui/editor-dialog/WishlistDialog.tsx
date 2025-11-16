@@ -12,8 +12,8 @@ import {
   DialogTitle,
 } from "@/shared/ui/kit/dialog";
 import { Form } from "@/shared/ui/kit/form";
+import { SubmitBtn } from "@/shared/ui/SubmitBtn";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -124,21 +124,14 @@ export function WishlistDialog({
 
             <DialogFooter className="mt-4">
               <DialogClose asChild>
-                <Button size="lg" className="cancel-button">
-                  Отмена
-                </Button>
+                <Button className="h-12 cancel-button">Отмена</Button>
               </DialogClose>
-              <Button
-                type="submit"
-                size="lg"
-                disabled={form.formState.isSubmitting}
+              <SubmitBtn
+                text="Сохранить"
+                loaderText="Сохранение..."
+                isSubmitting={form.formState.isSubmitting}
                 className="h-12"
-              >
-                {form.formState.isSubmitting && (
-                  <Loader2 className="animate-spin" />
-                )}
-                Сохранить
-              </Button>
+              />
             </DialogFooter>
           </form>
         </Form>
