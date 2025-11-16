@@ -52,6 +52,7 @@ export default function CollaboratorsList({
                 userName={c.userName}
                 userEmail={c.userEmail}
                 roles={c.roles}
+                confirm={c.confirm}
               />
             ))}
           </div>

@@ -1,6 +1,6 @@
 import { useWishlistMutations } from "@/features/wishlist/";
+import { handleError } from "@/shared/model/handleError";
 import { useCallback, useMemo } from "react";
-import { toast } from "sonner";
 import team from "../../../../shared/model/teams";
 import { useTeamMembers } from "./useTeamMembers";
 
@@ -9,56 +9,39 @@ function useMembershipMutations(teamId: string) {
   const { update } = useWishlistMutations();
 
   const editors = useMemo(
-    () => members?.filter((m) => m.roles.includes("editors")),
+    () =>
+      members?.filter((m) => m.roles.includes("editors")).map((e) => e.userId),
     [members]
   );
   const readers = useMemo(
-    () => members?.filter((m) => m.roles.includes("readers")),
+    () =>
+      members?.filter((m) => m.roles.includes("readers")).map((r) => r.userId),
     [members]
   );
 
-  const addMemberAsEditor = useCallback(
-    async (email: string, userId: string) => {
+  const addMember = useCallback(
+    async (email: string, userId: string, role: "editors" | "readers") => {
       try {
-        const response = await team.addEditor(teamId, email, userId);
+        // Добавляем члена в Team API
+        if (role === "editors") await team.addEditor(teamId, email, userId);
+        if (role === "readers") await team.addReader(teamId, email, userId);
 
+        // Обновляем список в БД
         await update(teamId, {
-          editorsIds: [...(editors?.map((m) => m.userId) ?? []), userId],
+          editorsIds:
+            role === "editors" ? [...(editors ?? []), userId] : editors,
+          readersIds:
+            role === "readers" ? [...(readers ?? []), userId] : readers,
         });
 
         mutate();
-        toast.success("Приглашение отправлено");
 
-        return response;
-      } catch {
-        toast.error("Не удалось пригласить пользователя", {
-          description: "Повторите попытку позже",
-        });
+        return { ok: true };
+      } catch (error) {
+        return handleError(error);
       }
     },
-    [editors, update, teamId, mutate]
-  );
-
-  const addMemberAsReader = useCallback(
-    async (email: string, userId: string) => {
-      try {
-        const response = await team.addReader(teamId, email, userId);
-
-        await update(teamId, {
-          readersIds: [...(readers?.map((m) => m.userId) ?? []), userId],
-        });
-
-        mutate();
-        toast.success("Приглашение отправлено");
-
-        return response;
-      } catch {
-        toast.error("Не удалось пригласить пользователя", {
-          description: "Повторите попытку позже",
-        });
-      }
-    },
-    [mutate, readers, teamId, update]
+    [editors, mutate, readers, teamId, update]
   );
 
   const deleteMember = useCallback(
@@ -69,25 +52,25 @@ function useMembershipMutations(teamId: string) {
       const membershipId = membership?.$id ?? "";
 
       try {
+        // удаляем членство в Team API
         await team.deleteMembership(teamId, membershipId);
-
+        // редактируем список редакторов и читателей вишлиста в БД
         await update(teamId, {
-          editorsIds: editors?.filter((m) => m.userId !== userId),
-          readersIds: readers?.filter((m) => m.userId !== userId),
+          editorsIds: editors?.filter((e) => e !== userId),
+          readersIds: readers?.filter((r) => r !== userId),
         });
 
         mutate();
-        toast.success("Пользователь удален из команды");
-      } catch {
-        toast.error("Не удалось удалить пользователя", {
-          description: "Повторите попытку позже",
-        });
+
+        return { ok: true };
+      } catch (error) {
+        return handleError(error);
       }
     },
     [editors, members, mutate, update, readers, teamId]
   );
 
-  return { addMemberAsEditor, addMemberAsReader, deleteMember };
+  return { deleteMember, addMember };
 }
 
 export default useMembershipMutations;

@@ -62,7 +62,7 @@ function CollaboratorActionButton({
   isConfirmed: boolean;
   isInvited: boolean;
 }) {
-  const { addMember, deleteMember } = useCollaboratorsDialogContext();
+  const { onAddMember, onDeleteMember } = useCollaboratorsDialogContext();
   const [loading, setLoading] = useState(false);
   const variant = isConfirmed ? "remove" : isInvited ? "invited" : "add";
 
@@ -72,8 +72,6 @@ function CollaboratorActionButton({
       text: "Исключить",
       action: "remove",
       disabled: loading,
-      styles:
-        "bg-muted-foreground hover:bg-muted-foreground/60  text-foreground",
     },
     invited: {
       icon: <MailCheck />,
@@ -101,8 +99,8 @@ function CollaboratorActionButton({
     setLoading(true);
 
     try {
-      if (action === "remove") await deleteMember(userId);
-      if (action === "add") await addMember(userId, userEmail);
+      if (action === "remove") await onDeleteMember(userId);
+      if (action === "add") await onAddMember(userId, userEmail);
     } finally {
       setLoading(false);
     }
@@ -117,7 +115,7 @@ function CollaboratorActionButton({
         className={cn(
           "ms-auto rounded-sm w-9 md:w-auto h-9 md:h-11",
           variant === "remove" &&
-            "bg-muted-foreground hover:bg-muted-foreground/60  text-foreground"
+            "bg-muted hover:bg-muted/60 text-muted-foreground"
         )}
         onClick={(e) => handleMembershipChange(e, variant)}
         disabled={variants[variant].disabled}

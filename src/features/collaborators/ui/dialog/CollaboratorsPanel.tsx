@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { CollaboratorsPanelContext } from "../../model/CollaboratorsPanelContext";
+import { toast } from "sonner";
+import {
+  CollaboratorsPanelContext,
+  type SelectedRole,
+} from "../../model/CollaboratorsPanelContext";
 import useMembershipMutations from "../../model/membership/useMembershipMutations";
 import { useTeamCollaborators } from "../../model/team-api-hooks/useTeamCollaborators";
 import { CollaboratorSearch } from "./CollaboratorSearch";
@@ -13,21 +17,40 @@ function CollaboratorsPanel({
   wishlistId: string;
   isPrivateChecked: boolean;
 }) {
-  const [selectedRole, setSelectedRole] = useState("editors");
+  const [selectedRole, setSelectedRole] = useState<SelectedRole>("editors");
   const [searchString, setSearchString] = useState("");
 
   const { collaborators, isLoading, error } = useTeamCollaborators(wishlistId);
+  const { addMember, deleteMember } = useMembershipMutations(wishlistId);
 
-  const { addMemberAsEditor, addMemberAsReader, deleteMember } =
-    useMembershipMutations(wishlistId);
+  const onAddMember = async (userId: string, userEmail: string) => {
+    const { ok } = await addMember(userEmail, userId, selectedRole);
 
-  const addMember = async (userId: string, userEmail: string) => {
-    const newMembership =
-      selectedRole === "editors"
-        ? await addMemberAsEditor(userEmail, userId)
-        : await addMemberAsReader(userEmail, userId);
+    if (!ok) {
+      toast.error("Не удалось добавить пользователя", {
+        description: "Повторите попытку позже",
+      });
+      return;
+    }
 
-    return newMembership;
+    toast.success("Приглашение отправлено", {
+      description: `${userId} приглашён как ${
+        selectedRole === "editors" ? "редактор" : "читатель"
+      }`,
+    });
+  };
+
+  const onDeleteMember = async (userId: string) => {
+    const { ok } = await deleteMember(userId);
+
+    if (!ok) {
+      toast.error("Не удалось удалить пользователя", {
+        description: "Повторите попытку позже",
+      });
+      return;
+    }
+
+    toast.success(`${userId} удален из команды списка`);
   };
 
   return (
@@ -36,8 +59,8 @@ function CollaboratorsPanel({
         wishlistId,
         selectedRole,
         setSelectedRole,
-        addMember,
-        deleteMember,
+        onAddMember,
+        onDeleteMember,
       }}
     >
       <div className="flex flex-col gap-6 lg:gap-8">

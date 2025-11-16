@@ -1,17 +1,13 @@
-import type { Models } from "appwrite";
 import { createContext, useContext } from "react";
 
 export type SelectedRole = "editors" | "readers";
 
 type CollaboratorsPanelContextType = {
   wishlistId: string;
-  selectedRole: string;
-  setSelectedRole: (role: string) => void;
-  addMember: (
-    userId: string,
-    email: string
-  ) => Promise<Models.Membership | undefined>;
-  deleteMember: (userId: string) => Promise<unknown>;
+  selectedRole: SelectedRole;
+  setSelectedRole: (role: SelectedRole) => void;
+  onAddMember: (userId: string, email: string) => Promise<void>;
+  onDeleteMember: (userId: string) => Promise<unknown>;
 };
 
 export const CollaboratorsPanelContext =
