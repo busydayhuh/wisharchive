@@ -62,33 +62,35 @@ export function WishlistDialog({
     if (action === "edit") {
       const privacyChanged = form.getFieldState("isPrivate").isDirty;
 
-      const updatedList = await actions.update(
+      const { ok } = await actions.update(
         wishlist!.$id,
         values,
         values.isPrivate,
         privacyChanged
       );
 
-      if (updatedList) {
-        toast.success("Изменения сохранены");
-      } else {
+      if (!ok) {
         toast.error("Не удалось сохранить изменения");
+        return;
       }
+
+      toast.success("Изменения сохранены");
       setIsOpen(false);
     }
 
     if (action === "create") {
-      const newList = await actions.create({
+      const { ok, response } = await actions.create({
         ...values,
         ownerId: currentUser?.userId ?? "",
         owner: currentUser,
       });
 
-      if (newList) {
-        toast.success("Список создан");
-      } else {
+      if (!ok) {
         toast.error("Не удалось сохранить список");
+        return;
       }
+
+      toast.success("Список создан", { description: response!.title });
       setIsOpen(false);
     }
   }

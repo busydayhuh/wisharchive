@@ -1,5 +1,6 @@
 import DeleteButton from "@/shared/ui/DeleteButton";
 import { FormLabel } from "@/shared/ui/kit/form";
+import { toast } from "sonner";
 import { useWishlistMutations } from "../../model/useWishlistMutations";
 
 type DeleteSectionProps = {
@@ -16,7 +17,14 @@ export function DeleteSection({
   const actions = useWishlistMutations();
 
   async function onDelete() {
-    await actions.delete(wishlistId);
+    const { ok } = await actions.delete(wishlistId);
+
+    if (!ok) {
+      toast.error("Не удалось удалить список");
+      return;
+    }
+
+    toast.success("Список удален", { description: wishlistTitle });
     setDialogOpen(false);
   }
 
@@ -27,7 +35,7 @@ export function DeleteSection({
         variant="button"
         wishTitle={wishlistTitle}
         action={onDelete}
-        buttonText="Удалить вишлист"
+        buttonText="Удалить список"
         className="bg-transparent mt-1 md:mt-0 !px-0 h-12"
       />
     </div>

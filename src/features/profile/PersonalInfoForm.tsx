@@ -18,6 +18,7 @@ import {
 } from "@/shared/ui/kit/popover";
 import { Textarea } from "@/shared/ui/kit/textarea";
 import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
+import { SubmitBtn } from "@/shared/ui/SubmitBtn";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronDownIcon } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -27,7 +28,6 @@ import type { KeyedMutator } from "swr";
 import type z from "zod";
 import useProfileMutations from "./model/useProfileMutations";
 import { ProfileImageUploader } from "./ProfileImageUploader";
-import { SubmitBtn } from "@/shared/ui/SubmitBtn";
 
 export function PersonalInfoForm({
   userInfo,
@@ -59,17 +59,25 @@ export function PersonalInfoForm({
   }, [isSubmitSuccessful, form]);
 
   const savePersonalInfo = async (values: z.infer<typeof formSchema>) => {
-    if (form.getFieldState("userName").isDirty) changeName(values.userName);
+    let accountNameChange;
 
-    const response = await changePersonalInfo(values, userInfo.$id);
-    if (response.status === "ok") {
-      mutateUser();
-      toast.success("Профиль успешно обновлён");
-    } else {
+    if (form.getFieldState("userName").isDirty) {
+      accountNameChange = await changeName(values.userName);
+    }
+    const documentInfoChange = await changePersonalInfo(values, userInfo.$id);
+
+    if (
+      (accountNameChange && !accountNameChange.ok) ||
+      !documentInfoChange.ok
+    ) {
       toast.error("Не удалось обновить профиль", {
         description: "Повторите попытку позже",
       });
+      return;
     }
+
+    mutateUser();
+    toast.success("Профиль успешно обновлён");
   };
 
   return (

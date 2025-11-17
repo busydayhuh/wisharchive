@@ -1,5 +1,6 @@
 import { useRevalidationByKeyword } from "@/shared/model/useRevalidationByKeyword";
 import { useCallback } from "react";
+import { toast } from "sonner";
 import { useWishlistMutations } from "./useWishlistMutations";
 
 export function useToggleBookmark(
@@ -18,15 +19,18 @@ export function useToggleBookmark(
         ? [...bookmarkedBy, userId]
         : [...bookmarkedBy].filter((id) => id !== userId);
 
-      try {
-        await update(wishlistId, {
-          bookmarkedBy: updatedList,
-        });
+      const { ok, errorMessage } = await update(wishlistId, {
+        bookmarkedBy: updatedList,
+      });
 
-        revalidateByKeyword("wishlists");
-      } catch {
-        console.log("Не удалось обновить закладки");
+      if (!ok) {
+        console.log(errorMessage);
+        toast.error("Не удалось добавить в закладки");
+
+        return;
       }
+
+      revalidateByKeyword("wishlists");
     },
     [update, wishlistId, bookmarkedBy, userId, revalidateByKeyword]
   );

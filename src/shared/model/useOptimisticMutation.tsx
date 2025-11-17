@@ -64,14 +64,11 @@ function applyToKeywordCaches(
       updater
         ? (prev: SWRCacheData) => {
             if (!prev) return prev;
-
             // Страницы ([][])
             if (Array.isArray(prev) && Array.isArray(prev[0]))
               return (prev as Models.Document[][]).map((page) => updater(page));
-
             // Один массив ([])
             if (Array.isArray(prev)) return updater(prev as Models.Document[]);
-
             // Один документ
             return updater([prev])[0];
           }
