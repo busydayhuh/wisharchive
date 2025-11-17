@@ -3,11 +3,22 @@ import { Checkbox } from "@/shared/ui/kit/checkbox";
 import { Label } from "@/shared/ui/kit/label";
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 import useProfileMutations from "./model/useProfileMutations";
 
 function DeleteAccountSection() {
   const { deleteProfile } = useProfileMutations();
   const [confirmation, setConfirmation] = useState(false);
+
+  const onDelete = async () => {
+    const { ok } = await deleteProfile();
+
+    if (!ok) {
+      toast.error("Не удалось удалить аккаунт", {
+        description: "Повторите попытку позже",
+      });
+    }
+  };
 
   return (
     <div className="flex flex-col gap-4 md:gap-6 mx-auto px-2 md:px-0 lg:max-w-3xl max-w-4xl">
@@ -25,7 +36,7 @@ function DeleteAccountSection() {
       <Button
         variant="destructive"
         disabled={!confirmation}
-        onClick={deleteProfile}
+        onClick={onDelete}
         className="w-fit h-14"
       >
         <Trash2 />

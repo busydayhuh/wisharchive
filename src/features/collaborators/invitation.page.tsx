@@ -63,8 +63,8 @@ function InvitationPage() {
       }
     } catch (error) {
       const { errorMessage } = handleError(error);
-      return toast.error(errorMessage, {
-        description: "Не удалось принять приглашение",
+      return toast.error("Не удалось принять приглашение", {
+        description: errorMessage,
       });
     }
   };

@@ -47,30 +47,42 @@ export function AccountInfoForm({
 
   const saveAccountInfo = async (values: z.infer<typeof formSchema>) => {
     if (form.getFieldState("userEmail").isDirty) {
-      const { ok } = await changeEmail(
+      const { ok, errorType, errorMessage } = await changeEmail(
         values.userEmail,
         values.oldPassword,
         userDocumentId
       );
 
       if (!ok) {
-        form.setError(
-          "oldPassword",
-          { type: "custom", message: "Неверный пароль" },
-          { shouldFocus: true }
-        );
+        if (errorType === "user_password_mismatch")
+          return form.setError(
+            "oldPassword",
+            {
+              type: "custom",
+              message: errorMessage,
+            },
+            { shouldFocus: true }
+          );
+
+        toast.error("Не удалось обновить данные", {
+          description: "Повторите попытку позже",
+        });
+
         return;
       }
       toast.success("Email успешно обновлён");
     }
 
     if (form.getFieldState("password").isDirty && values.password) {
-      const { ok } = await changePassword(values.password, values.oldPassword);
+      const { ok, errorMessage } = await changePassword(
+        values.password,
+        values.oldPassword
+      );
 
       if (!ok) {
         form.setError(
           "oldPassword",
-          { type: "custom", message: "Неверный пароль" },
+          { type: "custom", message: errorMessage },
           { shouldFocus: true }
         );
         return;
