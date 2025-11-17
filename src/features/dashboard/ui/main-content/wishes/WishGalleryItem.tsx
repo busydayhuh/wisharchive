@@ -117,7 +117,7 @@ const WishCover = memo(function WishCover({
       {userRoles && (
         <div
           className={cn(
-            "bottom-0 left-0 absolute flex justify-between has-only:justify-end gap-1 p-3 w-full transition-all duration-300 show-actions"
+            "right-0 bottom-0 absolute flex justify-end has-only:justify-end gap-1 p-3 w-fit"
           )}
         >
           {userRoles.isWishOwner ? (
@@ -129,6 +129,7 @@ const WishCover = memo(function WishCover({
               isArchived={wish.isArchived}
               title={wish.title}
               linkState={linkParams.state}
+              className="transition-all duration-300 show-actions"
             />
           ) : (
             <BookButton

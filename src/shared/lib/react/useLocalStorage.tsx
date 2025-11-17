@@ -21,7 +21,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
         setStoredValue(initialValue);
       }
     } catch (error) {
-      console.warn(`Ошибка чтения localStorage по ключу "${key}":`, error);
+      console.error(`Ошибка чтения localStorage по ключу "${key}":`, error);
       setStoredValue(initialValue);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

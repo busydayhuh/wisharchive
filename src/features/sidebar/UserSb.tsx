@@ -1,4 +1,5 @@
 import {
+  Check,
   ChevronsUpDown,
   LogOut,
   Moon,
@@ -9,6 +10,7 @@ import {
 } from "lucide-react";
 
 import { ROUTES } from "@/shared/model/routes";
+import { useTheme } from "@/shared/model/theme/createThemeProvider";
 import { useUser } from "@/shared/model/user/useUser";
 import {
   DropdownMenu,
@@ -37,6 +39,15 @@ export function UserSb() {
   const { current, logout } = useAuth();
   const { isMobile } = useSidebar();
   const { user } = useUser(current?.$id ?? null);
+  const { theme, setTheme } = useTheme();
+
+  const onThemeChange = (
+    e: React.MouseEvent,
+    theme: "dark" | "light" | "system"
+  ) => {
+    e.preventDefault();
+    setTheme(theme);
+  };
 
   return (
     <SidebarMenu>
@@ -92,17 +103,30 @@ export function UserSb() {
                 </DropdownMenuSubTrigger>
                 <DropdownMenuPortal>
                   <DropdownMenuSubContent className="bg-sidebar-accent">
-                    <DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={(e) => onThemeChange(e, "light")}
+                    >
                       <Sun />
                       Светлая
+                      {theme === "light" && (
+                        <Check className="size-4 text-muted-foreground" />
+                      )}
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={(e) => onThemeChange(e, "dark")}>
                       <Moon />
                       Тёмная
+                      {theme === "dark" && (
+                        <Check className="size-4 text-muted-foreground" />
+                      )}
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={(e) => onThemeChange(e, "system")}
+                    >
                       <Paintbrush />
                       Системная
+                      {theme === "system" && (
+                        <Check className="size-4 text-muted-foreground" />
+                      )}
                     </DropdownMenuItem>
                   </DropdownMenuSubContent>
                 </DropdownMenuPortal>

@@ -218,10 +218,10 @@ function SearchResults({
         <ItemGroup>
           {results.length === 0 && (
             <p className="flex flex-col items-center gap-1 mt-2 md:mt-4 text-muted-foreground text-sm">
-              <p className="inline-flex items-center">
+              <span className="inline-flex items-center">
                 <Wind className="stroke-[1.5px]" />
                 <Leaf className="size-4" />
-              </p>
+              </span>
               Нет результатов
             </p>
           )}

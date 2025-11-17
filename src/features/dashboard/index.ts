@@ -1,17 +1,21 @@
+// хуки и типы
 export { DashboardToolbarProvider } from "./model/DashboardToolbarContext";
 export type { SortState } from "./model/DashboardToolbarContext";
 export type { Filter } from "./model/toolbarConfig";
+export { useAccess } from "./model/useAccess";
 export { useCollabWishlists } from "./model/useCollabWishlists";
 export { useDashboardContext } from "./model/useDashboardContext";
 export { useDashboardToolbar } from "./model/useDashboardToolbar";
 export { useWishcardMeta } from "./model/useWishcardMeta";
 export { useWishlistcardMeta } from "./model/useWishlistcardMeta";
+//страницы
 export { ArchivedPageWithLayout } from "./pages/dashboard-archived.page";
 export { BookedPageWithLayout } from "./pages/dashboard-booked.page";
 export { BookmarksPageWithLayout } from "./pages/dashboard-bookmarks.page";
 export { WishlistPageWithLayout } from "./pages/dashboard-lists.page";
 export { SharedPageWithLayout } from "./pages/dashboard-shared.page";
 export { WishesPageWithLayout } from "./pages/dashboard-wishes.page";
+// ui
 export { DashboardLayout } from "./ui/DashboardLayout";
 export { DashboardContentContainer } from "./ui/main-content/DashboardContentContainer";
 export { DashboardGrid } from "./ui/main-content/DashboardGrid";

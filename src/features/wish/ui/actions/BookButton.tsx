@@ -73,7 +73,7 @@ export const BookButton = memo(function BookButton({
         className={cn(bookButtonVariants({ triggerVariant }), className)}
         onPressedChange={handlePress}
       >
-        <LockKeyhole />
+        {isBookedByCurrentUser ? <LockKeyholeOpen /> : <LockKeyhole />}
       </Toggle>
     </IconBtnWithTooltip>
   );

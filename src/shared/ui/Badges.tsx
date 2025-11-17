@@ -7,14 +7,17 @@ import {
   Eye,
   EyeClosed,
   List,
+  Lock,
   Pencil,
   Users2,
   X,
 } from "lucide-react";
+import { motion } from "motion/react";
 import { href, Link } from "react-router";
 import { cn } from "../lib/css";
 import { formatUrl } from "../lib/formatUrl";
 import { ROUTES } from "../model/routes";
+import { RoundedStar } from "./RoundedStar";
 
 type Size = "sm" | "md" | "lg";
 
@@ -73,22 +76,22 @@ export const ROLES = {
 export const PRIVACY_ICONS = {
   default: (
     <span className="bg-blue-bg p-2 rounded-sm [&_svg]:size-3.5 text-blue">
-      <Eye />
+      <Eye className="stroke-[2px]" />
     </span>
   ),
   private: (
     <span className="bg-pink-bg p-2 rounded-sm [&_svg]:size-3 text-pink">
-      <EyeClosed />
+      <EyeClosed className="stroke-[2px]" />
     </span>
   ),
   collab: (
     <span className="bg-yellow-bg p-2 rounded-sm [&_svg]:size-3 text-yellow">
-      <Users2 />
+      <Users2 className="stroke-[2px]" />
     </span>
   ),
   none: (
     <span className="bg-muted/60 p-2 rounded-sm [&_svg]:size-3 text-muted-foreground">
-      <X />
+      <X className="stroke-[2px]" />
     </span>
   ),
 };
@@ -234,5 +237,23 @@ export function ShopBadge({
       />
       <span className="max-w-[16ch] truncate">{domain}</span>
     </a>
+  );
+}
+
+export function BookedBadge() {
+  return (
+    <motion.div
+      className="relative flex justify-center items-center"
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0 }}
+      transition={{
+        duration: 0.4,
+        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+      }}
+    >
+      <RoundedStar className="fill-primary w-12 sm:w-20 h-12 sm:h-20" />
+      <Lock className="absolute size-4 sm:size-6 text-primary-foreground" />
+    </motion.div>
   );
 }

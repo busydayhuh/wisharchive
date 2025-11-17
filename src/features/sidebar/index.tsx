@@ -10,10 +10,12 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarSeparator,
   SidebarTrigger,
   useSidebar,
 } from "@/shared/ui/kit/sidebar";
 import Logo from "@/shared/ui/Logo";
+import { ModeToggle } from "@/shared/ui/ModeToggle";
 import {
   Archive,
   Blend,
@@ -101,6 +103,12 @@ export const AppSidebar = memo(function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
+        <SidebarMenuItem key="switcher">
+          <SidebarMenuButton tooltip="Тема">
+            <ModeToggle />
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+        <SidebarSeparator className="self-center bg-accent" />
         <UserSb />
       </SidebarFooter>
     </Sidebar>

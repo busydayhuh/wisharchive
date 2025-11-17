@@ -1,16 +1,17 @@
 import { cn } from "@/shared/lib/css";
 import { getFallbackColor } from "@/shared/lib/getFallbackColor";
-import { LockKeyhole } from "lucide-react";
+import { BookedBadge } from "@/shared/ui/Badges";
+import { AnimatePresence } from "motion/react";
 import { memo } from "react";
 
 const wishImageVariants = {
   gallery: {
-    img: "md:rounded-3xl rounded-xl aspect-[4/5] cover-overlay transition-all duration-300 bg-muted",
+    img: "md:rounded-3xl rounded-xl aspect-[4/5] transition-all duration-300 bg-muted",
     fallback: "aspect-[4/5]",
     icon: "w-10 md:w-16 h-10 md:h-16",
   },
   table: {
-    img: "rounded-md md:rounded-xl cover-overlay transition-all duration-300 w-24 md:w-32 lg:w-40 aspect-square",
+    img: "rounded-md md:rounded-xl transition-all duration-300 w-24 md:w-32 lg:w-40 aspect-square",
     fallback: "h-full",
     icon: "w-6 h-6 md:w-10 md:h-10",
   },
@@ -40,6 +41,7 @@ export const WishImage = memo(function WishImage({
     <div
       className={cn("relative overflow-clip", wishImageVariants[variant].img)}
     >
+      <div className="invisible absolute inset-0 pointer-events-none cover-overlay"></div>
       {url ? (
         <>
           <img
@@ -47,16 +49,13 @@ export const WishImage = memo(function WishImage({
             alt={alt}
             className={cn("w-full h-full object-cover")}
           />
-          {isBooked && variant !== "page" && (
-            <div className="top-0 left-0 absolute flex justify-center items-center bg-muted-backdrop w-full h-full pointer-events-none">
-              <LockKeyhole
-                className={cn(
-                  "stroke-[1.5px] text-white",
-                  wishImageVariants[variant].icon
-                )}
-              />
-            </div>
-          )}
+          <AnimatePresence>
+            {isBooked && variant !== "page" && (
+              <div className="top-0 left-0 absolute flex justify-center items-center w-full h-full pointer-events-none">
+                <BookedBadge />
+              </div>
+            )}
+          </AnimatePresence>
         </>
       ) : (
         <div

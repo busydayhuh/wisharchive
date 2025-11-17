@@ -15,10 +15,11 @@ export function BookmarkButton({
   return (
     <Toggle
       className={cn(
-        "bg-secondary data-[state=on]:bg-primary hover:bg-secondary/80 data-[state=on]:[&_svg]:fill-white data-[state=on]:[&_svg]:stroke-white px-1 py-1 rounded-sm data-[state=on]:text-white hover:text-foreground cursor-pointer shrink-0",
+        "bg-secondary data-[state=on]:bg-primary hover:bg-secondary/80 data-[state=on]:[&_svg]:fill-primary-foreground data-[state=on]:[&_svg]:stroke-primary-foreground px-1 py-1 rounded-sm data-[state=on]:text-primary-foreground hover:text-foreground cursor-pointer shrink-0",
         (variant === "gallery" || variant === "table") && "h-9 w-9",
         variant === "page" &&
           "h-9 gap-1.5 px-3 has-[>svg]:px-2.5 text-xs md:text-sm",
+        variant === "gallery" && "bg-inactive-bm",
 
         className
       )}

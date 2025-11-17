@@ -14,6 +14,8 @@ export function WishlistContent({ wishlistId }: { wishlistId: string }) {
       filters: toolbarState.filters,
     });
 
+  console.log("toolbarState.filters :>> ", toolbarState.filters);
+
   useInfiniteScroll({
     loadMore: () => setSize(size + 1),
     disabled: isValidating || reachedEnd,

@@ -87,7 +87,7 @@ function getWishQueries(filters: QueryFilters): string[] {
 
   if (toolbarFilters) {
     toolbarFilters.forEach((f) => {
-      if (f.value) {
+      if (f.value !== undefined && f.value !== null) {
         queries.push(Query.equal(f.key, f.value));
       }
     });

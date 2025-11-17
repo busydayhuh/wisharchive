@@ -6,6 +6,7 @@ import { Button } from "./kit/button";
 const ERROR_IMAGES = {
   "no-items": alienUrl,
   "default-error": alienError,
+  "no-access": alienError,
 };
 
 export function ErrorMessage({

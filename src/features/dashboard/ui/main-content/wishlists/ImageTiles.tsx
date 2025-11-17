@@ -22,29 +22,32 @@ export function ImageTiles({
 
   if (variant === "gallery")
     return (
-      <div className="gap-0.5 grid grid-cols-[1.5fr_1fr] grid-rows-2 *:first:row-span-2 rounded-xl md:rounded-3xl aspect-[4/3] overflow-hidden transition cover-overlay">
-        {coverImages.map((wish) => {
-          if (!wish) {
-            return <div className="bg-muted" key={ID.unique()}></div>;
-          }
+      <div className="relative rounded-xl md:rounded-3xl overflow-hidden">
+        <div className="invisible absolute inset-0 pointer-events-none cover-overlay"></div>
+        <div className="gap-0.5 grid grid-cols-[1.5fr_1fr] grid-rows-2 *:first:row-span-2 aspect-[4/3] transition">
+          {coverImages.map((wish) => {
+            if (!wish) {
+              return <div className="bg-muted" key={ID.unique()}></div>;
+            }
 
-          if (wish?.imageURL) {
-            return (
-              <img
-                src={wish.imageURL}
-                className="w-full h-full object-cover"
-                key={wish.id + "coverImage"}
-              />
-            );
-          } else {
-            return (
-              <div
-                style={{ background: getFallbackColor(wish.id) }}
-                key={wish.id + "coverImage"}
-              ></div>
-            );
-          }
-        })}
+            if (wish?.imageURL) {
+              return (
+                <img
+                  src={wish.imageURL}
+                  className="w-full h-full object-cover"
+                  key={wish.id + "coverImage"}
+                />
+              );
+            } else {
+              return (
+                <div
+                  style={{ background: getFallbackColor(wish.id) }}
+                  key={wish.id + "coverImage"}
+                ></div>
+              );
+            }
+          })}
+        </div>
       </div>
     );
 

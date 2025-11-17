@@ -45,7 +45,7 @@ const DashboardHeader = memo(function DashboardHeader({
           <DashboardOwner userId={dashboardUserId} isOwner={isDashboardOwner} />
           <Navigation />
         </div>
-        <div className="justify-self-end">
+        <div className="flex justify-self-end items-center gap-4">
           {isLoggedIn ? <GlobalSearchDialog /> : <Button>Войти</Button>}
         </div>
       </div>

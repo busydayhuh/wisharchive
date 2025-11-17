@@ -112,7 +112,12 @@ export function QuickActions({
   return (
     <>
       {useButtons ? (
-        <Buttons title={title} items={items} wishId={wishId} />
+        <Buttons
+          title={title}
+          items={items}
+          wishId={wishId}
+          className={className}
+        />
       ) : (
         <Dropdown
           wishId={wishId}
@@ -177,10 +182,12 @@ function Buttons({
   title,
   wishId,
   items,
+  className,
 }: {
   title: string;
   wishId: string;
   items: MenuItem[];
+  className?: string;
 } & React.ComponentProps<"div"> &
   DropdownTriggerVariants) {
   const renderers: Partial<Record<Action, (item: MenuItem) => JSX.Element>> = {
@@ -213,7 +220,7 @@ function Buttons({
     ),
   };
   return (
-    <div className="flex gap-2">
+    <div className={cn("flex gap-2", className)}>
       {items.map((item) => renderers[item.actionName]?.(item))}
     </div>
   );
