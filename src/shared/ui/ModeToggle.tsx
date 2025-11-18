@@ -27,7 +27,7 @@ export function ModeToggle() {
 
   return (
     <div
-      className="inline-flex gap-2 bg-transparent hover:bg-sidebar-accent p-0! overflow-hidden text-sidebar-foreground hover:text-sidebar-accent-foreground"
+      className="inline-flex gap-2 bg-transparent p-0! overflow-hidden"
       onClick={() => onThemeChange(mode ?? "light")}
     >
       <span className="flex justify-center items-center">

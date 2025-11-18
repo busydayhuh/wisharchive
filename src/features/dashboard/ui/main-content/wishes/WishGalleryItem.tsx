@@ -15,11 +15,7 @@ import { memo } from "react";
 import { Link } from "react-router";
 import { WishlistControl } from "./WishlistControl";
 
-const WishGalleryItem = memo(function WishGalleryItem({
-  wish,
-}: {
-  wish: WishDocumentType;
-}) {
+function WishGalleryItem({ wish }: { wish: WishDocumentType }) {
   const { onBookedPage, onListPage, userRoles, linkParams } =
     useWishcardMeta(wish);
   const isMobile = useIsMobile();
@@ -83,7 +79,7 @@ const WishGalleryItem = memo(function WishGalleryItem({
       </div>
     </div>
   );
-});
+}
 
 const WishCover = memo(function WishCover({
   wish,

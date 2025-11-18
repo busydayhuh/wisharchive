@@ -53,7 +53,7 @@ export function useQuickActions(wishId: string) {
         return;
       }
 
-      revalidateByKeyword("wishes");
+      await revalidateByKeyword("wishes");
       toast.success(
         archived ? "Желание восстановлено" : "Желание архивировано"
       );
@@ -92,7 +92,7 @@ export function useQuickActions(wishId: string) {
   }, [wishId, revalidateByKeyword, actions]);
 
   const changeWishlist = useCallback(
-    async (newWlId: string | null) => {
+    async (newWlId: string | null, newWlTitle: string) => {
       const { ok } = await actions.update(wishId, {
         wishlistId: newWlId,
         wishlist: newWlId,
@@ -103,12 +103,12 @@ export function useQuickActions(wishId: string) {
         return;
       }
 
-      Promise.all([
+      await Promise.all([
         revalidateByKeyword("wishes"),
         revalidateByKeyword("wishlists"),
       ]);
 
-      toast.success("Желание перемещено");
+      toast.success("Перемещено в", { description: newWlTitle });
     },
     [wishId, revalidateByKeyword, actions]
   );

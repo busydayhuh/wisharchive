@@ -6,6 +6,7 @@ import {
   useOptimisticMutation,
   type OptimisticUpdater,
 } from "@/shared/model/useOptimisticMutation";
+import { useRevalidationByKeyword } from "@/shared/model/useRevalidationByKeyword";
 import { ID, Permission, Role, type Models } from "appwrite";
 import { useCallback } from "react";
 
@@ -19,6 +20,7 @@ type createWishlistProps = {
 
 export function useWishlistMutations() {
   const { performMutation } = useOptimisticMutation();
+  const { revalidateByKeyword } = useRevalidationByKeyword();
 
   const create = useCallback(
     async (payload: createWishlistProps) => {
@@ -56,12 +58,13 @@ export function useWishlistMutations() {
           keyword: "wishlists",
         });
 
+        await revalidateByKeyword("wishlists");
         return { ok: true, response: newWishlist };
       } catch (error) {
         return handleError(error);
       }
     },
-    [performMutation]
+    [performMutation, revalidateByKeyword]
   );
 
   const update = useCallback(

@@ -49,7 +49,7 @@ export const WishImage = memo(function WishImage({
             alt={alt}
             className={cn("w-full h-full object-cover")}
           />
-          <AnimatePresence>
+          <AnimatePresence initial={false}>
             {isBooked && variant !== "page" && (
               <div className="top-0 left-0 absolute flex justify-center items-center w-full h-full pointer-events-none">
                 <BookedBadge />

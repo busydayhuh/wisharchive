@@ -30,7 +30,7 @@ export function useToggleBookmark(
         return;
       }
 
-      revalidateByKeyword("wishlists");
+      await revalidateByKeyword("wishlists");
     },
     [update, wishlistId, bookmarkedBy, userId, revalidateByKeyword]
   );

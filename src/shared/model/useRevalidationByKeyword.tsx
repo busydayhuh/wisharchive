@@ -5,10 +5,12 @@ export function useRevalidationByKeyword() {
   const { cache, mutate } = useSWRConfig();
 
   const revalidateByKeyword = useCallback(
-    (keyword: string) => {
+    async (keyword: string) => {
+      const tasks = [];
       for (const key of cache.keys()) {
-        if (key.includes(keyword)) mutate(key);
+        if (key.includes(keyword)) tasks.push(mutate(key));
       }
+      await Promise.all(tasks);
     },
     [cache, mutate]
   );

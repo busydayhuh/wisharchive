@@ -6,7 +6,7 @@ import type { WishlistDocumentType } from "@/shared/model/types";
 import { PRIVACY_ICONS, RoleBadge } from "@/shared/ui/Badges";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
-import { memo, useMemo } from "react";
+import { useMemo } from "react";
 import { Link } from "react-router";
 import { ImageTiles } from "./ImageTiles";
 
@@ -14,9 +14,7 @@ interface WishlistTableItemProps {
   wishlist: WishlistDocumentType;
 }
 
-const WishlistTableItem = memo(function WishlistTableItem({
-  wishlist,
-}: WishlistTableItemProps) {
+function WishlistTableItem({ wishlist }: WishlistTableItemProps) {
   const {
     collaborators,
     bookmarkWishlist,
@@ -105,6 +103,6 @@ const WishlistTableItem = memo(function WishlistTableItem({
       </div>
     </div>
   );
-});
+}
 
 export default WishlistTableItem;

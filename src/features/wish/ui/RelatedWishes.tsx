@@ -3,12 +3,12 @@ import { ROUTES } from "@/shared/model/routes";
 import { Button } from "@/shared/ui/kit/button";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
 import { ChevronRight } from "lucide-react";
-import { memo, useMemo } from "react";
+import { useMemo } from "react";
 import { Link, href } from "react-router";
 import { useWishes } from "../model/useWishes";
 import { WishImage } from "./WishImage";
 
-export const RelatedWishes = memo(function RelatedWishes({
+export function RelatedWishes({
   userId,
   userName,
   wishId,
@@ -102,4 +102,4 @@ export const RelatedWishes = memo(function RelatedWishes({
         </DashboardGrid>
       </div>
     );
-});
+}

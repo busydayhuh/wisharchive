@@ -1,5 +1,8 @@
 import { wishlistFormSchema as formSchema } from "@/shared/model/formSchemas";
-import type { WishlistDocumentType } from "@/shared/model/types";
+import type {
+  UserDocumentType,
+  WishlistDocumentType,
+} from "@/shared/model/types";
 import { useCurrentUser } from "@/shared/model/user/useCurrentUser";
 import { Button } from "@/shared/ui/kit/button";
 import {
@@ -56,7 +59,7 @@ export function WishlistDialog({
   });
 
   const actions = useWishlistMutations();
-  const { user: currentUser } = useCurrentUser();
+  const { user } = useCurrentUser();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (action === "edit") {
@@ -81,8 +84,8 @@ export function WishlistDialog({
     if (action === "create") {
       const { ok, response } = await actions.create({
         ...values,
-        ownerId: currentUser?.userId ?? "",
-        owner: currentUser,
+        ownerId: user!.userId,
+        owner: user!.$id as unknown as UserDocumentType,
       });
 
       if (!ok) {

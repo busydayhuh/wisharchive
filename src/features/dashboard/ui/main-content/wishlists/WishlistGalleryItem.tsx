@@ -4,15 +4,10 @@ import { BookmarkButton, EditWishlistButton } from "@/features/wishlist";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { PRIVACY_ICONS, RoleBadge } from "@/shared/ui/Badges";
-import { memo } from "react";
 import { Link } from "react-router-dom";
 import { ImageTiles } from "./ImageTiles";
 
-const WishlistGalleryItem = memo(function WishlistGalleryItem({
-  wishlist,
-}: {
-  wishlist: WishlistDocumentType;
-}) {
+function WishlistGalleryItem({ wishlist }: { wishlist: WishlistDocumentType }) {
   const {
     collaborators,
     bookmarkWishlist,
@@ -83,6 +78,6 @@ const WishlistGalleryItem = memo(function WishlistGalleryItem({
       )}
     </div>
   );
-});
+}
 
 export default WishlistGalleryItem;

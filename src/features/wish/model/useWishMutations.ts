@@ -37,7 +37,7 @@ export function useWishMutations() {
       try {
         const newWish = await db.wishes.create(payload);
 
-        revalidateByKeyword("wishes");
+        await revalidateByKeyword("wishes");
         return { ok: true, response: newWish };
       } catch (error) {
         return handleError(error);

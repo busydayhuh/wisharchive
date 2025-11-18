@@ -11,15 +11,10 @@ import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import type { WishDocumentType } from "@/shared/model/types";
 import { PriorityBadge, PRIVACY_ICONS, ShopBadge } from "@/shared/ui/Badges";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
-import { memo } from "react";
 import { Link } from "react-router";
 import { WishlistControl } from "./WishlistControl";
 
-const WishTableItem = memo(function WishTableItem({
-  wish,
-}: {
-  wish: WishDocumentType;
-}) {
+function WishTableItem({ wish }: { wish: WishDocumentType }) {
   const { userRoles, onBookedPage, onListPage, linkParams } =
     useWishcardMeta(wish);
 
@@ -136,6 +131,6 @@ const WishTableItem = memo(function WishTableItem({
       </div>
     </div>
   );
-});
+}
 
 export default WishTableItem;

@@ -42,8 +42,8 @@ export function WishlistControl({
     return (
       <WishlistChanger
         value={wishlist?.$id ?? "none"}
-        onValueChange={(newWlId: string) => {
-          changeWishlist(newWlId === "none" ? null : newWlId);
+        onValueChange={(newWlId: string, newWlTitle: string) => {
+          changeWishlist(newWlId === "none" ? null : newWlId, newWlTitle);
         }}
         className={className}
       />

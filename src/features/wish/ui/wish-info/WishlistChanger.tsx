@@ -15,7 +15,7 @@ export function WishlistChanger({
   variant = "dashboard",
   className,
 }: {
-  onValueChange: (value: string, additional?: { isPrivate: boolean }) => void;
+  onValueChange: (value: string, title: string) => void;
   value?: string;
   variant?: "dashboard" | "form";
   className?: string;
@@ -86,7 +86,7 @@ export function WishlistChanger({
 
         <ResponsiveSelect
           options={options}
-          onChange={onValueChange}
+          onChange={(value) => onValueChange(value, selected?.label ?? "")}
           value={value}
           renderTrigger={() => (
             <div className="md:hidden">
