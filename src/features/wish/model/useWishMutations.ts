@@ -5,7 +5,7 @@ import {
   type OptimisticUpdater,
 } from "@/shared/model/useOptimisticMutation";
 import { useRevalidationByKeyword } from "@/shared/model/useRevalidationByKeyword";
-import type { Models } from "appwrite";
+import { ID, type Models } from "appwrite";
 import { useCallback } from "react";
 
 type CreateWishProps = {
@@ -34,8 +34,27 @@ export function useWishMutations() {
 
   const create = useCallback(
     async (payload: CreateWishProps) => {
+      const id = ID.unique();
+
+      const mockWishForCache = {
+        ...payload,
+        wishlist: null,
+        $id: id,
+        $collectionId: "wishes",
+        $databaseId: "wisharchive",
+        $createdAt: "",
+        $updatedAt: "",
+        $permissions: [],
+      };
+
       try {
-        const newWish = await db.wishes.create(payload);
+        const newWish = await performMutation({
+          updater: (prev) => [mockWishForCache, ...prev],
+          action: async () => {
+            return await db.wishes.create(payload, undefined, id);
+          },
+          keyword: "wishes",
+        });
 
         await revalidateByKeyword("wishes");
         return { ok: true, response: newWish };
@@ -43,7 +62,7 @@ export function useWishMutations() {
         return handleError(error);
       }
     },
-    [revalidateByKeyword]
+    [revalidateByKeyword, performMutation]
   );
 
   const update = useCallback(

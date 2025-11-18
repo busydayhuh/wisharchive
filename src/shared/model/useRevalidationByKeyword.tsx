@@ -8,7 +8,8 @@ export function useRevalidationByKeyword() {
     async (keyword: string) => {
       const tasks = [];
       for (const key of cache.keys()) {
-        if (key.includes(keyword)) tasks.push(mutate(key));
+        if (key.includes(keyword))
+          tasks.push(mutate(key, undefined, { revalidate: true }));
       }
       await Promise.all(tasks);
     },
