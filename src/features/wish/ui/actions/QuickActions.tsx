@@ -49,6 +49,7 @@ type QuickActionsProps = {
   title: string;
   linkState: LinkParams["state"];
   isArchived?: boolean;
+  imageURL?: string;
   align?: "center" | "end" | "start";
   side?: "top" | "right" | "bottom" | "left";
 } & React.ComponentProps<"div"> &
@@ -57,6 +58,7 @@ type QuickActionsProps = {
 export function QuickActions({
   wishId,
   title,
+  imageURL,
   linkState,
   isArchived = false,
   align = "end",
@@ -66,7 +68,11 @@ export function QuickActions({
 }: QuickActionsProps) {
   const isMobile = useIsMobile();
   const { openConfDialog } = useConfirmationDialog();
-  const { archiveWish, deleteWish, editWish } = useQuickActions(wishId);
+  const { archiveWish, deleteWish, editWish } = useQuickActions(
+    wishId,
+    imageURL,
+    title
+  );
 
   const handleItemSelect = (item: MenuItem) => {
     if (item.confirmation) {
@@ -181,11 +187,13 @@ function Dropdown({
 function Buttons({
   title,
   wishId,
+  imageURL,
   items,
   className,
 }: {
   title: string;
   wishId: string;
+  imageURL?: string;
   items: MenuItem[];
   className?: string;
 } & React.ComponentProps<"div"> &
@@ -193,6 +201,7 @@ function Buttons({
   const renderers: Partial<Record<Action, (item: MenuItem) => JSX.Element>> = {
     archive: (item: MenuItem) => (
       <ArchiveButton
+        imageURL={imageURL}
         wishId={wishId}
         key={wishId + item.actionName}
         variant="quick-action"

@@ -35,6 +35,8 @@ function WishGalleryItem({ wish }: { wish: WishDocumentType }) {
 
       {!wish.isArchived && (
         <WishlistControl
+          wishTitle={wish.title}
+          imageURL={wish.imageURL ?? undefined}
           className={cn(
             "top-3 right-3 absolute w-fit font-medium md:text-sm 2xl:text-sm"
           )}
@@ -118,6 +120,7 @@ const WishCover = memo(function WishCover({
         >
           {userRoles.isWishOwner ? (
             <QuickActions
+              imageURL={wish.imageURL ?? undefined}
               wishId={wish.$id}
               triggerVariant="gallery"
               side="top"
@@ -129,6 +132,8 @@ const WishCover = memo(function WishCover({
             />
           ) : (
             <BookButton
+              wishTitle={wish.title}
+              imageURL={wish.imageURL ?? undefined}
               wishId={wish.$id}
               triggerVariant="gallery"
               isBooked={wish.isBooked}

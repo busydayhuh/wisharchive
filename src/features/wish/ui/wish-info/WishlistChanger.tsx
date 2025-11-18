@@ -86,7 +86,10 @@ export function WishlistChanger({
 
         <ResponsiveSelect
           options={options}
-          onChange={(value) => onValueChange(value, selected?.label ?? "")}
+          onChange={(value) => {
+            const newOption = options.find((o) => o.value === value);
+            onValueChange(value, newOption?.label ?? "");
+          }}
           value={value}
           renderTrigger={() => (
             <div className="md:hidden">

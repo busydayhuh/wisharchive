@@ -5,6 +5,7 @@ import { FormattedPrice } from "../FormattedPrice";
 
 export const WishFooter = memo(function WishFooter({
   wishId,
+  imageURL,
   wishTitle,
   isBooked,
   price,
@@ -14,6 +15,7 @@ export const WishFooter = memo(function WishFooter({
   isBooker,
 }: {
   wishId: string;
+  imageURL?: string;
   wishTitle: string;
   isBooked: boolean;
   price: number | null;
@@ -34,6 +36,7 @@ export const WishFooter = memo(function WishFooter({
       )}
       {isOwner ? (
         <ArchiveButton
+          imageURL={imageURL}
           wishId={wishId}
           variant="button"
           wishTitle={wishTitle}
@@ -42,6 +45,8 @@ export const WishFooter = memo(function WishFooter({
         />
       ) : (
         <BookButton
+          imageURL={imageURL}
+          wishTitle={wishTitle}
           wishId={wishId}
           triggerVariant="page"
           isBooked={isBooked}

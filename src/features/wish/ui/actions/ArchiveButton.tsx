@@ -9,6 +9,7 @@ type ArchiveButtonProps = {
   wishId: string;
   variant: "button" | "quick-action";
   isArchived: boolean;
+  imageURL?: string;
   wishTitle: string;
 } & React.ComponentProps<"div">;
 
@@ -17,10 +18,11 @@ export function ArchiveButton({
   variant = "button",
   isArchived,
   wishTitle,
+  imageURL,
   className,
 }: ArchiveButtonProps) {
   const { openConfDialog } = useConfirmationDialog();
-  const { archiveWish } = useQuickActions(wishId);
+  const { archiveWish } = useQuickActions(wishId, imageURL, wishTitle);
 
   const handleClick = () =>
     openConfDialog({

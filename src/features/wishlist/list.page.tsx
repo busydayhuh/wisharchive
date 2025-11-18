@@ -19,8 +19,14 @@ function WishlistPage() {
     return (
       <ErrorMessage
         variant="default-error"
-        message="Что-то пошло не так"
-        description="Не удалось загрузить список, повторите попытку позже"
+        message={
+          error.code === 404 ? "Список не найден" : "Что-то пошло не так"
+        }
+        description={
+          error.code === 404
+            ? "Такого списка не существует или он был удалён"
+            : "Не удалось загрузить список, повторите попытку позже"
+        }
         withButton={isLoggedIn}
         buttonText="К моим спискам"
         action={() =>

@@ -88,6 +88,8 @@ function WishTableItem({ wish }: { wish: WishDocumentType }) {
       {/* Отображается при w >= 768px */}
       <div className="hidden md:block justify-self-end md:justify-self-center">
         <WishlistControl
+          wishTitle={wish.title}
+          imageURL={wish.imageURL ?? undefined}
           className="w-fit h-9 font-medium text-xs lg:text-sm"
           isOwner={userRoles?.isWishOwner ?? false}
           onListPage={!!onListPage}
@@ -102,6 +104,8 @@ function WishTableItem({ wish }: { wish: WishDocumentType }) {
       <div className="justify-self-end lg:justify-self-center">
         {onListPage && (userRoles?.isWishOwner || userRoles?.isEditor) ? (
           <WishlistControl
+            wishTitle={wish.title}
+            imageURL={wish.imageURL ?? undefined}
             className="w-fit h-9 font-medium text-xs lg:text-sm"
             isOwner={userRoles?.isWishOwner ?? false}
             onListPage={!!onListPage}
@@ -112,6 +116,7 @@ function WishTableItem({ wish }: { wish: WishDocumentType }) {
           />
         ) : userRoles?.isWishOwner ? (
           <QuickActions
+            imageURL={wish.imageURL ?? undefined}
             wishId={wish.$id}
             title={wish.title}
             triggerVariant="table"
@@ -122,6 +127,8 @@ function WishTableItem({ wish }: { wish: WishDocumentType }) {
           />
         ) : (
           <BookButton
+            wishTitle={wish.title}
+            imageURL={wish.imageURL ?? undefined}
             wishId={wish.$id}
             triggerVariant="table"
             isBooked={wish.isBooked}

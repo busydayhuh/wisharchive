@@ -12,7 +12,9 @@ export function WishlistControl({
   isEditor,
   wishlist,
   wishId,
+  wishTitle,
   onListPage,
+  imageURL,
   className,
   variant = "gallery",
 }: {
@@ -22,10 +24,16 @@ export function WishlistControl({
   wishlist: WishlistDocumentType | null;
   wishId: string;
   onListPage?: boolean;
+  wishTitle: string;
+  imageURL?: string;
   className?: string;
   variant?: "gallery" | "table";
 }) {
-  const { changeWishlist, removeFromWishlist } = useQuickActions(wishId);
+  const { changeWishlist, removeFromWishlist } = useQuickActions(
+    wishId,
+    imageURL,
+    wishTitle
+  );
   const { openConfDialog } = useConfirmationDialog();
 
   const handleRemove = () =>

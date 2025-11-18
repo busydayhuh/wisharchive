@@ -36,6 +36,8 @@ export const WishInfo = memo(function WishInfo({
       />
 
       <WishDetails
+        wishTitle={wish.title}
+        imageURL={wish.imageURL ?? undefined}
         wishId={wish.$id}
         isArchived={wish.isArchived}
         wishlist={wish.wishlist}
@@ -46,6 +48,7 @@ export const WishInfo = memo(function WishInfo({
       />
 
       <WishFooter
+        imageURL={wish.imageURL ?? undefined}
         wishId={wish.$id}
         wishTitle={wish.title}
         isBooked={wish.isBooked}

@@ -2,12 +2,17 @@ import { useAuth } from "@/features/auth";
 import { ROUTES } from "@/shared/model/routes";
 import type { LinkParams } from "@/shared/model/types";
 import { useRevalidationByKeyword } from "@/shared/model/useRevalidationByKeyword";
+import { customToast } from "@/shared/ui/CustomToast";
 import { useCallback } from "react";
 import { href, useNavigate } from "react-router";
 import { toast } from "sonner";
 import { useWishMutations } from "./useWishMutations";
 
-export function useQuickActions(wishId: string) {
+export function useQuickActions(
+  wishId: string,
+  imageURL?: string,
+  wishTitle?: string
+) {
   const { current } = useAuth();
   const navigate = useNavigate();
   const { revalidateByKeyword } = useRevalidationByKeyword();
@@ -15,6 +20,11 @@ export function useQuickActions(wishId: string) {
 
   const showErrorToast = (text: string) =>
     toast.error(text, { description: "Повторите попытку позже" });
+  const showSuccessToast = useCallback(
+    (text: string) =>
+      customToast({ title: text, description: wishTitle, icon: imageURL }),
+    [imageURL, wishTitle]
+  );
 
   const bookWish = useCallback(
     async (pressed: boolean) => {
@@ -33,11 +43,11 @@ export function useQuickActions(wishId: string) {
         return;
       }
 
-      toast.success(
+      showSuccessToast(
         pressed ? "Желание забронировано" : "Бронирование отменено"
       );
     },
-    [current, navigate, wishId, actions]
+    [current, navigate, actions, wishId, showSuccessToast]
   );
 
   const archiveWish = useCallback(
@@ -54,11 +64,12 @@ export function useQuickActions(wishId: string) {
       }
 
       await revalidateByKeyword("wishes");
-      toast.success(
+
+      showSuccessToast(
         archived ? "Желание восстановлено" : "Желание архивировано"
       );
     },
-    [wishId, revalidateByKeyword, actions]
+    [wishId, revalidateByKeyword, actions, showSuccessToast]
   );
 
   const editWish = useCallback(
@@ -74,8 +85,8 @@ export function useQuickActions(wishId: string) {
       showErrorToast("Не удалось удалить желание");
       return;
     }
-    toast.success("Желание удалено");
-  }, [wishId, actions]);
+    showSuccessToast("Желание удалено");
+  }, [wishId, actions, showSuccessToast]);
 
   const removeFromWishlist = useCallback(async () => {
     const { ok } = await actions.update(wishId, {
@@ -88,8 +99,8 @@ export function useQuickActions(wishId: string) {
       return;
     }
     revalidateByKeyword("wishes");
-    toast.success("Желание исключено из списка");
-  }, [wishId, revalidateByKeyword, actions]);
+    showSuccessToast("Исключено из списка");
+  }, [wishId, revalidateByKeyword, actions, showSuccessToast]);
 
   const changeWishlist = useCallback(
     async (newWlId: string | null, newWlTitle: string) => {
@@ -108,9 +119,13 @@ export function useQuickActions(wishId: string) {
         revalidateByKeyword("wishlists"),
       ]);
 
-      toast.success("Перемещено в", { description: newWlTitle });
+      customToast({
+        title: "Перемещено в",
+        description: newWlTitle,
+        icon: imageURL,
+      });
     },
-    [wishId, revalidateByKeyword, actions]
+    [wishId, revalidateByKeyword, actions, imageURL]
   );
 
   return {

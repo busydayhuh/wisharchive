@@ -25,17 +25,21 @@ const bookButtonVariants = cva(
 export const BookButton = memo(function BookButton({
   wishId,
   triggerVariant = "gallery",
+  wishTitle,
   isBooked = false,
   isBookedByCurrentUser,
+  imageURL,
   className,
 }: React.ComponentProps<"div"> & {
   wishId: string;
+  wishTitle: string;
   triggerVariant?: "gallery" | "table" | "page";
   isBooked: boolean;
   isBookedByCurrentUser: boolean;
+  imageURL?: string;
 }) {
   const { openConfDialog } = useConfirmationDialog();
-  const { bookWish } = useQuickActions(wishId);
+  const { bookWish } = useQuickActions(wishId, imageURL, wishTitle);
 
   const handlePress = () =>
     openConfDialog({

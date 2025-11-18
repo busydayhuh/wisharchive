@@ -1,6 +1,7 @@
 import type { wishFormSchema } from "@/shared/model/formSchemas";
 import { ROUTES } from "@/shared/model/routes";
 import { useCurrentUser } from "@/shared/model/user/useCurrentUser";
+import { customToast } from "@/shared/ui/CustomToast";
 import { ErrorMessage } from "@/shared/ui/ErrorMessage";
 import { href } from "react-router";
 import { toast } from "sonner";
@@ -38,12 +39,14 @@ function WishAddPage() {
       return;
     }
 
-    toast.success("Желание создано", {
+    customToast({
+      title: "Желание создано",
       description: response!.title,
-      action: {
+      button: {
         label: "Создать ещё",
         onClick: () => navigateWithState(ROUTES.ADD),
       },
+      icon: response!.imageURL,
     });
 
     navigateWithState(

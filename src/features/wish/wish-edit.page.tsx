@@ -1,5 +1,6 @@
 import type { wishFormSchema } from "@/shared/model/formSchemas";
 import { ROUTES } from "@/shared/model/routes";
+import { customToast } from "@/shared/ui/CustomToast";
 import { ErrorMessage } from "@/shared/ui/ErrorMessage";
 import { href, useParams } from "react-router";
 import { toast } from "sonner";
@@ -34,7 +35,11 @@ function WishEditPage() {
       return;
     }
 
-    toast.success("Изменения сохранены");
+    customToast({
+      title: "Сохранено",
+      description: response!.title,
+      icon: response!.imageURL,
+    });
     navigateWithState(
       href(ROUTES.WISH, { wishId, userId: response!.ownerId }),
       {

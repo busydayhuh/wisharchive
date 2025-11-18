@@ -5,20 +5,25 @@ import { PriorityBadge, ShopBadge } from "@/shared/ui/Badges";
 import ExpandableText from "@/shared/ui/ExpandableText";
 import { memo } from "react";
 
-function getBasicInfo(
-  wishId: string,
-  isArchived: boolean,
-  priority: "0" | "1" | "2",
-  isOwner: boolean,
-  wishlist?: WishlistDocumentType | null,
-  shopURL?: string | null
-) {
+function getBasicInfo(params: WishDetailsProps) {
+  const {
+    isOwner,
+    wishlist,
+    isArchived,
+    wishId,
+    wishTitle,
+    imageURL,
+    shopURL,
+    priority,
+  } = params;
   return [
     {
       header: "вишлист",
       element:
         (!isOwner && !wishlist) || isArchived ? null : (
           <WishlistControl
+            wishTitle={wishTitle}
+            imageURL={imageURL}
             isOwner={isOwner}
             isEditor={false}
             onListPage={false}
@@ -38,33 +43,9 @@ function getBasicInfo(
   ];
 }
 
-export const WishDetails = memo(function WishDetails({
-  wishId,
-  wishlist,
-  isArchived,
-  priority = "2",
-  description,
-  shopURL,
-  isOwner,
-  className,
-}: {
-  wishId: string;
-  wishlist?: WishlistDocumentType | null;
-  isArchived: boolean;
-  priority: "0" | "1" | "2";
-  description?: string | null;
-  shopURL?: string | null;
-  isOwner: boolean;
-  className?: string;
-}) {
-  const basicInfo = getBasicInfo(
-    wishId,
-    isArchived,
-    priority,
-    isOwner,
-    wishlist,
-    shopURL
-  );
+export const WishDetails = memo(function WishDetails(props: WishDetailsProps) {
+  const basicInfo = getBasicInfo(props);
+  const { description, className } = props;
 
   return (
     <div className="flex flex-col gap-6 lg:gap-10 2xl:gap-12 max-w-3xl">
@@ -103,3 +84,16 @@ export const WishDetails = memo(function WishDetails({
     </div>
   );
 });
+
+type WishDetailsProps = {
+  wishId: string;
+  wishTitle: string;
+  imageURL?: string;
+  wishlist?: WishlistDocumentType | null;
+  isArchived: boolean;
+  priority: "0" | "1" | "2";
+  description?: string | null;
+  shopURL?: string | null;
+  isOwner: boolean;
+  className?: string;
+};

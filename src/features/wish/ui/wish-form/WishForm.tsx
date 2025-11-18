@@ -1,6 +1,7 @@
 import { wishFormSchema as formSchema } from "@/shared/model/formSchemas";
 import { ROUTES } from "@/shared/model/routes";
 import type { WishDocumentType } from "@/shared/model/types";
+import { customToast } from "@/shared/ui/CustomToast";
 import {
   Form,
   FormControl,
@@ -16,6 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
 import { href, useNavigate } from "react-router";
+import { toast } from "sonner";
 import type z from "zod";
 import DeleteButton from "../../../../shared/ui/DeleteButton";
 import { useWishMutations } from "../../model/useWishMutations";
@@ -55,12 +57,26 @@ export function WishForm({
   const pageHeader = wish ? "Редактировать желание" : "Новое желание";
 
   const onSave = async (values: z.infer<typeof formSchema>) => {
-    await onSubmit(values, wish!.$id);
+    await onSubmit(values, wish?.$id);
     setBlockNavigate(false);
   };
 
   const onDelete = async () => {
-    await actions.delete(wish!.$id);
+    const { ok } = await actions.delete(wish!.$id);
+
+    if (!ok) {
+      toast.error("Не удалось удалить желание", {
+        description: "Попробуйте повторить позже",
+      });
+      return;
+    }
+
+    customToast({
+      title: "Желание удалено",
+      description: wish?.title,
+      icon: wish?.imageURL ?? undefined,
+    });
+
     setBlockNavigate(false);
     navigate(href(ROUTES.WISHES, { userId: wish!.ownerId }));
   };

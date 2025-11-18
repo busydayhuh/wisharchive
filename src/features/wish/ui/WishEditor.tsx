@@ -39,6 +39,7 @@ function WishEditor({ wish, saveChanges, storageImageURL }: WishEditorProps) {
       ? await uploadToStorage(newImage)
       : storageImageURL;
 
+    setBlockNavigate(false);
     await saveChanges({ ...values, imageURL }, id);
   };
 
