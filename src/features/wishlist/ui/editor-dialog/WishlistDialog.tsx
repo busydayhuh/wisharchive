@@ -1,3 +1,4 @@
+import type { Roles } from "@/features/collaborators";
 import { wishlistFormSchema as formSchema } from "@/shared/model/formSchemas";
 import type {
   UserDocumentType,
@@ -39,6 +40,7 @@ const headerVariants = {
 export type WishlistDialogPropsType = React.ComponentProps<"button"> & {
   action: "edit" | "create";
   wishlist?: WishlistDocumentType | null;
+  roles?: Roles;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 };
@@ -46,6 +48,7 @@ export type WishlistDialogPropsType = React.ComponentProps<"button"> & {
 export function WishlistDialog({
   action = "edit",
   wishlist,
+  roles,
   isOpen,
   setIsOpen,
 }: WishlistDialogPropsType) {
@@ -110,20 +113,26 @@ export function WishlistDialog({
               </DialogDescription>
             </DialogHeader>
 
-            <WishlistFormFields form={form} />
+            <WishlistFormFields form={form} roles={roles} />
 
             {wishlist && (
               <>
                 <CollaboratorsSection
                   wishlistId={wishlist.$id}
+                  editors={wishlist.editorsIds}
+                  readers={wishlist.readersIds}
+                  ownerId={wishlist.ownerId}
                   isPrivate={wishlist.isPrivate}
                   form={form}
+                  isOwner={roles?.isWishlistOwner ?? false}
                 />
-                <DeleteSection
-                  wishlistId={wishlist.$id}
-                  wishlistTitle={wishlist.title}
-                  setDialogOpen={setIsOpen}
-                />
+                {roles?.isWishlistOwner && (
+                  <DeleteSection
+                    wishlistId={wishlist.$id}
+                    wishlistTitle={wishlist.title}
+                    setDialogOpen={setIsOpen}
+                  />
+                )}
               </>
             )}
 

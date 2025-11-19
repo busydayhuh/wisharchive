@@ -64,7 +64,7 @@ export const ROLES = {
   editor: {
     title: "редактор",
     icon: <Pencil />,
-    colors: "bg-green-bg text-foreground text-green",
+    colors: "bg-indigo-bg text-foreground text-indigo",
   },
   owner: {
     title: "владелец",

@@ -30,7 +30,7 @@ function DeleteAccountSection() {
           onCheckedChange={(checked: boolean) => setConfirmation(checked)}
         />
         <Label htmlFor="toggle">
-          Я абсолютно уверен, что хочу удалить свой профиль и все его данные
+          Я абсолютно уверен(-а), что хочу удалить свой профиль и все его данные
         </Label>
       </div>
       <Button

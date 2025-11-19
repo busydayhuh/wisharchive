@@ -1,21 +1,31 @@
 import { useWishlistMutations } from "@/features/wishlist/";
 import { handleError } from "@/shared/model/handleError";
+import { useRevalidationByKeyword } from "@/shared/model/useRevalidationByKeyword";
 import { useCallback, useMemo } from "react";
 import team from "../../../../shared/model/teams";
 import { useTeamMembers } from "./useTeamMembers";
 
 function useMembershipMutations(teamId: string) {
-  const { members, mutate } = useTeamMembers(teamId);
+  const { members, mutate: mutateTeamMembers } = useTeamMembers(teamId);
   const { update } = useWishlistMutations();
+  const { revalidateByKeyword } = useRevalidationByKeyword();
 
   const editors = useMemo(
     () =>
-      members?.filter((m) => m.roles.includes("editors")).map((e) => e.userId),
+      members
+        ?.filter(
+          (m) => m.roles.includes("editors") && !m.roles.includes("owner")
+        )
+        .map((e) => e.userId),
     [members]
   );
   const readers = useMemo(
     () =>
-      members?.filter((m) => m.roles.includes("readers")).map((r) => r.userId),
+      members
+        ?.filter(
+          (m) => m.roles.includes("readers") && !m.roles.includes("owner")
+        )
+        .map((r) => r.userId),
     [members]
   );
 
@@ -35,14 +45,15 @@ function useMembershipMutations(teamId: string) {
         });
         if (!ok) throw new Error(errorMessage);
 
-        mutate();
+        mutateTeamMembers();
+        revalidateByKeyword("wishlists");
 
         return { ok: true };
       } catch (error) {
         return handleError(error);
       }
     },
-    [editors, mutate, readers, teamId, update]
+    [editors, mutateTeamMembers, readers, teamId, update, revalidateByKeyword]
   );
 
   const deleteMember = useCallback(
@@ -62,14 +73,23 @@ function useMembershipMutations(teamId: string) {
         });
         if (!ok) throw Error;
 
-        mutate();
+        mutateTeamMembers();
+        revalidateByKeyword("wishlists");
 
         return { ok: true };
       } catch (error) {
         return handleError(error);
       }
     },
-    [editors, members, mutate, update, readers, teamId]
+    [
+      members,
+      teamId,
+      update,
+      editors,
+      readers,
+      mutateTeamMembers,
+      revalidateByKeyword,
+    ]
   );
 
   return { deleteMember, addMember };

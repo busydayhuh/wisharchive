@@ -1,3 +1,4 @@
+import type { Roles } from "@/features/collaborators";
 import { cn } from "@/shared/lib/css";
 import { wishlistFormSchema as formSchema } from "@/shared/model/formSchemas";
 import {
@@ -16,9 +17,11 @@ import { z } from "zod";
 
 type FormFieldsProps = {
   form: UseFormReturn<z.infer<typeof formSchema>>;
+  roles?: Roles;
 };
 
-export function WishlistFormFields({ form }: FormFieldsProps) {
+export function WishlistFormFields({ form, roles }: FormFieldsProps) {
+  const isNotOwner = !roles || (roles && !roles.isWishlistOwner);
   return (
     <div className="space-y-6">
       <FormField
@@ -63,6 +66,7 @@ export function WishlistFormFields({ form }: FormFieldsProps) {
                 <Switch
                   checked={field.value}
                   onCheckedChange={field.onChange}
+                  disabled={isNotOwner}
                 />
               </FormControl>
               <div className="flex flex-col gap-1">
@@ -76,7 +80,7 @@ export function WishlistFormFields({ form }: FormFieldsProps) {
                 </FormLabel>
                 {field.value && (
                   <FormDescription className="text-xs">
-                    Список будет доступен только вам и соавторам списка
+                    Список будет доступен только владельцу и соавторам списка
                   </FormDescription>
                 )}
               </div>

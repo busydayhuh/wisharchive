@@ -14,12 +14,16 @@ export function useQuickActions(
   wishTitle?: string
 ) {
   const { current } = useAuth();
-  const navigate = useNavigate();
-  const { revalidateByKeyword } = useRevalidationByKeyword();
   const actions = useWishMutations();
+  const { revalidateByKeyword } = useRevalidationByKeyword();
+  const navigate = useNavigate();
 
-  const showErrorToast = (text: string) =>
-    toast.error(text, { description: "Повторите попытку позже" });
+  const showErrorToast = useCallback(
+    (text: string) =>
+      toast.error(text, { description: "Повторите попытку позже" }),
+    []
+  );
+
   const showSuccessToast = useCallback(
     (text: string) =>
       customToast({ title: text, description: wishTitle, icon: imageURL }),
@@ -47,7 +51,7 @@ export function useQuickActions(
         pressed ? "Желание забронировано" : "Бронирование отменено"
       );
     },
-    [current, navigate, actions, wishId, showSuccessToast]
+    [current, navigate, actions, wishId, showSuccessToast, showErrorToast]
   );
 
   const archiveWish = useCallback(
@@ -64,12 +68,11 @@ export function useQuickActions(
       }
 
       await revalidateByKeyword("wishes");
-
       showSuccessToast(
         archived ? "Желание восстановлено" : "Желание архивировано"
       );
     },
-    [wishId, revalidateByKeyword, actions, showSuccessToast]
+    [actions, wishId, revalidateByKeyword, showSuccessToast, showErrorToast]
   );
 
   const editWish = useCallback(
@@ -86,7 +89,7 @@ export function useQuickActions(
       return;
     }
     showSuccessToast("Желание удалено");
-  }, [wishId, actions, showSuccessToast]);
+  }, [actions, wishId, showSuccessToast, showErrorToast]);
 
   const removeFromWishlist = useCallback(async () => {
     const { ok } = await actions.update(wishId, {
@@ -98,9 +101,10 @@ export function useQuickActions(
       showErrorToast("Не удалось исключить желание из списка");
       return;
     }
+
     revalidateByKeyword("wishes");
     showSuccessToast("Исключено из списка");
-  }, [wishId, revalidateByKeyword, actions, showSuccessToast]);
+  }, [actions, wishId, revalidateByKeyword, showSuccessToast, showErrorToast]);
 
   const changeWishlist = useCallback(
     async (newWlId: string | null, newWlTitle: string) => {
@@ -125,7 +129,7 @@ export function useQuickActions(
         icon: imageURL,
       });
     },
-    [wishId, revalidateByKeyword, actions, imageURL]
+    [actions, wishId, revalidateByKeyword, imageURL, showErrorToast]
   );
 
   return {

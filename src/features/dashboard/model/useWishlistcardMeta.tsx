@@ -22,22 +22,22 @@ export function useWishlistcardMeta(wishlist: WishlistDocumentType) {
     readersIds
   );
 
-  const { openDialog } = useWishlistDialog();
-  const openWishlistEditor = useCallback(
-    () => openDialog("edit", wishlist),
-    [wishlist, openDialog]
-  );
-
-  const { toggle } = useToggleBookmark($id, bookmarkedBy ?? [], authUser?.$id);
-  const isFavorite =
-    (!!authUser?.$id && bookmarkedBy?.includes(authUser.$id)) ?? false;
-
   const userRoles = resolveWishlistRoles(
     editorsIds,
     readersIds,
     ownerId,
     authUser?.$id
   );
+
+  const { openDialog } = useWishlistDialog();
+  const openWishlistEditor = useCallback(
+    () => openDialog("edit", wishlist, userRoles),
+    [wishlist, openDialog, userRoles]
+  );
+
+  const { toggle } = useToggleBookmark($id, bookmarkedBy ?? [], authUser?.$id);
+  const isFavorite =
+    (!!authUser?.$id && bookmarkedBy?.includes(authUser.$id)) ?? false;
 
   const onSharedPage = useMatch(ROUTES.SHARED);
 
