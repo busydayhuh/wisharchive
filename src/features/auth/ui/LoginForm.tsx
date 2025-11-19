@@ -75,7 +75,11 @@ function LoginForm() {
             {form.formState.errors.root?.message}
           </div>
         )}
-        <SubmitBtn isSubmitting={form.formState.isSubmitting} text="Войти" />
+        <SubmitBtn
+          isSubmitting={form.formState.isSubmitting}
+          text="Войти"
+          className="px-6"
+        />
       </form>
     </Form>
   );

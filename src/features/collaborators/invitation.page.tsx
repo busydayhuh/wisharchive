@@ -12,6 +12,7 @@ import { useWishlist } from "@/features/wishlist";
 import { handleError } from "@/shared/model/handleError";
 import { ROUTES } from "@/shared/model/routes";
 import team from "@/shared/model/teams";
+import { customToast } from "@/shared/ui/CustomToast";
 import { ErrorMessage } from "@/shared/ui/ErrorMessage";
 import {
   Item,
@@ -20,60 +21,76 @@ import {
   ItemMedia,
   ItemTitle,
 } from "@/shared/ui/kit/item";
-import { Loader } from "lucide-react";
-import { useMemo } from "react";
+import { Loader2 } from "lucide-react";
+import { useMemo, useState } from "react";
 import { href, useSearchParams } from "react-router";
 import { toast } from "sonner";
+import { useAuth } from "../auth";
 import { useRoute } from "../breadcrumbs";
 import { useMembership } from "./model/membership/useMembership";
 
 function InvitationPage() {
+  const { isLoggedIn, initSession } = useAuth();
+
   const [searchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
 
   const { membership } = useMembership(params.teamId, params.membershipId);
   const { wishlist, isLoading, error } = useWishlist(params.teamId);
+  const wlImage = wishlist?.wishes?.at(-1)?.imageURL || undefined;
+
+  const [loading, setLoading] = useState(false);
+
+  const { navigateWithState } = useRoute();
 
   const roleName = useMemo(
     () => (membership?.roles.includes("editors") ? "редактора" : "читателя"),
     [membership]
   );
 
-  const { navigateWithState } = useRoute();
-
   const onAcceptInvite = async () => {
     try {
-      const membershipUpdate = await team.acceptInvite(
+      setLoading(true);
+
+      await team.acceptInvite(
         params.teamId!,
         params.membershipId!,
         params.userId!,
         params.secret!
       );
 
-      if (membershipUpdate) {
-        navigateWithState(
-          href(ROUTES.WISHLIST, {
-            userId: wishlist!.ownerId,
-            listId: params.teamId!,
-          }),
-          { wlTitle: params.teamName }
-        );
+      if (!isLoggedIn) await initSession();
 
-        return toast.success("Приглашение принято");
-      }
+      navigateWithState(
+        href(ROUTES.WISHLIST, {
+          userId: wishlist!.ownerId,
+          listId: params.teamId!,
+        }),
+        { wlTitle: params.teamName }
+      );
+
+      customToast({
+        title: "Приглашение принято",
+        description: params.teamName,
+        icon: wlImage,
+      });
     } catch (error) {
       const { errorMessage } = handleError(error);
       return toast.error("Не удалось принять приглашение", {
         description: errorMessage,
       });
+    } finally {
+      setLoading(false);
     }
   };
 
   if (isLoading)
     return (
-      <Card className="justify-center items-center w-full max-w-md">
-        <Loader className="size-9 animate-spin" />
-      </Card>
+      <div className="fixed inset-0 place-content-center grid">
+        <Card className="place-content-center grid shadow-none border-0 w-full md:w-2xl h-56">
+          <Loader2 className="size-9 animate-spin" />
+        </Card>
+      </div>
     );
 
   if (error)
@@ -109,7 +126,7 @@ function InvitationPage() {
             <Item variant="muted">
               <ItemMedia variant="image">
                 <img
-                  src={wishlist.wishes?.at(-1)?.imageURL ?? undefined}
+                  src={wlImage}
                   className="place-content-center grid bg-muted rounded-sm size-8"
                   alt={wishlist.title[0]}
                 />
@@ -125,8 +142,13 @@ function InvitationPage() {
             </Item>
           </CardContent>
           <CardFooter>
-            <Button onClick={onAcceptInvite} className="h-14">
-              Принять и перейти к списку
+            <Button
+              onClick={onAcceptInvite}
+              className="h-14"
+              disabled={loading}
+            >
+              {loading && <Loader2 className="animate-spin" />}
+              {loading ? "Авторизация..." : "Принять и перейти к списку"}
             </Button>
           </CardFooter>
         </Card>

@@ -24,7 +24,7 @@ export function SubmitBtn({
       {isSubmitting ? (
         <>
           <Loader2 className="animate-spin" />
-          {loaderText}
+          {loaderText || text}
         </>
       ) : (
         text

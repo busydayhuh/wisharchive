@@ -36,6 +36,7 @@ type UserContextType = {
   login: (data: FormValues["login"]) => Promise<ResponseType>;
   logout: () => Promise<ResponseType>;
   register: (data: FormValues["register"]) => Promise<ResponseType>;
+  initSession: () => Promise<void>;
   isLoggedIn: boolean;
 };
 
@@ -127,6 +128,7 @@ export function UserProvider(props: { children: ReactNode }) {
         logout,
         register,
         session,
+        initSession: init,
         isLoggedIn: Boolean(user),
       }}
     >
