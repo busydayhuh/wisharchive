@@ -2,7 +2,7 @@ import { ROUTES } from "@/shared/model/routes";
 import { matchRoutes, useLocation } from "react-router";
 
 export function useDepartment() {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
 
   const outside = Boolean(
     matchRoutes(
@@ -26,11 +26,10 @@ export function useDepartment() {
   );
 
   const showNavigation = Boolean(
-    matchRoutes(
-      [{ path: ROUTES.WISHES }, { path: ROUTES.WISHLISTS }],
-      location.pathname
-    )
+    matchRoutes([{ path: ROUTES.WISHES }, { path: ROUTES.WISHLISTS }], pathname)
   );
 
-  return { outside, slimPage, hasBreadcrumbs, showNavigation };
+  const profileView = Boolean(search);
+
+  return { outside, slimPage, hasBreadcrumbs, showNavigation, profileView };
 }

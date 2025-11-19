@@ -43,7 +43,7 @@ export const userFormSchema = z.object({
     .max(100, "максимум 100 символов"),
   sex: z.enum(["female", "male", "other"]).nullable(),
   birthDate: z.date().nullable(),
-  bio: z.string().max(500, "максимум 500 символов").optional(),
+  bio: z.string().max(150, "слишком длинное").optional(),
 });
 
 export const accountInfoFormSchema = z.object({

@@ -1,5 +1,6 @@
 import { useAuth } from "@/features/auth";
 import { GlobalSearchDialog } from "@/features/global-search";
+import { useDepartment } from "@/shared/lib/react/useDepartment";
 import { Button } from "@/shared/ui/kit/button";
 import { memo } from "react";
 import Navigation from "../toolbar/Navigation";
@@ -19,8 +20,9 @@ const DashboardHeader = memo(function DashboardHeader({
   isDashboardOwner = true,
 }: DashboardHeaderProps) {
   const { isLoggedIn } = useAuth();
+  const { profileView } = useDepartment();
 
-  if (isDashboardOwner) {
+  if (isDashboardOwner && !profileView) {
     return (
       <div className="flex justify-between items-center gap-4 md:gap-6 mt-1.5 md:mt-4 mb-1.5 md:mb-3 lg:mb-8 w-full">
         <p className="font-bold text-primary text-3xl md:text-4xl lg:text-5xl leading-8">

@@ -1,4 +1,3 @@
-import { cn } from "@/shared/lib/css";
 import { ROUTES } from "@/shared/model/routes";
 import {
   Sidebar,
@@ -82,14 +81,14 @@ export const AppSidebar = memo(function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu className={cn(isMobile && "gap-0")}>
+            <SidebarMenu className="gap-0">
               {sidebarItems.map(({ name, icon, href }) => (
                 <SidebarMenuItem key={name}>
                   <SidebarMenuButton
                     tooltip={name}
                     asChild
                     isActive={!!matchPath(currentPath, href)}
-                    className={cn(isMobile && "h-12")}
+                    className="h-12"
                   >
                     <NavLink to={href}>
                       {icon}
@@ -104,7 +103,7 @@ export const AppSidebar = memo(function AppSidebar() {
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenuItem key="switcher">
-          <SidebarMenuButton tooltip="Тема">
+          <SidebarMenuButton tooltip="Тема" className="h-12">
             <ModeToggle />
           </SidebarMenuButton>
         </SidebarMenuItem>

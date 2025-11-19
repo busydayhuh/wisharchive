@@ -56,7 +56,7 @@ export function UserSb() {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent rounded-full data-[state=open]:text-sidebar-accent-foreground cursor-pointer"
+              className="data-[state=open]:bg-sidebar-accent rounded-md data-[state=open]:text-sidebar-accent-foreground cursor-pointer"
             >
               <UserAvatar
                 name={user?.userName ?? ""}
@@ -134,7 +134,7 @@ export function UserSb() {
               <DropdownMenuItem asChild>
                 <Link to={ROUTES.PROFILE}>
                   <Settings />
-                  Настройки аккаунта
+                  Редактировать профиль
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>

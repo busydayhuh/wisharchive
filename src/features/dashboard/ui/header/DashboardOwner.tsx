@@ -1,8 +1,9 @@
 import { cn } from "@/shared/lib/css";
+import { useDepartment } from "@/shared/lib/react/useDepartment";
 import { useUser } from "@/shared/model/user/useUser";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
-import { CakeIcon, Ghost, Meh } from "lucide-react";
+import { Ghost, Gift, Meh } from "lucide-react";
 import { memo } from "react";
 import { getUserBirthday } from "../../model/getUserBirthday";
 import { OwnerInfoPopover } from "./OwnerInfoPopover";
@@ -17,6 +18,7 @@ const DashboardOwner = memo(function DashboardOwner({
   className?: string;
 }) {
   const { user, isLoading, error } = useUser(userId);
+  const { profileView } = useDepartment();
 
   if (isLoading)
     return isOwner ? (
@@ -47,9 +49,14 @@ const DashboardOwner = memo(function DashboardOwner({
       </div>
     );
 
-  if (user && !isOwner)
+  if ((user && !isOwner) || profileView)
     return (
-      <div className={cn("flex md:flex-col items-center gap-3", className)}>
+      <div
+        className={cn(
+          "flex md:flex-col items-start md:items-center gap-3",
+          className
+        )}
+      >
         <UserAvatar
           name={user.userName}
           id={user.userId}
@@ -57,19 +64,24 @@ const DashboardOwner = memo(function DashboardOwner({
           className="p-0.5 border-1 border-muted/90"
           size="xl"
         />
-        <div className="flex flex-col md:items-center gap-2">
+        <div className="flex flex-col md:items-center gap-1 md:gap-2">
           <p className="font-semibold text-xl md:text-2xl truncate leading-tight">
             {user.userName}
           </p>
+
           <p className="text-muted-foreground text-xs md:text-sm truncate leading-tight">
             @{user.userId}
           </p>
           {user.birthDate && (
             <p className="inline-flex items-center gap-1 text-muted-foreground text-xs leading-none">
-              <CakeIcon className="size-3" />
+              <Gift className="size-3" />
               {getUserBirthday(user.birthDate as string)}
             </p>
           )}
+
+          <p className="mt-1 text-muted-foreground text-xs md:text-sm truncate leading-tight">
+            {user.bio}
+          </p>
         </div>
       </div>
     );
@@ -80,7 +92,7 @@ const DashboardOwner = memo(function DashboardOwner({
         name={user.userName}
         id={user.userId}
         avatarURL={user.avatarURL ?? undefined}
-        birthDate={user.birthDate as string}
+        email={user.userEmail}
       />
     );
 });

@@ -17,6 +17,7 @@ export { SharedPageWithLayout } from "./pages/dashboard-shared.page";
 export { WishesPageWithLayout } from "./pages/dashboard-wishes.page";
 // ui
 export { DashboardLayout } from "./ui/DashboardLayout";
+export { OwnerInfoPopover } from "./ui/header/OwnerInfoPopover";
 export { DashboardContentContainer } from "./ui/main-content/DashboardContentContainer";
 export { DashboardGrid } from "./ui/main-content/DashboardGrid";
 export { WishesPageLayout } from "./ui/main-content/wishes/WishesPageLayout";

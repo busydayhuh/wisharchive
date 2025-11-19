@@ -5,6 +5,7 @@ import { Calendar } from "@/shared/ui/kit/calendar";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -169,6 +170,7 @@ export function PersonalInfoForm({
                   placeholder="Расскажите о себе"
                 />
               </FormControl>
+              <FormDescription>Макс. 150 символов</FormDescription>
               <FormMessage />
             </FormItem>
           )}

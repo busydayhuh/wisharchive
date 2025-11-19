@@ -1,9 +1,11 @@
 import { cn } from "@/shared/lib/css";
 import { useDepartment } from "@/shared/lib/react/useDepartment";
+import { ROUTES } from "@/shared/model/routes";
 import { useCurrentUser } from "@/shared/model/user/useCurrentUser";
 import { SidebarTrigger } from "@/shared/ui/kit/sidebar";
 import Logo from "@/shared/ui/Logo";
-import { UserAvatar } from "@/shared/ui/UserAvatar";
+import { href, Link } from "react-router-dom";
+import { OwnerInfoPopover } from "../dashboard";
 import { Breadcrumbs } from "./Breadcrumbs";
 
 export function BreadcrumbsBar({
@@ -33,14 +35,19 @@ export function BreadcrumbsBar({
       {hasBreadcrumbs ? (
         <Breadcrumbs />
       ) : (
-        isMobile && <Logo variant="default" />
+        isMobile && (
+          <Link to={href(ROUTES.DASHBOARD, { userId: user?.userId ?? "" })}>
+            <Logo variant="inverted" />
+          </Link>
+        )
       )}
       {isMobile && user && !hasBreadcrumbs && (
-        <UserAvatar
+        <OwnerInfoPopover
           size="sm"
           id={user.userId}
           name={user.userName}
           avatarURL={user.avatarURL ?? undefined}
+          email={user.userEmail}
         />
       )}
     </div>

@@ -1,63 +1,106 @@
+import { useIsMobile } from "@/shared/lib/react/useIsMobile";
+import { ROUTES } from "@/shared/model/routes";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/shared/ui/kit/dialog";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/shared/ui/kit/popover";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
-import { CakeIcon } from "lucide-react";
-import { getUserBirthday } from "../../model/getUserBirthday";
+import { useState } from "react";
+import { href, Link } from "react-router";
 
 export function OwnerInfoPopover({
   avatarURL,
   name,
   id,
-  birthDate,
+  size = "lg",
 }: {
   avatarURL?: string;
   name: string;
   id: string;
-  birthDate?: string;
+  email: string;
+  size?: "sm" | "lg";
 }) {
-  return (
-    <Popover>
-      <PopoverTrigger>
+  const isMobile = useIsMobile();
+  const trigger = (
+    <UserAvatar
+      name={name}
+      id={id}
+      avatarURL={avatarURL ?? undefined}
+      className="p-0.5 border-1 border-muted/90"
+      size={size}
+    />
+  );
+
+  const [open, setOpen] = useState(false);
+
+  const content = (
+    <div className="space-y-4">
+      <p className="font-semibold text-muted-foreground text-xs">
+        Вы вошли как
+      </p>
+      <div className="flex items-center gap-4 px-2">
         <UserAvatar
           name={name}
           id={id}
           avatarURL={avatarURL ?? undefined}
-          className="p-0.5 border-1 border-muted/90"
           size="lg"
         />
-      </PopoverTrigger>
-      <PopoverContent className="w-fit">
-        <div className="gap-4 grid">
-          <div className="flex gap-4">
-            <UserAvatar
-              name={name}
-              id={id}
-              avatarURL={avatarURL ?? undefined}
-              size="md"
-            />
-            <div className="space-y-1">
-              <p className="font-medium leading-none">{name}</p>
-              <p className="text-muted-foreground text-sm">@{id}</p>
-              {birthDate && (
-                <p className="inline-flex items-center gap-1.5 bg-blue-bg px-2.5 py-1 rounded-sm text-blue text-xs leading-none">
-                  <CakeIcon className="size-3" />
-                  {getUserBirthday(birthDate)}
-                </p>
-              )}
-            </div>
-          </div>
-          {/* <div className="place-content-end grid w-full">
-            <CopyProfileLinkBtn
-              variant="default"
-              size="sm"
-              userId={id}
-              text="Поделиться"
-            />
-          </div> */}
+        <div>
+          <p className="mb-0.5 font-semibold">{name}</p>
+          <p className="text-muted-foreground text-sm">@{id}</p>
         </div>
+      </div>
+      <div className="grid">
+        <p className="mb-2 font-semibold text-muted-foreground text-xs">
+          Профиль
+        </p>
+        <Link
+          to={ROUTES.PROFILE}
+          className="hover:bg-accent px-2 py-1.5 rounded-sm w-full font-medium text-sm"
+          onClick={() => setOpen(false)}
+        >
+          Редактировать
+        </Link>
+        <Link
+          to={{
+            pathname: href(ROUTES.WISHES, { userId: id }),
+            search: "?view=profile",
+          }}
+          className="hover:bg-accent px-2 py-1.5 rounded-sm w-full font-medium text-sm"
+          onClick={() => setOpen(false)}
+        >
+          На страницу профиля
+        </Link>
+      </div>
+    </div>
+  );
+
+  if (isMobile)
+    return (
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger>{trigger}</DialogTrigger>
+        <DialogContent>
+          <DialogHeader className="sr-only">
+            <DialogTitle>Об аккаунте</DialogTitle>
+          </DialogHeader>
+          {content}
+        </DialogContent>
+      </Dialog>
+    );
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger>{trigger}</PopoverTrigger>
+      <PopoverContent className="w-fit" side="left">
+        {content}
       </PopoverContent>
     </Popover>
   );

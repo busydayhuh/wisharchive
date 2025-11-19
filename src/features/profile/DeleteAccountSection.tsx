@@ -21,7 +21,7 @@ function DeleteAccountSection() {
   };
 
   return (
-    <div className="flex flex-col gap-4 md:gap-6 mx-auto px-2 md:px-0 lg:max-w-3xl max-w-4xl">
+    <div className="flex flex-col gap-6 mx-auto px-2 md:px-0 lg:max-w-3xl max-w-4xl">
       <p className="font-semibold text-xl lg:text-2xl">Удаление профиля</p>
       <div className="flex items-start gap-3">
         <Checkbox
