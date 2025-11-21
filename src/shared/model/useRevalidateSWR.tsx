@@ -1,10 +1,10 @@
 import { useCallback } from "react";
 import { useSWRConfig } from "swr";
 
-export function useRevalidationByKeyword() {
+export function useRevalidateSWR() {
   const { cache, mutate } = useSWRConfig();
 
-  const revalidateByKeyword = useCallback(
+  const revalidate = useCallback(
     async (keyword: string) => {
       const tasks = [];
       for (const key of cache.keys()) {
@@ -16,5 +16,5 @@ export function useRevalidationByKeyword() {
     [cache, mutate]
   );
 
-  return { revalidateByKeyword };
+  return { revalidate };
 }

@@ -34,6 +34,7 @@ export function useWishlists(
   userId?: string
 ) {
   const queries = filters ? getWishlistQueries(filters) : null;
+  const pageId = `${page}+${userId}`;
 
   const getWishlistKey = (
     pageIndex: number,
@@ -45,16 +46,16 @@ export function useWishlists(
     if (previousPageData && previousPageData.length === 0) return null;
     // первая страница, нет previousPageData
     if (pageIndex === 0 && filters)
-      return ["wishlists", page + userId, stableStringify(filters)];
+      return ["wishlists", pageId, stableStringify(filters)];
     // добавляем курсор к ключу
     const cursor = previousPageData?.at(-1)?.$id ?? null;
-    return ["wishlists", page + userId, stableStringify(filters), cursor];
+    return ["wishlists", pageId, stableStringify(filters), cursor];
   };
 
   const { data, isLoading, error, size, setSize, isValidating, mutate } =
     useSWRInfinite(
       getWishlistKey,
-      ([, , cursor]) => fetcher(queries!, cursor),
+      ([, , , cursor]) => fetcher(queries!, cursor),
       {
         onSuccess: (data) => {
           data.flat().forEach((wl) => (wl.wishes ? wl.wishes.reverse() : null));

@@ -1,15 +1,16 @@
 import type { Models } from "appwrite";
 import { useCallback } from "react";
-import { useSWRConfig, type Cache, type ScopedMutator } from "swr";
+import { useSWRConfig, type ScopedMutator } from "swr";
+import { useUpdateSWRCache } from "./useUpdateSWRCache";
 
 export type OptimisticUpdater = (prev: Models.Document[]) => Models.Document[];
 type ServerAction = () => Promise<Models.Document | void>;
 
-type SWRCacheData =
-  | Models.Document
-  | Models.Document[]
-  | Models.Document[][]
-  | undefined;
+// type SWRCacheData =
+//   | Models.Document
+//   | Models.Document[]
+//   | Models.Document[][]
+//   | undefined;
 
 type PerformMutationParams = {
   updater: OptimisticUpdater;
@@ -19,16 +20,14 @@ type PerformMutationParams = {
 };
 
 export function useOptimisticMutation() {
-  const { mutate, cache } = useSWRConfig();
+  const { mutate } = useSWRConfig();
+  const { updateSWRCache } = useUpdateSWRCache();
 
   const performMutation = useCallback(
     async (params: PerformMutationParams) => {
       try {
         // обновляем кеш по основному ключу
-        applyToKeywordCaches(cache, mutate, params.keyword, params.updater, {
-          rollbackOnError: true,
-          revalidate: false,
-        });
+        updateSWRCache(params.keyword, params.updater);
         // обновляем кеш по доп. ключам, если есть (ключи одиночных документов)
         applyToExtraKeysCaches(mutate, params.updater, params.extraKeys);
         // основное действие с API
@@ -37,46 +36,46 @@ export function useOptimisticMutation() {
         console.log("Ошибка мутации", error);
 
         // запрашиваем актуальные данные для отката
-        applyToKeywordCaches(cache, mutate, params.keyword);
+        updateSWRCache(params.keyword);
         params.extraKeys?.forEach((key) => mutate(key));
         // выбрасываем ошибку наверх
         throw error;
       }
     },
-    [cache, mutate]
+    [updateSWRCache, mutate]
   );
 
   return { performMutation };
 }
 
-function applyToKeywordCaches(
-  cache: Cache,
-  mutate: ScopedMutator,
-  keyword: string,
-  updater?: OptimisticUpdater,
-  options?: { rollbackOnError?: boolean; revalidate?: boolean }
-) {
-  for (const key of cache.keys()) {
-    if (!key.includes(keyword)) continue;
+// export function applyToKeywordCaches(
+//   cache: Cache,
+//   mutate: ScopedMutator,
+//   keyword: string,
+//   updater?: OptimisticUpdater,
+//   options?: { rollbackOnError?: boolean; revalidate?: boolean }
+// ) {
+//   for (const key of cache.keys()) {
+//     if (!key.includes(keyword)) continue;
 
-    mutate(
-      key,
-      updater
-        ? (prev: SWRCacheData) => {
-            if (!prev) return prev;
-            // Страницы ([][])
-            if (Array.isArray(prev) && Array.isArray(prev[0]))
-              return (prev as Models.Document[][]).map((page) => updater(page));
-            // Один массив ([])
-            if (Array.isArray(prev)) return updater(prev as Models.Document[]);
-            // Один документ
-            return updater([prev])[0];
-          }
-        : undefined,
-      options
-    );
-  }
-}
+//     mutate(
+//       key,
+//       updater
+//         ? (prev: SWRCacheData) => {
+//             if (!prev) return prev;
+//             // Страницы ([][])
+//             if (Array.isArray(prev) && Array.isArray(prev[0]))
+//               return (prev as Models.Document[][]).map((page) => updater(page));
+//             // Один массив ([])
+//             if (Array.isArray(prev)) return updater(prev as Models.Document[]);
+//             // Один документ
+//             return updater([prev])[0];
+//           }
+//         : undefined,
+//       options
+//     );
+//   }
+// }
 
 function applyToExtraKeysCaches(
   mutate: ScopedMutator,

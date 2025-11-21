@@ -1,7 +1,7 @@
 import { useAuth } from "@/features/auth";
 import { ROUTES } from "@/shared/model/routes";
 import type { LinkParams } from "@/shared/model/types";
-import { useRevalidationByKeyword } from "@/shared/model/useRevalidationByKeyword";
+import { useRevalidateSWR } from "@/shared/model/useRevalidateSWR";
 import { customToast } from "@/shared/ui/CustomToast";
 import { useCallback } from "react";
 import { href, useNavigate } from "react-router";
@@ -15,7 +15,7 @@ export function useQuickActions(
 ) {
   const { current } = useAuth();
   const actions = useWishMutations();
-  const { revalidateByKeyword } = useRevalidationByKeyword();
+  const { revalidate } = useRevalidateSWR();
   const navigate = useNavigate();
 
   const showErrorToast = useCallback(
@@ -67,12 +67,12 @@ export function useQuickActions(
         return;
       }
 
-      await revalidateByKeyword("wishes");
+      await revalidate("wishes");
       showSuccessToast(
         archived ? "Желание восстановлено" : "Желание архивировано"
       );
     },
-    [actions, wishId, revalidateByKeyword, showSuccessToast, showErrorToast]
+    [actions, wishId, revalidate, showSuccessToast, showErrorToast]
   );
 
   const editWish = useCallback(
@@ -102,9 +102,9 @@ export function useQuickActions(
       return;
     }
 
-    revalidateByKeyword("wishes");
+    revalidate("wishes");
     showSuccessToast("Исключено из списка");
-  }, [actions, wishId, revalidateByKeyword, showSuccessToast, showErrorToast]);
+  }, [actions, wishId, revalidate, showSuccessToast, showErrorToast]);
 
   const changeWishlist = useCallback(
     async (newWlId: string | null, newWlTitle: string) => {
@@ -118,10 +118,7 @@ export function useQuickActions(
         return;
       }
 
-      await Promise.all([
-        revalidateByKeyword("wishes"),
-        revalidateByKeyword("wishlists"),
-      ]);
+      await Promise.all([revalidate("wishes"), revalidate("wishlists")]);
 
       customToast({
         title: "Перемещено в",
@@ -129,7 +126,7 @@ export function useQuickActions(
         icon: imageURL,
       });
     },
-    [actions, wishId, revalidateByKeyword, imageURL, showErrorToast]
+    [actions, wishId, revalidate, imageURL, showErrorToast]
   );
 
   return {

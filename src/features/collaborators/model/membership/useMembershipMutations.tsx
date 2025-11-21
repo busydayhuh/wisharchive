@@ -1,6 +1,6 @@
 import { useWishlistMutations } from "@/features/wishlist/";
 import { handleError } from "@/shared/model/handleError";
-import { useRevalidationByKeyword } from "@/shared/model/useRevalidationByKeyword";
+import { useRevalidateSWR } from "@/shared/model/useRevalidateSWR";
 import { useCallback, useMemo } from "react";
 import team from "../../../../shared/model/teams";
 import { useTeamMembers } from "./useTeamMembers";
@@ -8,7 +8,7 @@ import { useTeamMembers } from "./useTeamMembers";
 function useMembershipMutations(teamId: string) {
   const { members, mutate: mutateTeamMembers } = useTeamMembers(teamId);
   const { update } = useWishlistMutations();
-  const { revalidateByKeyword } = useRevalidationByKeyword();
+  const { revalidate } = useRevalidateSWR();
 
   const editors = useMemo(
     () =>
@@ -46,14 +46,14 @@ function useMembershipMutations(teamId: string) {
         if (!ok) throw new Error(errorMessage);
 
         mutateTeamMembers();
-        revalidateByKeyword("wishlists");
+        revalidate("wishlists");
 
         return { ok: true };
       } catch (error) {
         return handleError(error);
       }
     },
-    [editors, mutateTeamMembers, readers, teamId, update, revalidateByKeyword]
+    [editors, mutateTeamMembers, readers, teamId, update, revalidate]
   );
 
   const deleteMember = useCallback(
@@ -74,22 +74,14 @@ function useMembershipMutations(teamId: string) {
         if (!ok) throw Error;
 
         mutateTeamMembers();
-        revalidateByKeyword("wishlists");
+        revalidate("wishlists");
 
         return { ok: true };
       } catch (error) {
         return handleError(error);
       }
     },
-    [
-      members,
-      teamId,
-      update,
-      editors,
-      readers,
-      mutateTeamMembers,
-      revalidateByKeyword,
-    ]
+    [members, teamId, update, editors, readers, mutateTeamMembers, revalidate]
   );
 
   return { deleteMember, addMember };

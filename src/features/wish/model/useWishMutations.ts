@@ -4,7 +4,7 @@ import {
   useOptimisticMutation,
   type OptimisticUpdater,
 } from "@/shared/model/useOptimisticMutation";
-import { useRevalidationByKeyword } from "@/shared/model/useRevalidationByKeyword";
+import { useRevalidateSWR } from "@/shared/model/useRevalidateSWR";
 import { ID, type Models } from "appwrite";
 import { useCallback } from "react";
 
@@ -30,7 +30,7 @@ export type UpdateWishProps = Partial<CreateWishProps> & {
 
 export function useWishMutations() {
   const { performMutation } = useOptimisticMutation();
-  const { revalidateByKeyword } = useRevalidationByKeyword();
+  const { revalidate } = useRevalidateSWR();
 
   const create = useCallback(
     async (payload: CreateWishProps) => {
@@ -56,13 +56,13 @@ export function useWishMutations() {
           keyword: "wishes",
         });
 
-        await revalidateByKeyword("wishes");
+        await revalidate("wishes");
         return { ok: true, response: newWish };
       } catch (error) {
         return handleError(error);
       }
     },
-    [revalidateByKeyword, performMutation]
+    [revalidate, performMutation]
   );
 
   const update = useCallback(
