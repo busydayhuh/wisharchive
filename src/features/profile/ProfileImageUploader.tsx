@@ -1,5 +1,4 @@
 import { cn } from "@/shared/lib/css";
-import type { UserDocumentType } from "@/shared/model/types";
 import { uploadToStorage } from "@/shared/model/uploadToStorage";
 import useImageDrop from "@/shared/model/useImageDrop";
 import { Button } from "@/shared/ui/kit/button";
@@ -14,8 +13,8 @@ import {
   X,
 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
-import type { KeyedMutator } from "swr";
 import useProfileMutations from "./model/useProfileMutations";
+import type { UpdateUserCache } from "./profile.page";
 
 type SavingState = {
   isSuccess: boolean;
@@ -28,13 +27,13 @@ export function ProfileImageUploader({
   userId,
   documentId,
   name,
-  mutateUser,
+  updateUserCache,
 }: {
   imageURL?: string;
   userId: string;
   documentId: string;
   name: string;
-  mutateUser: KeyedMutator<UserDocumentType>;
+  updateUserCache: UpdateUserCache;
 }) {
   const [compressedAvatar, setCompressedAvatar] = useState<
     File | null | undefined
@@ -51,34 +50,45 @@ export function ProfileImageUploader({
     setSaving({ isSuccess: false, isSaving: true, isError: false });
 
     if (!compressedAvatar) {
-      const response = await changeAvatar(null, documentId);
-      if (response.status === "ok") mutateUser();
+      const { ok } = await changeAvatar(null, documentId);
+      if (ok) updateUserCache(documentId, { avatarURL: null });
 
       return setSaving({
-        isSuccess: response.status === "ok",
+        isSuccess: ok,
         isSaving: false,
-        isError: response.status === "error",
+        isError: !ok,
       });
     }
 
-    const uploadedURL = await uploadToStorage(compressedAvatar);
-    if (uploadedURL) {
-      const response = await changeAvatar(uploadedURL, documentId);
-      if (response.status === "ok") mutateUser();
-
-      return setSaving({
-        isSuccess: response.status === "ok",
-        isSaving: false,
-        isError: response.status === "error",
-      });
-    } else {
-      return setSaving({
+    const { ok: storageOk, response: uploadedURL } = await uploadToStorage(
+      compressedAvatar
+    );
+    if (!storageOk) {
+      setSaving({
         isSuccess: false,
         isSaving: false,
         isError: true,
       });
+      return;
     }
-  }, [changeAvatar, compressedAvatar, documentId, mutateUser]);
+
+    const { ok } = await changeAvatar(uploadedURL as string, documentId);
+    if (!ok) {
+      setSaving({
+        isSuccess: false,
+        isSaving: false,
+        isError: true,
+      });
+      return;
+    }
+
+    updateUserCache(documentId, { avatarURL: uploadedURL });
+    setSaving({
+      isSuccess: ok,
+      isSaving: false,
+      isError: !ok,
+    });
+  }, [changeAvatar, compressedAvatar, documentId, updateUserCache]);
 
   useEffect(
     () => setSaving({ isSuccess: false, isSaving: false, isError: false }),

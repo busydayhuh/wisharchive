@@ -25,17 +25,17 @@ import { ChevronDownIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import type { KeyedMutator } from "swr";
 import type z from "zod";
 import useProfileMutations from "./model/useProfileMutations";
+import type { UpdateUserCache } from "./profile.page";
 import { ProfileImageUploader } from "./ProfileImageUploader";
 
 export function PersonalInfoForm({
   userInfo,
-  mutateUser,
+  updateUserCache,
 }: {
   userInfo: UserDocumentType;
-  mutateUser: KeyedMutator<UserDocumentType>;
+  updateUserCache: UpdateUserCache;
 }) {
   const { changeName, changePersonalInfo } = useProfileMutations();
 
@@ -77,7 +77,7 @@ export function PersonalInfoForm({
       return;
     }
 
-    mutateUser();
+    updateUserCache(userInfo.$id, values);
     toast.success("Профиль успешно обновлён");
   };
 
@@ -152,7 +152,7 @@ export function PersonalInfoForm({
             userId={userInfo.userId}
             documentId={userInfo.$id}
             name={userInfo.userName}
-            mutateUser={mutateUser}
+            updateUserCache={updateUserCache}
           />
         </div>
 

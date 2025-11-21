@@ -1,16 +1,16 @@
 import type { UserDocumentType } from "@/shared/model/types";
-import type { KeyedMutator } from "swr";
 import { AccountInfoForm } from "./AccountInfoForm";
 import DeleteAccountSection from "./DeleteAccountSection";
 import { PersonalInfoForm } from "./PersonalInfoForm";
 import { UserInfoHeader } from "./UserInfoHeader";
+import type { UpdateUserCache } from "./profile.page";
 
 export function ProfilePageLayout({
   profileInfo,
-  mutateUser,
+  updateUserCache,
 }: {
   profileInfo: UserDocumentType;
-  mutateUser: KeyedMutator<UserDocumentType>;
+  updateUserCache: UpdateUserCache;
 }) {
   return (
     <div className="space-y-6 lg:space-y-10 mx-auto mt-3 lg:mt-0 mb-6">
@@ -25,7 +25,10 @@ export function ProfilePageLayout({
       />
       <div className="gap-4 lg:gap-20 grid grid-cols-1 lg:grid-cols-2">
         <div className="w-full">
-          <PersonalInfoForm userInfo={profileInfo} mutateUser={mutateUser} />
+          <PersonalInfoForm
+            userInfo={profileInfo}
+            updateUserCache={updateUserCache}
+          />
         </div>
 
         <div className="space-y-4 lg:space-y-10">

@@ -1,6 +1,7 @@
 import { appwriteService } from "@/shared/model/appwrite";
 import { CONFIG } from "@/shared/model/config";
 import { ID } from "appwrite";
+import { handleError } from "./handleError";
 
 export async function uploadToStorage(blob: File) {
   const bucketId = CONFIG.APPWRITE_STORAGE_BUCKET;
@@ -13,9 +14,12 @@ export async function uploadToStorage(blob: File) {
       file
     );
 
-    return appwriteService.storage.getFileView(bucketId, uploadedFile.$id);
-  } catch (e) {
-    console.log("Не удалось загрузить файл", e);
-    return null;
+    return {
+      ok: true,
+      response: appwriteService.storage.getFileView(bucketId, uploadedFile.$id),
+    };
+  } catch (error) {
+    console.log("Не удалось загрузить файл");
+    return handleError(error);
   }
 }

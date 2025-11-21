@@ -73,7 +73,7 @@ export function UserSb() {
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg border-1 border-muted bg-sidebar-accent"
+            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg border-1 border-muted bg-popover"
             side={isMobile ? "bottom" : "right"}
             align="end"
             sideOffset={4}
@@ -102,7 +102,7 @@ export function UserSb() {
                   тему
                 </DropdownMenuSubTrigger>
                 <DropdownMenuPortal>
-                  <DropdownMenuSubContent className="bg-sidebar-accent">
+                  <DropdownMenuSubContent className="bg-popover">
                     <DropdownMenuItem
                       onClick={(e) => onThemeChange(e, "light")}
                     >
