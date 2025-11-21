@@ -15,6 +15,8 @@ export type QueryFilters = {
   limit?: number;
 };
 
+export type Page = "main" | "collaborative" | "bookmarks" | "all";
+
 const QUANTITY_LIMIT = 15;
 
 async function fetcher(queries: string[], cursor: string | null) {
@@ -26,7 +28,11 @@ async function fetcher(queries: string[], cursor: string | null) {
   return response.documents as WishlistDocumentType[];
 }
 
-export function useWishlists(filters?: QueryFilters) {
+export function useWishlists(
+  filters?: QueryFilters,
+  page: Page = "main",
+  userId?: string
+) {
   const queries = filters ? getWishlistQueries(filters) : null;
 
   const getWishlistKey = (
@@ -39,11 +45,10 @@ export function useWishlists(filters?: QueryFilters) {
     if (previousPageData && previousPageData.length === 0) return null;
     // первая страница, нет previousPageData
     if (pageIndex === 0 && filters)
-      return ["wishlists", stableStringify(filters)];
+      return ["wishlists", page + userId, stableStringify(filters)];
     // добавляем курсор к ключу
     const cursor = previousPageData?.at(-1)?.$id ?? null;
-
-    return ["wishlists", stableStringify(filters), cursor];
+    return ["wishlists", page + userId, stableStringify(filters), cursor];
   };
 
   const { data, isLoading, error, size, setSize, isValidating, mutate } =

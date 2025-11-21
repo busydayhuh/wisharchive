@@ -20,11 +20,15 @@ export function WishlistSelect({
   const { current } = useAuth();
   const isMobile = useIsMobile();
 
-  const { wishlists, isLoading, error } = useCollabWishlists({
-    sort: { field: "$sequence", direction: "desc" },
-    filters: [],
-    limit: 100,
-  });
+  const { wishlists, isLoading, error } = useCollabWishlists(
+    {
+      sort: { field: "$sequence", direction: "desc" },
+      filters: [],
+      limit: 100,
+    },
+    "all",
+    current?.$id
+  );
 
   const options = [
     {

@@ -17,12 +17,16 @@ function BookmarksPage() {
     setSize,
     isValidating,
     reachedEnd,
-  } = useWishlists({
-    bookmarkedBy: dashboardUserId,
-    searchString: searchString,
-    sort: toolbarState.sort,
-    filters: toolbarState.filters,
-  });
+  } = useWishlists(
+    {
+      bookmarkedBy: dashboardUserId,
+      searchString: searchString,
+      sort: toolbarState.sort,
+      filters: toolbarState.filters,
+    },
+    "bookmarks",
+    dashboardUserId
+  );
 
   useInfiniteScroll({
     loadMore: () => setSize(size + 1),

@@ -6,7 +6,7 @@ export {
   useWishlistMutations,
 } from "./model/useWishlistMutations";
 export { useWishlists } from "./model/useWishlists";
-export type { QueryFilters } from "./model/useWishlists";
+export type { Page, QueryFilters } from "./model/useWishlists";
 export { WishlistDialogProvider } from "./model/WishlistDialogContext";
 export { BookmarkButton } from "./ui/actions/BookmarkButton";
 export { EditWishlistButton } from "./ui/actions/EditWishlistButton";

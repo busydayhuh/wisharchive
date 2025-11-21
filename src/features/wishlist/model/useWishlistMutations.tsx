@@ -49,7 +49,10 @@ export function useWishlistMutations() {
         );
       };
 
-      const updateCache: OptimisticUpdater = (prev) => [mockWishlist, ...prev];
+      const updateCache: OptimisticUpdater = (prev) => [
+        { ...mockWishlist, $sequence: prev.length },
+        ...prev,
+      ];
 
       try {
         const newWishlist = await performMutation({

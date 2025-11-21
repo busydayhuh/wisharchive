@@ -17,12 +17,16 @@ function WishlistsPage() {
     setSize,
     isValidating,
     reachedEnd,
-  } = useWishlists({
-    ownerId: dashboardUserId,
-    searchString: searchString,
-    sort: toolbarState.sort,
-    filters: toolbarState.filters,
-  });
+  } = useWishlists(
+    {
+      ownerId: dashboardUserId,
+      searchString: searchString,
+      sort: toolbarState.sort,
+      filters: toolbarState.filters,
+    },
+    "main",
+    dashboardUserId
+  );
 
   useInfiniteScroll({
     loadMore: () => setSize(size + 1),

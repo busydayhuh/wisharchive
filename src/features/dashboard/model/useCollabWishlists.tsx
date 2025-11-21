@@ -1,4 +1,7 @@
-import type { QueryFilters as WishlistFilters } from "@/features/wishlist";
+import type {
+  Page,
+  QueryFilters as WishlistFilters,
+} from "@/features/wishlist";
 import { useWishlists } from "@/features/wishlist";
 import team from "@/shared/model/teams";
 import type { Models } from "appwrite";
@@ -9,7 +12,11 @@ async function fetcher() {
   return response.teams as Models.Team<Models.Preferences>[];
 }
 
-export function useCollabWishlists(filters: WishlistFilters) {
+export function useCollabWishlists(
+  filters: WishlistFilters,
+  page?: Page,
+  userId?: string
+) {
   const {
     data: teams,
     isLoading: teamsLoading,
@@ -26,7 +33,7 @@ export function useCollabWishlists(filters: WishlistFilters) {
     setSize,
     isValidating,
     reachedEnd,
-  } = useWishlists({ ...filters, teams: teamsIds });
+  } = useWishlists({ ...filters, teams: teamsIds }, page, userId);
 
   return {
     wishlists,
