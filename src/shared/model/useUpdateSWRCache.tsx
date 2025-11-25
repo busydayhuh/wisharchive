@@ -1,6 +1,7 @@
 import type { Models } from "appwrite";
 import { useCallback } from "react";
 import { useSWRConfig } from "swr";
+import { sortBySequence } from "../lib/sortBySequence";
 import type { OptimisticUpdater } from "./useOptimisticMutation";
 
 type SWRCacheData =
@@ -45,5 +46,17 @@ export function useUpdateSWRCache() {
     [cache, mutate]
   );
 
-  return { updateSWRCache };
+  const addToCacheList = useCallback(
+    (prev: Models.Document[], updatedElement: Models.Document) =>
+      sortBySequence([updatedElement, ...prev]),
+    []
+  );
+
+  const removeFromCacheList = useCallback(
+    (prev: Models.Document[], id: string) =>
+      prev.filter(({ $id }) => $id !== id),
+    []
+  );
+
+  return { updateSWRCache, addToCacheList, removeFromCacheList };
 }

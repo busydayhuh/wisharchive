@@ -4,7 +4,7 @@ import {
   resolveWishlistRoles,
   useDashboardCollaborators,
 } from "@/features/collaborators";
-import { useToggleBookmark, useWishlistDialog } from "@/features/wishlist";
+import { useBookmark, useWishlistDialog } from "@/features/wishlist";
 import { ROUTES } from "@/shared/model/routes";
 import type { LinkParams, WishlistDocumentType } from "@/shared/model/types";
 import { useCallback } from "react";
@@ -35,7 +35,11 @@ export function useWishlistcardMeta(wishlist: WishlistDocumentType) {
     [wishlist, openDialog, userRoles]
   );
 
-  const { toggle } = useToggleBookmark($id, bookmarkedBy ?? [], authUser?.$id);
+  const { toggleBookmark } = useBookmark(
+    $id,
+    bookmarkedBy ?? [],
+    authUser?.$id
+  );
   const isFavorite =
     (!!authUser?.$id && bookmarkedBy?.includes(authUser.$id)) ?? false;
 
@@ -52,7 +56,7 @@ export function useWishlistcardMeta(wishlist: WishlistDocumentType) {
 
   return {
     collaborators,
-    bookmarkWishlist: toggle,
+    bookmarkWishlist: toggleBookmark,
     userRoles,
     isFavorite,
     onSharedPage,

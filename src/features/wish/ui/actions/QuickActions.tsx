@@ -2,7 +2,7 @@ import { cn } from "@/shared/lib/css";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import { type Action } from "@/shared/model/confirmation-dialog/ConfirmationDialogContext";
 import { useConfirmationDialog } from "@/shared/model/confirmation-dialog/useConfirmationDialog";
-import type { LinkParams } from "@/shared/model/types";
+import { notifyError, notifySuccessExpanded } from "@/shared/ui/CustomToast";
 import { IconBtnWithTooltip } from "@/shared/ui/IconBtnWithTooltip";
 import { Button } from "@/shared/ui/kit/button";
 import {
@@ -47,7 +47,7 @@ type MenuItem = {
 type QuickActionsProps = {
   wishId: string;
   title: string;
-  linkState: LinkParams["state"];
+  toEditPage: () => void;
   isArchived?: boolean;
   imageURL?: string;
   align?: "center" | "end" | "start";
@@ -59,7 +59,7 @@ export function QuickActions({
   wishId,
   title,
   imageURL,
-  linkState,
+  toEditPage,
   isArchived = false,
   align = "end",
   side = "top",
@@ -68,11 +68,7 @@ export function QuickActions({
 }: QuickActionsProps) {
   const isMobile = useIsMobile();
   const { openConfDialog } = useConfirmationDialog();
-  const { archiveWish, deleteWish, editWish } = useQuickActions(
-    wishId,
-    imageURL,
-    title
-  );
+  const { archiveWish, deleteWish } = useQuickActions(wishId);
 
   const handleItemSelect = (item: MenuItem) => {
     if (item.confirmation) {
@@ -92,7 +88,14 @@ export function QuickActions({
     {
       title: isArchived ? "Вернуть из архива" : "Переместить в архив",
       icon: isArchived ? <ArchiveRestore /> : <Archive />,
-      action: () => archiveWish(isArchived),
+      action: async () => {
+        const { ok } = await archiveWish(isArchived);
+        if (!ok) {
+          notifyError("Не удалось переместить в архив");
+          return;
+        }
+        notifySuccessExpanded("Перенесено в архив", title, imageURL);
+      },
       actionName: "archive" as Action,
       isActive: isArchived,
       confirmation: true,
@@ -100,14 +103,21 @@ export function QuickActions({
     {
       title: "Редактировать",
       icon: <Edit2 />,
-      action: () => editWish(linkState),
+      action: () => toEditPage(),
       actionName: "edit" as Action,
       confirmation: false,
     },
     {
       title: "Удалить",
       icon: <Trash2 />,
-      action: deleteWish,
+      action: async () => {
+        const { ok } = await deleteWish();
+        if (!ok) {
+          notifyError("Не удалось удалить желание");
+          return;
+        }
+        notifySuccessExpanded("Удалено", title, imageURL);
+      },
       actionName: "delete" as Action,
       confirmation: true,
     },

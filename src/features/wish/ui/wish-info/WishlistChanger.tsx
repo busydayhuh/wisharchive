@@ -3,6 +3,7 @@ import { useRoute } from "@/features/breadcrumbs";
 import { useCollabWishlists } from "@/features/dashboard";
 import { cn } from "@/shared/lib/css";
 import { ROUTES } from "@/shared/model/routes";
+import type { WishlistDocumentType } from "@/shared/model/types";
 import { PRIVACY_ICONS } from "@/shared/ui/Badges";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
 import { ResponsiveSelect, type Option } from "@/shared/ui/ResponsiveSelect";
@@ -15,7 +16,7 @@ export function WishlistChanger({
   variant = "dashboard",
   className,
 }: {
-  onValueChange: (value: string, title: string) => void;
+  onValueChange: (value: string, list?: WishlistDocumentType) => void;
   value?: string;
   variant?: "dashboard" | "form";
   className?: string;
@@ -52,19 +53,20 @@ export function WishlistChanger({
     })),
   ];
 
-  const selected = options.find((o) => o.value === value);
+  const selectedOption = options.find((o) => o.value === value);
+
   const handleNavigation = () => {
-    if (!selected || selected.value === "none") {
+    if (!selectedOption || selectedOption.value === "none") {
       return undefined;
     }
     return navigateWithState(
       href(ROUTES.WISHLIST, {
-        userId: selected.additional!.ownerId,
-        listId: selected!.value,
+        userId: selectedOption.additional!.ownerId,
+        listId: selectedOption!.value,
       }),
       {
-        userId: selected.additional!.ownerId,
-        wlTitle: selected.label,
+        userId: selectedOption.additional!.ownerId,
+        wlTitle: selectedOption.label,
       }
     );
   };
@@ -80,19 +82,19 @@ export function WishlistChanger({
         <button
           className={cn(
             "flex items-center gap-1.5 bg-secondary hover:bg-secondary/90 shadow-none px-1.5 py-1 pr-2 border-r-1 border-r-border/60 rounded-l-md h-10",
-            selected?.value !== "none" && "cursor-pointer"
+            selectedOption?.value !== "none" && "cursor-pointer"
           )}
           onClick={handleNavigation}
         >
-          {selected?.icon}
-          <span className="max-w-[10ch] truncate">{selected?.label}</span>
+          {selectedOption?.icon}
+          <span className="max-w-[10ch] truncate">{selectedOption?.label}</span>
         </button>
 
         <ResponsiveSelect
           options={options}
           onChange={(value) => {
-            const newOption = options.find((o) => o.value === value);
-            onValueChange(value, newOption?.label ?? "");
+            const selectedList = wishlists?.find((wl) => wl.$id === value);
+            onValueChange(value, selectedList);
           }}
           value={value}
           renderTrigger={() => (

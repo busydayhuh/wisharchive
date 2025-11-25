@@ -21,7 +21,7 @@ export function DeleteButton({
   const handleClick = () =>
     openConfDialog({
       action: "delete",
-      onConfirm: action,
+      onConfirm: async () => action(),
       name: wishTitle,
     });
 

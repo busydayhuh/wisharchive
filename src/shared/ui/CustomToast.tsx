@@ -22,6 +22,20 @@ export function customToast(toast: Omit<ToastProps, "id">) {
   ));
 }
 
+export const notifyError = (
+  message: string,
+  description = "Повторите попытку позже"
+) => sonnerToast.error(message, { description });
+
+export const notifySuccessSimple = (message: string, description?: string) =>
+  sonnerToast.success(message, { description });
+
+export const notifySuccessExpanded = (
+  message: string,
+  title: string,
+  imageURL?: string
+) => customToast({ title: message, description: title, icon: imageURL });
+
 function CustomToast(props: ToastProps) {
   const { title, description, button, id, icon } = props;
 

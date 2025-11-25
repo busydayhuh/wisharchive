@@ -1,5 +1,6 @@
 import { cn } from "@/shared/lib/css";
 import { useConfirmationDialog } from "@/shared/model/confirmation-dialog/useConfirmationDialog";
+import { notifyError, notifySuccessExpanded } from "@/shared/ui/CustomToast";
 import { IconBtnWithTooltip } from "@/shared/ui/IconBtnWithTooltip";
 import { Button } from "@/shared/ui/kit/button";
 import { Archive, ArchiveRestore } from "lucide-react";
@@ -22,12 +23,19 @@ export function ArchiveButton({
   className,
 }: ArchiveButtonProps) {
   const { openConfDialog } = useConfirmationDialog();
-  const { archiveWish } = useQuickActions(wishId, imageURL, wishTitle);
+  const { archiveWish } = useQuickActions(wishId);
 
   const handleClick = () =>
     openConfDialog({
       action: "archive",
-      onConfirm: () => archiveWish(isArchived),
+      onConfirm: async () => {
+        const { ok } = await archiveWish(isArchived);
+        if (!ok) {
+          notifyError("Не удалось переместить в архив");
+          return;
+        }
+        notifySuccessExpanded("Перенесено в архив", wishTitle, imageURL);
+      },
       name: wishTitle,
       isActive: isArchived,
     });

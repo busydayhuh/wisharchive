@@ -1,4 +1,4 @@
-import { WishlistControl } from "@/features/dashboard";
+import { WishlistController } from "@/features/dashboard";
 import { cn } from "@/shared/lib/css";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { PriorityBadge, ShopBadge } from "@/shared/ui/Badges";
@@ -21,7 +21,7 @@ function getBasicInfo(params: WishDetailsProps) {
       header: "вишлист",
       element:
         (!isOwner && !wishlist) || isArchived ? null : (
-          <WishlistControl
+          <WishlistController
             wishTitle={wishTitle}
             imageURL={imageURL}
             isOwner={isOwner}

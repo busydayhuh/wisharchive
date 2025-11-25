@@ -12,10 +12,10 @@ import type { WishDocumentType } from "@/shared/model/types";
 import { PriorityBadge, PRIVACY_ICONS, ShopBadge } from "@/shared/ui/Badges";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { Link } from "react-router";
-import { WishlistControl } from "./WishlistControl";
+import { WishlistController } from "./WishlistController";
 
 function WishTableItem({ wish }: { wish: WishDocumentType }) {
-  const { userRoles, onBookedPage, onListPage, linkParams } =
+  const { userRoles, onBookedPage, onListPage, linkParams, toEditPage } =
     useWishcardMeta(wish);
 
   const isMobile = useIsMobile();
@@ -87,7 +87,7 @@ function WishTableItem({ wish }: { wish: WishDocumentType }) {
       {/* Управление вишлистом */}
       {/* Отображается при w >= 768px */}
       <div className="hidden md:block justify-self-end md:justify-self-center">
-        <WishlistControl
+        <WishlistController
           wishTitle={wish.title}
           imageURL={wish.imageURL ?? undefined}
           className="w-fit h-9 font-medium text-xs lg:text-sm"
@@ -103,7 +103,7 @@ function WishTableItem({ wish }: { wish: WishDocumentType }) {
       {/* Быстрые действия / забронировать */}
       <div className="justify-self-end lg:justify-self-center">
         {onListPage && (userRoles?.isWishOwner || userRoles?.isEditor) ? (
-          <WishlistControl
+          <WishlistController
             wishTitle={wish.title}
             imageURL={wish.imageURL ?? undefined}
             className="w-fit h-9 font-medium text-xs lg:text-sm"
@@ -123,7 +123,7 @@ function WishTableItem({ wish }: { wish: WishDocumentType }) {
             side="bottom"
             align="end"
             isArchived={wish.isArchived}
-            linkState={linkParams.state}
+            toEditPage={toEditPage}
           />
         ) : (
           <BookButton

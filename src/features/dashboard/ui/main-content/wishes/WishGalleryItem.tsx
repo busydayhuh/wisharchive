@@ -13,10 +13,10 @@ import { PriorityBadge, PRIVACY_ICONS } from "@/shared/ui/Badges";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { memo } from "react";
 import { Link } from "react-router";
-import { WishlistControl } from "./WishlistControl";
+import { WishlistController } from "./WishlistController";
 
 function WishGalleryItem({ wish }: { wish: WishDocumentType }) {
-  const { onBookedPage, onListPage, userRoles, linkParams } =
+  const { onBookedPage, onListPage, userRoles, linkParams, toEditPage } =
     useWishcardMeta(wish);
   const isMobile = useIsMobile();
 
@@ -30,11 +30,12 @@ function WishGalleryItem({ wish }: { wish: WishDocumentType }) {
         wish={wish}
         userRoles={userRoles}
         linkParams={linkParams}
+        toEditPage={toEditPage}
         isMobile={isMobile}
       />
 
       {!wish.isArchived && (
-        <WishlistControl
+        <WishlistController
           wishTitle={wish.title}
           imageURL={wish.imageURL ?? undefined}
           className={cn(
@@ -85,11 +86,13 @@ function WishGalleryItem({ wish }: { wish: WishDocumentType }) {
 
 const WishCover = memo(function WishCover({
   wish,
+  toEditPage,
   userRoles,
   linkParams,
   isMobile,
 }: {
   wish: WishDocumentType;
+  toEditPage: () => void;
   userRoles?: WishRoles;
   linkParams: LinkParams;
   isMobile: boolean;
@@ -127,7 +130,7 @@ const WishCover = memo(function WishCover({
               align="start"
               isArchived={wish.isArchived}
               title={wish.title}
-              linkState={linkParams.state}
+              toEditPage={toEditPage}
               className="transition-all duration-300 show-actions"
             />
           ) : (

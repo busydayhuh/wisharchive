@@ -4,7 +4,7 @@ import { resolveWishRoles } from "@/features/collaborators";
 import { ROUTES } from "@/shared/model/routes";
 import type { LinkParams, WishDocumentType } from "@/shared/model/types";
 import { useMemo } from "react";
-import { href, useMatch } from "react-router-dom";
+import { href, useMatch, useNavigate } from "react-router-dom";
 
 export function useWishcardMeta({
   wishlist,
@@ -19,6 +19,7 @@ export function useWishcardMeta({
 >) {
   const { current: authUser } = useAuth();
   const { location, params } = useRoute();
+  const navigate = useNavigate();
 
   const roles = useMemo(
     () => resolveWishRoles(wishlist, ownerId, bookerId, authUser?.$id),
@@ -42,10 +43,14 @@ export function useWishcardMeta({
     },
   };
 
+  const toEditPage = () =>
+    navigate(href(ROUTES.EDIT, { wishId: $id }), { state: linkParams.state });
+
   return {
     userRoles: roles,
     onBookedPage,
     onListPage,
     linkParams,
+    toEditPage,
   };
 }

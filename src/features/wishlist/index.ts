@@ -1,4 +1,4 @@
-export { useToggleBookmark } from "./model/useToggleBookmark";
+export { useBookmark } from "./model/useBookmark";
 export { useWishlist } from "./model/useWishlist";
 export { useWishlistDialog } from "./model/useWishlistDialog";
 export {

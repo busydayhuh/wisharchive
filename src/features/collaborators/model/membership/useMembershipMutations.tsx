@@ -1,14 +1,12 @@
 import { useWishlistMutations } from "@/features/wishlist/";
 import { handleError } from "@/shared/model/handleError";
-import { useRevalidateSWR } from "@/shared/model/useRevalidateSWR";
+import team from "@/shared/model/teams";
 import { useCallback, useMemo } from "react";
-import team from "../../../../shared/model/teams";
 import { useTeamMembers } from "./useTeamMembers";
 
 function useMembershipMutations(teamId: string) {
   const { members, mutate: mutateTeamMembers } = useTeamMembers(teamId);
   const { update } = useWishlistMutations();
-  const { revalidate } = useRevalidateSWR();
 
   const editors = useMemo(
     () =>
@@ -31,6 +29,11 @@ function useMembershipMutations(teamId: string) {
 
   const addMember = useCallback(
     async (email: string, userId: string, role: "editors" | "readers") => {
+      const updatedEditors =
+        role === "editors" ? [...(editors ?? []), userId] : editors;
+      const updatedReaders =
+        role === "readers" ? [...(readers ?? []), userId] : readers;
+
       try {
         // Добавляем члена в Team API
         if (role === "editors") await team.addEditor(teamId, email, userId);
@@ -38,22 +41,18 @@ function useMembershipMutations(teamId: string) {
 
         // Обновляем список в БД
         const { ok, errorMessage } = await update(teamId, {
-          editorsIds:
-            role === "editors" ? [...(editors ?? []), userId] : editors,
-          readersIds:
-            role === "readers" ? [...(readers ?? []), userId] : readers,
+          editorsIds: updatedEditors,
+          readersIds: updatedReaders,
         });
         if (!ok) throw new Error(errorMessage);
 
         mutateTeamMembers();
-        revalidate("wishlists");
-
         return { ok: true };
       } catch (error) {
         return handleError(error);
       }
     },
-    [editors, mutateTeamMembers, readers, teamId, update, revalidate]
+    [editors, mutateTeamMembers, readers, teamId, update]
   );
 
   const deleteMember = useCallback(
@@ -74,14 +73,12 @@ function useMembershipMutations(teamId: string) {
         if (!ok) throw Error;
 
         mutateTeamMembers();
-        revalidate("wishlists");
-
         return { ok: true };
       } catch (error) {
         return handleError(error);
       }
     },
-    [members, teamId, update, editors, readers, mutateTeamMembers, revalidate]
+    [members, teamId, update, editors, readers, mutateTeamMembers]
   );
 
   return { deleteMember, addMember };

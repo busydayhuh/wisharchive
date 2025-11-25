@@ -1,139 +1,185 @@
 import { useAuth } from "@/features/auth";
-import { ROUTES } from "@/shared/model/routes";
-import type { LinkParams } from "@/shared/model/types";
-import { useRevalidateSWR } from "@/shared/model/useRevalidateSWR";
-import { customToast } from "@/shared/ui/CustomToast";
+import type { WishlistDocumentType } from "@/shared/model/types";
+import { useUpdateSWRCache } from "@/shared/model/useUpdateSWRCache";
 import { useCallback } from "react";
-import { href, useNavigate } from "react-router";
-import { toast } from "sonner";
+import { useWish } from "./useWish";
 import { useWishMutations } from "./useWishMutations";
 
-export function useQuickActions(
-  wishId: string,
-  imageURL?: string,
-  wishTitle?: string
-) {
+export function useQuickActions(wishId: string) {
   const { current } = useAuth();
-  const actions = useWishMutations();
-  const { revalidate } = useRevalidateSWR();
-  const navigate = useNavigate();
+  const { wish } = useWish(wishId);
+  const { update, deleteW } = useWishMutations();
+  const { updateSWRCache, addToCacheList, removeFromCacheList } =
+    useUpdateSWRCache();
 
-  const showErrorToast = useCallback(
-    (text: string) =>
-      toast.error(text, { description: "Повторите попытку позже" }),
+  const perform = useCallback(
+    async ({
+      mutation,
+      patch,
+    }: {
+      mutation: () => Promise<{ ok: boolean }>;
+      patch?: () => void;
+    }) => {
+      const { ok } = await mutation();
+      if (!ok) return { ok };
+      patch?.();
+      return { ok };
+    },
     []
   );
 
-  const showSuccessToast = useCallback(
-    (text: string) =>
-      customToast({ title: text, description: wishTitle, icon: imageURL }),
-    [imageURL, wishTitle]
-  );
-
   const bookWish = useCallback(
-    async (pressed: boolean) => {
-      if (!current) return navigate(ROUTES.LOGIN);
+    (isBooking: boolean) => {
+      const fields = {
+        isBooked: isBooking,
+        bookerId: isBooking ? current?.$id : null,
+        bookedBy: isBooking ? current?.$id : null,
+      };
+      const updatedWish = wish ? { ...wish, ...fields } : undefined;
 
-      const { ok } = await actions.update(wishId, {
-        isBooked: pressed,
-        bookerId: pressed ? current.$id : null,
-        bookedBy: pressed ? current.$id : null,
+      return perform({
+        mutation: () => update(wishId, fields),
+        patch: updatedWish
+          ? () =>
+              updateSWRCache("booked", (prev) =>
+                isBooking
+                  ? addToCacheList(prev, updatedWish)
+                  : removeFromCacheList(prev, wishId)
+              )
+          : undefined,
       });
-
-      if (!ok) {
-        showErrorToast(
-          pressed ? "Ошибка бронирования" : "Не удалось отменить бронь"
-        );
-        return;
-      }
-
-      showSuccessToast(
-        pressed ? "Желание забронировано" : "Бронирование отменено"
-      );
     },
-    [current, navigate, actions, wishId, showSuccessToast, showErrorToast]
+    [
+      current?.$id,
+      wish,
+      perform,
+      update,
+      wishId,
+      updateSWRCache,
+      addToCacheList,
+      removeFromCacheList,
+    ]
   );
 
   const archiveWish = useCallback(
-    async (archived: boolean) => {
-      const { ok } = await actions.update(wishId, {
-        isArchived: !archived,
+    (isCurrentlyArchived: boolean) => {
+      const isArchiving = !isCurrentlyArchived;
+      const fields = {
+        isArchived: isArchiving,
         wishlist: null,
         wishlistId: null,
+      };
+      const updatedWish = wish ? { ...wish, ...fields } : undefined;
+
+      return perform({
+        mutation: () => update(wishId, fields),
+        patch: updatedWish
+          ? () =>
+              updateSWRCache("archived", (prev) =>
+                isArchiving
+                  ? addToCacheList(prev, updatedWish)
+                  : removeFromCacheList(prev, wishId)
+              )
+          : undefined,
       });
-
-      if (!ok) {
-        showErrorToast("Не удалось переместить желание");
-        return;
-      }
-
-      await revalidate("wishes");
-      showSuccessToast(
-        archived ? "Желание восстановлено" : "Желание архивировано"
-      );
     },
-    [actions, wishId, revalidate, showSuccessToast, showErrorToast]
+    [
+      wish,
+      perform,
+      update,
+      wishId,
+      updateSWRCache,
+      addToCacheList,
+      removeFromCacheList,
+    ]
   );
 
-  const editWish = useCallback(
-    (linkState: LinkParams["state"]) =>
-      navigate(href(ROUTES.EDIT, { wishId }), { state: linkState }),
-    [wishId, navigate]
+  const deleteWish = useCallback(
+    () =>
+      perform({
+        mutation: () => deleteW(wishId),
+      }),
+    [deleteW, perform, wishId]
   );
 
-  const deleteWish = useCallback(async () => {
-    const { ok } = await actions.delete(wishId);
+  const removeFromWishlist = useCallback(() => {
+    const oldListId = wish?.wishlistId;
 
-    if (!ok) {
-      showErrorToast("Не удалось удалить желание");
-      return;
-    }
-    showSuccessToast("Желание удалено");
-  }, [actions, wishId, showSuccessToast, showErrorToast]);
-
-  const removeFromWishlist = useCallback(async () => {
-    const { ok } = await actions.update(wishId, {
-      wishlistId: null,
-      wishlist: null,
+    return perform({
+      mutation: () =>
+        update(wishId, {
+          wishlistId: null,
+          wishlist: null,
+        }),
+      patch: () =>
+        updateSWRCache("wishlists", (prev) =>
+          prev.map((wl) =>
+            wl.$id === oldListId
+              ? { ...wl, wishes: removeFromCacheList(wl.wishes, wishId) }
+              : wl
+          )
+        ),
     });
-
-    if (!ok) {
-      showErrorToast("Не удалось исключить желание из списка");
-      return;
-    }
-
-    revalidate("wishes");
-    showSuccessToast("Исключено из списка");
-  }, [actions, wishId, revalidate, showSuccessToast, showErrorToast]);
+  }, [
+    wish?.wishlistId,
+    perform,
+    update,
+    wishId,
+    updateSWRCache,
+    removeFromCacheList,
+  ]);
 
   const changeWishlist = useCallback(
-    async (newWlId: string | null, newWlTitle: string) => {
-      const { ok } = await actions.update(wishId, {
-        wishlistId: newWlId,
-        wishlist: newWlId,
-      });
+    (newListId: string | null, newList?: WishlistDocumentType) => {
+      const oldListId = wish?.wishlistId;
+      const updatedWish = wish
+        ? { ...wish, wishlistId: newListId, wishlist: newList }
+        : undefined;
 
-      if (!ok) {
-        showErrorToast("Не удалось переместить желание");
-        return;
-      }
+      return perform({
+        mutation: () =>
+          update(wishId, {
+            wishlistId: newListId,
+            wishlist: newListId,
+          }),
 
-      await Promise.all([revalidate("wishes"), revalidate("wishlists")]);
-
-      customToast({
-        title: "Перемещено в",
-        description: newWlTitle,
-        icon: imageURL,
+        patch:
+          updatedWish && newListId
+            ? () => {
+                updateSWRCache("wishlists", (prev) =>
+                  prev.map((wl) => {
+                    if (wl.$id === oldListId)
+                      return {
+                        ...wl,
+                        wishes: removeFromCacheList(wl.wishes, wishId),
+                      };
+                    if (wl.$id === newListId)
+                      return {
+                        ...wl,
+                        wishes: addToCacheList(wl.wishes, updatedWish),
+                      };
+                    return wl;
+                  })
+                );
+              }
+            : undefined,
       });
     },
-    [actions, wishId, revalidate, imageURL, showErrorToast]
+    [
+      wish,
+      perform,
+      update,
+      wishId,
+      updateSWRCache,
+      removeFromCacheList,
+      addToCacheList,
+    ]
   );
 
   return {
     bookWish,
     archiveWish,
     deleteWish,
-    editWish,
     removeFromWishlist,
     changeWishlist,
   };

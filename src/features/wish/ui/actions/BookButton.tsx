@@ -1,5 +1,6 @@
 import { cn } from "@/shared/lib/css";
 import { useConfirmationDialog } from "@/shared/model/confirmation-dialog/useConfirmationDialog";
+import { notifyError, notifySuccessExpanded } from "@/shared/ui/CustomToast";
 import { IconBtnWithTooltip } from "@/shared/ui/IconBtnWithTooltip";
 import { Toggle } from "@/shared/ui/kit/toggle";
 import { cva } from "class-variance-authority";
@@ -39,11 +40,18 @@ export const BookButton = memo(function BookButton({
   imageURL?: string;
 }) {
   const { openConfDialog } = useConfirmationDialog();
-  const { bookWish } = useQuickActions(wishId, imageURL, wishTitle);
+  const { bookWish } = useQuickActions(wishId);
 
   const handlePress = () =>
     openConfDialog({
-      onConfirm: () => bookWish(!isBookedByCurrentUser),
+      onConfirm: async () => {
+        const { ok } = await bookWish(!isBookedByCurrentUser);
+        if (!ok) {
+          notifyError("Не удалось забронировать желание");
+          return;
+        }
+        notifySuccessExpanded("Хочу подарить", wishTitle, imageURL);
+      },
       action: "book",
       isActive: isBookedByCurrentUser,
     });

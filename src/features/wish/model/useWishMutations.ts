@@ -127,5 +127,5 @@ export function useWishMutations() {
     [performMutation]
   );
 
-  return { create, update, delete: deleteW };
+  return { create, update, deleteW };
 }
