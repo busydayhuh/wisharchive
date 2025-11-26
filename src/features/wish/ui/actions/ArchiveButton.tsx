@@ -34,7 +34,11 @@ export function ArchiveButton({
           notifyError("Не удалось переместить в архив");
           return;
         }
-        notifySuccessExpanded("Перенесено в архив", wishTitle, imageURL);
+        notifySuccessExpanded(
+          isArchived ? "Восстановлено" : "Перенесено в архив",
+          wishTitle,
+          imageURL
+        );
       },
       name: wishTitle,
       isActive: isArchived,
