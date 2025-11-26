@@ -15,9 +15,7 @@ import {
 import { cva, type VariantProps } from "class-variance-authority";
 import { Archive, ArchiveRestore, Edit2, Ellipsis, Trash2 } from "lucide-react";
 import { type JSX } from "react";
-import DeleteButton from "../../../../shared/ui/DeleteButton";
 import { useQuickActions } from "../../model/useQuickActions";
-import { ArchiveButton } from "./ArchiveButton";
 
 const dropdownTriggerVariants = cva(
   "inline-flex justify-center items-center border-0 rounded-sm size-9 text-foreground text-sm transition duration-300 cursor-pointer shrink-0",
@@ -86,7 +84,7 @@ export function QuickActions({
 
   const items = [
     {
-      title: isArchived ? "Вернуть из архива" : "Переместить в архив",
+      title: isArchived ? "Вернуть из архива" : "В архив",
       icon: isArchived ? <ArchiveRestore /> : <Archive />,
       action: async () => {
         const { ok } = await archiveWish(isArchived);
@@ -94,7 +92,11 @@ export function QuickActions({
           notifyError("Не удалось переместить в архив");
           return;
         }
-        notifySuccessExpanded("Перенесено в архив", title, imageURL);
+        notifySuccessExpanded(
+          isArchived ? "Восстановлено" : "Перенесено в архив",
+          title,
+          imageURL
+        );
       },
       actionName: "archive" as Action,
       isActive: isArchived,
@@ -132,6 +134,7 @@ export function QuickActions({
           title={title}
           items={items}
           wishId={wishId}
+          handleItemSelect={handleItemSelect}
           className={className}
         />
       ) : (
@@ -195,52 +198,33 @@ function Dropdown({
 }
 
 function Buttons({
-  title,
   wishId,
-  imageURL,
+  handleItemSelect,
   items,
   className,
 }: {
-  title: string;
   wishId: string;
-  imageURL?: string;
+  handleItemSelect: (item: MenuItem) => void;
   items: MenuItem[];
   className?: string;
 } & React.ComponentProps<"div"> &
   DropdownTriggerVariants) {
-  const renderers: Partial<Record<Action, (item: MenuItem) => JSX.Element>> = {
-    archive: (item: MenuItem) => (
-      <ArchiveButton
-        imageURL={imageURL}
-        wishId={wishId}
-        key={wishId + item.actionName}
-        variant="quick-action"
-        isArchived={item.isActive ?? false}
-        wishTitle={title}
-      />
-    ),
-    edit: (item: MenuItem) => (
-      <IconBtnWithTooltip
-        key={wishId + item.actionName}
-        tooltipText="Редактировать"
-      >
-        <Button size="icon" variant="secondary" onClick={item.action}>
-          {item.icon}
-        </Button>
-      </IconBtnWithTooltip>
-    ),
-    delete: (item: MenuItem) => (
-      <DeleteButton
-        key={wishId + item.actionName}
-        variant="quick-action"
-        wishTitle={title}
-        action={item.action}
-      />
-    ),
-  };
   return (
     <div className={cn("flex gap-2", className)}>
-      {items.map((item) => renderers[item.actionName]?.(item))}
+      {items.map((item) => (
+        <IconBtnWithTooltip
+          key={wishId + item.actionName}
+          tooltipText={item.title}
+        >
+          <Button
+            size="icon"
+            variant="secondary"
+            onClick={() => handleItemSelect(item)}
+          >
+            {item.icon}
+          </Button>
+        </IconBtnWithTooltip>
+      ))}
     </div>
   );
 }
