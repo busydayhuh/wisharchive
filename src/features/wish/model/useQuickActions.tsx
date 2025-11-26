@@ -41,7 +41,7 @@ export function useQuickActions(wishId: string) {
         mutation: () => update(wishId, fields),
         patch: updatedWish
           ? () =>
-              updateSWRCache("booked", (prev) =>
+              updateSWRCache(`booked+${current?.$id}`, (prev) =>
                 isBooking
                   ? addToCacheList(prev, updatedWish)
                   : removeFromCacheList(prev, wishId)
@@ -75,7 +75,7 @@ export function useQuickActions(wishId: string) {
         mutation: () => update(wishId, fields),
         patch: updatedWish
           ? () =>
-              updateSWRCache("archived", (prev) =>
+              updateSWRCache(`archived+${current?.$id}`, (prev) =>
                 isArchiving
                   ? addToCacheList(prev, updatedWish)
                   : removeFromCacheList(prev, wishId)
@@ -84,6 +84,7 @@ export function useQuickActions(wishId: string) {
       });
     },
     [
+      current,
       wish,
       perform,
       update,
