@@ -7,7 +7,6 @@ import DefaultLoader from "@/shared/ui/DefaultLoader";
 import { Toaster } from "@/shared/ui/kit/sonner";
 import MainContainer from "@/shared/ui/MainContainer";
 import { Outlet, useNavigation } from "react-router-dom";
-import { useSWRConfig } from "swr";
 
 function App() {
   const { isLoggedIn } = useAuth();
@@ -15,8 +14,8 @@ function App() {
 
   const isLoading = useNavigation().state === "loading";
 
-  const { cache } = useSWRConfig();
-  console.log("cache :>> ", cache);
+  // const { cache } = useSWRConfig();
+  // console.log("cache :>> ", cache);
 
   return (
     <>
