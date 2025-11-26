@@ -5,6 +5,8 @@ import { Query, type Models } from "appwrite";
 import stableStringify from "fast-json-stable-stringify";
 import useSWRInfinite from "swr/infinite";
 
+type Page = "main" | "archived" | "booked" | "wishlist";
+
 type QueryFilters = {
   ownerId?: string;
   searchString?: string;
@@ -27,27 +29,32 @@ async function fetcher(queries: string[], cursor: string | null) {
   return response.documents as WishDocumentType[];
 }
 
-export function useWishes(filters?: QueryFilters) {
+export function useWishes(
+  filters?: QueryFilters,
+  page: Page = "main",
+  userId?: string
+) {
   const queries = filters ? getWishQueries(filters) : null;
+  const pageId = `${page}+${userId}`;
 
   const getWishKey = (
     pageIndex: number,
     previousPageData: Models.Document[] | null
   ) => {
     if (!filters) return null;
-
     // дошли до конца
     if (previousPageData && previousPageData.length === 0) return null;
     // первая страница, нет previousPageData
-    if (pageIndex === 0 && filters) return ["wishes", stableStringify(filters)];
+    if (pageIndex === 0 && filters)
+      return ["wishes", pageId, stableStringify(filters)];
     // добавляем курсор к ключу
     const cursor = previousPageData?.at(-1)?.$id ?? null;
 
-    return ["wishes", stableStringify(filters), cursor];
+    return ["wishes", pageId, stableStringify(filters), cursor];
   };
 
   const { data, isLoading, error, size, setSize, isValidating } =
-    useSWRInfinite(getWishKey, ([, , cursor]) => fetcher(queries!, cursor), {
+    useSWRInfinite(getWishKey, ([, , , cursor]) => fetcher(queries!, cursor), {
       revalidateAll: true,
       keepPreviousData: true,
     }); // если queries null, то key = null и запроса не будет

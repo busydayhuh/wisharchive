@@ -17,15 +17,19 @@ export function RelatedWishes({
   wishId: string;
   userName?: string;
 }) {
-  const { wishes, isLoading, error } = useWishes({
-    ownerId: userId,
-    archived: false,
-    sort: {
-      field: "$sequence",
-      direction: "desc",
+  const { wishes, isLoading, error } = useWishes(
+    {
+      ownerId: userId,
+      archived: false,
+      sort: {
+        field: "$sequence",
+        direction: "desc",
+      },
+      filters: [],
     },
-    filters: [],
-  });
+    "main",
+    userId
+  );
 
   const relatedWishes = useMemo(
     () =>

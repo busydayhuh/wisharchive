@@ -6,13 +6,17 @@ export function WishlistContent({ wishlistId }: { wishlistId: string }) {
   const { searchString, toolbarState } = useDashboardToolbar();
 
   const { wishes, isLoading, error, isValidating, size, setSize, reachedEnd } =
-    useWishes({
-      searchString: searchString,
-      wishlistId: wishlistId,
-      archived: false,
-      sort: toolbarState.sort,
-      filters: toolbarState.filters,
-    });
+    useWishes(
+      {
+        searchString: searchString,
+        wishlistId: wishlistId,
+        archived: false,
+        sort: toolbarState.sort,
+        filters: toolbarState.filters,
+      },
+      "wishlist",
+      wishlistId
+    );
 
   console.log("toolbarState.filters :>> ", toolbarState.filters);
 

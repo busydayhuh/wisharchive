@@ -10,13 +10,17 @@ function BookedPage() {
   const { searchString, toolbarState } = useDashboardToolbar();
 
   const { wishes, isLoading, error, size, setSize, isValidating, reachedEnd } =
-    useWishes({
-      bookerId: dashboardUserId,
-      archived: false,
-      searchString: searchString,
-      sort: toolbarState.sort,
-      filters: toolbarState.filters,
-    });
+    useWishes(
+      {
+        bookerId: dashboardUserId,
+        archived: false,
+        searchString: searchString,
+        sort: toolbarState.sort,
+        filters: toolbarState.filters,
+      },
+      "booked",
+      dashboardUserId
+    );
 
   useInfiniteScroll({
     loadMore: () => setSize(size + 1),

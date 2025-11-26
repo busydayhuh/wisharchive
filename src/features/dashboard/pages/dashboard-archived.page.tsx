@@ -10,13 +10,17 @@ function ArchivedWishesPage() {
   const { searchString, toolbarState } = useDashboardToolbar();
 
   const { wishes, isLoading, error, size, setSize, isValidating, reachedEnd } =
-    useWishes({
-      ownerId: dashboardUserId,
-      searchString: searchString,
-      archived: true,
-      sort: toolbarState.sort,
-      filters: toolbarState.filters,
-    });
+    useWishes(
+      {
+        ownerId: dashboardUserId,
+        searchString: searchString,
+        archived: true,
+        sort: toolbarState.sort,
+        filters: toolbarState.filters,
+      },
+      "archived",
+      dashboardUserId
+    );
 
   useInfiniteScroll({
     loadMore: () => setSize(size + 1),

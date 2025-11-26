@@ -10,13 +10,17 @@ function WishesPage() {
   const { searchString, toolbarState } = useDashboardToolbar();
 
   const { wishes, isLoading, error, size, setSize, isValidating, reachedEnd } =
-    useWishes({
-      ownerId: dashboardUserId,
-      searchString: searchString,
-      archived: false,
-      sort: toolbarState.sort,
-      filters: toolbarState.filters,
-    });
+    useWishes(
+      {
+        ownerId: dashboardUserId,
+        searchString: searchString,
+        archived: false,
+        sort: toolbarState.sort,
+        filters: toolbarState.filters,
+      },
+      "main",
+      dashboardUserId
+    );
 
   useInfiniteScroll({
     loadMore: () => setSize(size + 1),
