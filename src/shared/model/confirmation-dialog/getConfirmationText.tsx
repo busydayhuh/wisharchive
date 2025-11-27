@@ -55,7 +55,8 @@ export function getConfirmationText(
       ) : (
         <p>
           Вы сможете найти <strong>{name}</strong> позже в разделе «Архив
-          желаний».
+          желаний». Если желание забронировано,{" "}
+          <strong>бронь будет отменена</strong>.
         </p>
       ),
       actionText: isActive ? "Вернуть" : "Переместить",
