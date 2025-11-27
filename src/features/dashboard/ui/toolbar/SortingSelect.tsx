@@ -1,5 +1,4 @@
 import { cn } from "@/shared/lib/css";
-import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
 import { ChevronDown } from "lucide-react";
 import type { SortState } from "../../model/DashboardToolbarContext";
@@ -18,8 +17,6 @@ export function SortingSelect() {
     icon: sort.icon,
   }));
 
-  const isMobile = useIsMobile();
-
   function setSort(value: string) {
     const splitValue = value.split("+");
     const newState: SortState = {
@@ -32,21 +29,20 @@ export function SortingSelect() {
 
   return (
     <ResponsiveSelect
-      value={`${sortState.field}+${sortState.direction}`}
-      onChange={setSort}
+      selectedValue={`${sortState.field}+${sortState.direction}`}
+      onSelect={setSort}
       options={options}
-      renderTrigger={(selected) => (
+      renderSelected={(selected) => (
         <>
           <span className="flex items-center gap-1.5">
             {selected?.icon}
             {selected?.label}
           </span>
-          {isMobile && <ChevronDown className="size-3" />}
+          <ChevronDown className="md:hidden size-3" />
         </>
       )}
-      triggerCSS={cn(
-        "gap-2 bg-primary w-fit max-w-[16rem] data-[size=default]:h-10 font-medium text-primary-foreground text-xs lg:text-sm",
-        isMobile && "h-9 px-2.5"
+      triggerClassName={cn(
+        "gap-2 bg-primary px-2.5 w-fit max-w-[16rem] h-9 md:data-[size=default]:h-10 font-medium text-primary-foreground text-xs lg:text-sm"
       )}
       title="Сортировка"
     />

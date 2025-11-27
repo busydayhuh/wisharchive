@@ -32,6 +32,7 @@ type Session = Models.Session | null;
 
 type UserContextType = {
   current: User;
+  userId?: string;
   session: Session;
   login: (data: FormValues["login"]) => Promise<ResponseType>;
   logout: () => Promise<ResponseType>;
@@ -124,6 +125,7 @@ export function UserProvider(props: { children: ReactNode }) {
     <UserContext.Provider
       value={{
         current: user,
+        userId: user?.$id,
         login,
         logout,
         register,

@@ -13,7 +13,7 @@ import { PriorityBadge, PRIVACY_ICONS } from "@/shared/ui/Badges";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { memo } from "react";
 import { Link } from "react-router";
-import { WishlistController } from "./WishlistController";
+import { WishlistDisplayManager } from "./WishlistDisplayManager";
 
 function WishGalleryItem({ wish }: { wish: WishDocumentType }) {
   const { onBookedPage, onListPage, userRoles, linkParams, toEditPage } =
@@ -35,7 +35,7 @@ function WishGalleryItem({ wish }: { wish: WishDocumentType }) {
       />
 
       {!wish.isArchived && (
-        <WishlistController
+        <WishlistDisplayManager
           wishTitle={wish.title}
           imageURL={wish.imageURL ?? undefined}
           className={cn(

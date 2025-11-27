@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from "@/shared/ui/kit/select";
 import { Check, ChevronDown, Loader2 } from "lucide-react";
+import { useMemo } from "react";
 import { cn } from "../lib/css";
 import { useIsMobile } from "../lib/react/useIsMobile";
 import {
@@ -26,38 +27,41 @@ export type Option = {
   icon?: React.ReactNode;
   colors?: string;
   disabled?: boolean;
-  additional?: { ownerId: string };
 };
 
 type ResponsiveSelectProps = {
-  value?: string;
-  onChange: (value: string, additional?: { isPrivate: boolean }) => void;
+  selectedValue?: string;
+  onSelect: (value: string, additional?: { isPrivate: boolean }) => void;
   options: Option[];
-  renderTrigger?: (selected?: Option) => React.ReactNode;
+  renderSelected?: (selected?: Option) => React.ReactNode;
   title?: string;
   renderOption?: (opt: Option, isSelected: boolean) => React.ReactNode;
   isLoading?: boolean;
   error?: Error;
-  triggerCSS?: string;
-  contentCSS?: string;
+  triggerClassName?: string;
+  contentClassName?: string;
 };
 
 export function ResponsiveSelect({
-  value,
-  onChange,
+  selectedValue,
+  onSelect,
   options,
-  renderTrigger,
-  title = "Выбор",
+  renderSelected,
   renderOption,
+  title = "Выбор",
   isLoading = false,
   error,
-  triggerCSS,
-  contentCSS,
+  triggerClassName,
+  contentClassName,
 }: ResponsiveSelectProps) {
   const isMobile = useIsMobile();
-  const selected =
-    options.find((o) => o.value === value) ??
-    options.find((o) => o.value === "none");
+
+  const selectedOption = useMemo(
+    () =>
+      options.find((o) => o.value === selectedValue) ??
+      options.find((o) => o.value === "none"),
+    [options, selectedValue]
+  );
 
   if (error) {
     return (
@@ -75,12 +79,21 @@ export function ResponsiveSelect({
         className="flex items-center gap-2 w-full"
       >
         <Loader2 className="w-4 h-4 animate-spin" />
-        Загрузка...
+        Загрузка…
       </Button>
     );
   }
 
-  // мобильная версия
+  const renderOptionContent = (opt: Option) =>
+    renderOption ? (
+      renderOption(opt, opt.value === selectedValue)
+    ) : (
+      <span className="flex items-center gap-2">
+        {opt.icon}
+        {opt.label}
+      </span>
+    );
+
   if (isMobile) {
     return (
       <Drawer>
@@ -89,43 +102,36 @@ export function ResponsiveSelect({
             variant="outline"
             className={cn(
               "justify-between bg-secondary border-0 outline-0 w-fit font-normal",
-              triggerCSS
+              triggerClassName
             )}
           >
-            {renderTrigger ? (
-              renderTrigger(selected)
+            {renderSelected ? (
+              renderSelected(selectedOption)
             ) : (
-              <span className="flex justify-between items-center gap-2 w-full">
-                {selected?.label ?? ""}
+              <span className="flex items-center gap-2 w-full">
+                {selectedOption?.label ?? ""}
                 <ChevronDown className="size-3" />
               </span>
             )}
           </Button>
         </DrawerTrigger>
+
         <DrawerContent className="rounded-t-2xl w-full">
           <DrawerHeader>
             <DrawerTitle>{title}</DrawerTitle>
           </DrawerHeader>
+
           <div className="flex flex-col">
             {options.map((opt) => (
               <DrawerClose asChild key={opt.value}>
                 <Button
-                  variant={opt.value === value ? "secondary" : "ghost"}
+                  variant={opt.value === selectedValue ? "secondary" : "ghost"}
                   disabled={opt.disabled}
-                  onClick={() => {
-                    return onChange(opt.value);
-                  }}
+                  onClick={() => onSelect(opt.value)}
                   className="justify-start py-6 font-normal"
                 >
-                  {renderOption ? (
-                    renderOption(opt, opt.value === value)
-                  ) : (
-                    <span className="flex items-center gap-2">
-                      {opt.icon}
-                      {opt.label}
-                    </span>
-                  )}
-                  {opt.value === value && <Check className="ms-auto" />}
+                  {renderOptionContent(opt)}
+                  {opt.value === selectedValue && <Check className="ms-auto" />}
                 </Button>
               </DrawerClose>
             ))}
@@ -135,61 +141,32 @@ export function ResponsiveSelect({
     );
   }
 
-  // десктоп
   return (
-    <Select
-      onValueChange={(value: string) => {
-        return onChange(value);
-      }}
-      value={value}
-    >
-      <SelectTrigger className={cn("cursor-pointer", triggerCSS)}>
+    <Select onValueChange={onSelect} value={selectedValue}>
+      <SelectTrigger className={cn("cursor-pointer", triggerClassName)}>
         <SelectValue>
-          {renderTrigger ? renderTrigger(selected) : selected?.label ?? ""}
+          {renderSelected
+            ? renderSelected(selectedOption)
+            : selectedOption?.label ?? ""}
         </SelectValue>
       </SelectTrigger>
       <SelectContent
-        align="end"
+        align="center"
         className={cn(
           "bg-secondary max-h-[26rem] overflow-y-scroll",
-          contentCSS
+          contentClassName
         )}
       >
-        {options.map((opt) => {
-          if (opt.value === "none") {
-            return (
-              <SelectItem
-                key={opt.value}
-                value={opt.value}
-                className="focus:bg-accent px-2.5 py-2 cursor-pointer"
-                disabled={opt.disabled}
-              >
-                <span className="flex items-center gap-2">
-                  {opt.icon}
-                  {opt.label}
-                </span>
-              </SelectItem>
-            );
-          }
-
-          return (
-            <SelectItem
-              key={opt.value}
-              value={opt.value}
-              disabled={opt.disabled}
-              className="focus:bg-accent px-2.5 py-2 cursor-pointer"
-            >
-              {renderOption ? (
-                renderOption(opt, opt.value === value)
-              ) : (
-                <span className="flex items-center gap-2 [&_svg:text-muted-foreground]">
-                  {opt.icon}
-                  {opt.label}
-                </span>
-              )}
-            </SelectItem>
-          );
-        })}
+        {options.map((opt) => (
+          <SelectItem
+            key={opt.value}
+            value={opt.value}
+            disabled={opt.disabled}
+            className="focus:bg-accent px-2.5 py-2 cursor-pointer"
+          >
+            {renderOptionContent(opt)}
+          </SelectItem>
+        ))}
       </SelectContent>
     </Select>
   );

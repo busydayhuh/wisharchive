@@ -22,6 +22,6 @@ export { DashboardContentContainer } from "./ui/main-content/DashboardContentCon
 export { DashboardGrid } from "./ui/main-content/DashboardGrid";
 export { WishesPageLayout } from "./ui/main-content/wishes/WishesPageLayout";
 export { WishesSkeleton } from "./ui/main-content/wishes/WishesSkeleton";
-export { WishlistController } from "./ui/main-content/wishes/WishlistController";
+export { WishlistDisplayManager } from "./ui/main-content/wishes/WishlistDisplayManager";
 export { ImageTiles } from "./ui/main-content/wishlists/ImageTiles";
 export { DashboardToolbar } from "./ui/toolbar/DashboardToolbar";

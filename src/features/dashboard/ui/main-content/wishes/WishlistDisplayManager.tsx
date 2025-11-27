@@ -7,7 +7,7 @@ import { notifyError, notifySuccessExpanded } from "@/shared/ui/CustomToast";
 import { Button } from "@/shared/ui/kit/button";
 import { X } from "lucide-react";
 
-export function WishlistController({
+export function WishlistDisplayManager({
   isOwner,
   isMobile,
   isEditor,
@@ -22,7 +22,7 @@ export function WishlistController({
   const { changeWishlist, removeFromWishlist } = useQuickActions(wishId);
   const { openConfDialog } = useConfirmationDialog();
 
-  const handleRemove = () =>
+  const remove = () =>
     openConfDialog({
       action: "edit",
       onConfirm: async () => {
@@ -41,38 +41,38 @@ export function WishlistController({
       isOwner: isOwner,
     });
 
+  const move = async (newWlId: string, newWl?: WishlistDocumentType) => {
+    const { ok } = await changeWishlist(
+      newWlId === "none" ? null : newWlId,
+      newWl
+    );
+    if (!ok) {
+      notifyError("Не удалось переместить желание");
+      return;
+    }
+    notifySuccessExpanded(
+      "Перемещено в",
+      newWl?.title ?? "без списка",
+      imageURL
+    );
+  };
+
+  // перенос в другой вишлист [дашборд]
   if (isOwner && !onListPage) {
     if (isMobile && variant === "gallery") return null;
-
     return (
       <WishlistChanger
-        value={wishlist?.$id ?? "none"}
-        onValueChange={async (
-          newWlId: string,
-          newWl?: WishlistDocumentType
-        ) => {
-          const { ok } = await changeWishlist(
-            newWlId === "none" ? null : newWlId,
-            newWl
-          );
-          if (!ok) {
-            notifyError("Не удалось переместить желание");
-            return;
-          }
-          notifySuccessExpanded(
-            "Перемещено в",
-            newWl?.title ?? "без списка",
-            imageURL
-          );
-        }}
+        selectedValue={wishlist?.$id ?? "none"}
+        onSelect={move}
         className={className}
       />
     );
   }
+  // убрать из вишлиста [страница вишлиста]
   if ((isEditor || isOwner) && onListPage)
     return (
       <Button
-        onClick={handleRemove}
+        onClick={remove}
         size="icon"
         variant="secondary"
         className={cn(
@@ -87,7 +87,7 @@ export function WishlistController({
         {variant === "table" && "Убрать"}
       </Button>
     );
-
+  // бейдж с названием [для гостей]
   if (wishlist && !onListPage)
     return (
       <WishlistBadge

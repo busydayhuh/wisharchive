@@ -23,15 +23,9 @@ export function PrioritySelect({
   return (
     <ResponsiveSelect
       options={options}
-      onChange={onValueChange}
-      value={value}
-      renderTrigger={(selected) => (
-        <span className="flex items-center gap-1.5">
-          {selected?.icon}
-          {selected?.label}
-        </span>
-      )}
-      triggerCSS="py-6"
+      onSelect={onValueChange}
+      selectedValue={value}
+      triggerClassName="py-6"
       title="Приоритет"
     />
   );

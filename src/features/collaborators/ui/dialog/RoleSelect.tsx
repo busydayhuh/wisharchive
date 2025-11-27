@@ -25,10 +25,10 @@ export default function RoleSelect({
       </p>
 
       <ResponsiveSelect
-        value={selectedRole}
-        onChange={setSelectedRole as (role: string) => void}
+        selectedValue={selectedRole}
+        onSelect={setSelectedRole as (role: string) => void}
         options={options}
-        triggerCSS="py-6 w-full md:text-sm"
+        triggerClassName="py-6 w-full md:text-sm"
       />
       <div className="px-2 text-muted-foreground text-xs leading-tight">
         {selectedRole === "readers"

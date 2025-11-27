@@ -212,9 +212,8 @@ export function WishForm({
               <FormItem>
                 <FormLabel className="mb-1">Выберите вишлист</FormLabel>
                 <WishlistSelect
-                  variant="form"
-                  value={field.value}
-                  onValueChange={(
+                  selectedValue={field.value}
+                  onSelect={(
                     wishlistId: string,
                     wishlist: WishlistDocumentType | null
                   ) => {

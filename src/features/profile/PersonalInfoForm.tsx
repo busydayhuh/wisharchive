@@ -243,10 +243,10 @@ function SexSelect({
   return (
     <ResponsiveSelect
       options={options}
-      onChange={onValueChange}
-      value={value}
+      onSelect={onValueChange}
+      selectedValue={value}
       title="Пол"
-      triggerCSS={className}
+      triggerClassName={className}
     />
   );
 }
