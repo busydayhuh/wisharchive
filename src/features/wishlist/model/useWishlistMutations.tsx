@@ -7,6 +7,7 @@ import {
   type OptimisticUpdater,
 } from "@/shared/model/useOptimisticMutation";
 import { useRevalidateSWR } from "@/shared/model/useRevalidateSWR";
+import { useUpdateSWRCache } from "@/shared/model/useUpdateSWRCache";
 import { ID, Permission, Role, type Models } from "appwrite";
 import { useCallback } from "react";
 
@@ -21,6 +22,7 @@ type createWishlistProps = {
 export function useWishlistMutations() {
   const { performMutation } = useOptimisticMutation();
   const { revalidate } = useRevalidateSWR();
+  const { updateSWRCache } = useUpdateSWRCache();
 
   const create = useCallback(
     async (payload: createWishlistProps) => {
@@ -123,12 +125,20 @@ export function useWishlistMutations() {
           extraKeys: [wishlistId],
         });
 
+        updateSWRCache("wishes", (prev) =>
+          prev.map((w) =>
+            w.wishlistId === wishlistId
+              ? { ...w, wishlistId: null, wishlist: null }
+              : w
+          )
+        );
+
         return { ok: true };
       } catch (error) {
         return handleError(error);
       }
     },
-    [performMutation]
+    [performMutation, updateSWRCache]
   );
 
   return { create, update, delete: deleteWl };

@@ -55,9 +55,9 @@ export function ResponsiveSelect({
   contentCSS,
 }: ResponsiveSelectProps) {
   const isMobile = useIsMobile();
-  const selected = options.find((o) => o.value === value);
-
-  // const optionsMap = Object.fromEntries(options.map((o) => [o.value, o]));
+  const selected =
+    options.find((o) => o.value === value) ??
+    options.find((o) => o.value === "none");
 
   if (error) {
     return (

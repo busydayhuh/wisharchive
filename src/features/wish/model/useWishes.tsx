@@ -25,7 +25,6 @@ async function fetcher(queries: string[], cursor: string | null) {
     : [...queries];
 
   const response = await db.wishes.list(withCursor);
-
   return response.documents as WishDocumentType[];
 }
 

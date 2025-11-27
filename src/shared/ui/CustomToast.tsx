@@ -40,7 +40,7 @@ function CustomToast(props: ToastProps) {
   const { title, description, button, id, icon } = props;
 
   return (
-    <div className="flex items-center gap-4 bg-primary p-4 rounded-md w-full md:max-w-xl text-primary-foreground">
+    <div className="flex items-center gap-4 bg-primary p-4 pr-8 rounded-md w-full md:max-w-xl text-primary-foreground">
       <div className="rounded-sm size-12 overflow-hidden shrink-0 grow-0">
         <img src={icon} className="bg-muted w-full h-full object-cover" />
       </div>

@@ -23,7 +23,6 @@ export function WishlistChanger({
 }) {
   const { current } = useAuth();
   const { navigateWithState } = useRoute();
-
   const { wishlists, isLoading, error } = useCollabWishlists(
     {
       sort: { field: "$sequence", direction: "desc" },
@@ -34,6 +33,7 @@ export function WishlistChanger({
     current?.$id
   );
 
+  const optionValue = value ?? "none";
   const options: Option[] = [
     {
       value: "none",
@@ -52,8 +52,13 @@ export function WishlistChanger({
           : PRIVACY_ICONS.collab,
     })),
   ];
-
-  const selectedOption = options.find((o) => o.value === value);
+  const selectedOption: Option = options.find(
+    (o) => o.value === optionValue
+  ) ?? {
+    value: "none",
+    label: "без списка",
+    icon: PRIVACY_ICONS.none,
+  };
 
   const handleNavigation = () => {
     if (!selectedOption || selectedOption.value === "none") {
@@ -96,7 +101,7 @@ export function WishlistChanger({
             const selectedList = wishlists?.find((wl) => wl.$id === value);
             onValueChange(value, selectedList);
           }}
-          value={value}
+          value={optionValue}
           renderTrigger={() => (
             <div className="md:hidden">
               <ChevronDown className="size-4 text-muted-foreground" />

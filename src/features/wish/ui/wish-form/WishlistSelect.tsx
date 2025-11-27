@@ -21,6 +21,8 @@ export function WishlistSelect({
   const { current } = useAuth();
   const isMobile = useIsMobile();
 
+  console.log("value :>> ", value);
+
   const { wishlists, isLoading, error } = useCollabWishlists(
     {
       sort: { field: "$sequence", direction: "desc" },
@@ -30,7 +32,7 @@ export function WishlistSelect({
     "all",
     current?.$id
   );
-
+  const optionValue = value ?? "none";
   const options = [
     {
       value: "none",
@@ -56,7 +58,7 @@ export function WishlistSelect({
         const selectedList = wishlists?.find((wl) => wl.$id === value);
         onValueChange(value, selectedList ?? null);
       }}
-      value={value}
+      value={optionValue}
       renderTrigger={(selected) =>
         variant === "dashboard" && isMobile ? (
           <ArrowLeftRightIcon className="size-3" />
