@@ -66,7 +66,6 @@ export function UserProvider(props: { children: ReactNode }) {
 
       return { ok: true };
     } catch (error) {
-      console.log("Не получилось войти", error);
       return handleError(error);
     }
   }
@@ -81,7 +80,6 @@ export function UserProvider(props: { children: ReactNode }) {
 
       return { ok: true };
     } catch (error) {
-      console.log("Не получилось выйти", error);
       return handleError(error);
     }
   }
@@ -106,7 +104,6 @@ export function UserProvider(props: { children: ReactNode }) {
 
       return { ok: true };
     } catch (error) {
-      console.log("Не удалось зарегистрироваться", error);
       return handleError(error);
     }
   }
