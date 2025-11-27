@@ -5,7 +5,7 @@ import { Query, type Models } from "appwrite";
 import stableStringify from "fast-json-stable-stringify";
 import useSWRInfinite from "swr/infinite";
 
-type Page = "main" | "archived" | "booked" | "wishlist";
+type Page = "main-wishes" | "archived" | "booked" | "wishlist";
 
 type QueryFilters = {
   ownerId?: string;
@@ -31,7 +31,7 @@ async function fetcher(queries: string[], cursor: string | null) {
 
 export function useWishes(
   filters?: QueryFilters,
-  page: Page = "main",
+  page: Page = "main-wishes",
   userId?: string
 ) {
   const queries = filters ? getWishQueries(filters) : null;

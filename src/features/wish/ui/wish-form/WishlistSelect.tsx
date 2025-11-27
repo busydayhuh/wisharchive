@@ -2,6 +2,7 @@ import { useAuth } from "@/features/auth";
 import { useCollabWishlists } from "@/features/dashboard";
 import { cn } from "@/shared/lib/css";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
+import type { WishlistDocumentType } from "@/shared/model/types";
 import { PRIVACY_ICONS } from "@/shared/ui/Badges";
 import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
 import { ArrowLeftRightIcon } from "lucide-react";
@@ -12,7 +13,7 @@ export function WishlistSelect({
   variant = "dashboard",
   className,
 }: {
-  onValueChange: (value: string, additional?: { isPrivate: boolean }) => void;
+  onValueChange: (id: string, wishlist: WishlistDocumentType | null) => void;
   value?: string;
   variant?: "dashboard" | "form";
   className?: string;
@@ -51,7 +52,10 @@ export function WishlistSelect({
   return (
     <ResponsiveSelect
       options={options}
-      onChange={onValueChange}
+      onChange={(value) => {
+        const selectedList = wishlists?.find((wl) => wl.$id === value);
+        onValueChange(value, selectedList ?? null);
+      }}
       value={value}
       renderTrigger={(selected) =>
         variant === "dashboard" && isMobile ? (

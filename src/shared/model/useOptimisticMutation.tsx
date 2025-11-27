@@ -51,7 +51,7 @@ function applyToExtraKeysCaches(
       (prev?: Models.Document) => (prev ? updater([prev])[0] : prev),
       {
         rollbackOnError: true,
-        revalidate: true,
+        revalidate: false,
       }
     );
   }

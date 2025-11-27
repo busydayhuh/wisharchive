@@ -1,5 +1,6 @@
 import db from "@/shared/model/databases";
 import { handleError } from "@/shared/model/handleError";
+import type { WishlistDocumentType } from "@/shared/model/types";
 import {
   useOptimisticMutation,
   type OptimisticUpdater,
@@ -14,7 +15,7 @@ type CreateWishProps = {
   owner: string;
   price: number | null;
   wishlistId: string | null;
-  wishlist: string | null;
+  wishlist: WishlistDocumentType | null | string;
   description?: string | null;
   shopURL?: string | null;
   currency?: string;
@@ -38,7 +39,6 @@ export function useWishMutations() {
 
       const mockWishForCache = {
         ...payload,
-        wishlist: null,
         $id: id,
         $collectionId: "wishes",
         $databaseId: "wisharchive",
@@ -67,25 +67,12 @@ export function useWishMutations() {
 
   const update = useCallback(
     async (wishId: string, payload: UpdateWishProps) => {
-      const wishlistChanged = payload.wishlist !== undefined;
-      // моковый вишлист для кеша до рефетча реальных данных
-      const mockWishlist =
-        payload.wishlist === null
-          ? payload.wishlist
-          : {
-              $id: payload.wishlist,
-              title: "",
-              isPrivate: false,
-              ownerId: "",
-            };
-
       const updateCache: OptimisticUpdater = (prev) =>
         prev.map((wish: Models.Document) =>
           wish.$id === wishId
             ? {
                 ...wish,
                 ...payload,
-                ...(wishlistChanged ? mockWishlist : {}),
               }
             : wish
         );
@@ -116,7 +103,6 @@ export function useWishMutations() {
             await db.wishes.delete(wishId);
           },
           keyword: "wishes",
-          extraKeys: [wishId],
         });
 
         return { ok: true };

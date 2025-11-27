@@ -18,7 +18,7 @@ function WishesPage() {
         sort: toolbarState.sort,
         filters: toolbarState.filters,
       },
-      "main",
+      "main-wishes",
       dashboardUserId
     );
 

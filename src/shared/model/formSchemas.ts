@@ -32,7 +32,10 @@ export const wishFormSchema = z.object({
     .transform((val) => (val === 0 ? null : val))
     .nullish(),
   currency: z.string(),
-  wishlist: z.string(),
+  wishlistId: z.string(),
+  wishlist: z
+    .looseObject({ title: z.string(), isPrivate: z.boolean() })
+    .nullable(),
   priority: z.enum(["2", "1", "0"]),
 });
 

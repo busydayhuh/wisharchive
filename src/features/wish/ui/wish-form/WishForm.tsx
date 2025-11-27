@@ -1,6 +1,9 @@
 import { wishFormSchema as formSchema } from "@/shared/model/formSchemas";
 import { ROUTES } from "@/shared/model/routes";
-import type { WishDocumentType } from "@/shared/model/types";
+import type {
+  WishDocumentType,
+  WishlistDocumentType,
+} from "@/shared/model/types";
 import { customToast } from "@/shared/ui/CustomToast";
 import {
   Form,
@@ -48,7 +51,8 @@ export function WishForm({
       shopURL: wish?.shopURL || "",
       price: wish?.price || null,
       currency: wish?.currency || "RUB",
-      wishlist: wish?.wishlistId || "none",
+      wishlistId: wish?.wishlistId || "none",
+      wishlist: wish?.wishlist || null,
       priority: wish?.priority || "1",
     },
   });
@@ -62,7 +66,9 @@ export function WishForm({
   };
 
   const onDelete = async () => {
-    const { ok } = await actions.delete(wish!.$id);
+    setBlockNavigate(false);
+
+    const { ok } = await actions.deleteW(wish!.$id);
 
     if (!ok) {
       toast.error("Не удалось удалить желание", {
@@ -76,8 +82,6 @@ export function WishForm({
       description: wish?.title,
       icon: wish?.imageURL ?? undefined,
     });
-
-    setBlockNavigate(false);
     navigate(href(ROUTES.WISHES, { userId: wish!.ownerId }));
   };
 
@@ -203,14 +207,20 @@ export function WishForm({
         {!wish?.isArchived && (
           <FormField
             control={form.control}
-            name="wishlist"
+            name="wishlistId"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="mb-1">Выберите вишлист</FormLabel>
                 <WishlistSelect
                   variant="form"
                   value={field.value}
-                  onValueChange={field.onChange}
+                  onValueChange={(
+                    wishlistId: string,
+                    wishlist: WishlistDocumentType | null
+                  ) => {
+                    form.setValue("wishlistId", wishlistId);
+                    form.setValue("wishlist", wishlist);
+                  }}
                   className="py-6 pl-2 w-full md:w-[24rem] text-sm md:text-base"
                 />
 

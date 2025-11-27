@@ -27,7 +27,7 @@ export function RelatedWishes({
       },
       filters: [],
     },
-    "main",
+    "main-wishes",
     userId
   );
 

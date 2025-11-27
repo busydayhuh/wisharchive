@@ -36,7 +36,7 @@ function WishEditor({ wish, saveChanges, storageImageURL }: WishEditorProps) {
     id?: string
   ) => {
     const imageURL = newImage
-      ? await uploadToStorage(newImage)
+      ? ((await uploadToStorage(newImage)).response as string)
       : storageImageURL;
 
     setBlockNavigate(false);

@@ -11,6 +11,7 @@ export function useQuickActions(wishId: string) {
   const { update, deleteW } = useWishMutations();
   const { updateSWRCache, addToCacheList, removeFromCacheList } =
     useUpdateSWRCache();
+  const userId = current?.$id;
 
   const perform = useCallback(
     async ({
@@ -32,8 +33,8 @@ export function useQuickActions(wishId: string) {
     (isBooking: boolean) => {
       const fields = {
         isBooked: isBooking,
-        bookerId: isBooking ? current?.$id : null,
-        bookedBy: isBooking ? current?.$id : null,
+        bookerId: isBooking ? userId : null,
+        bookedBy: isBooking ? userId : null,
       };
       const updatedWish = wish ? { ...wish, ...fields } : undefined;
 
@@ -41,7 +42,7 @@ export function useQuickActions(wishId: string) {
         mutation: () => update(wishId, fields),
         patch: updatedWish
           ? () =>
-              updateSWRCache(`booked+${current?.$id}`, (prev) =>
+              updateSWRCache(`booked+${userId}`, (prev) =>
                 isBooking
                   ? addToCacheList(prev, updatedWish)
                   : removeFromCacheList(prev, wishId)
@@ -50,7 +51,7 @@ export function useQuickActions(wishId: string) {
       });
     },
     [
-      current?.$id,
+      userId,
       wish,
       perform,
       update,
@@ -68,30 +69,45 @@ export function useQuickActions(wishId: string) {
         isArchived: isArchiving,
         wishlist: null,
         wishlistId: null,
+        isBooked: false,
+        bookerId: null,
+        bookedBy: null,
       };
+
       const updatedWish = wish ? { ...wish, ...fields } : undefined;
 
       return perform({
         mutation: () => update(wishId, fields),
         patch: updatedWish
-          ? () =>
-              updateSWRCache(`archived+${current?.$id}`, (prev) =>
+          ? () => {
+              if (isArchiving) {
+                updateSWRCache("wishes", (prev) =>
+                  removeFromCacheList(prev, wishId)
+                );
+              } else {
+                updateSWRCache(`main-wishes+${userId}`, (prev) =>
+                  addToCacheList(prev, updatedWish)
+                );
+              }
+
+              updateSWRCache(`archived+${userId}`, (prev) =>
                 isArchiving
                   ? addToCacheList(prev, updatedWish)
                   : removeFromCacheList(prev, wishId)
-              )
+              );
+            }
           : undefined,
       });
     },
     [
-      current,
       wish,
       perform,
       update,
       wishId,
       updateSWRCache,
-      addToCacheList,
+      userId,
       removeFromCacheList,
+      addToCacheList,
     ]
   );
 
@@ -112,14 +128,18 @@ export function useQuickActions(wishId: string) {
           wishlistId: null,
           wishlist: null,
         }),
-      patch: () =>
+      patch: () => {
         updateSWRCache("wishlists", (prev) =>
           prev.map((wl) =>
             wl.$id === oldListId
               ? { ...wl, wishes: removeFromCacheList(wl.wishes, wishId) }
               : wl
           )
-        ),
+        );
+        updateSWRCache(`wishlist+${oldListId}`, (prev) =>
+          removeFromCacheList(prev, wishId)
+        );
+      },
     });
   }, [
     wish?.wishlistId,
@@ -141,7 +161,7 @@ export function useQuickActions(wishId: string) {
         mutation: () =>
           update(wishId, {
             wishlistId: newListId,
-            wishlist: newListId,
+            wishlist: newList,
           }),
 
         patch:
