@@ -21,6 +21,7 @@ import { Textarea } from "@/shared/ui/kit/textarea";
 import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
 import { SubmitBtn } from "@/shared/ui/SubmitBtn";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ru } from "date-fns/locale";
 import { ChevronDownIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -211,6 +212,7 @@ function DatePicker({
       </PopoverTrigger>
       <PopoverContent className="p-0 w-auto overflow-hidden" align="start">
         <Calendar
+          locale={ru}
           mode="single"
           selected={date}
           captionLayout="dropdown"
