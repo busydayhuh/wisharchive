@@ -1,5 +1,5 @@
 import { useLocalStorage } from "@/shared/lib/react/useLocalStorage";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ThemeProviderContext } from "./createThemeProvider";
 
 export type Theme = "dark" | "light" | "system";
@@ -13,6 +13,8 @@ type ThemeProviderProps = {
 export type ThemeProviderState = {
   theme: Theme;
   setTheme: (theme: Theme) => void;
+  colorScheme?: "dark" | "light";
+  setColorScheme: (scheme: "dark" | "light") => void;
 };
 
 export function ThemeProvider({
@@ -22,6 +24,9 @@ export function ThemeProvider({
   ...props
 }: ThemeProviderProps) {
   const [theme, setTheme] = useLocalStorage(storageKey, defaultTheme);
+  const [colorScheme, setColorScheme] = useState<
+    "dark" | "light" | undefined
+  >();
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -35,15 +40,19 @@ export function ThemeProvider({
         : "light";
 
       root.classList.add(systemTheme);
+      setColorScheme(systemTheme);
       return;
     }
 
     root.classList.add(theme);
+    setColorScheme(theme);
   }, [theme]);
 
   const value = {
     theme,
     setTheme,
+    colorScheme,
+    setColorScheme,
   };
 
   return (
