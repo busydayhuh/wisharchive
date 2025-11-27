@@ -12,7 +12,7 @@ import { useWishlist } from "@/features/wishlist";
 import { handleError } from "@/shared/model/handleError";
 import { ROUTES } from "@/shared/model/routes";
 import team from "@/shared/model/teams";
-import { customToast } from "@/shared/ui/CustomToast";
+import { customToast, notifyError } from "@/shared/ui/CustomToast";
 import { ErrorMessage } from "@/shared/ui/ErrorMessage";
 import {
   Item,
@@ -24,7 +24,6 @@ import {
 import { Loader2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { href, useSearchParams } from "react-router";
-import { toast } from "sonner";
 import { useAuth } from "../auth";
 import { useRoute } from "../breadcrumbs";
 import { useMembership } from "./model/membership/useMembership";
@@ -76,9 +75,8 @@ function InvitationPage() {
       });
     } catch (error) {
       const { errorMessage } = handleError(error);
-      return toast.error("Не удалось принять приглашение", {
-        description: errorMessage,
-      });
+      notifyError("Не удалось принять приглашение", errorMessage);
+      return;
     } finally {
       setLoading(false);
     }

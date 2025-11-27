@@ -2,6 +2,7 @@
 import { appwriteService } from "@/shared/model/appwrite";
 import db from "@/shared/model/databases";
 import { handleError, type ResponseType } from "@/shared/model/handleError";
+import { useRevalidateSWR } from "@/shared/model/useRevalidateSWR";
 import { type Models } from "appwrite";
 import {
   createContext,
@@ -49,6 +50,7 @@ export function useAuth() {
 
 export function UserProvider(props: { children: ReactNode }) {
   const navigate = useNavigate();
+  const { revalidate } = useRevalidateSWR();
 
   const [session, setSession] = useState<Session>(null);
   const [user, setUser] = useState<User>(null);
@@ -100,6 +102,7 @@ export function UserProvider(props: { children: ReactNode }) {
       });
 
       await login(data);
+      revalidate("users");
 
       return { ok: true };
     } catch (error) {
