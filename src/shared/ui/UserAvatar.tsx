@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { cn } from "../lib/css";
 import { getFallbackColor } from "../lib/getFallbackColor";
+import { useTheme } from "../model/theme/createThemeProvider";
 
 export const AVATAR_SIZES = {
   sm: "w-6 h-6 text-xs",
@@ -28,6 +29,9 @@ export function UserAvatar({
   className?: string;
   fallbackText?: string;
 }) {
+  const { colorScheme } = useTheme();
+  console.log("colorScheme :>> ", colorScheme);
+
   return (
     <Avatar
       className={cn(
@@ -48,7 +52,7 @@ export function UserAvatar({
         style={{
           background: fallbackText
             ? "var(--muted)"
-            : getFallbackColor(id, { dark: false }),
+            : getFallbackColor(id, { dark: true }),
         }}
       >
         {fallbackText || size === "sm" ? "" : "✨"}
