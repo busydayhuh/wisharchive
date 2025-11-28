@@ -35,7 +35,7 @@ import { UserAvatar } from "@/shared/ui/UserAvatar";
 import { Link } from "react-router";
 import { useAuth } from "../auth";
 
-export function UserSb() {
+export function UserMenu() {
   const { current, logout } = useAuth();
   const { isMobile } = useSidebar();
   const { user } = useUser(current?.$id ?? null);

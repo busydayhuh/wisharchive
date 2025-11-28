@@ -26,7 +26,7 @@ import {
 import { memo } from "react";
 import { href, Link, matchPath, NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "../auth";
-import { UserSb } from "./UserSb";
+import { UserMenu } from "./UserMenu";
 
 export const AppSidebar = memo(function AppSidebar() {
   const { current } = useAuth();
@@ -108,7 +108,7 @@ export const AppSidebar = memo(function AppSidebar() {
           </SidebarMenuButton>
         </SidebarMenuItem>
         <SidebarSeparator className="self-center bg-accent" />
-        <UserSb />
+        <UserMenu />
       </SidebarFooter>
     </Sidebar>
   );

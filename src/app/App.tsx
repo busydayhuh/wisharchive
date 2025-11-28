@@ -14,9 +14,6 @@ function App() {
 
   const isLoading = useNavigation().state === "loading";
 
-  // const { cache } = useSWRConfig();
-  // console.log("cache :>> ", cache);
-
   return (
     <>
       {isLoggedIn && <AppSidebar />}
