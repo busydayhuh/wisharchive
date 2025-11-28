@@ -10,7 +10,7 @@ import {
 import ShareOnSocials from "@/shared/ui/ShareOnSocials";
 import { BookmarkButton } from "./actions/BookmarkButton";
 import { EditWishlistButton } from "./actions/EditWishlistButton";
-import { WishlistCollaborators } from "./WishlistCollaborators";
+import { Collaborators } from "./Collaborators";
 
 export function WishlistHeader({
   wishlistId,
@@ -47,7 +47,7 @@ export function WishlistHeader({
         </div>
 
         <div className="flex justify-between items-center">
-          <WishlistCollaborators
+          <Collaborators
             ownerId={ownerId}
             wishlistId={wishlistId}
             isPrivate={isPrivate}
@@ -87,7 +87,7 @@ export function WishlistHeader({
       </div>
 
       <div className="flex justify-between items-center">
-        <WishlistCollaborators
+        <Collaborators
           ownerId={ownerId}
           wishlistId={wishlistId}
           isPrivate={isPrivate}

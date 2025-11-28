@@ -22,7 +22,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { useWishlistMutations } from "../../model/useWishlistMutations";
-import CollaboratorsSection from "./CollaboratorsSection";
+import { Collaborators } from "../Collaborators";
 import { DeleteSection } from "./DeleteSection";
 import { WishlistFormFields } from "./WishlistFormFields";
 
@@ -64,22 +64,22 @@ export function WishlistDialog({
   const actions = useWishlistMutations();
   const { user } = useCurrentUser();
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSaveChanges(values: z.infer<typeof formSchema>) {
+    if (!user) return;
+    const { userId, $id: docId } = user;
+
     if (action === "edit") {
       const privacyChanged = form.getFieldState("isPrivate").isDirty;
-
       const { ok } = await actions.update(
         wishlist!.$id,
         values,
         values.isPrivate,
         privacyChanged
       );
-
       if (!ok) {
         toast.error("Не удалось сохранить изменения");
         return;
       }
-
       toast.success("Изменения сохранены");
       setIsOpen(false);
     }
@@ -87,15 +87,13 @@ export function WishlistDialog({
     if (action === "create") {
       const { ok, response } = await actions.create({
         ...values,
-        ownerId: user!.userId,
-        owner: user!.$id as unknown as UserDocumentType,
+        ownerId: userId,
+        owner: docId as unknown as UserDocumentType,
       });
-
       if (!ok) {
         toast.error("Не удалось сохранить список");
         return;
       }
-
       toast.success("Список создан", { description: response!.title });
       setIsOpen(false);
     }
@@ -105,7 +103,7 @@ export function WishlistDialog({
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="rounded-xl sm:max-w-[425px]">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form onSubmit={form.handleSubmit(onSaveChanges)}>
             <DialogHeader className="gap-1 mb-6">
               <DialogTitle>{headerVariants[action].title}</DialogTitle>
               <DialogDescription className="sr-only">
@@ -114,18 +112,21 @@ export function WishlistDialog({
             </DialogHeader>
 
             <WishlistFormFields form={form} roles={roles} />
-
             {wishlist && (
               <>
-                <CollaboratorsSection
+                <Collaborators
                   wishlistId={wishlist.$id}
                   editors={wishlist.editorsIds}
                   readers={wishlist.readersIds}
                   ownerId={wishlist.ownerId}
-                  isPrivate={wishlist.isPrivate}
-                  form={form}
+                  isPrivate={form?.watch("isPrivate") ?? wishlist.isPrivate}
                   isOwner={roles?.isWishlistOwner ?? false}
                 />
+                {!roles?.isWishlistOwner && (
+                  <p className="text-muted-foreground text-xs">
+                    Только владелец может редактировать список соавторов
+                  </p>
+                )}
                 {roles?.isWishlistOwner && (
                   <DeleteSection
                     wishlistId={wishlist.$id}
@@ -135,7 +136,6 @@ export function WishlistDialog({
                 )}
               </>
             )}
-
             <DialogFooter className="mt-4">
               <DialogClose asChild>
                 <Button className="h-12 cancel-button">Отмена</Button>
