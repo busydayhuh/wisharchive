@@ -8,18 +8,15 @@ export type ResponseType = {
 };
 
 const appwriteErrorsMap = new Map([
-  // приглашения в команду
   [
     "team_invalid_secret",
     "Ссылка на приглашение неактивна. Получите новое приглашение и попробуйте позже",
   ],
   ["team_invite_mismatch", "Приглашение не принадлежит активному юзеру"],
-  // авторизация
   ["user_invalid_credentials", "Неверный логин или пароль"],
   ["user_password_mismatch", "Пароли не совпадают"],
   ["user_email_already_exists", "Пользователь с таким email уже существует"],
   ["user_already_exists", "Никнейм занят"],
-  // general
   ["general_server_error", "Ошибка сервера"],
 ]);
 
