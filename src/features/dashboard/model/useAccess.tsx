@@ -14,33 +14,28 @@ export function useAccess(
   type: "wish" | "wishlist",
   item: WishDocumentType | WishlistDocumentType
 ) {
-  const { current: authUser } = useAuth();
+  const { userId } = useAuth();
 
   const roles = useMemo(
     () =>
       type === "wish"
-        ? resolveWishRoles(
-            item.wishlist,
-            item.ownerId,
-            item.bookerId,
-            authUser?.$id
-          )
+        ? resolveWishRoles(item.wishlist, item.ownerId, item.bookerId, userId)
         : resolveWishlistRoles(
             item.editorsIds,
             item.readersIds,
             item.ownerId,
-            authUser?.$id
+            userId
           ),
-    [item, authUser, type]
+    [item, userId, type]
   );
 
   const hasAccess = useMemo(() => {
     return resolveVisibility(
       item.isPrivate || item.wishlist?.isPrivate,
-      authUser?.$id,
+      userId,
       roles
     );
-  }, [authUser, roles, item]);
+  }, [userId, roles, item]);
 
   return { roles, hasAccess };
 }

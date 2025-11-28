@@ -1,48 +1,33 @@
 import { useAuth } from "@/features/auth";
 import { useRoute } from "@/features/breadcrumbs";
-import {
-  resolveWishlistRoles,
-  useDashboardCollaborators,
-} from "@/features/collaborators";
+import { useDashboardCollaborators } from "@/features/collaborators";
 import { useBookmark, useWishlistDialog } from "@/features/wishlist";
 import { ROUTES } from "@/shared/model/routes";
 import type { LinkParams, WishlistDocumentType } from "@/shared/model/types";
 import { useCallback } from "react";
 import { href, useMatch } from "react-router";
+import { useAccess } from "./useAccess";
 
 export function useWishlistcardMeta(wishlist: WishlistDocumentType) {
   const { editorsIds, readersIds, bookmarkedBy, ownerId, $id, owner, title } =
     wishlist;
 
-  const { current: authUser } = useAuth();
+  const { userId } = useAuth();
   const { location, params } = useRoute();
   const { collaborators } = useDashboardCollaborators(
     ownerId,
     editorsIds,
     readersIds
   );
-
-  const userRoles = resolveWishlistRoles(
-    editorsIds,
-    readersIds,
-    ownerId,
-    authUser?.$id
-  );
-
+  const { roles } = useAccess("wishlist", wishlist);
   const { openDialog } = useWishlistDialog();
+
   const openWishlistEditor = useCallback(
-    () => openDialog("edit", wishlist, userRoles),
-    [wishlist, openDialog, userRoles]
+    () => openDialog("edit", wishlist, roles),
+    [wishlist, openDialog, roles]
   );
-
-  const { toggleBookmark } = useBookmark(
-    $id,
-    bookmarkedBy ?? [],
-    authUser?.$id
-  );
-  const isFavorite =
-    (!!authUser?.$id && bookmarkedBy?.includes(authUser.$id)) ?? false;
-
+  const { toggleBookmark } = useBookmark($id, bookmarkedBy ?? [], userId);
+  const isFavorite = userId ? bookmarkedBy?.includes(userId) : false;
   const onSharedPage = useMatch(ROUTES.SHARED);
 
   const linkParams: LinkParams = {
@@ -57,7 +42,7 @@ export function useWishlistcardMeta(wishlist: WishlistDocumentType) {
   return {
     collaborators,
     bookmarkWishlist: toggleBookmark,
-    userRoles,
+    userRoles: roles,
     isFavorite,
     onSharedPage,
     openWishlistEditor,
