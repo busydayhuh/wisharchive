@@ -1,14 +1,12 @@
 import { cva } from "class-variance-authority";
 import {
-  ArrowDown,
-  ArrowUp,
-  CircleDot,
   Crown,
   Eye,
   EyeClosed,
   List,
   Lock,
   Pencil,
+  Sparkle,
   Users2,
   X,
 } from "lucide-react";
@@ -18,6 +16,8 @@ import { cn } from "../lib/css";
 import { formatUrl } from "../lib/formatUrl";
 import { ROUTES } from "../model/routes";
 import { RoundedStar } from "./RoundedStar";
+import { Rating, RatingButton } from "./kit/rating";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./kit/tooltip";
 
 type Size = "sm" | "md" | "lg";
 
@@ -36,24 +36,6 @@ const badgesVariants = cva(
     },
   }
 );
-
-export const PRIORITIES = {
-  "2": {
-    title: "высокий",
-    icon: <ArrowUp />,
-    colors: "bg-pink-bg",
-  },
-  "1": {
-    title: "средний",
-    icon: <CircleDot />,
-    colors: "bg-blue-bg",
-  },
-  "0": {
-    title: "низкий",
-    icon: <ArrowDown />,
-    colors: "bg-muted",
-  },
-};
 
 export const ROLES = {
   reader: {
@@ -105,16 +87,38 @@ export function PriorityBadge({
   size?: Size;
   className?: string;
 }) {
+  const descriptions = new Map([
+    [0, "Было бы неплохо"],
+    [1, "Может подождать"],
+    [2, "Очень нужно!"],
+  ]);
+
   return (
-    <span
-      className={cn(
-        badgesVariants({ size, className }),
-        PRIORITIES[priority].colors
-      )}
-    >
-      {PRIORITIES[priority].icon}
-      {PRIORITIES[priority].title}
-    </span>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <div
+          className={cn(
+            "bg-blue-bg px-2.5 pt-2 pb-1.5 rounded-md w-fit",
+            size === "sm" && "px-1.5 pt-1 pb-0.5",
+            className
+          )}
+        >
+          <Rating readOnly value={Number(priority) + 1}>
+            {Array.from({ length: 3 }).map((_, index) => (
+              <RatingButton
+                key={index}
+                icon={<Sparkle />}
+                className="text-blue"
+                size={size === "md" ? 16 : 12}
+              />
+            ))}
+          </Rating>
+        </div>
+      </TooltipTrigger>
+      <TooltipContent>
+        <p>{descriptions.get(Number(priority))}</p>
+      </TooltipContent>
+    </Tooltip>
   );
 }
 

@@ -1,32 +1,38 @@
-import { PRIORITIES } from "@/shared/ui/Badges";
-import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
-import { useMemo } from "react";
+import { Rating, RatingButton } from "@/shared/ui/kit/rating";
+import { Sparkle } from "lucide-react";
 
 export function PrioritySelect({
-  onValueChange,
-  value = "1",
+  priority,
+  setPriority,
 }: {
-  onValueChange: (value: string) => void;
-  value: "2" | "1" | "0";
+  priority: number;
+  setPriority: (value: number) => void;
 }) {
-  const options = useMemo(
-    () =>
-      Object.entries(PRIORITIES).map((i) => ({
-        value: i[0],
-        label: i[1].title,
-        colors: i[1].colors,
-        icon: i[1].icon,
-      })),
-    []
-  );
+  const descriptions = new Map([
+    [0, "Было бы неплохо"],
+    [1, "Хочу, но может подождать"],
+    [2, "Очень нужно!"],
+  ]);
 
   return (
-    <ResponsiveSelect
-      options={options}
-      onSelect={onValueChange}
-      selectedValue={value}
-      triggerClassName="py-6"
-      title="Приоритет"
-    />
+    <div className="flex md:flex-row flex-col md:items-center gap-2 md:gap-2.5">
+      <div className="bg-muted/80 px-2.5 pt-2 pb-1.5 rounded-md w-fit">
+        <Rating
+          value={priority + 1}
+          onValueChange={(value) => setPriority(value - 1)}
+        >
+          {Array.from({ length: 3 }).map((_, index) => (
+            <RatingButton
+              key={index}
+              icon={<Sparkle />}
+              className="text-muted-foreground"
+            />
+          ))}
+        </Rating>
+      </div>
+      <p className="text-muted-foreground text-sm">
+        {descriptions.get(priority)}
+      </p>
+    </div>
   );
 }

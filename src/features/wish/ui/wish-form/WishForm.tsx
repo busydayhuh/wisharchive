@@ -135,8 +135,8 @@ export function WishForm({
             <FormItem>
               <FormLabel>Приоритет</FormLabel>
               <PrioritySelect
-                onValueChange={field.onChange}
-                value={field.value}
+                setPriority={(value: number) => field.onChange(String(value))}
+                priority={Number(field.value)}
               />
             </FormItem>
           )}
