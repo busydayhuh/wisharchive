@@ -1,33 +1,16 @@
-import { useCallback, useMemo } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { RouteContext, type NavigateWithState } from "./createRouteContext";
+import type { LinkParams } from "@/shared/model/types";
+import { createContext } from "react";
+import type { Location, Params } from "react-router";
 
-export function RouteContextProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const location = useLocation();
-  const params = useParams();
-  const navigate = useNavigate();
+export type RouteContext = {
+  location: Location;
+  params: Params;
+  navigateWithState: NavigateWithState;
+};
 
-  const navigateWithState: NavigateWithState = useCallback(
-    (path, stateData) => {
-      navigate(path, {
-        state: {
-          data: stateData,
-        },
-      });
-    },
-    [navigate]
-  );
+export type NavigateWithState = (
+  route: string,
+  stateData?: LinkParams["state"]["data"]
+) => void;
 
-  const value = useMemo(
-    () => ({ location, params, navigateWithState }),
-    [location, params, navigateWithState]
-  );
-
-  return (
-    <RouteContext.Provider value={value}>{children}</RouteContext.Provider>
-  );
-}
+export const RouteContext = createContext<RouteContext | null>(null);

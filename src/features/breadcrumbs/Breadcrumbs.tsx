@@ -11,8 +11,8 @@ import {
 } from "@/shared/ui/kit/breadcrumb";
 import { href, Link, matchPath } from "react-router-dom";
 import { Fragment } from "react/jsx-runtime";
-import { breadcrumbMap, type Crumb } from "./breadcrumbMap";
-import { useRoute } from "./model/createRouteContext";
+import { breadcrumbMap, type Crumb } from "./model/breadcrumbMap";
+import { useRoute } from "./model/useRoute";
 
 type BreadcrumbKey = keyof typeof breadcrumbMap;
 
