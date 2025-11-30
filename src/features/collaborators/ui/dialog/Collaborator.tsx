@@ -4,7 +4,7 @@ import { Button } from "@/shared/ui/kit/button";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
 import { Loader2, MailCheck, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
-import { useCollaboratorsDialogContext } from "../../model/CollaboratorsPanelContext";
+import { useCollabManager } from "../../model/store/collab-manager/useCollabManager";
 
 export default function Collaborator({
   avatarURL,
@@ -32,14 +32,12 @@ export default function Collaborator({
         id={userId}
         name={userName}
       />
-
       <div className="flex flex-col">
         <p className="font-medium text-sm md:text-base">{userName}</p>
         <p className="text-muted-foreground text-xs leading-tight">
           {roles ? roleName(roles) : null}
         </p>
       </div>
-
       <CollaboratorActionButton
         userId={userId}
         userEmail={userEmail}
@@ -62,7 +60,7 @@ function CollaboratorActionButton({
   isConfirmed: boolean;
   isInvited: boolean;
 }) {
-  const { onAddMember, onDeleteMember } = useCollaboratorsDialogContext();
+  const { onAddMember, onDeleteMember } = useCollabManager();
   const [loading, setLoading] = useState(false);
   const variant = isConfirmed ? "remove" : isInvited ? "invited" : "add";
 

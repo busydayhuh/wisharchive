@@ -1,8 +1,5 @@
-import { createContext, useContext } from "react";
-import type { CollaboratorsDialogContextType } from "./CollaboratorsDialogContext";
-
-export const CollaboratorsDialogContext =
-  createContext<CollaboratorsDialogContextType | null>(null);
+import { useContext } from "react";
+import { CollaboratorsDialogContext } from "./Context";
 
 export function useCollaboratorsDialog() {
   const ctx = useContext(CollaboratorsDialogContext);
@@ -11,6 +8,5 @@ export function useCollaboratorsDialog() {
     throw new Error(
       "useCollaboratorsDialogProvider должен использоваться только внутри CollaboratorsDialogProvider"
     );
-
   return ctx;
 }

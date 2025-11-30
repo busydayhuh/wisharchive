@@ -1,17 +1,17 @@
-export { CollaboratorsDialogProvider } from "./model/CollaboratorsDialogContext";
+export { useDashboardCollaborators } from "./model/hooks/useDashboardCollaborators";
+export { useTeamCollaborators } from "./model/hooks/useTeamCollaborators";
+export {
+  useWishlistTeamRoles,
+  useWishTeamRoles,
+} from "./model/hooks/useTeamRoles";
 export {
   resolveVisibility,
   resolveWishlistRoles,
   resolveWishRoles,
-} from "./model/document-data-based/resolveDashboardRoles";
-export { useDashboardCollaborators } from "./model/document-data-based/useDashboardCollaborators";
-export { useTeamCollaborators } from "./model/team-api-hooks/useTeamCollaborators";
-export {
-  useWishlistTeamRoles,
-  useWishTeamRoles,
-} from "./model/team-api-hooks/useTeamRoles";
+} from "./model/resolveDashboardRoles";
+export { CollaboratorsDialogProvider } from "./model/store/collab-dialog/Provider";
+export { useCollaboratorsDialog } from "./model/store/collab-dialog/useCollabDialog";
 export type { Roles, WishRoles } from "./model/types";
-export { useCollaboratorsDialog } from "./model/useCollaboratorsDialog";
 export {
   CollaboratorsAvatars,
   CollaboratorsAvatarsSkeleton,

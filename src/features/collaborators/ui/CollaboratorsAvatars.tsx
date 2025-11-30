@@ -40,12 +40,10 @@ export const CollaboratorsAvatars = memo(function CollaboratorsAvatars({
 
   if (isLoading)
     return <CollaboratorsAvatarsSkeleton size={size} maxVisible={maxVisible} />;
-
   // в команде списка всегда как минимум 1 участник (владелец)
   // не показываем соавторов в карточках, если нет других участников
   // но всегда показываем в диалогах и на странице вишлиста, даже если в соавторах только автор
   if (collaborators && hideOwner && collaborators.length < 2) return null;
-
   if (collaborators)
     return (
       <div

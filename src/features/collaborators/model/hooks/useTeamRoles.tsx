@@ -1,5 +1,5 @@
+import { useTeamCollaborators } from "../hooks/useTeamCollaborators";
 import type { Roles } from "../types";
-import { useTeamCollaborators } from "./useTeamCollaborators";
 
 function resolveRoles({
   userId,

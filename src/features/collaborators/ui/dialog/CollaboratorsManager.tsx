@@ -1,16 +1,16 @@
+import { notifyError, notifySuccessSimple } from "@/shared/ui/CustomToast";
 import { useState } from "react";
-import { toast } from "sonner";
+import useMembershipMutations from "../../model/hooks/useMembershipMutations";
+import { useTeamCollaborators } from "../../model/hooks/useTeamCollaborators";
 import {
-  CollaboratorsPanelContext,
+  CollaboratorsManager as ManagerContext,
   type SelectedRole,
-} from "../../model/CollaboratorsPanelContext";
-import useMembershipMutations from "../../model/membership/useMembershipMutations";
-import { useTeamCollaborators } from "../../model/team-api-hooks/useTeamCollaborators";
+} from "../../model/store/collab-manager/Context";
 import { CollaboratorSearch } from "./CollaboratorSearch";
 import CollaboratorsList from "./CollaboratorsList";
 import RoleSelect from "./RoleSelect";
 
-function CollaboratorsPanel({
+function CollaboratorsManager({
   wishlistId,
   isPrivateChecked,
 }: {
@@ -25,36 +25,29 @@ function CollaboratorsPanel({
 
   const onAddMember = async (userId: string, userEmail: string) => {
     const { ok } = await addMember(userEmail, userId, selectedRole);
-
     if (!ok) {
-      toast.error("Не удалось добавить пользователя", {
-        description: "Повторите попытку позже",
-      });
+      notifyError("Не удалось добавить пользователя");
       return;
     }
-
-    toast.success("Приглашение отправлено", {
-      description: `${userId} приглашён как ${
+    notifySuccessSimple(
+      "Приглашение отправлено",
+      `${userId} приглашён как ${
         selectedRole === "editors" ? "редактор" : "читатель"
-      }`,
-    });
+      }`
+    );
   };
 
   const onDeleteMember = async (userId: string) => {
     const { ok } = await deleteMember(userId);
-
     if (!ok) {
-      toast.error("Не удалось удалить пользователя", {
-        description: "Повторите попытку позже",
-      });
+      notifyError("Не удалось удалить пользователя");
       return;
     }
-
-    toast.success(`${userId} удален из команды списка`);
+    notifySuccessSimple(`${userId} удален из команды списка`);
   };
 
   return (
-    <CollaboratorsPanelContext.Provider
+    <ManagerContext.Provider
       value={{
         wishlistId,
         selectedRole,
@@ -65,12 +58,10 @@ function CollaboratorsPanel({
     >
       <div className="flex flex-col gap-6 lg:gap-8">
         <RoleSelect isPrivateChecked={isPrivateChecked} />
-
         <CollaboratorSearch
           searchString={searchString}
           setSearchString={setSearchString}
         />
-
         <CollaboratorsList
           searchString={searchString}
           collaborators={collaborators}
@@ -78,8 +69,8 @@ function CollaboratorsPanel({
           collaboratorsError={error}
         />
       </div>
-    </CollaboratorsPanelContext.Provider>
+    </ManagerContext.Provider>
   );
 }
 
-export default CollaboratorsPanel;
+export default CollaboratorsManager;

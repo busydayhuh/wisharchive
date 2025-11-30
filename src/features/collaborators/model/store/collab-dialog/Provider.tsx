@@ -1,6 +1,6 @@
 import { useCallback, useState, type ReactNode } from "react";
-import { CollaboratorsDialog } from "../ui/dialog/CollaboratorsDialog";
-import { CollaboratorsDialogContext } from "./useCollaboratorsDialog";
+import { CollaboratorsDialog } from "../../../ui/dialog/CollaboratorsDialog";
+import { CollaboratorsDialogContext } from "./Context";
 
 export type CollaboratorsDialogContextType = {
   openCollabDialog: (wishlistId: string, isPrivateChecked?: boolean) => void;
@@ -19,14 +19,12 @@ export function CollaboratorsDialogProvider({
 }) {
   const [dialogState, setDialogState] =
     useState<CollaboratorsDialogState | null>(null);
-
   const openCollabDialog = useCallback(
     (wishlistId: string, isPrivateChecked?: boolean) => {
       setDialogState({ open: true, wishlistId, isPrivateChecked });
     },
     []
   );
-
   const closeCollabDialog = useCallback(() => {
     setDialogState(null);
   }, []);
@@ -36,7 +34,6 @@ export function CollaboratorsDialogProvider({
       value={{ openCollabDialog, closeCollabDialog }}
     >
       {children}
-
       {dialogState && (
         <CollaboratorsDialog
           {...dialogState}

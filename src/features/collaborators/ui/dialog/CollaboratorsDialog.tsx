@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from "@/shared/ui/kit/dialog";
 import { DialogClose } from "@radix-ui/react-dialog";
-import CollaboratorsPanel from "./CollaboratorsPanel";
+import CollaboratorsManager from "./CollaboratorsManager";
 
 export type CollaboratorsDialogProps = {
   wishlistId: string;
@@ -32,12 +32,10 @@ export function CollaboratorsDialog({
             Добавьте редакторов или читателей в список
           </DialogDescription>
         </DialogHeader>
-
-        <CollaboratorsPanel
+        <CollaboratorsManager
           wishlistId={wishlistId}
           isPrivateChecked={isPrivateChecked}
         />
-
         <DialogFooter className="sm:justify-start mt-6">
           <DialogClose asChild>
             <Button size="lg">Готово</Button>

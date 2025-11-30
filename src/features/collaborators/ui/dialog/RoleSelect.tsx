@@ -1,13 +1,13 @@
 import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
 import { Eye, Pencil } from "lucide-react";
-import { useCollaboratorsDialogContext } from "../../model/CollaboratorsPanelContext";
+import { useCollabManager } from "../../model/store/collab-manager/useCollabManager";
 
 export default function RoleSelect({
   isPrivateChecked,
 }: {
   isPrivateChecked: boolean;
 }) {
-  const { selectedRole, setSelectedRole } = useCollaboratorsDialogContext();
+  const { selectedRole, setSelectedRole } = useCollabManager();
   const options = [
     { value: "editors", label: "Редактора", icon: <Pencil /> },
     {
@@ -23,7 +23,6 @@ export default function RoleSelect({
       <p className="inline-block mb-2 font-medium text-muted-foreground text-sm">
         Пригласить соавтора в роли
       </p>
-
       <ResponsiveSelect
         selectedValue={selectedRole}
         onSelect={setSelectedRole as (role: string) => void}

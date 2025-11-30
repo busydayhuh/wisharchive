@@ -4,13 +4,11 @@ export type Roles = {
   isReader: boolean;
   isEditor: boolean;
 };
-
 // Роли для желания
 export type WishRoles = Roles & {
   isBooker: boolean;
   isWishOwner: boolean;
 };
-
 // Соавтор
 export type CollaboratorType = {
   userId: string;

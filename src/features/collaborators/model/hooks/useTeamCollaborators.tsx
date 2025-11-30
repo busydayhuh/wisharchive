@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useUsers } from "../../../../shared/model/user/useUsers";
-import { useTeamMembers } from "../membership/useTeamMembers";
 import type { CollaboratorType } from "../types";
+import { useTeamMembers } from "./useTeamMembers";
 
 export function useTeamCollaborators(wishlistId: string | null) {
   const {
