@@ -114,6 +114,9 @@ export function WishlistDialog({
             <WishlistFormFields form={form} roles={roles} />
             {wishlist && (
               <>
+                <p className="inline-block mt-5 mb-2 font-medium text-muted-foreground text-sm">
+                  Соавторы списка
+                </p>
                 <Collaborators
                   wishlistId={wishlist.$id}
                   editors={wishlist.editorsIds}

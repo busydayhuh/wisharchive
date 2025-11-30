@@ -35,7 +35,7 @@ export function DeleteSection({
         variant="button"
         wishTitle={wishlistTitle}
         action={onDelete}
-        buttonText="Удалить список"
+        buttonText="Удалить"
         className="bg-transparent mt-1 md:mt-0 !px-0 h-12"
       />
     </div>
