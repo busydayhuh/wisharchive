@@ -43,7 +43,7 @@ export function OwnerInfoPopover({
 
   const content = (
     <div className="space-y-4">
-      <p className="font-semibold text-muted-foreground text-xs">
+      <p className="font-headers font-semibold text-muted-foreground text-xs">
         Вы вошли как
       </p>
       <div className="flex items-center gap-4 px-2">

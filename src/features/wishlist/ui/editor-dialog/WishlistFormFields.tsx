@@ -29,7 +29,7 @@ export function WishlistFormFields({ form, roles }: FormFieldsProps) {
         name="title"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="gap-1">
+            <FormLabel className="gap-1 font-semibold">
               Название <span className="text-destructive">*</span>
             </FormLabel>
             <FormControl>

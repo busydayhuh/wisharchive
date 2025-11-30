@@ -21,7 +21,7 @@ export const WishHeader = memo(function WishHeader({
   return (
     <div className="flex flex-col gap-2">
       <div className="flex justify-between items-baseline gap-4">
-        <p className="font-bold text-xl md:text-2xl lg:text-3xl 2xl:text-4xl">
+        <p className="font-headers font-bold text-xl md:text-2xl lg:text-3xl 2xl:text-4xl">
           {title}
         </p>
         <div className="flex items-center gap-1.5">

@@ -117,7 +117,7 @@ export function WishlistName({
 }) {
   return (
     <div className="flex items-center gap-3 lg:gap-5">
-      <p className="font-bold text-xl lg:text-3xl 2xl:text-4xl line-clamp-2 lg:line-clamp-none leading-6 lg:leading-8">
+      <p className="font-headers font-bold text-xl lg:text-3xl 2xl:text-4xl line-clamp-2 lg:line-clamp-none leading-6 lg:leading-8">
         {title}
       </p>
       <p

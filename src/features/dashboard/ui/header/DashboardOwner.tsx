@@ -65,7 +65,7 @@ const DashboardOwner = memo(function DashboardOwner({
           size="xl"
         />
         <div className="flex flex-col md:items-center gap-1 md:gap-2">
-          <p className="font-semibold text-xl md:text-2xl truncate leading-tight">
+          <p className="font-headers font-bold text-xl md:text-2xl truncate leading-tight">
             {user.userName}
           </p>
 
@@ -73,7 +73,7 @@ const DashboardOwner = memo(function DashboardOwner({
             @{user.userId}
           </p>
           {user.birthDate && (
-            <p className="inline-flex items-center gap-1 text-muted-foreground text-xs leading-none">
+            <p className="inline-flex items-center gap-1 font-headers text-muted-foreground text-sm leading-none">
               <Gift className="size-3" />
               {getUserBirthday(user.birthDate as string)}
             </p>

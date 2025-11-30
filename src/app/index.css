@@ -49,6 +49,7 @@
   --color-overlay: var(--overlay);
   --color-inactive-bm: var(--bookmark-background);
   --font-display: "Manrope", "sans-serif";
+  --font-headers: "Raleway", "sans-serif";
   --font-emoji: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
     "sans-serif";
   --inset-shadow-base: inset 0px 0px 120px 20px var(--color-zinc-700);
