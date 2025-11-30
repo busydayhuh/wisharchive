@@ -1,4 +1,4 @@
-import { CollaboratorsAvatars } from "@/features/collaborators";
+import { CollaboratorsGroup } from "@/features/collaborators";
 import { useWishlistcardMeta } from "@/features/dashboard/model/useWishlistcardMeta";
 import { BookmarkButton, EditWishlistButton } from "@/features/wishlist";
 import "@/shared/assets/custom.css";
@@ -67,7 +67,7 @@ function WishlistTableItem({ wishlist }: WishlistTableItemProps) {
       {/* Соавторы */}
       <div className="hidden sm:flex justify-self-center">
         {collaborators && (
-          <CollaboratorsAvatars
+          <CollaboratorsGroup
             collaborators={collaborators}
             size="md"
             maxVisible={5}

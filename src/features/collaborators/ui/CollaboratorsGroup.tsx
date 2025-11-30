@@ -1,5 +1,21 @@
 import { cn } from "@/shared/lib/css";
+import { useIsMobile } from "@/shared/lib/react/useIsMobile";
+import { RoleBadge } from "@/shared/ui/Badges";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/shared/ui/kit/hover-card";
+import {
+  Item,
+  ItemContent,
+  ItemDescription,
+  ItemMedia,
+  ItemTitle,
+} from "@/shared/ui/kit/item";
+import { Popover, PopoverContent } from "@/shared/ui/kit/popover";
 import { AVATAR_SIZES, UserAvatar } from "@/shared/ui/UserAvatar";
+import { PopoverTrigger } from "@radix-ui/react-popover";
 import { Frown } from "lucide-react";
 import { memo } from "react";
 import type { CollaboratorType } from "../model/types";
@@ -19,7 +35,60 @@ const SPACING = {
   sm: "-space-x-2",
 };
 
-export const CollaboratorsAvatars = memo(function CollaboratorsAvatars({
+export function CollaboratorsGroup(props: CollaboratorsAvatarsProps) {
+  const isMobile = useIsMobile();
+
+  const getRoles = (role = "readers") => ({
+    isWishlistOwner: role === "owner",
+    isEditor: role === "editors",
+    isReader: role === "readers",
+  });
+  const listElements = (
+    <div className="flex flex-col gap-2.5 w-full">
+      {props.collaborators &&
+        props.collaborators.map((c) => (
+          <Item className="p-0" size="sm">
+            <ItemMedia variant="image">
+              <UserAvatar
+                size="md"
+                avatarURL={c.avatarURL ?? undefined}
+                name={c.userName}
+                id={c.userId}
+              />
+            </ItemMedia>
+            <ItemContent>
+              <ItemTitle className="font-semibold">{c.userName}</ItemTitle>
+              <ItemDescription>
+                <RoleBadge roles={getRoles(c.role)} size="sm" />
+              </ItemDescription>
+            </ItemContent>
+          </Item>
+        ))}
+    </div>
+  );
+
+  if (props.size === "sm") return <CollaboratorsAvatars {...props} />;
+  if (isMobile)
+    return (
+      <Popover>
+        <PopoverTrigger>
+          <CollaboratorsAvatars {...props} />
+        </PopoverTrigger>
+        <PopoverContent>{listElements}</PopoverContent>
+      </Popover>
+    );
+
+  return (
+    <HoverCard openDelay={0}>
+      <HoverCardTrigger>
+        <CollaboratorsAvatars {...props} />
+      </HoverCardTrigger>
+      <HoverCardContent className="w-fit">{listElements}</HoverCardContent>
+    </HoverCard>
+  );
+}
+
+const CollaboratorsAvatars = memo(function CollaboratorsAvatars({
   collaborators,
   isLoading,
   error,

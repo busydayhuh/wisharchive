@@ -16,5 +16,6 @@ export type CollaboratorType = {
   userEmail: string;
   avatarURL: string | null;
   roles?: string[];
+  role?: string;
   confirm?: boolean;
 };

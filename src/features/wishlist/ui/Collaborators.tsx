@@ -1,5 +1,5 @@
 import {
-  CollaboratorsAvatars,
+  CollaboratorsGroup,
   useCollaboratorsDialog,
   useDashboardCollaborators,
 } from "@/features/collaborators";
@@ -33,7 +33,7 @@ export function Collaborators({
   if (collaborators)
     return (
       <div className="flex items-center gap-2">
-        <CollaboratorsAvatars
+        <CollaboratorsGroup
           collaborators={collaborators}
           isLoading={isLoading}
           error={error}

@@ -13,7 +13,7 @@ export { CollaboratorsDialogProvider } from "./model/store/collab-dialog/Provide
 export { useCollaboratorsDialog } from "./model/store/collab-dialog/useCollabDialog";
 export type { Roles, WishRoles } from "./model/types";
 export {
-  CollaboratorsAvatars,
   CollaboratorsAvatarsSkeleton,
-} from "./ui/CollaboratorsAvatars";
+  CollaboratorsGroup,
+} from "./ui/CollaboratorsGroup";
 export { CollaboratorsDialog } from "./ui/dialog/CollaboratorsDialog";

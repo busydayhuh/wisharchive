@@ -27,7 +27,7 @@ export function useWishlistcardMeta(wishlist: WishlistDocumentType) {
     [wishlist, openDialog, roles]
   );
   const { toggleBookmark } = useBookmark($id, bookmarkedBy ?? [], userId);
-  const isFavorite = userId ? bookmarkedBy?.includes(userId) : false;
+  const isFavorite = userId ? bookmarkedBy?.includes(userId) ?? false : false;
   const onSharedPage = useMatch(ROUTES.SHARED);
 
   const linkParams: LinkParams = {

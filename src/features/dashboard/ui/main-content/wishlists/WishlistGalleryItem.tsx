@@ -1,4 +1,4 @@
-import { CollaboratorsAvatars } from "@/features/collaborators";
+import { CollaboratorsGroup } from "@/features/collaborators";
 import { useWishlistcardMeta } from "@/features/dashboard/model/useWishlistcardMeta";
 import { BookmarkButton, EditWishlistButton } from "@/features/wishlist";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
@@ -58,7 +58,7 @@ function WishlistGalleryItem({ wishlist }: { wishlist: WishlistDocumentType }) {
 
           {/* Соавторы */}
           {collaborators && (
-            <CollaboratorsAvatars
+            <CollaboratorsGroup
               collaborators={collaborators}
               size="sm"
               maxVisible={3}

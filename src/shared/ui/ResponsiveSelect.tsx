@@ -110,7 +110,7 @@ export function ResponsiveSelect({
             ) : (
               <span className="flex items-center gap-2 w-full">
                 {selectedOption?.label ?? ""}
-                <ChevronDown className="size-3" />
+                <ChevronDown className="ms-auto size-3" />
               </span>
             )}
           </Button>
