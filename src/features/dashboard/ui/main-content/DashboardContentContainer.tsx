@@ -1,4 +1,4 @@
-import CreateButtonWithDropdown from "@/features/create";
+import { CreateFAB } from "@/features/create";
 import { AnimatePresence, motion } from "motion/react";
 import { type ReactNode } from "react";
 
@@ -12,7 +12,7 @@ export function DashboardContentContainer({
       <motion.div layout>
         <AnimatePresence>{children}</AnimatePresence>
       </motion.div>
-      <CreateButtonWithDropdown />
+      <CreateFAB />
     </div>
   );
 }
