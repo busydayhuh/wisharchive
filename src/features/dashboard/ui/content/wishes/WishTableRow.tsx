@@ -23,7 +23,7 @@ function WishTableRow({ wish }: { wish: WishDocumentType }) {
   return (
     <div
       className={cn(
-        "relative items-center gap-2 grid grid-cols-[3fr_1fr] md:grid-cols-[22rem_1fr_1fr_0.5fr] lg:grid-cols-[28rem_1fr_1fr_1fr_0.5fr] 2xl:grid-cols-[54rem_1fr_1fr_1fr_0.5fr] xl:grid-cols-[40rem_1fr_1fr_1fr_0.5fr] md:px-1 py-1 md:py-2 w-full transition"
+        "wish-table-grid relative items-center md:px-1 py-1 md:py-2 w-full transition"
       )}
     >
       {/* Картинка */}
