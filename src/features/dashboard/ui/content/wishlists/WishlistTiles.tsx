@@ -3,7 +3,7 @@ import { getFallbackColor } from "@/shared/lib/getFallbackColor";
 import type { WishDocumentType } from "@/shared/model/types";
 import { ID } from "appwrite";
 
-export function ImageTiles({
+export function WishlistTiles({
   wishes,
   variant = "gallery",
 }: {

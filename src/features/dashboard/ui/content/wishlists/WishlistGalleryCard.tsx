@@ -5,7 +5,7 @@ import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { PRIVACY_ICONS, RoleBadge } from "@/shared/ui/Badges";
 import { Link } from "react-router-dom";
-import { ImageTiles } from "./ImageTiles";
+import { WishlistTiles } from "./WishlistTiles";
 
 function WishlistGalleryCard({ wishlist }: { wishlist: WishlistDocumentType }) {
   const {
@@ -40,7 +40,7 @@ function WishlistGalleryCard({ wishlist }: { wishlist: WishlistDocumentType }) {
 
         {/* Стопка картинок */}
         <Link {...linkParams} className="relative">
-          <ImageTiles wishes={wishlist.wishes} />
+          <WishlistTiles wishes={wishlist.wishes} />
           {wishlist.isPrivate && (
             <div className="top-2 left-2 absolute flex justify-center items-center rounded-full w-6 md:w-8 h-6 md:h-8 overflow-clip">
               {PRIVACY_ICONS.private}

@@ -8,7 +8,7 @@ import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 import { useMemo } from "react";
 import { Link } from "react-router";
-import { ImageTiles } from "./ImageTiles";
+import { WishlistTiles } from "./WishlistTiles";
 
 interface WishlistTableRowProps {
   wishlist: WishlistDocumentType;
@@ -39,7 +39,7 @@ function WishlistTableRow({ wishlist }: WishlistTableRowProps) {
     <div className="wl-table-grid relative items-center py-2 pl-2 md:pl-0">
       {/* Превью желаний */}
       <Link {...linkParams} className="relative">
-        <ImageTiles wishes={wishlist.wishes} variant="table" />
+        <WishlistTiles wishes={wishlist.wishes} variant="table" />
         {wishlist.isPrivate && (
           <div className="top-4 left-0 absolute flex justify-center items-center rounded-full w-6 md:w-8 h-6 md:h-8 overflow-clip">
             {PRIVACY_ICONS.private}
