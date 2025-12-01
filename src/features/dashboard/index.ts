@@ -19,6 +19,5 @@ export { ContentGrid } from "./ui/content/ContentGrid";
 export { ContentLayout } from "./ui/content/ContentLayout";
 export { ContentWrapper } from "./ui/content/ContentWrapper";
 export { WishesSkeleton } from "./ui/content/wishes/WishesSkeleton";
-export { WishlistDisplayResolver } from "./ui/content/wishes/WishlistDisplayResolver";
 export { DashboardLayout } from "./ui/DashboardLayout";
 export { OwnerInfoPopover } from "./ui/header/OwnerInfoPopover";
