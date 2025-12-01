@@ -2,8 +2,7 @@ import { useUsers } from "@/shared/model/user/useUsers";
 import type { CollaboratorType } from "../types";
 
 // Облегченный хук для дашборда, который не вызывает Team API для каждого вишлиста, а использует дублирующие состав Team поля в вишлисте
-
-export function useDashboardCollaborators(
+export function useDocumentCollaborators(
   ownerId: string,
   editorsIds: string[],
   readersIds: string[]

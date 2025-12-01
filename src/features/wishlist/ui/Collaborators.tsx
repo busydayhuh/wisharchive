@@ -1,7 +1,7 @@
 import {
   CollaboratorsGroup,
   useCollaboratorsDialog,
-  useDashboardCollaborators,
+  useDocumentCollaborators,
 } from "@/features/collaborators";
 import { Button } from "@/shared/ui/kit/button";
 import { PlusIcon } from "lucide-react";
@@ -23,7 +23,7 @@ export function Collaborators({
   readers,
   isOwner,
 }: CollaboratorsProps) {
-  const { collaborators, isLoading, error } = useDashboardCollaborators(
+  const { collaborators, isLoading, error } = useDocumentCollaborators(
     ownerId,
     editors,
     readers

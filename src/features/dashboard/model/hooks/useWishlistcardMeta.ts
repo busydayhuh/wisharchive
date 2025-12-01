@@ -1,6 +1,6 @@
 import { useAuth } from "@/features/auth";
 import { useRoute } from "@/features/breadcrumbs";
-import { useDashboardCollaborators } from "@/features/collaborators";
+import { useDocumentCollaborators } from "@/features/collaborators";
 import { useBookmark, useWishlistDialog } from "@/features/wishlist";
 import { ROUTES } from "@/shared/model/routes";
 import type { LinkParams, WishlistDocumentType } from "@/shared/model/types";
@@ -14,7 +14,7 @@ export function useWishlistcardMeta(wishlist: WishlistDocumentType) {
 
   const { userId } = useAuth();
   const { location, params } = useRoute();
-  const { collaborators } = useDashboardCollaborators(
+  const { collaborators } = useDocumentCollaborators(
     ownerId,
     editorsIds,
     readersIds
