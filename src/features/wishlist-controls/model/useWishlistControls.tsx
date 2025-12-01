@@ -10,7 +10,7 @@ import { useCallback } from "react";
 
 export default function useWishlistControls(
   wish: WishDocumentType,
-  roles: WishRoles
+  roles?: WishRoles
 ) {
   const { $id, title, imageURL, wishlist } = wish;
   const { changeWishlist, removeFromWishlist } = useQuickActions($id);
@@ -33,13 +33,13 @@ export default function useWishlistControls(
           );
         },
         name: wishlist?.title,
-        isOwner: roles.isWishOwner,
+        isOwner: roles?.isWishOwner,
       }),
     [
       imageURL,
       openConfDialog,
       removeFromWishlist,
-      roles.isWishOwner,
+      roles?.isWishOwner,
       title,
       wishlist?.title,
     ]

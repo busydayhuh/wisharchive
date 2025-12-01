@@ -13,7 +13,7 @@ import WishlistRemoveButton from "./WishlistRemoveButton";
 
 type WishlistControlsProps = {
   wish: WishDocumentType;
-  roles: WishRoles;
+  roles?: WishRoles;
   wishlist: WishlistDocumentType | null;
   className?: string;
   variant?: "gallery" | "table";
@@ -31,7 +31,7 @@ export function WishlistControls({
   const isMobile = useIsMobile();
 
   // кнопка смены wl [дашборд]
-  if (roles.isWishOwner && !onListPage) {
+  if (roles?.isWishOwner && !onListPage) {
     if (isMobile && variant === "gallery") return null;
     return (
       <WishlistChanger
@@ -42,7 +42,7 @@ export function WishlistControls({
     );
   }
   // убрать из wl [страница вишлиста]
-  if ((roles.isEditor || roles.isWishlistOwner) && onListPage)
+  if ((roles?.isEditor || roles?.isWishlistOwner) && onListPage)
     return (
       <WishlistRemoveButton
         onRemove={remove}

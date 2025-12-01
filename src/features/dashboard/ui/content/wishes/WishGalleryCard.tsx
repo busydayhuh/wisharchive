@@ -6,6 +6,7 @@ import {
   QuickActions,
   WishImage,
 } from "@/features/wish";
+import { WishlistControls } from "@/features/wishlist-controls";
 import { cn } from "@/shared/lib/css";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import type { LinkParams, WishDocumentType } from "@/shared/model/types";
@@ -13,7 +14,6 @@ import { PriorityBadge, PRIVACY_ICONS } from "@/shared/ui/Badges";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { memo } from "react";
 import { Link } from "react-router";
-import { WishlistDisplayResolver } from "./WishlistDisplayResolver";
 
 function WishGalleryCard({ wish }: { wish: WishDocumentType }) {
   const { onBookedPage, onListPage, userRoles, linkParams, onEditWish } =
@@ -35,18 +35,14 @@ function WishGalleryCard({ wish }: { wish: WishDocumentType }) {
       />
 
       {!wish.isArchived && (
-        <WishlistDisplayResolver
-          wishTitle={wish.title}
-          imageURL={wish.imageURL ?? undefined}
+        <WishlistControls
+          wish={wish}
+          wishlist={wish.wishlist}
+          variant="gallery"
+          roles={userRoles}
           className={cn(
             "top-3 right-3 absolute w-fit font-medium md:text-sm 2xl:text-sm"
           )}
-          isMobile={isMobile}
-          onListPage={!!onListPage}
-          isOwner={userRoles?.isWishOwner ?? false}
-          isEditor={userRoles?.isEditor ?? false}
-          wishlist={wish.wishlist}
-          wishId={wish.$id}
         />
       )}
 
