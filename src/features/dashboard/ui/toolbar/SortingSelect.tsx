@@ -1,13 +1,12 @@
 import { cn } from "@/shared/lib/css";
 import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
 import { ChevronDown } from "lucide-react";
-import type { SortState } from "../../model/DashboardToolbarContext";
+import { useToolbar } from "../../model/store/toolbar/useToolbar";
 import { toolbarConfigs } from "../../model/toolbarConfig";
-import { useDashboardToolbar } from "../../model/useDashboardToolbar";
+import type { SortState } from "../../model/types";
 
 export function SortingSelect() {
-  const { toolbarState, setToolbarState, dashboardType } =
-    useDashboardToolbar();
+  const { toolbarState, setToolbarState, dashboardType } = useToolbar();
 
   const sortState = toolbarState.sort;
 

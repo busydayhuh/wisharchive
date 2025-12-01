@@ -1,4 +1,4 @@
-import { DashboardGrid } from "@/features/dashboard/";
+import { ContentGrid } from "@/features/dashboard/";
 import { ROUTES } from "@/shared/model/routes";
 import { Button } from "@/shared/ui/kit/button";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
@@ -43,11 +43,11 @@ export function RelatedWishes({
   if (isLoading)
     return (
       <div className="mx-2 md:mx-auto md:max-w-[96%]">
-        <DashboardGrid viewMode="gallery">
+        <ContentGrid viewMode="gallery">
           {[...Array(5)].map((_, index) => (
             <Skeleton key={"related" + index} className="mb-4" />
           ))}
-        </DashboardGrid>
+        </ContentGrid>
       </div>
     );
   if (error) return null;
@@ -71,7 +71,7 @@ export function RelatedWishes({
           </Button>
         </div>
 
-        <DashboardGrid viewMode="gallery">
+        <ContentGrid viewMode="gallery">
           {relatedWishes.map((wish) => (
             <div
               className="group-card-wrapper transition-all duration-300"
@@ -103,7 +103,7 @@ export function RelatedWishes({
               </Link>
             </div>
           ))}
-        </DashboardGrid>
+        </ContentGrid>
       </div>
     );
 }

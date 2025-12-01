@@ -1,5 +1,5 @@
 import { type WishRoles } from "@/features/collaborators";
-import { useWishcardMeta } from "@/features/dashboard/model/useWishcardMeta";
+import { useWishcardMeta } from "@/features/dashboard/model/hooks/useWishcardMeta";
 import {
   BookButton,
   FormattedPrice,
@@ -13,10 +13,10 @@ import { PriorityBadge, PRIVACY_ICONS } from "@/shared/ui/Badges";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { memo } from "react";
 import { Link } from "react-router";
-import { WishlistDisplayManager } from "./WishlistDisplayManager";
+import { WishlistDisplayResolver } from "./WishlistDisplayResolver";
 
-function WishGalleryItem({ wish }: { wish: WishDocumentType }) {
-  const { onBookedPage, onListPage, userRoles, linkParams, toEditPage } =
+function WishGalleryCard({ wish }: { wish: WishDocumentType }) {
+  const { onBookedPage, onListPage, userRoles, linkParams, onEditWish } =
     useWishcardMeta(wish);
   const isMobile = useIsMobile();
 
@@ -30,12 +30,12 @@ function WishGalleryItem({ wish }: { wish: WishDocumentType }) {
         wish={wish}
         userRoles={userRoles}
         linkParams={linkParams}
-        toEditPage={toEditPage}
+        onEditWish={onEditWish}
         isMobile={isMobile}
       />
 
       {!wish.isArchived && (
-        <WishlistDisplayManager
+        <WishlistDisplayResolver
           wishTitle={wish.title}
           imageURL={wish.imageURL ?? undefined}
           className={cn(
@@ -86,13 +86,13 @@ function WishGalleryItem({ wish }: { wish: WishDocumentType }) {
 
 const WishCover = memo(function WishCover({
   wish,
-  toEditPage,
+  onEditWish,
   userRoles,
   linkParams,
   isMobile,
 }: {
   wish: WishDocumentType;
-  toEditPage: () => void;
+  onEditWish: () => void;
   userRoles?: WishRoles;
   linkParams: LinkParams;
   isMobile: boolean;
@@ -130,7 +130,7 @@ const WishCover = memo(function WishCover({
               align="start"
               isArchived={wish.isArchived}
               title={wish.title}
-              toEditPage={toEditPage}
+              onEditWish={onEditWish}
               className="transition-all duration-300 show-actions"
             />
           ) : (
@@ -149,4 +149,4 @@ const WishCover = memo(function WishCover({
   );
 });
 
-export default WishGalleryItem;
+export default WishGalleryCard;

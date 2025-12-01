@@ -1,7 +1,7 @@
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import { ROUTES } from "@/shared/model/routes";
 import { useMatch } from "react-router";
-import { useDashboardToolbar } from "../../model/useDashboardToolbar";
+import { useToolbar } from "../../model/store/toolbar/useToolbar";
 import FiltersGroup from "./FiltersGroup";
 import { SortingSelect } from "./SortingSelect";
 import ViewModeSwitch from "./ViewModeSwitch";
@@ -9,7 +9,7 @@ import ViewModeSwitch from "./ViewModeSwitch";
 export function DashboardToolbar({ isOwner }: { isOwner: boolean }) {
   const isMobile = useIsMobile();
   const onArchivedPage = useMatch(ROUTES.ARCHIVED);
-  const { toolbarState, setToolbarState } = useDashboardToolbar();
+  const { toolbarState, setToolbarState } = useToolbar();
 
   if (isMobile) {
     return (

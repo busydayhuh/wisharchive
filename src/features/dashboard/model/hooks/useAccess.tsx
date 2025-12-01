@@ -4,16 +4,10 @@ import {
   resolveWishRoles,
   resolveWishlistRoles,
 } from "@/features/collaborators";
-import type {
-  WishDocumentType,
-  WishlistDocumentType,
-} from "@/shared/model/types";
+import type { Models } from "appwrite";
 import { useMemo } from "react";
 
-export function useAccess(
-  type: "wish" | "wishlist",
-  item: WishDocumentType | WishlistDocumentType
-) {
+export function useAccess(type: "wish" | "wishlist", item: Models.Document) {
   const { userId } = useAuth();
 
   const roles = useMemo(

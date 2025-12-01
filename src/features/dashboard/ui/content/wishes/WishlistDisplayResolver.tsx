@@ -7,7 +7,7 @@ import { notifyError, notifySuccessExpanded } from "@/shared/ui/CustomToast";
 import { Button } from "@/shared/ui/kit/button";
 import { X } from "lucide-react";
 
-export function WishlistDisplayManager({
+export function WishlistDisplayResolver({
   isOwner,
   isMobile,
   isEditor,

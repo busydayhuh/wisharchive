@@ -1,5 +1,5 @@
 import { CollaboratorsAvatarsSkeleton } from "@/features/collaborators";
-import { DashboardGrid, WishesSkeleton } from "@/features/dashboard";
+import { ContentGrid, WishesSkeleton } from "@/features/dashboard";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
 
 export function WishlistSkeleton() {
@@ -22,11 +22,11 @@ export function WishlistSkeleton() {
           <Skeleton className="size-9" />
         </div>
       </div>
-      <DashboardGrid viewMode="gallery">
+      <ContentGrid viewMode="gallery">
         {[...Array(5)].map((_, index) => (
           <WishesSkeleton viewMode="gallery" key={"wish-skeleton-" + index} />
         ))}
-      </DashboardGrid>
+      </ContentGrid>
     </div>
   );
 }

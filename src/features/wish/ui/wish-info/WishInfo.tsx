@@ -11,7 +11,7 @@ export const WishInfo = memo(function WishInfo({
 }: {
   wish: WishDocumentType;
 }) {
-  const { userRoles, toEditPage } = useWishcardMeta(wish);
+  const { userRoles, onEditWish } = useWishcardMeta(wish);
   const { hasAccess } = useAccess("wish", wish);
 
   if (!hasAccess)
@@ -29,7 +29,7 @@ export const WishInfo = memo(function WishInfo({
         title={wish.title}
         owner={wish.owner}
         isEditor={userRoles?.isWishOwner}
-        editWish={() => toEditPage()}
+        editWish={() => onEditWish()}
         imageURL={wish.imageURL ?? undefined}
       />
 

@@ -1,5 +1,5 @@
 import { ROUTES } from "@/shared/model/routes";
-import { matchRoutes, useLocation } from "react-router";
+import { matchRoutes, useLocation, useMatch } from "react-router";
 
 export function useDepartment() {
   const { pathname, search } = useLocation();
@@ -10,26 +10,33 @@ export function useDepartment() {
       pathname
     )
   );
-
   const slimPage = Boolean(
     matchRoutes(
       [{ path: ROUTES.WISH }, { path: ROUTES.EDIT }, { path: ROUTES.PROFILE }],
       pathname
     )
   );
-
   const hasBreadcrumbs = Boolean(
     matchRoutes(
       [{ path: ROUTES.WISH }, { path: ROUTES.WISHLIST }, { path: ROUTES.EDIT }],
       pathname
     )
   );
-
   const showNavigation = Boolean(
     matchRoutes([{ path: ROUTES.WISHES }, { path: ROUTES.WISHLISTS }], pathname)
   );
-
   const profileView = Boolean(search);
+  const page = {
+    list: useMatch(ROUTES.WISHLIST),
+    booked: useMatch(ROUTES.BOOKED),
+  };
 
-  return { outside, slimPage, hasBreadcrumbs, showNavigation, profileView };
+  return {
+    outside,
+    slimPage,
+    hasBreadcrumbs,
+    showNavigation,
+    profileView,
+    page,
+  };
 }

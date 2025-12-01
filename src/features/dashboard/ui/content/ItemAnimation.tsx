@@ -2,7 +2,7 @@ import { cn } from "@/shared/lib/css";
 import { motion } from "motion/react";
 import React from "react";
 
-export function AnimationsWrapper({
+export function ItemAnimation({
   type,
   viewMode,
   children,

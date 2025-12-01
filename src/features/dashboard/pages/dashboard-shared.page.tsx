@@ -1,14 +1,14 @@
 import { useInfiniteScroll } from "@/shared/lib/react/useInfiniteScroll";
 import { useMemo } from "react";
-import { useCollabWishlists } from "../model/useCollabWishlists";
-import { useDashboardContext } from "../model/useDashboardContext";
-import { useDashboardToolbar } from "../model/useDashboardToolbar";
+import { useCollabWishlists } from "../model/hooks/useCollabWishlists";
+import { useDashboard } from "../model/store/dashboard/useDashboard";
+import { useToolbar } from "../model/store/toolbar/useToolbar";
 import { wrapDashboardPage } from "../model/wrapDashboardPage";
-import WishlistsPageLayout from "../ui/main-content/wishlists/WishlistsPageLayout";
+import { ContentLayout } from "../ui/content/ContentLayout";
 
 function SharedPage() {
-  const { searchString, toolbarState } = useDashboardToolbar();
-  const { dashboardUserId } = useDashboardContext();
+  const { searchString, toolbarState } = useToolbar();
+  const { dashboardOwnerId } = useDashboard();
 
   const {
     wishlists,
@@ -25,7 +25,7 @@ function SharedPage() {
       filters: toolbarState.filters,
     },
     "collaborative",
-    dashboardUserId
+    dashboardOwnerId
   );
 
   useInfiniteScroll({
@@ -43,12 +43,12 @@ function SharedPage() {
   );
 
   return (
-    <WishlistsPageLayout
-      wishlists={collabWishlists}
+    <ContentLayout
+      items={collabWishlists}
       isLoading={isLoading}
       isValidating={isValidating}
       error={error}
-      viewMode={toolbarState.viewMode}
+      type="wishlist"
     />
   );
 }

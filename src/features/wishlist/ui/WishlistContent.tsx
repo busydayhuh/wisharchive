@@ -1,10 +1,9 @@
-import { useDashboardToolbar, WishesPageLayout } from "@/features/dashboard";
+import { ContentLayout, useToolbar } from "@/features/dashboard";
 import { useWishes } from "@/features/wish";
 import { useInfiniteScroll } from "@/shared/lib/react/useInfiniteScroll";
 
 export function WishlistContent({ wishlistId }: { wishlistId: string }) {
-  const { searchString, toolbarState } = useDashboardToolbar();
-
+  const { searchString, toolbarState } = useToolbar();
   const { wishes, isLoading, error, isValidating, size, setSize, reachedEnd } =
     useWishes(
       {
@@ -18,8 +17,6 @@ export function WishlistContent({ wishlistId }: { wishlistId: string }) {
       wishlistId
     );
 
-  console.log("toolbarState.filters :>> ", toolbarState.filters);
-
   useInfiniteScroll({
     loadMore: () => setSize(size + 1),
     disabled: isValidating || reachedEnd,
@@ -27,12 +24,12 @@ export function WishlistContent({ wishlistId }: { wishlistId: string }) {
   });
 
   return (
-    <WishesPageLayout
-      wishes={wishes}
+    <ContentLayout
+      items={wishes}
       isLoading={isLoading}
       error={error}
       isValidating={isValidating}
-      viewMode={toolbarState.viewMode}
+      type="wish"
     />
   );
 }

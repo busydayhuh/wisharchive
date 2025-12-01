@@ -45,7 +45,7 @@ type MenuItem = {
 type QuickActionsProps = {
   wishId: string;
   title: string;
-  toEditPage: () => void;
+  onEditWish: () => void;
   isArchived?: boolean;
   imageURL?: string;
   align?: "center" | "end" | "start";
@@ -57,7 +57,7 @@ export function QuickActions({
   wishId,
   title,
   imageURL,
-  toEditPage,
+  onEditWish,
   isArchived = false,
   align = "end",
   side = "top",
@@ -105,7 +105,7 @@ export function QuickActions({
     {
       title: "Редактировать",
       icon: <Edit2 />,
-      action: () => toEditPage(),
+      action: () => onEditWish(),
       actionName: "edit" as Action,
       confirmation: false,
     },

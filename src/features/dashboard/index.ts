@@ -1,13 +1,12 @@
 // хуки и типы
-export { DashboardToolbarProvider } from "./model/DashboardToolbarContext";
-export type { SortState } from "./model/DashboardToolbarContext";
-export type { Filter } from "./model/toolbarConfig";
-export { useAccess } from "./model/useAccess";
-export { useCollabWishlists } from "./model/useCollabWishlists";
-export { useDashboardContext } from "./model/useDashboardContext";
-export { useDashboardToolbar } from "./model/useDashboardToolbar";
-export { useWishcardMeta } from "./model/useWishcardMeta";
-export { useWishlistcardMeta } from "./model/useWishlistcardMeta";
+export { useAccess } from "./model/hooks/useAccess";
+export { useCollabWishlists } from "./model/hooks/useCollabWishlists";
+export { useWishcardMeta } from "./model/hooks/useWishcardMeta";
+export { useWishlistcardMeta } from "./model/hooks/useWishlistcardMeta";
+export { useDashboard } from "./model/store/dashboard/useDashboard";
+export { ToolbarProvider } from "./model/store/toolbar/ToolbarProvider";
+export { useToolbar } from "./model/store/toolbar/useToolbar";
+export type { Filter, SortState } from "./model/types";
 //страницы
 export { ArchivedPageWithLayout } from "./pages/dashboard-archived.page";
 export { BookedPageWithLayout } from "./pages/dashboard-booked.page";
@@ -16,12 +15,10 @@ export { WishlistPageWithLayout } from "./pages/dashboard-lists.page";
 export { SharedPageWithLayout } from "./pages/dashboard-shared.page";
 export { WishesPageWithLayout } from "./pages/dashboard-wishes.page";
 // ui
+export { ContentGrid } from "./ui/content/ContentGrid";
+export { ContentLayout } from "./ui/content/ContentLayout";
+export { ContentWrapper } from "./ui/content/ContentWrapper";
+export { WishesSkeleton } from "./ui/content/wishes/WishesSkeleton";
+export { WishlistDisplayResolver } from "./ui/content/wishes/WishlistDisplayResolver";
 export { DashboardLayout } from "./ui/DashboardLayout";
 export { OwnerInfoPopover } from "./ui/header/OwnerInfoPopover";
-export { DashboardContentContainer } from "./ui/main-content/DashboardContentContainer";
-export { DashboardGrid } from "./ui/main-content/DashboardGrid";
-export { WishesPageLayout } from "./ui/main-content/wishes/WishesPageLayout";
-export { WishesSkeleton } from "./ui/main-content/wishes/WishesSkeleton";
-export { WishlistDisplayManager } from "./ui/main-content/wishes/WishlistDisplayManager";
-export { ImageTiles } from "./ui/main-content/wishlists/ImageTiles";
-export { DashboardToolbar } from "./ui/toolbar/DashboardToolbar";

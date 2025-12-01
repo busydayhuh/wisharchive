@@ -43,7 +43,7 @@ export function useWishcardMeta({
     },
   };
 
-  const toEditPage = () =>
+  const onEditWish = () =>
     navigate(href(ROUTES.EDIT, { wishId: $id }), { state: linkParams.state });
 
   return {
@@ -51,6 +51,6 @@ export function useWishcardMeta({
     onBookedPage,
     onListPage,
     linkParams,
-    toEditPage,
+    onEditWish,
   };
 }

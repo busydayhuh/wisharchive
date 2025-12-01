@@ -1,13 +1,13 @@
 import { useWishlists } from "@/features/wishlist";
 import { useInfiniteScroll } from "@/shared/lib/react/useInfiniteScroll";
-import { useDashboardContext } from "../model/useDashboardContext";
-import { useDashboardToolbar } from "../model/useDashboardToolbar";
+import { useDashboard } from "../model/store/dashboard/useDashboard";
+import { useToolbar } from "../model/store/toolbar/useToolbar";
 import { wrapDashboardPage } from "../model/wrapDashboardPage";
-import WishlistsPageLayout from "../ui/main-content/wishlists/WishlistsPageLayout";
+import { ContentLayout } from "../ui/content/ContentLayout";
 
 function BookmarksPage() {
-  const { dashboardUserId } = useDashboardContext();
-  const { searchString, toolbarState } = useDashboardToolbar();
+  const { dashboardOwnerId } = useDashboard();
+  const { searchString, toolbarState } = useToolbar();
 
   const {
     wishlists: bookmarkedWishlists,
@@ -19,13 +19,13 @@ function BookmarksPage() {
     reachedEnd,
   } = useWishlists(
     {
-      bookmarkedBy: dashboardUserId,
+      bookmarkedBy: dashboardOwnerId,
       searchString: searchString,
       sort: toolbarState.sort,
       filters: toolbarState.filters,
     },
     "bookmarks",
-    dashboardUserId
+    dashboardOwnerId
   );
 
   useInfiniteScroll({
@@ -35,12 +35,12 @@ function BookmarksPage() {
   });
 
   return (
-    <WishlistsPageLayout
-      wishlists={bookmarkedWishlists}
+    <ContentLayout
+      items={bookmarkedWishlists}
       isLoading={isLoading}
       isValidating={isValidating}
       error={error}
-      viewMode={toolbarState.viewMode}
+      type="wishlist"
     />
   );
 }

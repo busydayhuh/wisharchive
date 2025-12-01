@@ -1,8 +1,8 @@
-import { DashboardToolbarProvider } from "../model/DashboardToolbarContext";
-import { DashboardContext } from "../model/useDashboardContext";
-import { useDashboardMeta } from "../model/useDashboardMeta";
+import { useDashboardMeta } from "../model/hooks/useDashboardMeta";
+import { DashboardContext } from "../model/store/dashboard/Context";
+import { ToolbarProvider } from "../model/store/toolbar/ToolbarProvider";
+import { ContentWrapper } from "./content/ContentWrapper";
 import DashboardHeader from "./header/DashboardHeader";
-import { DashboardContentContainer } from "./main-content/DashboardContentContainer";
 import { DashboardToolbar } from "./toolbar/DashboardToolbar";
 
 export function DashboardLayout({
@@ -18,14 +18,14 @@ export function DashboardLayout({
     <DashboardHeader
       title={meta.title}
       showDashboardOwner={meta.showDashboardOwner}
-      dashboardUserId={meta.dashboardUserId}
+      dashboardOwnerId={meta.dashboardOwnerId}
       isDashboardOwner={meta.isDashboardOwner}
     />
   );
 
   return (
     <DashboardContext.Provider value={meta}>
-      <DashboardToolbarProvider
+      <ToolbarProvider
         dashboardType={meta.dashboardType}
         localStorageKey={meta.localStorageKey}
         key={meta.dashboardType}
@@ -33,9 +33,9 @@ export function DashboardLayout({
         <div className="relative mt-4 md:mt-0 px-1 md:px-0">
           {header ? header : defaultDashboardHeader}
           <DashboardToolbar isOwner={meta.isDashboardOwner} />
-          <DashboardContentContainer>{children}</DashboardContentContainer>
+          <ContentWrapper>{children}</ContentWrapper>
         </div>
-      </DashboardToolbarProvider>
+      </ToolbarProvider>
     </DashboardContext.Provider>
   );
 }

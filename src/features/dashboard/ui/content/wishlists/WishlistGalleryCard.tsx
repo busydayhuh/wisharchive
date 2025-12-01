@@ -1,5 +1,5 @@
 import { CollaboratorsGroup } from "@/features/collaborators";
-import { useWishlistcardMeta } from "@/features/dashboard/model/useWishlistcardMeta";
+import { useWishlistcardMeta } from "@/features/dashboard/model/hooks/useWishlistcardMeta";
 import { BookmarkButton, EditWishlistButton } from "@/features/wishlist";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import type { WishlistDocumentType } from "@/shared/model/types";
@@ -7,7 +7,7 @@ import { PRIVACY_ICONS, RoleBadge } from "@/shared/ui/Badges";
 import { Link } from "react-router-dom";
 import { ImageTiles } from "./ImageTiles";
 
-function WishlistGalleryItem({ wishlist }: { wishlist: WishlistDocumentType }) {
+function WishlistGalleryCard({ wishlist }: { wishlist: WishlistDocumentType }) {
   const {
     collaborators,
     bookmarkWishlist,
@@ -80,4 +80,4 @@ function WishlistGalleryItem({ wishlist }: { wishlist: WishlistDocumentType }) {
   );
 }
 
-export default WishlistGalleryItem;
+export default WishlistGalleryCard;

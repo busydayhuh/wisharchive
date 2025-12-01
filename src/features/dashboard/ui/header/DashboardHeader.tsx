@@ -9,14 +9,14 @@ import DashboardOwner from "./DashboardOwner";
 type DashboardHeaderProps = {
   title: string | null;
   showDashboardOwner: boolean;
-  dashboardUserId?: string;
+  dashboardOwnerId?: string;
   isDashboardOwner: boolean;
 };
 
 const DashboardHeader = memo(function DashboardHeader({
   title,
   showDashboardOwner,
-  dashboardUserId,
+  dashboardOwnerId,
   isDashboardOwner = true,
 }: DashboardHeaderProps) {
   const { isLoggedIn } = useAuth();
@@ -32,7 +32,7 @@ const DashboardHeader = memo(function DashboardHeader({
           <GlobalSearchDialog />
           {showDashboardOwner && (
             <DashboardOwner
-              userId={dashboardUserId}
+              userId={dashboardOwnerId}
               isOwner={isDashboardOwner}
             />
           )}
@@ -44,7 +44,10 @@ const DashboardHeader = memo(function DashboardHeader({
       <div className="items-start grid grid-cols-[3fr_1fr] md:grid-cols-3 mt-1.5 md:mt-4 mb-1.5 md:mb-3 lg:mb-8 w-full">
         <div className="hidden md:block" />
         <div className="flex flex-col md:items-center gap-3">
-          <DashboardOwner userId={dashboardUserId} isOwner={isDashboardOwner} />
+          <DashboardOwner
+            userId={dashboardOwnerId}
+            isOwner={isDashboardOwner}
+          />
           <Navigation />
         </div>
         <div className="flex justify-self-end items-center gap-4">

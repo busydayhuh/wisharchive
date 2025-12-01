@@ -1,7 +1,7 @@
 import { cn } from "@/shared/lib/css";
 import React from "react";
 
-export function DashboardGrid({
+export function ContentGrid({
   viewMode,
   children,
   className,

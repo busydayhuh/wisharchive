@@ -10,35 +10,7 @@ import {
   SortAscIcon,
   SortDescIcon,
 } from "lucide-react";
-
-export type DashboardType =
-  | "wishes"
-  | "lists"
-  | "booked"
-  | "bookmarks"
-  | "shared"
-  | "archived"
-  | "list";
-
-export type Sort = {
-  label: string;
-  field: string;
-  direction: "asc" | "desc";
-  default?: boolean;
-  icon?: React.ReactNode;
-};
-export type Filter = {
-  key: string;
-  value?: string | boolean | number | null;
-  requiresUser?: boolean;
-  label: string;
-  onlyIfOwner?: boolean;
-};
-
-export type ToolbarConfig = {
-  sorts: Sort[];
-  filters: Filter[];
-};
+import type { DashboardType, Sort, ToolbarConfig } from "./types";
 
 const wishesSorts: Sort[] = [
   {

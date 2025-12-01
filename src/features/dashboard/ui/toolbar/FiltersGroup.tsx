@@ -10,13 +10,12 @@ import {
 import { Toggle } from "@/shared/ui/kit/toggle";
 import { ListFilterPlus, X } from "lucide-react";
 import { useCallback, useMemo, type JSX } from "react";
-import type { ToolbarState } from "../../model/DashboardToolbarContext";
+import { useToolbar } from "../../model/store/toolbar/useToolbar";
 import { toolbarConfigs } from "../../model/toolbarConfig";
-import { useDashboardToolbar } from "../../model/useDashboardToolbar";
+import type { ToolbarState } from "../../model/types";
 
 function FiltersGroup({ isOwner }: { isOwner: boolean }) {
-  const { toolbarState, setToolbarState, dashboardType } =
-    useDashboardToolbar();
+  const { toolbarState, setToolbarState, dashboardType } = useToolbar();
 
   const isMobile = useIsMobile();
   const { current: user } = useAuth();

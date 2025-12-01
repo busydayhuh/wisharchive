@@ -1,25 +1,25 @@
 import { useWishes } from "@/features/wish";
 import { useInfiniteScroll } from "@/shared/lib/react/useInfiniteScroll";
-import { useDashboardContext } from "../model/useDashboardContext";
-import { useDashboardToolbar } from "../model/useDashboardToolbar";
+import { useDashboard } from "../model/store/dashboard/useDashboard";
+import { useToolbar } from "../model/store/toolbar/useToolbar";
 import { wrapDashboardPage } from "../model/wrapDashboardPage";
-import { WishesPageLayout } from "../ui/main-content/wishes/WishesPageLayout";
+import { ContentLayout } from "../ui/content/ContentLayout";
 
 function BookedPage() {
-  const { dashboardUserId } = useDashboardContext();
-  const { searchString, toolbarState } = useDashboardToolbar();
+  const { dashboardOwnerId } = useDashboard();
+  const { searchString, toolbarState } = useToolbar();
 
   const { wishes, isLoading, error, size, setSize, isValidating, reachedEnd } =
     useWishes(
       {
-        bookerId: dashboardUserId,
+        bookerId: dashboardOwnerId,
         archived: false,
         searchString: searchString,
         sort: toolbarState.sort,
         filters: toolbarState.filters,
       },
       "booked",
-      dashboardUserId
+      dashboardOwnerId
     );
 
   useInfiniteScroll({
@@ -29,12 +29,12 @@ function BookedPage() {
   });
 
   return (
-    <WishesPageLayout
-      wishes={wishes}
+    <ContentLayout
+      items={wishes}
       isLoading={isLoading}
-      error={error}
       isValidating={isValidating}
-      viewMode={toolbarState.viewMode}
+      error={error}
+      type="wish"
     />
   );
 }

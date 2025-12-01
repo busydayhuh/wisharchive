@@ -1,5 +1,5 @@
 import { CollaboratorsGroup } from "@/features/collaborators";
-import { useWishlistcardMeta } from "@/features/dashboard/model/useWishlistcardMeta";
+import { useWishlistcardMeta } from "@/features/dashboard/model/hooks/useWishlistcardMeta";
 import { BookmarkButton, EditWishlistButton } from "@/features/wishlist";
 import "@/shared/assets/custom.css";
 import type { WishlistDocumentType } from "@/shared/model/types";
@@ -10,11 +10,11 @@ import { useMemo } from "react";
 import { Link } from "react-router";
 import { ImageTiles } from "./ImageTiles";
 
-interface WishlistTableItemProps {
+interface WishlistTableRowProps {
   wishlist: WishlistDocumentType;
 }
 
-function WishlistTableItem({ wishlist }: WishlistTableItemProps) {
+function WishlistTableRow({ wishlist }: WishlistTableRowProps) {
   const {
     collaborators,
     bookmarkWishlist,
@@ -105,4 +105,4 @@ function WishlistTableItem({ wishlist }: WishlistTableItemProps) {
   );
 }
 
-export default WishlistTableItem;
+export default WishlistTableRow;

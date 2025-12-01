@@ -4,10 +4,10 @@ import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import { ROUTES } from "@/shared/model/routes";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { matchPath } from "react-router";
-import type { DashboardType } from "./toolbarConfig";
+import type { DashboardType } from "../types";
 
 export type DashboardMeta = {
-  dashboardUserId?: string;
+  dashboardOwnerId?: string;
   isDashboardOwner: boolean;
   title: string;
   showTitle: boolean;
@@ -46,13 +46,13 @@ export function useDashboardMeta(): DashboardMeta {
   const { userId: paramUserId, listId: paramListId } = params;
 
   // Кому принадлежит дашборд
-  const dashboardUserId = useMemo(() => {
+  const dashboardOwnerId = useMemo(() => {
     if (!paramUserId && !authUser?.$id) return undefined;
     return paramUserId ?? authUser?.$id;
   }, [paramUserId, authUser]);
 
-  const isDashboardOwner = dashboardUserId
-    ? authUser?.$id === dashboardUserId
+  const isDashboardOwner = dashboardOwnerId
+    ? authUser?.$id === dashboardOwnerId
     : false;
 
   // Какой заголовок отображать
@@ -89,7 +89,7 @@ export function useDashboardMeta(): DashboardMeta {
   const showDashboardOwner = !isMobile || !isDashboardOwner;
 
   return {
-    dashboardUserId,
+    dashboardOwnerId,
     isDashboardOwner,
     title,
     showTitle,

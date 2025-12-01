@@ -1,17 +1,9 @@
 import { useLocalStorage } from "@/shared/lib/react/useLocalStorage";
 import { useState, type ReactNode } from "react";
-import type { DashboardType, Filter, Sort } from "./toolbarConfig";
-import { DashboardToolbarContext } from "./useDashboardToolbar";
+import type { DashboardType, ToolbarState } from "../../types";
+import { ToolbarContext } from "./Context";
 
-export type SortState = Pick<Sort, "field" | "direction">;
-
-export type ToolbarState = {
-  sort: SortState;
-  filters: Filter[] | [];
-  viewMode: "gallery" | "table";
-};
-
-export function DashboardToolbarProvider({
+export function ToolbarProvider({
   dashboardType,
   localStorageKey,
   children,
@@ -35,7 +27,7 @@ export function DashboardToolbarProvider({
   const [searchString, setSearchString] = useState("");
 
   return (
-    <DashboardToolbarContext.Provider
+    <ToolbarContext.Provider
       value={{
         toolbarState,
         setToolbarState,
@@ -47,6 +39,6 @@ export function DashboardToolbarProvider({
       }}
     >
       {children}
-    </DashboardToolbarContext.Provider>
+    </ToolbarContext.Provider>
   );
 }

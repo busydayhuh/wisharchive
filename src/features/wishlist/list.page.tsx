@@ -2,7 +2,7 @@ import { ROUTES } from "@/shared/model/routes";
 import { ErrorMessage } from "@/shared/ui/ErrorMessage";
 import { href, useNavigate, useParams } from "react-router";
 import { useAuth } from "../auth";
-import { DashboardToolbarProvider } from "../dashboard";
+import { ToolbarProvider } from "../dashboard";
 import { useWishlist } from "./model/useWishlist";
 import { WishlistLayout } from "./ui/WishlistLayout";
 import { WishlistSkeleton } from "./ui/WishlistSkeleton";
@@ -37,12 +37,9 @@ function WishlistPage() {
 
   if (wishlist)
     return (
-      <DashboardToolbarProvider
-        dashboardType="list"
-        localStorageKey={`list+${listId}}`}
-      >
+      <ToolbarProvider dashboardType="list" localStorageKey={`list+${listId}}`}>
         <WishlistLayout wishlist={wishlist} />
-      </DashboardToolbarProvider>
+      </ToolbarProvider>
     );
 }
 

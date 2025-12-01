@@ -1,25 +1,25 @@
 import { useWishes } from "@/features/wish";
 import { useInfiniteScroll } from "@/shared/lib/react/useInfiniteScroll";
-import { useDashboardContext } from "../model/useDashboardContext";
-import { useDashboardToolbar } from "../model/useDashboardToolbar";
+import { useDashboard } from "../model/store/dashboard/useDashboard";
+import { useToolbar } from "../model/store/toolbar/useToolbar";
 import { wrapDashboardPage } from "../model/wrapDashboardPage";
-import { WishesPageLayout } from "../ui/main-content/wishes/WishesPageLayout";
+import { ContentLayout } from "../ui/content/ContentLayout";
 
 function ArchivedWishesPage() {
-  const { dashboardUserId } = useDashboardContext();
-  const { searchString, toolbarState } = useDashboardToolbar();
+  const { dashboardOwnerId } = useDashboard();
+  const { searchString, toolbarState } = useToolbar();
 
   const { wishes, isLoading, error, size, setSize, isValidating, reachedEnd } =
     useWishes(
       {
-        ownerId: dashboardUserId,
+        ownerId: dashboardOwnerId,
         searchString: searchString,
         archived: true,
         sort: toolbarState.sort,
         filters: toolbarState.filters,
       },
       "archived",
-      dashboardUserId
+      dashboardOwnerId
     );
 
   useInfiniteScroll({
@@ -29,12 +29,12 @@ function ArchivedWishesPage() {
   });
 
   return (
-    <WishesPageLayout
-      wishes={wishes}
+    <ContentLayout
+      items={wishes}
       isLoading={isLoading}
       isValidating={isValidating}
       error={error}
-      viewMode={toolbarState.viewMode}
+      type="wish"
     />
   );
 }
