@@ -33,17 +33,7 @@ export const WishInfo = memo(function WishInfo({
         imageURL={wish.imageURL ?? undefined}
       />
 
-      <WishDetails
-        wishTitle={wish.title}
-        imageURL={wish.imageURL ?? undefined}
-        wishId={wish.$id}
-        isArchived={wish.isArchived}
-        wishlist={wish.wishlist}
-        priority={wish.priority}
-        description={wish.description}
-        shopURL={wish.shopURL}
-        isOwner={userRoles?.isWishOwner ?? false}
-      />
+      <WishDetails wish={wish} roles={userRoles} />
 
       <WishFooter
         imageURL={wish.imageURL ?? undefined}
