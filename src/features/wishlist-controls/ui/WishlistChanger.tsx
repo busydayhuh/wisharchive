@@ -6,7 +6,7 @@ import { Skeleton } from "@/shared/ui/kit/skeleton";
 import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
 import { ChevronDown } from "lucide-react";
 import { href } from "react-router";
-import { useWishlistOptions } from "../../model/useWishlistOptions";
+import { useWishlistOptions } from "../model/useWishlistOptions";
 
 export function WishlistChanger({
   onSelect,

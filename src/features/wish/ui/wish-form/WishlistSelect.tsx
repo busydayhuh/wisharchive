@@ -1,6 +1,6 @@
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
-import { useWishlistOptions } from "../../model/useWishlistOptions";
+import { useWishlistOptions } from "../../../wishlist-controls/model/useWishlistOptions";
 
 export function WishlistSelect({
   onSelect,
