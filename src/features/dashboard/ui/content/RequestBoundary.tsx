@@ -9,7 +9,7 @@ import { ContentGrid } from "./ContentGrid";
 import { WishesSkeleton } from "./wishes/WishesSkeleton";
 import { WishlistsSkeleton } from "./wishlists/WishlistsSkeleton";
 
-type ContentResolverProps = {
+type RequestBoundaryProps = {
   items?: Models.Document[];
   type: "wish" | "wishlist";
   isLoading: boolean;
@@ -51,14 +51,14 @@ const STATUS_MESSAGES = {
   },
 };
 
-export function ContentResolver({
+export function RequestBoundary({
   items,
   type,
   isLoading,
   viewMode,
   error,
   children,
-}: ContentResolverProps) {
+}: RequestBoundaryProps) {
   const { isDashboardOwner, dashboardType } = useDashboard();
   const { hasActiveFilters } = useToolbar();
   const { openDialog } = useWishlistDialog();

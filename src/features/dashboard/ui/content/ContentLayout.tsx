@@ -7,8 +7,8 @@ import type { Models } from "appwrite";
 import { useToolbar } from "../../model/store/toolbar/useToolbar";
 import { AccessGate } from "./AccessGate";
 import { ContentGrid } from "./ContentGrid";
-import { ContentResolver, ItemSkeleton } from "./ContentResolver";
 import { ItemAnimation } from "./ItemAnimation";
+import { ItemSkeleton, RequestBoundary } from "./RequestBoundary";
 import WishGalleryCard from "./wishes/WishGalleryCard";
 import WishTableRow from "./wishes/WishTableRow";
 import WishlistGalleryCard from "./wishlists/WishlistGalleryCard";
@@ -33,7 +33,7 @@ export function ContentLayout({
   const { viewMode } = toolbarState;
 
   return (
-    <ContentResolver
+    <RequestBoundary
       items={items}
       type={type}
       isLoading={isLoading}
@@ -55,7 +55,7 @@ export function ContentLayout({
           {isValidating && <ItemSkeleton type={type} viewMode={viewMode} />}
         </ContentGrid>
       )}
-    </ContentResolver>
+    </RequestBoundary>
   );
 }
 
