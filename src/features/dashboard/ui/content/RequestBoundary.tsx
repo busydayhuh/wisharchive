@@ -18,39 +18,6 @@ type RequestBoundaryProps = {
   children: (safeItems: Models.Document[]) => React.ReactNode;
 };
 
-const STATUS_MESSAGES = {
-  wish: {
-    error: {
-      message: "Что-то пошло не так",
-      description: "Не получилось загрузить желания, повторите попытку позже",
-    },
-    empty: {
-      message: "Нет желаний",
-      description: "Здесь пока нет ни одного желания",
-      CAT: "Создать желание",
-    },
-    "no-results": {
-      message: "Не найдено",
-      description: "Нет желаний, подходящих условиям фильтрации",
-    },
-  },
-  wishlist: {
-    error: {
-      message: "Что-то пошло не так",
-      description: "Не получилось загрузить списки, повторите попытку позже",
-    },
-    empty: {
-      message: "Нет списков",
-      description: "Здесь пока нет ни одного списка",
-      CAT: "Создать список",
-    },
-    "no-results": {
-      message: "Не найдено",
-      description: "Нет списков, подходящих условиям фильтрации",
-    },
-  },
-};
-
 export function RequestBoundary({
   items,
   type,
@@ -77,39 +44,19 @@ export function RequestBoundary({
         ))}
       </ContentGrid>
     );
-
-  if (error)
-    return (
-      <ErrorMessage
-        variant="default-error"
-        message={STATUS_MESSAGES[type]["error"].message}
-        description={STATUS_MESSAGES[type]["error"].description}
-      />
-    );
-
+  if (error) return <ErrorMessage variant="default" />;
   if (items && items.length === 0) {
     return (
       <ErrorMessage
-        variant="no-items"
-        message={
-          hasActiveFilters
-            ? STATUS_MESSAGES[type]["no-results"].message
-            : STATUS_MESSAGES[type]["empty"].message
-        }
-        description={
-          hasActiveFilters
-            ? STATUS_MESSAGES[type]["no-results"].description
-            : STATUS_MESSAGES[type]["empty"].description
-        }
+        variant={hasActiveFilters ? "no-results" : "no-items"}
+        entity={type === "wish" ? "wishes" : "wishlists"}
         withButton={isDashboardOwner && hasCreateBtn.includes(dashboardType)}
-        buttonText={STATUS_MESSAGES[type]["empty"].CAT}
         action={() =>
           type === "wish" ? navigate(ROUTES.ADD) : openDialog("create")
         }
       />
     );
   }
-
   if (items) return children(items);
 }
 
