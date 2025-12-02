@@ -14,15 +14,6 @@ export function DashboardLayout({
 }) {
   const meta = useDashboardMeta();
 
-  const defaultDashboardHeader = (
-    <DashboardHeader
-      title={meta.title}
-      showDashboardOwner={meta.showDashboardOwner}
-      dashboardOwnerId={meta.dashboardOwnerId}
-      isDashboardOwner={meta.isDashboardOwner}
-    />
-  );
-
   return (
     <DashboardContext.Provider value={meta}>
       <ToolbarProvider
@@ -31,7 +22,7 @@ export function DashboardLayout({
         key={meta.dashboardType}
       >
         <div className="relative mt-4 md:mt-0 px-1 md:px-0">
-          {header ? header : defaultDashboardHeader}
+          {header ? header : <DashboardHeader {...meta} />}
           <DashboardToolbar isOwner={meta.isDashboardOwner} />
           <ContentWrapper>{children}</ContentWrapper>
         </div>
