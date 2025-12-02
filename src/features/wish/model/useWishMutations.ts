@@ -1,5 +1,5 @@
 import db from "@/shared/model/databases";
-import { handleError } from "@/shared/model/handleError";
+import { handleError } from "@/shared/model/errors/handleError";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import {
   useOptimisticMutation,

@@ -1,7 +1,7 @@
 import { Card } from "@/shared/ui/kit/card";
 
 import { useWishlist } from "@/features/wishlist";
-import { handleError } from "@/shared/model/handleError";
+import { handleError } from "@/shared/model/errors/handleError";
 import { ROUTES } from "@/shared/model/routes";
 import team from "@/shared/model/teams";
 import { customToast, notifyError } from "@/shared/ui/CustomToast";

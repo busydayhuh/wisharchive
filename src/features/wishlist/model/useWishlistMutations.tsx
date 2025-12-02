@@ -1,5 +1,5 @@
 import db from "@/shared/model/databases";
-import { handleError } from "@/shared/model/handleError";
+import { handleError } from "@/shared/model/errors/handleError";
 import team from "@/shared/model/teams";
 import type { UserDocumentType } from "@/shared/model/types";
 import {

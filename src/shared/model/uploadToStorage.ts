@@ -1,7 +1,7 @@
 import { appwriteService } from "@/shared/model/appwrite";
 import { CONFIG } from "@/shared/model/config";
 import { ID } from "appwrite";
-import { handleError } from "./handleError";
+import { handleError } from "./errors/handleError";
 
 export async function uploadToStorage(blob: File) {
   const bucketId = CONFIG.APPWRITE_STORAGE_BUCKET;

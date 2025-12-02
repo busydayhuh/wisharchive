@@ -1,5 +1,5 @@
 import { useWishlistMutations } from "@/features/wishlist/";
-import { handleError } from "@/shared/model/handleError";
+import { handleError } from "@/shared/model/errors/handleError";
 import team from "@/shared/model/teams";
 import { useCallback, useMemo } from "react";
 import { useTeamMembers } from "./useTeamMembers";

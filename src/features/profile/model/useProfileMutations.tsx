@@ -1,6 +1,6 @@
 import { appwriteService } from "@/shared/model/appwrite";
 import db from "@/shared/model/databases";
-import { handleError } from "@/shared/model/handleError";
+import { handleError } from "@/shared/model/errors/handleError";
 import type { UserDocumentType } from "@/shared/model/types";
 import { useCallback } from "react";
 
