@@ -5,4 +5,10 @@ export type Variant =
   | "no-results"
   | "not-found"
   | "no-access";
-export type Entity = "wishes" | "wishlists" | "wish" | "wishlist" | "default";
+export type Entity =
+  | "wishes"
+  | "wishlists"
+  | "wish"
+  | "wishlist"
+  | "default"
+  | "profile";

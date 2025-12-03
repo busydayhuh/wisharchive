@@ -45,7 +45,7 @@ function WishGalleryCard({ wish }: { wish: WishDocumentType }) {
         state={linkParams.state}
         className="flex lg:flex-row flex-col lg:justify-between lg:items-center px-1"
       >
-        <p className="pr-1 font-semibold text-base lg:text-base xl:text-lg truncate">
+        <p className="pr-1 font-medium text-base lg:text-base xl:text-lg truncate">
           {wish.title}
         </p>
 

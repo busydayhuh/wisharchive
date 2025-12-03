@@ -14,7 +14,7 @@ import WishEditor from "./ui/WishEditor";
 import { WishEditorSkeleton } from "./ui/WishEditorSkeleton";
 
 function WishEditPage() {
-  const { current: authUser, isLoggedIn } = useAuth();
+  const { userId } = useAuth();
   const { update } = useWishMutations();
   const { navigateWithState } = useRoute();
 
@@ -26,7 +26,6 @@ function WishEditPage() {
     wishId?: string
   ) {
     if (!wishId) return;
-
     const wishUpdates = normalizeWishData(formData);
     const { ok, response } = await update(wishId, wishUpdates);
 
@@ -34,7 +33,6 @@ function WishEditPage() {
       toast.error("Не удалось сохранить изменения");
       return;
     }
-
     customToast({
       title: "Сохранено",
       description: response!.title,
@@ -49,22 +47,9 @@ function WishEditPage() {
     );
   }
 
-  if (wish && authUser?.$id !== wish.ownerId)
-    return "Нет прав на доступ к этой странице.";
-
-  if (error)
-    return (
-      <ErrorMessage
-        variant="default-error"
-        message="Что-то пошло не так"
-        description="Не удалось загрузить желание, повторите попытку позже"
-        withButton={isLoggedIn}
-        buttonText="К моим желаниям"
-        action={() =>
-          navigateWithState(href(ROUTES.WISHES, { userId: authUser!.$id }))
-        }
-      />
-    );
+  if (wish && userId !== wish.ownerId)
+    return <ErrorMessage variant="no-access" />;
+  if (error) return <ErrorMessage variant="default" />;
   if (isLoading) return <WishEditorSkeleton />;
 
   if (wish)

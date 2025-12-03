@@ -6,7 +6,7 @@ import {
   List,
   Lock,
   Pencil,
-  Sparkle,
+  Rocket,
   Users2,
   X,
 } from "lucide-react";
@@ -57,22 +57,22 @@ export const ROLES = {
 
 export const PRIVACY_ICONS = {
   default: (
-    <span className="bg-blue-bg p-2 rounded-sm [&_svg]:size-3.5 text-blue">
+    <span className="p-1.5 rounded-sm [&_svg]:size-3.5 text-blue">
       <Eye className="stroke-[2px]" />
     </span>
   ),
   private: (
-    <span className="bg-pink-bg p-2 rounded-sm [&_svg]:size-3 text-pink">
+    <span className="p-1.5 rounded-sm [&_svg]:size-3 text-pink">
       <EyeClosed className="stroke-[2px]" />
     </span>
   ),
   collab: (
-    <span className="bg-yellow-bg p-2 rounded-sm [&_svg]:size-3 text-yellow">
+    <span className="p-1.5 rounded-sm [&_svg]:size-3 text-yellow">
       <Users2 className="stroke-[2px]" />
     </span>
   ),
   none: (
-    <span className="bg-muted/60 p-2 rounded-sm [&_svg]:size-3 text-muted-foreground">
+    <span className="p-1.5 rounded-sm [&_svg]:size-3 text-muted-foreground">
       <X className="stroke-[2px]" />
     </span>
   ),
@@ -107,7 +107,7 @@ export function PriorityBadge({
             {Array.from({ length: 3 }).map((_, index) => (
               <RatingButton
                 key={index}
-                icon={<Sparkle />}
+                icon={<Rocket />}
                 className="text-blue"
                 size={size === "md" ? 16 : 12}
               />

@@ -107,7 +107,7 @@ export const AppSidebar = memo(function AppSidebar() {
             <ModeToggle />
           </SidebarMenuButton>
         </SidebarMenuItem>
-        <SidebarSeparator className="self-center bg-accent" />
+        <SidebarSeparator className="self-center bg-sidebar-accent" />
         <UserMenu />
       </SidebarFooter>
     </Sidebar>

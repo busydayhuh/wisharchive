@@ -48,8 +48,8 @@
   --color-logo-inverted: var(--logo-inverted);
   --color-overlay: var(--overlay);
   --color-inactive-bm: var(--bookmark-background);
-  --font-display: "Manrope", "sans-serif";
-  --font-headers: "Raleway", "sans-serif";
+  --font-display: "TikTok Sans", "sans-serif";
+  --font-headers: "Manrope", "sans-serif";
   --font-emoji: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
     "sans-serif";
   --inset-shadow-base: inset 0px 0px 120px 20px var(--color-zinc-700);
@@ -85,13 +85,13 @@
 }
 
 :root {
-  --background: oklch(95.607% 0.0073 80.574);
-  --foreground: oklch(0.14 0 285.86);
+  --background: #f7f7f7;
+  --foreground: oklch(0.2 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.14 0 285.86);
   --popover: oklch(0.97 0 0);
   --popover-foreground: oklch(0.14 0 285.86);
-  --primary: oklch(0.28 0.09 268);
+  --primary: oklch(0.2 0 0);
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(1 0 0);
   --secondary-foreground: oklch(0.14 0 285.86);
@@ -112,28 +112,28 @@
   --indigo-bg: oklch(44.881% 0.15235 268.287);
   --blue: oklch(50.647% 0.12715 262.528);
   --blue-bg: oklch(85.238% 0.04678 263.712);
-  --sidebar: oklch(24.227% 0.084 268.019);
-  --sidebar-foreground: oklch(0.99 0 0);
-  --sidebar-primary: oklch(0.28 0.09 268);
+  --sidebar: oklch(89.911% 0.00216 14.587);
+  --sidebar-foreground: oklch(0.2 0 0);
+  --sidebar-primary: oklch(0.2 0 0);
   --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(44.881% 0.15235 268.287);
-  --sidebar-accent-foreground: oklch(0.99 0 0);
-  --sidebar-border: oklch(0.92 0 286.61);
+  --sidebar-accent: oklch(78.422% 0.00223 15.01 / 0.764);
+  --sidebar-accent-foreground: oklch(0.2 0 0);
+  --sidebar-border: oklch(71.871% 0.00008 271.152 / 0);
   --sidebar-ring: oklch(0.93 0.03 273.66);
   --radius: 1rem;
   --logo-default: oklch(0.14 0 285.86);
-  --logo-inverted: oklch(1 0 0);
+  --logo-inverted: oklch(0.2 0 0);
   --overlay: oklch(24.462% 0.00151 16.245 / 0.373);
 }
 
 .dark {
   --background: oklch(0.14 0 285.86);
-  --foreground: oklch(0.99 0 0);
+  --foreground: oklch(0.97 0 106);
   --card: oklch(0.21 0.01 285.93);
   --card-foreground: oklch(0.99 0 0);
   --popover: oklch(0.21 0.01 285.93);
   --popover-foreground: oklch(0.99 0 0);
-  --primary: oklch(0.97 0 0);
+  --primary: oklch(0.97 0 106);
   --primary-foreground: oklch(0.27 0.01 286.1);
   --secondary: oklch(0.27 0.01 286.1);
   --secondary-foreground: oklch(0.99 0 0);

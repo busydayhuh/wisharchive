@@ -18,6 +18,7 @@ export function SubmitBtn({
   return (
     <Button
       type="submit"
+      size="xl"
       disabled={isSubmitting || !isDirty}
       className={cn("h-14", className)}
     >

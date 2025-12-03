@@ -41,7 +41,7 @@ export function SortingSelect() {
         </>
       )}
       triggerClassName={cn(
-        "gap-2 bg-primary px-2.5 w-fit max-w-[16rem] h-9 md:data-[size=default]:h-10 font-medium text-primary-foreground text-xs lg:text-sm"
+        "gap-2 bg-primary px-2.5 w-fit max-w-[16rem] h-9 md:data-[size=default]:h-10 text-primary-foreground text-xs lg:text-sm"
       )}
       title="Сортировка"
     />

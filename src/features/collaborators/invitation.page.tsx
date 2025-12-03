@@ -74,15 +74,7 @@ function InvitationPage() {
       </div>
     );
 
-  if (error)
-    return (
-      <ErrorMessage
-        variant="default-error"
-        message="Что-то пошло не так"
-        description="Проверьте правильность ссылки для подтверждения приглашения"
-      />
-    );
-
+  if (error) return <ErrorMessage variant="default" />;
   if (wishlist)
     return (
       <div className="fixed inset-0 place-content-center grid">

@@ -49,8 +49,10 @@ export function WishlistChanger({
       >
         <button
           className={cn(
-            "flex items-center gap-1.5 bg-secondary hover:bg-secondary/90 shadow-none px-1.5 py-1 pr-2 border-r-1 border-r-border/60 rounded-l-md h-10",
-            selectedOption?.value !== "none" && "cursor-pointer"
+            "flex items-center gap-1.5 bg-secondary hover:bg-secondary/90 shadow-none px-1.5 py-1 pr-2 border-r-1 border-r-border/60 rounded-l-md h-10 font-normal",
+            selectedOption?.value !== "none"
+              ? "cursor-pointer"
+              : "text-muted-foreground"
           )}
           onClick={goToWishlist}
         >

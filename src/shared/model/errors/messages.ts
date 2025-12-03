@@ -23,12 +23,20 @@ export const STATUS_MESSAGES: Record<Variant, Record<string, Message>> = {
     wishes: {
       header: "Нет таких желаний",
       description: "Ни одно желание не подходит под ваш запрос",
+      CAT: "Создать желание",
     },
     wishlists: {
       header: "Нет таких списков",
       description: "Ни один список не подходит под ваш запрос",
+      CAT: "Создать список",
     },
   },
-  "not-found": {},
+  "not-found": {
+    default: {
+      header: "Страница не найдена",
+      description:
+        "Страница была удалена или у вас нет доступа к этой странице",
+    },
+  },
   "no-access": {},
 };

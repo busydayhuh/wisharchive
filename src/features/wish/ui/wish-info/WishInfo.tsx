@@ -14,14 +14,7 @@ export const WishInfo = memo(function WishInfo({
   const { userRoles, onEditWish } = useWishcardMeta(wish);
   const { hasAccess } = useAccess("wish", wish);
 
-  if (!hasAccess)
-    return (
-      <ErrorMessage
-        variant="no-access"
-        message="Нет доступа"
-        description="У вас нет прав доступа для просмотра этого желания"
-      />
-    );
+  if (!hasAccess) return <ErrorMessage variant="no-access" />;
 
   return (
     <div className="flex flex-col gap-6 lg:gap-10 2xl:gap-12 px-2 md:px-0 py-2.5">
