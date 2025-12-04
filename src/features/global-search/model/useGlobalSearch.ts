@@ -3,7 +3,7 @@ import db from "@/shared/model/databases";
 import { Query } from "appwrite";
 import stableStringify from "fast-json-stable-stringify";
 import useSWR from "swr";
-import type { Category } from "..";
+import type { Category } from "../GlobalSearch";
 
 type GlobalSearchParams = {
   category: Category;
@@ -17,15 +17,14 @@ async function fetcher(category: Category, queries: string[]) {
 }
 
 export function useGlobalSearch(searchParams: GlobalSearchParams) {
-  const { current } = useAuth();
+  const { userId } = useAuth();
 
   const queries =
-    searchParams.category && searchParams.search !== undefined
-      ? getGlobalQueries(searchParams, current!.$id)
+    searchParams.search !== undefined
+      ? getGlobalQueries(searchParams, userId)
       : null;
-
   const key =
-    searchParams.category && searchParams.search !== undefined
+    searchParams.search !== undefined && queries
       ? ["global", stableStringify(searchParams)]
       : null;
 
@@ -42,9 +41,11 @@ export function useGlobalSearch(searchParams: GlobalSearchParams) {
 
 function getGlobalQueries(
   searchParams: GlobalSearchParams,
-  userId: string
-): string[] {
+  userId?: string
+): string[] | null {
   const queries: string[] = [];
+
+  if (!userId) return null;
 
   if (searchParams.category === "wishes") {
     queries.push(Query.contains("title", searchParams.search));

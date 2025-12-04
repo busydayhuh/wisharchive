@@ -1,5 +1,5 @@
 import { useAuth } from "@/features/auth";
-import { GlobalSearchDialog } from "@/features/global-search";
+import { GlobalSearchDialog } from "@/features/global-search/GlobalSearch";
 import { useDepartment } from "@/shared/lib/react/useDepartment";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import { Button } from "@/shared/ui/kit/button";

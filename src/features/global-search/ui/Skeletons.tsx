@@ -1,6 +1,6 @@
 import { cn } from "@/shared/lib/css";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
-import type { Category } from "..";
+import type { Category } from "../GlobalSearch";
 
 const ITEM_SIZES = {
   default: "p-4 gap-4 ",
