@@ -3,7 +3,7 @@ import { useUpdateSWRCache } from "@/shared/model/useUpdateSWRCache";
 import DefaultLoader from "@/shared/ui/DefaultLoader";
 import { ErrorMessage } from "@/shared/ui/ErrorMessage";
 import { useCallback } from "react";
-import { ProfilePageLayout } from "./ProfilePageLayout";
+import { ProfilePageLayout } from "./ui/ProfilePageLayout";
 
 export type UpdateUserCache = (
   userDocId: string,
