@@ -46,6 +46,7 @@ export function useDashboardMeta(): DashboardMeta {
 
   // Тип дашборда для фильтров тулбара
   const { dashboardType } = useDashboardType();
+
   const localStorageKey = useMemo(() => {
     const param = paramUserId || paramListId || null;
     return param ? `${dashboardType}+${param}` : dashboardType;

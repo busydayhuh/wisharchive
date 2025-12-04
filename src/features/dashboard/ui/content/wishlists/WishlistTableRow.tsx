@@ -3,9 +3,10 @@ import { useWishlistcardMeta } from "@/features/dashboard/model/hooks/useWishlis
 import { BookmarkButton, EditWishlistButton } from "@/features/wishlist";
 import "@/shared/assets/custom.css";
 import type { WishlistDocumentType } from "@/shared/model/types";
-import { PRIVACY_ICONS, RoleBadge } from "@/shared/ui/Badges";
+import { RoleBadge } from "@/shared/ui/Badges";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
+import { EyeClosed } from "lucide-react";
 import { useMemo } from "react";
 import { Link } from "react-router";
 import { WishlistTiles } from "./WishlistTiles";
@@ -41,8 +42,8 @@ function WishlistTableRow({ wishlist }: WishlistTableRowProps) {
       <Link {...linkParams} className="relative">
         <WishlistTiles wishes={wishlist.wishes} variant="table" />
         {wishlist.isPrivate && (
-          <div className="top-4 left-0 absolute flex justify-center items-center rounded-full w-6 md:w-8 h-6 md:h-8 overflow-clip">
-            {PRIVACY_ICONS.private}
+          <div className="top-4 left-0 absolute flex justify-center items-center bg-pink-bg rounded-full w-6 md:w-8 h-6 md:h-8 overflow-clip">
+            <EyeClosed className="size-3" />
           </div>
         )}
       </Link>

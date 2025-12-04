@@ -23,7 +23,7 @@ export function BreadcrumbsBar({
   return (
     <div
       className={cn(
-        "flex items-center gap-2.5 px-1 md:px-0 py-0.5",
+        "flex items-center gap-2.5 md:mt-2 px-1 md:px-0 py-0.5",
         !hasBreadcrumbs && "justify-between"
       )}
     >

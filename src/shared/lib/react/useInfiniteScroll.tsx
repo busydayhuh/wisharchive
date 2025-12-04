@@ -20,7 +20,6 @@ export function useInfiniteScroll({
       const fullHeight = document.body.offsetHeight;
 
       if (windowHeight + scrollY >= fullHeight - offset) {
-        console.log("скроллит");
         loadMore();
       }
     };

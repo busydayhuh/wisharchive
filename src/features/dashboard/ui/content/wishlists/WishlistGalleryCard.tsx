@@ -3,7 +3,8 @@ import { useWishlistcardMeta } from "@/features/dashboard/model/hooks/useWishlis
 import { BookmarkButton, EditWishlistButton } from "@/features/wishlist";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import type { WishlistDocumentType } from "@/shared/model/types";
-import { PRIVACY_ICONS, RoleBadge } from "@/shared/ui/Badges";
+import { RoleBadge } from "@/shared/ui/Badges";
+import { EyeClosed } from "lucide-react";
 import { Link } from "react-router-dom";
 import { WishlistTiles } from "./WishlistTiles";
 
@@ -42,8 +43,8 @@ function WishlistGalleryCard({ wishlist }: { wishlist: WishlistDocumentType }) {
         <Link {...linkParams} className="relative">
           <WishlistTiles wishes={wishlist.wishes} />
           {wishlist.isPrivate && (
-            <div className="top-2 left-2 absolute flex justify-center items-center rounded-full w-6 md:w-8 h-6 md:h-8 overflow-clip">
-              {PRIVACY_ICONS.private}
+            <div className="top-3 left-3 absolute flex justify-center items-center bg-pink-bg shadow-xs rounded-full size-7 overflow-clip text-foreground">
+              <EyeClosed className="size-3" />
             </div>
           )}
         </Link>

@@ -10,7 +10,6 @@ import { WishImage } from "./WishImage";
 
 export function RelatedWishes({
   userId,
-  userName,
   wishId,
 }: {
   userId: string;
@@ -55,9 +54,9 @@ export function RelatedWishes({
   if (relatedWishes)
     return (
       <div className="space-y-3 md:space-y-6 mx-2 md:mx-auto md:max-w-[96%]">
-        <div className="flex flex-wrap justify-between">
-          <div className="font-bold text-lg md:text-xl 2xl:text-2xl">
-            Другие желания пользователя {userName}
+        <div className="flex flex-wrap justify-between items-center">
+          <div className="font-headers font-bold text-lg md:text-xl 2xl:text-2xl">
+            Другие желания от @{userId}
           </div>
           <Button
             variant="link"
@@ -66,7 +65,7 @@ export function RelatedWishes({
             aria-label="Смотреть все желания пользователя"
           >
             <Link to={href(ROUTES.WISHES, { userId: userId })}>
-              смотреть все <ChevronRight />
+              все <ChevronRight />
             </Link>
           </Button>
         </div>

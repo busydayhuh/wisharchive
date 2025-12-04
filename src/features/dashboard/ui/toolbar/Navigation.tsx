@@ -19,13 +19,19 @@ const Navigation = memo(function Navigation() {
       <div className="flex gap-1 px-1 w-fit">
         <NavLink
           className={styles}
-          to={href(ROUTES.WISHES, { userId: userId })}
+          to={{
+            pathname: href(ROUTES.WISHES, { userId: userId }),
+            search: "?view=profile",
+          }}
         >
           желания
         </NavLink>
         <NavLink
           className={styles}
-          to={href(ROUTES.WISHLISTS, { userId: userId })}
+          to={{
+            pathname: href(ROUTES.WISHLISTS, { userId: userId }),
+            search: "?view=profile",
+          }}
         >
           списки
         </NavLink>

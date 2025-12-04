@@ -17,8 +17,6 @@ export function useUpdateSWRCache() {
     (keyword: string, updater?: OptimisticUpdater) => {
       for (const key of cache.keys()) {
         if (!key.includes(keyword)) continue;
-
-        console.log("key includes:>> ", key, keyword);
         mutate(
           key,
           //нет апдейтера — кэш ревалидируется через новый запрос к API

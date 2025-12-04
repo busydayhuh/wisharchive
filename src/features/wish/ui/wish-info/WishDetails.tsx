@@ -23,7 +23,7 @@ export const WishDetails = memo(function WishDetails({
         <WishlistControls
           wish={wish}
           roles={roles}
-          variant="gallery"
+          variant="table"
           wishlist={wish.wishlist}
         />
       ),
@@ -40,15 +40,13 @@ export const WishDetails = memo(function WishDetails({
 
   return (
     <div className="flex flex-col gap-6 lg:gap-10 2xl:gap-12 max-w-3xl">
-      <div className="flex flex-col justify-between gap-2 md:gap-2.5 text-xs md:text-sm">
+      <div className="flex flex-col justify-between gap-2 md:gap-2.5 bg-background text-xs md:text-sm">
         {rows.map((r) => (
           <div
             key={r.header}
             className="flex justify-between items-center gap-1 md:gap-4 md:basis-0"
           >
-            <p className="font-medium text-muted-foreground/80 shrink-0">
-              {r.header}
-            </p>
+            <p className="text-muted-foreground/80 shrink-0">{r.header}</p>
             <div className="border-b-1 border-b-muted-foreground/50 border-dotted w-full h-1"></div>
             {r.element ? (
               r.element

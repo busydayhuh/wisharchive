@@ -186,7 +186,7 @@ function Dropdown({
               key={wishId + item.actionName}
               onSelect={() => handleItemSelect(item)}
               aria-label={item.title}
-              className="flex gap-2 [&_svg]:stroke-[1.5px] font-medium cursor-pointer"
+              className="flex gap-2 [&_svg]:stroke-[1.5px] cursor-pointer"
             >
               {item.icon} {item.title}
             </DropdownMenuItem>

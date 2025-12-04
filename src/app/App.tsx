@@ -6,6 +6,7 @@ import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import DefaultLoader from "@/shared/ui/DefaultLoader";
 import { Toaster } from "@/shared/ui/kit/sonner";
 import MainContainer from "@/shared/ui/MainContainer";
+import OrionBackground from "@/shared/ui/OrionBackground";
 import { Outlet, useNavigation } from "react-router-dom";
 
 function App() {
@@ -17,13 +18,14 @@ function App() {
   return (
     <>
       {isLoggedIn && <AppSidebar />}
+      {isLoggedIn && <OrionBackground />}
       <MainContainer>
         <BreadcrumbsBar isMobile={isMobile} isUser={isLoggedIn} />
         <Outlet />
         {isLoading && (
           <div
             className={cn(
-              "z-50 fixed inset-0 flex justify-center items-center bg-white/60 backdrop-blur-sm transition-opacity duration-300",
+              "z-50 fixed inset-0 flex justify-center items-center bg-background transition-opacity duration-300",
               isLoading
                 ? "opacity-100 pointer-events-auto"
                 : "opacity-0 pointer-events-none"

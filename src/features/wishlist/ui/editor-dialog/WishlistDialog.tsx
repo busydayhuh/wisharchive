@@ -141,7 +141,9 @@ export function WishlistDialog({
             )}
             <DialogFooter className="mt-4">
               <DialogClose asChild>
-                <Button className="h-12 cancel-button">Отмена</Button>
+                <Button className="h-12 cancel-button" size="xl">
+                  Отмена
+                </Button>
               </DialogClose>
               <SubmitBtn
                 text="Сохранить"

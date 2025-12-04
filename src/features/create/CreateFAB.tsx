@@ -154,7 +154,7 @@ function MenuButton({
     >
       <Button
         onClick={onClick}
-        className="gap-2 bg-indigo-bg hover:bg-indigo-bg rounded-xl h-14 text-background hover:text-background"
+        className="gap-2 bg-indigo-bg hover:bg-indigo-bg hover:shadow-indigo-bg/40 hover:shadow-lg has-[>svg]:pr-3.5 rounded-xl h-14 font-normal text-background hover:text-background"
       >
         {icon}
         {label}

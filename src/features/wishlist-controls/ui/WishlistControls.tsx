@@ -32,7 +32,22 @@ export function WishlistControls({
 
   // кнопка смены wl [дашборд]
   if (roles?.isWishOwner && !onListPage) {
-    if (isMobile && variant === "gallery") return null;
+    if (isMobile && variant === "gallery")
+      return (
+        <>
+          {" "}
+          {wishlist ? (
+            <WishlistBadge
+              id={wishlist.$id}
+              title={wishlist.title}
+              className={className}
+              isPrivate={wishlist.isPrivate}
+              ownerId={wishlist.ownerId}
+            />
+          ) : null}
+        </>
+      );
+
     return (
       <WishlistChanger
         selectedValue={wishlist?.$id ?? "none"}

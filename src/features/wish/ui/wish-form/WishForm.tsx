@@ -93,7 +93,7 @@ export function WishForm({
         onSubmit={form.handleSubmit(onSave)}
         className="flex flex-col gap-4 md:gap-6 mt-3 md:mt-0 md:ml-4 px-2 md:px-0 pb-2 max-w-3xl"
       >
-        <p className="hidden md:block font-bold text-lg md:text-2xl lg:text-3xl">
+        <p className="hidden md:block font-headers font-bold text-lg md:text-2xl lg:text-3xl">
           {pageHeader}
         </p>
         <FormField

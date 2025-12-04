@@ -26,7 +26,7 @@ export function CurrencySelect({
       onSelect={onValueChange}
       options={options}
       renderSelected={(selected) => (
-        <span className="flex justify-between items-center gap-1 font-semibold">
+        <span className="flex justify-between items-center gap-1">
           {selected?.icon}
           <ChevronDown className="md:hidden size-3" />
         </span>

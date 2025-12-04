@@ -3,10 +3,9 @@ import {
   Crown,
   Eye,
   EyeClosed,
-  List,
   Lock,
   Pencil,
-  Rocket,
+  Sparkles,
   Users2,
   X,
 } from "lucide-react";
@@ -22,7 +21,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "./kit/tooltip";
 type Size = "sm" | "md" | "lg";
 
 const badgesVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium transition-all [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-3 shrink-0 [&_svg]:shrink-0 w-fit shadow-none",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-all [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-3 shrink-0 [&_svg]:shrink-0 w-fit shadow-none",
   {
     variants: {
       size: {
@@ -46,7 +45,7 @@ export const ROLES = {
   editor: {
     title: "редактор",
     icon: <Pencil />,
-    colors: "bg-indigo-bg text-foreground text-indigo",
+    colors: "bg-pink-bg text-pink-900",
   },
   owner: {
     title: "владелец",
@@ -107,7 +106,7 @@ export function PriorityBadge({
             {Array.from({ length: 3 }).map((_, index) => (
               <RatingButton
                 key={index}
-                icon={<Rocket />}
+                icon={<Sparkles />}
                 className="text-blue"
                 size={size === "md" ? 16 : 12}
               />
@@ -153,10 +152,10 @@ export function WishlistBadge({
       }}
       className={cn(
         badgesVariants({ size, className }),
-        "bg-secondary hover:bg-secondary/90 hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 cursor-pointer [&_svg]:size-4"
+        "bg-secondary hover:bg-secondary/90 hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 cursor-pointer [&_svg]:size-4 font-normal"
       )}
     >
-      {isPrivate ? <EyeClosed /> : <List />}
+      {isPrivate && <EyeClosed />}
       <span className="max-w-[20ch] truncate">{title}</span>
     </Link>
   );

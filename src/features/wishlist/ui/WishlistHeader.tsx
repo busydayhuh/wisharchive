@@ -41,10 +41,8 @@ export function WishlistHeader({
 
   if (isMobile)
     return (
-      <div className="space-y-3 mt-3 mb-1">
-        <div className="flex justify-between items-center gap-2">
-          <WishlistName title={title} isPrivate={isPrivate} />
-        </div>
+      <div className="space-y-4 mb-2">
+        <WishlistName title={title} isPrivate={isPrivate} />
 
         <div className="flex justify-between items-center">
           <Collaborators
@@ -117,13 +115,13 @@ export function WishlistName({
 }) {
   return (
     <div className="flex items-center gap-3 lg:gap-5">
-      <p className="font-headers font-bold text-xl lg:text-3xl 2xl:text-4xl line-clamp-2 lg:line-clamp-none leading-6 lg:leading-8">
+      <p className="font-headers font-bold text-2xl lg:text-3xl 2xl:text-4xl line-clamp-2 lg:line-clamp-none leading-6 lg:leading-8">
         {title}
       </p>
       <p
         className={cn(
           "inline-flex px-2 py-1 rounded-sm text-xs",
-          isPrivate ? "bg-pink-bg" : "bg-blue-bg"
+          isPrivate ? "bg-pink-bg text-pink-950" : "bg-blue-bg text-blue"
         )}
       >
         {isPrivate ? "приватный" : "публичный"}

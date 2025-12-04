@@ -7,7 +7,7 @@ export const ROUTES = {
   INVITE: "/accept-invite",
   DASHBOARD: "/:userId",
   WISHES: "/:userId/wishes",
-  WISHLISTS: "/:userId/lists/",
+  WISHLISTS: "/:userId/lists",
   WISHLIST: "/:userId/lists/:listId",
   WISH: "/:userId/wishes/:wishId",
   /* PROTECTED */

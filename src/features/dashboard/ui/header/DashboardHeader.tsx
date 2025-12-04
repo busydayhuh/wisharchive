@@ -26,7 +26,7 @@ const DashboardHeader = memo(function DashboardHeader({
   if (isDashboardOwner && !profileView) {
     return (
       <div className="flex justify-between items-center gap-4 md:gap-6 mt-1.5 md:mt-4 mb-1.5 md:mb-3 lg:mb-8 w-full">
-        <p className="font-headers font-bold text-primary lg:text-[58px] text-3xl md:text-4xl leading-8">
+        <p className="font-headers font-bold text-primary lg:text-[48px] text-3xl md:text-4xl leading-8">
           {dashboardHeader}
         </p>
         <div className="flex items-center gap-4 ms-auto">
