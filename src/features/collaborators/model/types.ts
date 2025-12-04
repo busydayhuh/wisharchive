@@ -9,6 +9,9 @@ export type WishRoles = Roles & {
   isBooker: boolean;
   isWishOwner: boolean;
 };
+
+export type AccessRoles = Roles & Partial<WishRoles>;
+
 // Соавтор
 export type CollaboratorType = {
   userId: string;

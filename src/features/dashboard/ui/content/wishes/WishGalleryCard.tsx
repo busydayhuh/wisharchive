@@ -1,4 +1,5 @@
 import { useWishcardMeta } from "@/features/dashboard/model/hooks/useWishcardMeta";
+import { useRoles } from "@/features/dashboard/model/store/access/useRoles";
 import { FormattedPrice } from "@/features/wish";
 import { WishlistControls } from "@/features/wishlist-controls";
 import { cn } from "@/shared/lib/css";
@@ -10,8 +11,9 @@ import { Link } from "react-router";
 import { WishGalleryCover } from "./WishGalleryCover";
 
 function WishGalleryCard({ wish }: { wish: WishDocumentType }) {
-  const { onBookedPage, onListPage, userRoles, linkParams, onEditWish } =
+  const { onBookedPage, onListPage, linkParams, onEditWish } =
     useWishcardMeta(wish);
+  const userRoles = useRoles();
   const isMobile = useIsMobile();
 
   return (

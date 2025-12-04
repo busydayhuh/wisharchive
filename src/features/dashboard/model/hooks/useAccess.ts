@@ -1,4 +1,5 @@
 import { useAuth } from "@/features/auth";
+import type { AccessRoles } from "@/features/collaborators";
 import {
   resolveVisibility,
   resolveWishRoles,
@@ -10,7 +11,7 @@ import { useMemo } from "react";
 export function useAccess(type: "wish" | "wishlist", item?: Models.Document) {
   const { userId } = useAuth();
 
-  const roles = useMemo(() => {
+  const roles = useMemo<AccessRoles | undefined>(() => {
     if (!item) return undefined;
     return type === "wish"
       ? resolveWishRoles(item.wishlist, item.ownerId, item.bookerId, userId)

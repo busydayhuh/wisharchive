@@ -1,4 +1,5 @@
 import { useWishcardMeta } from "@/features/dashboard/model/hooks/useWishcardMeta";
+import { useRoles } from "@/features/dashboard/model/store/access/useRoles";
 import { BookButton, FormattedPrice, WishImage } from "@/features/wish";
 import { WishlistControls } from "@/features/wishlist-controls";
 import "@/shared/assets/custom.css";
@@ -11,9 +12,10 @@ import { Link } from "react-router";
 import { QuickActions } from "./QuickActions";
 
 function WishTableRow({ wish }: { wish: WishDocumentType }) {
-  const { userRoles, onBookedPage, onListPage, linkParams, onEditWish } =
+  const { onBookedPage, onListPage, linkParams, onEditWish } =
     useWishcardMeta(wish);
-
+  const userRoles = useRoles();
+  const { isWishOwner, isBooker, isEditor } = userRoles;
   const isMobile = useIsMobile();
 
   return (
@@ -94,7 +96,7 @@ function WishTableRow({ wish }: { wish: WishDocumentType }) {
 
       {/* Быстрые действия / забронировать */}
       <div className="justify-self-end lg:justify-self-center">
-        {onListPage && (userRoles?.isWishOwner || userRoles?.isEditor) ? (
+        {onListPage && (isWishOwner || isEditor) ? (
           <WishlistControls
             wish={wish}
             roles={userRoles}
@@ -102,7 +104,7 @@ function WishTableRow({ wish }: { wish: WishDocumentType }) {
             wishlist={wish.wishlist}
             variant="table"
           />
-        ) : userRoles?.isWishOwner ? (
+        ) : isWishOwner ? (
           <QuickActions
             imageURL={wish.imageURL ?? undefined}
             wishId={wish.$id}
@@ -120,7 +122,7 @@ function WishTableRow({ wish }: { wish: WishDocumentType }) {
             wishId={wish.$id}
             triggerVariant="table"
             isBooked={wish.isBooked}
-            isBookedByCurrentUser={userRoles?.isBooker ?? false}
+            isBookedByCurrentUser={isBooker ?? false}
           />
         )}
       </div>

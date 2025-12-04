@@ -1,4 +1,4 @@
-import type { WishRoles } from "@/features/collaborators";
+import type { AccessRoles } from "@/features/collaborators";
 import { BookButton, WishImage } from "@/features/wish";
 import { cn } from "@/shared/lib/css";
 import type { LinkParams, WishDocumentType } from "@/shared/model/types";
@@ -16,7 +16,7 @@ export const WishGalleryCover = memo(function WishGalleryCover({
 }: {
   wish: WishDocumentType;
   onEditWish: () => void;
-  userRoles?: WishRoles;
+  userRoles?: AccessRoles;
   linkParams: LinkParams;
   isMobile: boolean;
 }) {
@@ -63,7 +63,7 @@ export const WishGalleryCover = memo(function WishGalleryCover({
               wishId={wish.$id}
               triggerVariant="gallery"
               isBooked={wish.isBooked}
-              isBookedByCurrentUser={userRoles?.isBooker}
+              isBookedByCurrentUser={userRoles?.isBooker ?? false}
             />
           )}
         </div>

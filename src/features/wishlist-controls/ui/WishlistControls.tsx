@@ -1,4 +1,4 @@
-import type { WishRoles } from "@/features/collaborators";
+import type { AccessRoles } from "@/features/collaborators";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import { ROUTES } from "@/shared/model/routes";
 import type {
@@ -13,7 +13,7 @@ import WishlistRemoveButton from "./WishlistRemoveButton";
 
 type WishlistControlsProps = {
   wish: WishDocumentType;
-  roles?: WishRoles;
+  roles?: AccessRoles;
   wishlist: WishlistDocumentType | null;
   className?: string;
   variant?: "gallery" | "table";

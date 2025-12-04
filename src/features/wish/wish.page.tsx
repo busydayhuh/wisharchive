@@ -2,6 +2,7 @@ import { ROUTES } from "@/shared/model/routes";
 import { ErrorMessage } from "@/shared/ui/ErrorMessage";
 import { href, useNavigate, useParams } from "react-router";
 import { useAuth } from "../auth";
+import type { WishRoles } from "../collaborators";
 import { useAccess } from "../dashboard";
 import { useWish } from "./model/hooks/useWish";
 import { RelatedWishes } from "./ui/RelatedWishes";
@@ -13,9 +14,9 @@ import { WishPageSkeleton } from "./ui/WishPageSkeleton";
 function WishPage() {
   const { wishId } = useParams();
   const { wish, isLoading, error } = useWish(wishId ?? null);
-  const navigate = useNavigate();
   const { userId, isLoggedIn } = useAuth();
-  const { hasAccess } = useAccess("wish", wish);
+  const { hasAccess, roles } = useAccess("wish", wish);
+  const navigate = useNavigate();
 
   if (error)
     return (
@@ -40,7 +41,7 @@ function WishPage() {
             variant="page"
           />
         }
-        infoSlot={<WishInfo wish={wish} />}
+        infoSlot={<WishInfo wish={wish} roles={roles as WishRoles} />}
         relatedSlot={
           <RelatedWishes
             userId={wish.owner.userId}

@@ -1,4 +1,4 @@
-import type { WishRoles } from "@/features/collaborators";
+import type { AccessRoles } from "@/features/collaborators";
 import { useQuickActions } from "@/features/dashboard/";
 import { useConfirmationDialog } from "@/shared/model/confirmation-dialog/useConfirmationDialog";
 import type {
@@ -10,7 +10,7 @@ import { useCallback } from "react";
 
 export default function useWishlistControls(
   wish: WishDocumentType,
-  roles?: WishRoles
+  roles?: AccessRoles
 ) {
   const { $id, title, imageURL, wishlist } = wish;
   const { changeWishlist, removeFromWishlist } = useQuickActions($id);

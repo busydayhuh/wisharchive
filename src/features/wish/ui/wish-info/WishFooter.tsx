@@ -1,30 +1,19 @@
+import type { AccessRoles } from "@/features/collaborators";
+import type { WishDocumentType } from "@/shared/model/types";
 import { memo } from "react";
 import { ArchiveButton } from "../actions/ArchiveButton";
 import { BookButton } from "../actions/BookButton";
 import { FormattedPrice } from "../FormattedPrice";
 
 export const WishFooter = memo(function WishFooter({
-  wishId,
-  imageURL,
-  wishTitle,
-  isBooked,
-  price,
-  currency,
-  isArchived,
-  isOwner,
-  isBooker,
+  wish,
+  roles,
 }: {
-  wishId: string;
-  imageURL?: string;
-  wishTitle: string;
-  isBooked: boolean;
-  price: number | null;
-  currency: string;
-  isArchived: boolean;
-  shopURL: string | null;
-  isOwner: boolean;
-  isBooker: boolean;
+  wish: WishDocumentType;
+  roles: AccessRoles;
 }) {
+  const { price, currency, title, imageURL, $id, isArchived, isBooked } = wish;
+
   return (
     <div className="flex md:flex-row flex-col md:justify-between items-start md:items-center gap-4 md:gap-10 md:mt-auto max-w-3xl">
       {price && (
@@ -34,23 +23,23 @@ export const WishFooter = memo(function WishFooter({
           className="font-bold text-2xl lg:text-3xl"
         />
       )}
-      {isOwner ? (
+      {roles.isWishOwner ? (
         <ArchiveButton
-          imageURL={imageURL}
-          wishId={wishId}
+          imageURL={imageURL ?? undefined}
+          wishId={$id}
           variant="button"
-          wishTitle={wishTitle}
+          wishTitle={title}
           isArchived={isArchived}
           className="w-full md:w-fit h-14"
         />
       ) : (
         <BookButton
-          imageURL={imageURL}
-          wishTitle={wishTitle}
-          wishId={wishId}
+          imageURL={imageURL ?? undefined}
+          wishTitle={title}
+          wishId={$id}
           triggerVariant="page"
           isBooked={isBooked}
-          isBookedByCurrentUser={isBooker}
+          isBookedByCurrentUser={roles?.isBooker ?? false}
           className="w-full md:w-fit h-14"
         />
       )}
