@@ -2,6 +2,7 @@ import { ROUTES } from "@/shared/model/routes";
 import { ErrorMessage } from "@/shared/ui/ErrorMessage";
 import { href, useNavigate, useParams } from "react-router";
 import { useAuth } from "../auth";
+import { useAccess } from "../dashboard";
 import { useWish } from "./model/useWish";
 import { RelatedWishes } from "./ui/RelatedWishes";
 import { WishInfo } from "./ui/wish-info/WishInfo";
@@ -14,18 +15,22 @@ function WishPage() {
   const { wish, isLoading, error } = useWish(wishId ?? null);
   const navigate = useNavigate();
   const { userId, isLoggedIn } = useAuth();
+  const { hasAccess } = useAccess("wish", wish);
 
-  if (error) return;
-  <ErrorMessage
-    variant="not-found"
-    withButton={isLoggedIn}
-    action={() => navigate(href(ROUTES.WISHES, { userId: userId! }))}
-  />;
+  if (error)
+    return (
+      <ErrorMessage
+        variant="not-found"
+        withButton={isLoggedIn}
+        action={() => navigate(href(ROUTES.WISHES, { userId: userId! }))}
+      />
+    );
   if (isLoading) return <WishPageSkeleton />;
+  if (!hasAccess) return <ErrorMessage variant="no-access" />;
+
   if (wish)
     return (
       <WishLayout
-        backSlot={null}
         imageSlot={
           <WishImage
             wishId={wish.$id}

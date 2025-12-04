@@ -7,23 +7,23 @@ import {
 import type { Models } from "appwrite";
 import { useMemo } from "react";
 
-export function useAccess(type: "wish" | "wishlist", item: Models.Document) {
+export function useAccess(type: "wish" | "wishlist", item?: Models.Document) {
   const { userId } = useAuth();
 
-  const roles = useMemo(
-    () =>
-      type === "wish"
-        ? resolveWishRoles(item.wishlist, item.ownerId, item.bookerId, userId)
-        : resolveWishlistRoles(
-            item.editorsIds,
-            item.readersIds,
-            item.ownerId,
-            userId
-          ),
-    [item, userId, type]
-  );
+  const roles = useMemo(() => {
+    if (!item) return undefined;
+    return type === "wish"
+      ? resolveWishRoles(item.wishlist, item.ownerId, item.bookerId, userId)
+      : resolveWishlistRoles(
+          item.editorsIds,
+          item.readersIds,
+          item.ownerId,
+          userId
+        );
+  }, [item, userId, type]);
 
   const hasAccess = useMemo(() => {
+    if (!item) return false;
     return resolveVisibility(
       item.isPrivate || item.wishlist?.isPrivate,
       userId,

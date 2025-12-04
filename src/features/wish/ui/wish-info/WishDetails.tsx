@@ -15,7 +15,7 @@ export const WishDetails = memo(function WishDetails({
   roles,
 }: WishDetailsProps) {
   const showWishlistControls =
-    Boolean(wish.wishlist) || Boolean(roles?.isWishOwner);
+    (Boolean(wish.wishlist) || Boolean(roles?.isWishOwner)) && !wish.isArchived;
   const rows = [
     {
       header: "вишлист",
