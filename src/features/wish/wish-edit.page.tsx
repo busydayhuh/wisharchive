@@ -7,9 +7,9 @@ import { toast } from "sonner";
 import type z from "zod";
 import { useAuth } from "../auth";
 import { useRoute } from "../breadcrumbs";
+import { useWish } from "./model/hooks/useWish";
+import { useWishMutations } from "./model/hooks/useWishMutations";
 import { normalizeWishData } from "./model/normalizeWishData";
-import { useWish } from "./model/useWish";
-import { useWishMutations } from "./model/useWishMutations";
 import WishEditor from "./ui/WishEditor";
 import { WishEditorSkeleton } from "./ui/WishEditorSkeleton";
 

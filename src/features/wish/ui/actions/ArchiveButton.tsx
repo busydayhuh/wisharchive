@@ -1,10 +1,10 @@
+import { useQuickActions } from "@/features/dashboard";
 import { cn } from "@/shared/lib/css";
 import { useConfirmationDialog } from "@/shared/model/confirmation-dialog/useConfirmationDialog";
 import { notifyError, notifySuccessExpanded } from "@/shared/ui/CustomToast";
 import { IconBtnWithTooltip } from "@/shared/ui/IconBtnWithTooltip";
 import { Button } from "@/shared/ui/kit/button";
 import { Archive, ArchiveRestore } from "lucide-react";
-import { useQuickActions } from "../../model/useQuickActions";
 
 type ArchiveButtonProps = {
   wishId: string;

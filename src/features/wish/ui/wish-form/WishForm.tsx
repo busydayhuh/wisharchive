@@ -23,7 +23,7 @@ import { href, useNavigate } from "react-router";
 import { toast } from "sonner";
 import type z from "zod";
 import DeleteButton from "../../../../shared/ui/DeleteButton";
-import { useWishMutations } from "../../model/useWishMutations";
+import { useWishMutations } from "../../model/hooks/useWishMutations";
 import { CurrencySelect } from "./CurrencySelect";
 import { PrioritySelect } from "./PrioritySelect";
 import { WishlistSelect } from "./WishlistSelect";

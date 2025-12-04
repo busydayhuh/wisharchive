@@ -1,10 +1,11 @@
 import type { WishRoles } from "@/features/collaborators";
-import { BookButton, QuickActions, WishImage } from "@/features/wish";
+import { BookButton, WishImage } from "@/features/wish";
 import { cn } from "@/shared/lib/css";
 import type { LinkParams, WishDocumentType } from "@/shared/model/types";
 import { PRIVACY_ICONS } from "@/shared/ui/Badges";
 import { memo } from "react";
 import { Link } from "react-router";
+import { QuickActions } from "./QuickActions";
 
 export const WishGalleryCover = memo(function WishGalleryCover({
   wish,

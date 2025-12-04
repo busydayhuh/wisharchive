@@ -1,8 +1,8 @@
+import { useQuickActionItems } from "@/features/dashboard/model/hooks/useQuickActionItems";
 import { cn } from "@/shared/lib/css";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import { type Action } from "@/shared/model/confirmation-dialog/ConfirmationDialogContext";
 import { useConfirmationDialog } from "@/shared/model/confirmation-dialog/useConfirmationDialog";
-import { notifyError, notifySuccessExpanded } from "@/shared/ui/CustomToast";
 import { IconBtnWithTooltip } from "@/shared/ui/IconBtnWithTooltip";
 import { Button } from "@/shared/ui/kit/button";
 import {
@@ -13,9 +13,8 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/kit/dropdown-menu";
 import { cva, type VariantProps } from "class-variance-authority";
-import { Archive, ArchiveRestore, Edit2, Ellipsis, Trash2 } from "lucide-react";
+import { Ellipsis } from "lucide-react";
 import { type JSX } from "react";
-import { useQuickActions } from "../../model/useQuickActions";
 
 const dropdownTriggerVariants = cva(
   "inline-flex justify-center items-center border-0 rounded-sm size-9 text-foreground text-sm transition duration-300 cursor-pointer shrink-0",
@@ -30,10 +29,8 @@ const dropdownTriggerVariants = cva(
     },
   }
 );
-
 type DropdownTriggerVariants = VariantProps<typeof dropdownTriggerVariants>;
-
-type MenuItem = {
+export type MenuItem = {
   title: string;
   icon: JSX.Element;
   action: () => void;
@@ -41,7 +38,6 @@ type MenuItem = {
   isActive?: boolean;
   confirmation?: boolean;
 };
-
 type QuickActionsProps = {
   wishId: string;
   title: string;
@@ -66,7 +62,14 @@ export function QuickActions({
 }: QuickActionsProps) {
   const isMobile = useIsMobile();
   const { openConfDialog } = useConfirmationDialog();
-  const { archiveWish, deleteWish } = useQuickActions(wishId);
+
+  const items = useQuickActionItems({
+    wishId,
+    title,
+    imageURL,
+    isArchived,
+    onEditWish,
+  });
 
   const handleItemSelect = (item: MenuItem) => {
     if (item.confirmation) {
@@ -81,49 +84,6 @@ export function QuickActions({
     }
     return item.action();
   };
-
-  const items = [
-    {
-      title: isArchived ? "Вернуть из архива" : "В архив",
-      icon: isArchived ? <ArchiveRestore /> : <Archive />,
-      action: async () => {
-        const { ok } = await archiveWish(isArchived);
-        if (!ok) {
-          notifyError("Не удалось переместить в архив");
-          return;
-        }
-        notifySuccessExpanded(
-          isArchived ? "Восстановлено" : "Перенесено в архив",
-          title,
-          imageURL
-        );
-      },
-      actionName: "archive" as Action,
-      isActive: isArchived,
-      confirmation: true,
-    },
-    {
-      title: "Редактировать",
-      icon: <Edit2 />,
-      action: () => onEditWish(),
-      actionName: "edit" as Action,
-      confirmation: false,
-    },
-    {
-      title: "Удалить",
-      icon: <Trash2 />,
-      action: async () => {
-        const { ok } = await deleteWish();
-        if (!ok) {
-          notifyError("Не удалось удалить желание");
-          return;
-        }
-        notifySuccessExpanded("Удалено", title, imageURL);
-      },
-      actionName: "delete" as Action,
-      confirmation: true,
-    },
-  ];
 
   const useButtons = triggerVariant === "gallery" && !isMobile;
 

@@ -5,7 +5,7 @@ import { Skeleton } from "@/shared/ui/kit/skeleton";
 import { ChevronRight } from "lucide-react";
 import { useMemo } from "react";
 import { Link, href } from "react-router";
-import { useWishes } from "../model/useWishes";
+import { useWishes } from "../model/hooks/useWishes";
 import { WishImage } from "./WishImage";
 
 export function RelatedWishes({

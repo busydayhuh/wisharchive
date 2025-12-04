@@ -3,7 +3,7 @@ import { ErrorMessage } from "@/shared/ui/ErrorMessage";
 import { href, useNavigate, useParams } from "react-router";
 import { useAuth } from "../auth";
 import { useAccess } from "../dashboard";
-import { useWish } from "./model/useWish";
+import { useWish } from "./model/hooks/useWish";
 import { RelatedWishes } from "./ui/RelatedWishes";
 import { WishInfo } from "./ui/wish-info/WishInfo";
 import { WishImage } from "./ui/WishImage";

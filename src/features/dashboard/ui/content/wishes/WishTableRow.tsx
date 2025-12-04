@@ -1,10 +1,5 @@
 import { useWishcardMeta } from "@/features/dashboard/model/hooks/useWishcardMeta";
-import {
-  BookButton,
-  FormattedPrice,
-  QuickActions,
-  WishImage,
-} from "@/features/wish";
+import { BookButton, FormattedPrice, WishImage } from "@/features/wish";
 import { WishlistControls } from "@/features/wishlist-controls";
 import "@/shared/assets/custom.css";
 import { cn } from "@/shared/lib/css";
@@ -13,6 +8,7 @@ import type { WishDocumentType } from "@/shared/model/types";
 import { PriorityBadge, PRIVACY_ICONS, ShopBadge } from "@/shared/ui/Badges";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
 import { Link } from "react-router";
+import { QuickActions } from "./QuickActions";
 
 function WishTableRow({ wish }: { wish: WishDocumentType }) {
   const { userRoles, onBookedPage, onListPage, linkParams, onEditWish } =

@@ -1,3 +1,4 @@
+import { useQuickActions } from "@/features/dashboard";
 import { cn } from "@/shared/lib/css";
 import { useConfirmationDialog } from "@/shared/model/confirmation-dialog/useConfirmationDialog";
 import { notifyError, notifySuccessExpanded } from "@/shared/ui/CustomToast";
@@ -6,7 +7,6 @@ import { Toggle } from "@/shared/ui/kit/toggle";
 import { cva } from "class-variance-authority";
 import { LockKeyhole, LockKeyholeOpen } from "lucide-react";
 import { memo } from "react";
-import { useQuickActions } from "../../model/useQuickActions";
 
 const bookButtonVariants = cva(
   "inline-flex justify-center items-center border-0 transition duration-300 cursor-pointer shrink-0",

@@ -1,9 +1,8 @@
 import { useAuth } from "@/features/auth";
+import { useWish, useWishMutations } from "@/features/wish";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { useUpdateSWRCache } from "@/shared/model/useUpdateSWRCache";
 import { useCallback } from "react";
-import { useWish } from "./useWish";
-import { useWishMutations } from "./useWishMutations";
 
 export function useQuickActions(wishId: string) {
   const { current } = useAuth();

@@ -1,5 +1,5 @@
 import type { WishRoles } from "@/features/collaborators";
-import { useQuickActions } from "@/features/wish/";
+import { useQuickActions } from "@/features/dashboard/";
 import { useConfirmationDialog } from "@/shared/model/confirmation-dialog/useConfirmationDialog";
 import type {
   WishDocumentType,

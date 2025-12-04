@@ -1,17 +1,17 @@
 import type { wishFormSchema } from "@/shared/model/formSchemas";
 import { ROUTES } from "@/shared/model/routes";
 import { useCurrentUser } from "@/shared/model/user/useCurrentUser";
+import { customToast } from "@/shared/ui/CustomToast";
 import { ErrorMessage } from "@/shared/ui/ErrorMessage";
 import { href } from "react-router";
+import { toast } from "sonner";
 import type z from "zod";
 import { useAuth } from "../auth";
 import { useRoute } from "../breadcrumbs";
+import { useWishMutations } from "./model/hooks/useWishMutations";
 import { normalizeWishData } from "./model/normalizeWishData";
-import { useWishMutations } from "./model/useWishMutations";
 import WishEditor from "./ui/WishEditor";
 import { WishEditorSkeleton } from "./ui/WishEditorSkeleton";
-import { customToast } from "@/shared/ui/CustomToast";
-import { toast } from "sonner";
 
 function WishAddPage() {
   const { current: authUser, isLoggedIn } = useAuth();

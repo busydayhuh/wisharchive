@@ -1,6 +1,7 @@
 // хуки и типы
 export { useAccess } from "./model/hooks/useAccess";
 export { useCollabWishlists } from "./model/hooks/useCollabWishlists";
+export { useQuickActions } from "./model/hooks/useQuickActions";
 export { useWishcardMeta } from "./model/hooks/useWishcardMeta";
 export { useWishlistcardMeta } from "./model/hooks/useWishlistcardMeta";
 export { useDashboard } from "./model/store/dashboard/useDashboard";
