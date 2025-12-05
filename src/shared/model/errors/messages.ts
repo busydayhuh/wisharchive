@@ -34,9 +34,15 @@ export const STATUS_MESSAGES: Record<Variant, Record<string, Message>> = {
   "not-found": {
     default: {
       header: "Страница не найдена",
-      description:
-        "Страница была удалена или у вас нет доступа к этой странице",
+      description: "Такой страницы не существует или она была удалена",
+      CAT: "На главную",
     },
   },
-  "no-access": {},
+  "no-access": {
+    default: {
+      header: "Нет доступа",
+      description: "У вас нет доступа к этой странице",
+      CAT: "На главную",
+    },
+  },
 };

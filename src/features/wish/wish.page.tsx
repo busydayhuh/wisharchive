@@ -1,6 +1,6 @@
-import { ROUTES } from "@/shared/model/routes";
-import { ErrorMessage } from "@/shared/ui/ErrorMessage";
-import { href, useNavigate, useParams } from "react-router";
+import type { WishDocumentType } from "@/shared/model/types";
+import PageBoundary from "@/shared/ui/PageBoundary";
+import { useParams } from "react-router";
 import { useAuth } from "../auth";
 import type { WishRoles } from "../collaborators";
 import { useAccess } from "../dashboard";
@@ -16,40 +16,44 @@ function WishPage() {
   const { wish, isLoading, error } = useWish(wishId ?? null);
   const { userId, isLoggedIn } = useAuth();
   const { hasAccess, roles } = useAccess("wish", wish);
-  const navigate = useNavigate();
 
-  if (error)
-    return (
-      <ErrorMessage
-        variant="not-found"
-        withButton={isLoggedIn}
-        action={() => navigate(href(ROUTES.WISHES, { userId: userId! }))}
-      />
-    );
-  if (isLoading) return <WishPageSkeleton />;
-  if (!hasAccess) return <ErrorMessage variant="no-access" />;
-
-  if (wish)
-    return (
-      <WishLayout
-        imageSlot={
-          <WishImage
-            wishId={wish.$id}
-            url={wish.imageURL}
-            alt={wish.title}
-            isBooked={wish.isBooked}
-            variant="page"
-          />
-        }
-        infoSlot={<WishInfo wish={wish} roles={roles as WishRoles} />}
-        relatedSlot={
-          <RelatedWishes
-            userId={wish.owner.userId}
-            userName={wish.owner.userName}
-            wishId={wish.$id}
-          />
-        }
-      />
-    );
+  return (
+    <PageBoundary
+      item={wish}
+      isLoggedIn={isLoggedIn}
+      userId={userId}
+      hasAccess={hasAccess}
+      isLoading={isLoading}
+      error={error}
+      skeleton={<WishPageSkeleton />}
+    >
+      {(safeItem) => (
+        <WishLayout
+          imageSlot={
+            <WishImage
+              wishId={safeItem.$id}
+              url={safeItem.imageURL}
+              alt={safeItem.title}
+              isBooked={safeItem.isBooked}
+              variant="page"
+            />
+          }
+          infoSlot={
+            <WishInfo
+              wish={safeItem as WishDocumentType}
+              roles={roles as WishRoles}
+            />
+          }
+          relatedSlot={
+            <RelatedWishes
+              userId={safeItem.owner.userId}
+              userName={safeItem.owner.userName}
+              wishId={safeItem.$id}
+            />
+          }
+        />
+      )}
+    </PageBoundary>
+  );
 }
 export const Component = WishPage;
