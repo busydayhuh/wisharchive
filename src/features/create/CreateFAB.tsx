@@ -1,11 +1,12 @@
 import { cn } from "@/shared/lib/css";
+import { useAppLocation } from "@/shared/lib/react/useAppLocation";
 import { ROUTES } from "@/shared/model/routes";
 import { Button } from "@/shared/ui/kit/button";
-import { ListPlus, Plus, Stars } from "lucide-react";
+import { ListPlus, Orbit, Plus, Stars } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
-import { useWishlistDialog } from "../wishlist";
+import { useWishlistDialog, useWishPicker } from "../wishlist";
 
 const fabVariants = {
   closed: { scale: 1 },
@@ -51,7 +52,9 @@ const menuItem = {
 export function CreateFAB() {
   const [open, setOpen] = useState(false);
   const { openDialog } = useWishlistDialog();
+  const { openPicker } = useWishPicker();
   const navigate = useNavigate();
+  const { page } = useAppLocation();
 
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
@@ -92,14 +95,25 @@ export function CreateFAB() {
               }}
             />
 
-            <MenuButton
-              icon={<ListPlus />}
-              label="Новый список"
-              onClick={() => {
-                openDialog("create");
-                setOpen(false);
-              }}
-            />
+            {page.list ? (
+              <MenuButton
+                icon={<Orbit />}
+                label="Из моих желаний"
+                onClick={() => {
+                  openPicker();
+                  setOpen(false);
+                }}
+              />
+            ) : (
+              <MenuButton
+                icon={<ListPlus />}
+                label="Новый список"
+                onClick={() => {
+                  openDialog("create");
+                  setOpen(false);
+                }}
+              />
+            )}
           </motion.div>
         )}
       </AnimatePresence>
