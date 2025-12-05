@@ -1,3 +1,5 @@
+export { useWishPicker } from "./model/store/wish-picker/useWishPicker";
+export { WishPickerProvider } from "./model/store/wish-picker/WishPickerProvider";
 export { useBookmark } from "./model/useBookmark";
 export { useWishlist } from "./model/useWishlist";
 export { useWishlistBase } from "./model/useWishlistBase";
