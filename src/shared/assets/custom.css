@@ -220,3 +220,31 @@ html {
     grid-template-areas: "image title priority additional controls actions";
   }
 }
+
+.wl-table-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: auto 2fr 0.5fr;
+  grid-template-areas: "image title actions";
+}
+
+@media (min-width: 640px) {
+  .wl-table-grid {
+    grid-template-columns: auto 3fr 1fr 0.5fr;
+    grid-template-areas: "image title collab actions";
+  }
+}
+
+@media (min-width: 768px) {
+  .wl-table-grid {
+    grid-template-columns: auto 2fr 1fr 1fr;
+    grid-template-areas: "image title collab actions";
+  }
+}
+
+@media (min-width: 1024px) {
+  .wl-table-grid {
+    grid-template-columns: auto 2fr 1fr 1fr 1fr 1fr;
+    grid-template-areas: "image title collab created updated actions";
+  }
+}

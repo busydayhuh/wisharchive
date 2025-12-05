@@ -1,9 +1,24 @@
+import type { AccessRoles, CollaboratorType } from "@/features/collaborators";
 import { useWishlistBase, useWishlistDialog } from "@/features/wishlist";
 import { useAppLocation } from "@/shared/lib/react/useAppLocation";
-import type { WishlistDocumentType } from "@/shared/model/types";
+import type { LinkParams, WishlistDocumentType } from "@/shared/model/types";
 import { useRoles } from "../store/access/useRoles";
 
-export function useWishlistcardMeta(wishlist: WishlistDocumentType) {
+export type WishlistcardMeta = {
+  linkParams: LinkParams;
+  isFavorite: boolean;
+  toggleBookmark: (pressed: boolean) => Promise<void>;
+  collaborators: CollaboratorType[] | undefined;
+  collabsLoading: boolean;
+  collabsError?: Error;
+  userRoles: AccessRoles;
+  onSharedPage: boolean;
+  openWishlistEditor: () => void;
+};
+
+export function useWishlistcardMeta(
+  wishlist: WishlistDocumentType
+): WishlistcardMeta {
   const base = useWishlistBase(wishlist);
   const roles = useRoles();
 
