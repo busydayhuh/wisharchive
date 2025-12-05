@@ -178,9 +178,9 @@
     @apply gap-3 md:gap-4 lg:gap-6 grid grid-cols-[6rem_10rem_1fr] sm:grid-cols-[6rem_10rem_1fr_1fr] md:grid-cols-[7rem_2fr_1fr_1fr] lg:grid-cols-[10rem_2fr_1fr_1fr_1fr_1fr];
   }
 
-  .wish-table-grid {
+  /* .wish-table-grid {
     @apply gap-2 grid grid-cols-[3fr_1fr] md:grid-cols-[22rem_1fr_1fr_0.5fr] lg:grid-cols-[28rem_1fr_1fr_1fr_0.5fr] 2xl:grid-cols-[54rem_1fr_1fr_1fr_0.5fr] xl:grid-cols-[40rem_1fr_1fr_1fr_0.5fr];
-  }
+  } */
 
   /* Для устройств с курсором */
   @media (any-hover: hover) {

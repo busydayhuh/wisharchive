@@ -35,7 +35,6 @@ export function WishlistControls({
     if (isMobile && variant === "gallery")
       return (
         <>
-          {" "}
           {wishlist ? (
             <WishlistBadge
               id={wishlist.$id}
