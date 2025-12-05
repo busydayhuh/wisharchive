@@ -1,5 +1,6 @@
 import { cva } from "class-variance-authority";
 import {
+  Circle,
   Crown,
   Eye,
   EyeClosed,
@@ -7,7 +8,6 @@ import {
   Pencil,
   Sparkles,
   Users2,
-  X,
 } from "lucide-react";
 import { motion } from "motion/react";
 import { href, Link } from "react-router";
@@ -72,7 +72,7 @@ export const PRIVACY_ICONS = {
   ),
   none: (
     <span className="p-1.5 rounded-sm [&_svg]:size-3 text-muted-foreground">
-      <X className="stroke-[2px]" />
+      <Circle className="stroke-[2px]" />
     </span>
   ),
 };
