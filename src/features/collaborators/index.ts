@@ -11,7 +11,12 @@ export {
 export { resolveVisibility } from "./model/resolveVisibility";
 export { CollaboratorsDialogProvider } from "./model/store/collab-dialog/Provider";
 export { useCollaboratorsDialog } from "./model/store/collab-dialog/useCollabDialog";
-export type { AccessRoles, Roles, WishRoles } from "./model/types";
+export type {
+  AccessRoles,
+  CollaboratorType,
+  Roles,
+  WishRoles,
+} from "./model/types";
 export {
   CollaboratorsAvatarsSkeleton,
   CollaboratorsGroup,

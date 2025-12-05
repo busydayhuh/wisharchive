@@ -1,21 +1,22 @@
 import type { ReactNode } from "react";
 import { cn } from "../lib/css";
-import { useDepartment } from "../lib/react/useDepartment";
+import { useAppLocation } from "../lib/react/useAppLocation";
 
 function MainContainer({
   children,
 }: {
   children: ReactNode;
   slimLayout?: boolean;
-  outside?: boolean;
+  loginArea?: boolean;
 }) {
-  const { slimPage, outside } = useDepartment();
+  const { page, loginArea } = useAppLocation();
+  const slimPage = page.wish || page.edit || page.profile;
 
   return (
     <main
       className={cn(
         "relative lg:px-5 md:pb-4 md:pl-2 lg:pl-8 w-full",
-        outside && "!p-0 !m-0",
+        loginArea && "!p-0 !m-0",
         slimPage && "mx-auto max-w-[100rem] md:mt-2"
       )}
     >

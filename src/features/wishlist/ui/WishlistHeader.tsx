@@ -1,6 +1,7 @@
 import type { Roles } from "@/features/collaborators";
 import { cn } from "@/shared/lib/css";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
+import type { WishlistDocumentType } from "@/shared/model/types";
 import {
   Accordion,
   AccordionContent,
@@ -8,36 +9,32 @@ import {
   AccordionTrigger,
 } from "@/shared/ui/kit/accordion";
 import ShareOnSocials from "@/shared/ui/ShareOnSocials";
+import { useWishlistBase } from "../model/useWishlistBase";
+import { useWishlistDialog } from "../model/useWishlistDialog";
 import { BookmarkButton } from "./actions/BookmarkButton";
 import { EditWishlistButton } from "./actions/EditWishlistButton";
 import { Collaborators } from "./Collaborators";
 
 export function WishlistHeader({
-  wishlistId,
-  ownerId,
-  title,
-  isPrivate,
-  description,
-  bookmarkWishlist,
+  wishlist,
   userRoles,
-  isFavorite,
-  openWishlistEditor,
-  editors,
-  readers,
 }: {
-  wishlistId: string;
-  ownerId: string;
-  title: string;
-  isPrivate: boolean;
-  description?: string | null;
-  bookmarkWishlist: (pressed: boolean) => Promise<void>;
+  wishlist: WishlistDocumentType;
   userRoles: Roles | undefined;
-  isFavorite: boolean;
-  openWishlistEditor: () => void;
-  editors: string[];
-  readers: string[];
 }) {
   const isMobile = useIsMobile();
+  const { title, $id, isPrivate, description } = wishlist;
+  const {
+    isFavorite,
+    toggleBookmark,
+    collaborators,
+    collabsError,
+    collabsLoading,
+  } = useWishlistBase(wishlist);
+  const canEdit = userRoles?.isEditor || userRoles?.isWishlistOwner;
+
+  const { openDialog } = useWishlistDialog();
+  const openWishlistEditor = () => openDialog("edit", wishlist, userRoles);
 
   if (isMobile)
     return (
@@ -46,23 +43,23 @@ export function WishlistHeader({
 
         <div className="flex justify-between items-center">
           <Collaborators
-            ownerId={ownerId}
-            wishlistId={wishlistId}
+            collaborators={collaborators}
+            isLoading={collabsLoading}
+            error={collabsError}
+            wishlistId={$id}
             isPrivate={isPrivate}
-            editors={editors}
-            readers={readers}
             isOwner={userRoles?.isWishlistOwner ?? false}
           />
 
           <div className="flex items-center gap-1.5">
-            {(userRoles?.isEditor || userRoles?.isWishlistOwner) && (
+            {canEdit && (
               <EditWishlistButton onClick={openWishlistEditor} variant="page" />
             )}
             <ShareOnSocials />
             <BookmarkButton
               variant="gallery"
               isFavorite={isFavorite}
-              onPressed={bookmarkWishlist}
+              onPressed={toggleBookmark}
             />
           </div>
         </div>
@@ -77,7 +74,7 @@ export function WishlistHeader({
         <WishlistName title={title} isPrivate={isPrivate} />
 
         <div className="flex items-center gap-2">
-          {(userRoles?.isEditor || userRoles?.isWishlistOwner) && (
+          {canEdit && (
             <EditWishlistButton onClick={openWishlistEditor} variant="page" />
           )}
           <ShareOnSocials />
@@ -86,17 +83,17 @@ export function WishlistHeader({
 
       <div className="flex justify-between items-center">
         <Collaborators
-          ownerId={ownerId}
-          wishlistId={wishlistId}
+          collaborators={collaborators}
+          isLoading={collabsLoading}
+          error={collabsError}
+          wishlistId={$id}
           isPrivate={isPrivate}
-          editors={editors}
-          readers={readers}
           isOwner={userRoles?.isWishlistOwner ?? false}
         />
         <BookmarkButton
           variant="page"
           isFavorite={isFavorite}
-          onPressed={bookmarkWishlist}
+          onPressed={toggleBookmark}
           className="ms-auto"
         />
       </div>

@@ -1,33 +1,19 @@
-import { DashboardLayout, useWishlistcardMeta } from "@/features/dashboard";
+import type { AccessRoles } from "@/features/collaborators";
+import { DashboardLayout } from "@/features/dashboard";
 import type { WishlistDocumentType } from "@/shared/model/types";
 import { WishlistContent } from "./WishlistContent";
 import { WishlistHeader } from "./WishlistHeader";
 
 export function WishlistLayout({
   wishlist,
+  roles,
 }: {
   wishlist: WishlistDocumentType;
+  roles?: AccessRoles;
 }) {
-  const { userRoles, isFavorite, bookmarkWishlist, openWishlistEditor } =
-    useWishlistcardMeta(wishlist);
-
   return (
     <DashboardLayout
-      header={
-        <WishlistHeader
-          wishlistId={wishlist.$id}
-          ownerId={wishlist.ownerId}
-          title={wishlist.title}
-          isPrivate={wishlist.isPrivate}
-          description={wishlist.description}
-          bookmarkWishlist={bookmarkWishlist}
-          isFavorite={isFavorite}
-          userRoles={userRoles}
-          openWishlistEditor={openWishlistEditor}
-          editors={wishlist.editorsIds}
-          readers={wishlist.readersIds}
-        />
-      }
+      header={<WishlistHeader wishlist={wishlist} userRoles={roles} />}
     >
       <WishlistContent wishlistId={wishlist.$id} />
     </DashboardLayout>

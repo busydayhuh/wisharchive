@@ -1,5 +1,5 @@
 import { cn } from "@/shared/lib/css";
-import { useDepartment } from "@/shared/lib/react/useDepartment";
+import { useAppLocation } from "@/shared/lib/react/useAppLocation";
 import { useUser } from "@/shared/model/user/useUser";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
@@ -18,7 +18,7 @@ const DashboardOwner = memo(function DashboardOwner({
   className?: string;
 }) {
   const { user, isLoading, error } = useUser(userId);
-  const { profileView } = useDepartment();
+  const { hasSearchParams: profileView } = useAppLocation();
 
   if (isLoading)
     return isOwner ? (

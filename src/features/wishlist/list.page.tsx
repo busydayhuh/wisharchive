@@ -12,7 +12,7 @@ function WishlistPage() {
   const { wishlist, isLoading, error } = useWishlist(listId ?? null);
   const { isLoggedIn, current } = useAuth();
   const navigate = useNavigate();
-  const { hasAccess } = useAccess("wishlist", wishlist);
+  const { hasAccess, roles } = useAccess("wishlist", wishlist);
 
   if (isLoading) return <WishlistSkeleton />;
   if (error)
@@ -30,7 +30,7 @@ function WishlistPage() {
   if (wishlist)
     return (
       <ToolbarProvider dashboardType="list" localStorageKey={`list+${listId}}`}>
-        <WishlistLayout wishlist={wishlist} />
+        <WishlistLayout wishlist={wishlist} roles={roles} />
       </ToolbarProvider>
     );
 }

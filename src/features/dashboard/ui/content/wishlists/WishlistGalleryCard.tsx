@@ -11,7 +11,7 @@ import { WishlistTiles } from "./WishlistTiles";
 function WishlistGalleryCard({ wishlist }: { wishlist: WishlistDocumentType }) {
   const {
     collaborators,
-    bookmarkWishlist,
+    toggleBookmark,
     isFavorite,
     onSharedPage,
     openWishlistEditor,
@@ -27,7 +27,7 @@ function WishlistGalleryCard({ wishlist }: { wishlist: WishlistDocumentType }) {
         {/* Добавить в закладки */}
         <BookmarkButton
           isFavorite={isFavorite}
-          onPressed={bookmarkWishlist}
+          onPressed={toggleBookmark}
           className="top-2 right-2 z-10 absolute"
         />
 

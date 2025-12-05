@@ -1,9 +1,7 @@
 import { useWishcardMeta } from "@/features/dashboard/model/hooks/useWishcardMeta";
-import { useRoles } from "@/features/dashboard/model/store/access/useRoles";
 import { FormattedPrice } from "@/features/wish";
 import { WishlistControls } from "@/features/wishlist-controls";
 import { cn } from "@/shared/lib/css";
-import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import type { WishDocumentType } from "@/shared/model/types";
 import { PriorityBadge } from "@/shared/ui/Badges";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
@@ -11,10 +9,8 @@ import { Link } from "react-router";
 import { WishGalleryCover } from "./WishGalleryCover";
 
 function WishGalleryCard({ wish }: { wish: WishDocumentType }) {
-  const { onBookedPage, onListPage, linkParams, onEditWish } =
+  const { linkParams, onEditWish, showOwner, userRoles, isMobile } =
     useWishcardMeta(wish);
-  const userRoles = useRoles();
-  const isMobile = useIsMobile();
 
   return (
     <div
@@ -62,7 +58,7 @@ function WishGalleryCard({ wish }: { wish: WishDocumentType }) {
         )}
       </Link>
       <div className="flex justify-between items-center gap-1">
-        {(onBookedPage || onListPage) && (
+        {showOwner && (
           <OwnerAvatar
             userId={wish.ownerId}
             userName={wish.owner.userName}

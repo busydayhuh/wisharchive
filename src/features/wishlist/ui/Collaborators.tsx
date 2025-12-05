@@ -1,33 +1,28 @@
+import type { CollaboratorType } from "@/features/collaborators";
 import {
   CollaboratorsGroup,
   useCollaboratorsDialog,
-  useDocumentCollaborators,
 } from "@/features/collaborators";
 import { Button } from "@/shared/ui/kit/button";
 import { PlusIcon } from "lucide-react";
 
 type CollaboratorsProps = {
   wishlistId: string;
-  ownerId: string;
   isPrivate: boolean;
-  editors: string[];
-  readers: string[];
+  collaborators?: CollaboratorType[];
+  isLoading: boolean;
+  error?: Error;
   isOwner: boolean;
 };
 
 export function Collaborators({
   wishlistId,
-  ownerId,
+  collaborators,
+  isLoading,
+  error,
   isPrivate,
-  editors,
-  readers,
   isOwner,
 }: CollaboratorsProps) {
-  const { collaborators, isLoading, error } = useDocumentCollaborators(
-    ownerId,
-    editors,
-    readers
-  );
   const { openCollabDialog } = useCollaboratorsDialog();
 
   if (collaborators)

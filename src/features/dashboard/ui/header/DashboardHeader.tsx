@@ -1,6 +1,6 @@
 import { useAuth } from "@/features/auth";
-import { GlobalSearchDialog } from "@/features/global-search/GlobalSearch";
-import { useDepartment } from "@/shared/lib/react/useDepartment";
+import { GlobalSearchDialog } from "@/features/global-search";
+import { useAppLocation } from "@/shared/lib/react/useAppLocation";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import { Button } from "@/shared/ui/kit/button";
 import { memo } from "react";
@@ -19,7 +19,7 @@ const DashboardHeader = memo(function DashboardHeader({
   isDashboardOwner = true,
 }: DashboardHeaderProps) {
   const { isLoggedIn } = useAuth();
-  const { profileView } = useDepartment();
+  const { hasSearchParams: profileView } = useAppLocation();
   const isMobile = useIsMobile();
   const showOwner = !isMobile || !isDashboardOwner;
 

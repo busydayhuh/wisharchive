@@ -1,51 +1,21 @@
-import { useAuth } from "@/features/auth";
-import { useRoute } from "@/features/breadcrumbs";
-import { useDocumentCollaborators } from "@/features/collaborators";
-import { useBookmark, useWishlistDialog } from "@/features/wishlist";
-import { ROUTES } from "@/shared/model/routes";
-import type { LinkParams, WishlistDocumentType } from "@/shared/model/types";
-import { useCallback } from "react";
-import { href, useMatch } from "react-router";
-import { useAccess } from "./useAccess";
+import { useWishlistBase, useWishlistDialog } from "@/features/wishlist";
+import { useAppLocation } from "@/shared/lib/react/useAppLocation";
+import type { WishlistDocumentType } from "@/shared/model/types";
+import { useRoles } from "../store/access/useRoles";
 
 export function useWishlistcardMeta(wishlist: WishlistDocumentType) {
-  const { editorsIds, readersIds, bookmarkedBy, ownerId, $id, owner, title } =
-    wishlist;
+  const base = useWishlistBase(wishlist);
+  const roles = useRoles();
 
-  const { userId } = useAuth();
-  const { location, params } = useRoute();
-  const { collaborators } = useDocumentCollaborators(
-    ownerId,
-    editorsIds,
-    readersIds
-  );
-  const { roles } = useAccess("wishlist", wishlist);
   const { openDialog } = useWishlistDialog();
+  const openWishlistEditor = () => openDialog("edit", wishlist, roles);
 
-  const openWishlistEditor = useCallback(
-    () => openDialog("edit", wishlist, roles),
-    [wishlist, openDialog, roles]
-  );
-  const { toggleBookmark } = useBookmark($id, bookmarkedBy ?? [], userId);
-  const isFavorite = userId ? bookmarkedBy?.includes(userId) ?? false : false;
-  const onSharedPage = useMatch(ROUTES.SHARED);
-
-  const linkParams: LinkParams = {
-    to: href(ROUTES.WISHLIST, { listId: $id, userId: ownerId }),
-    state: {
-      prevLocation: location.pathname,
-      prevParams: params,
-      data: { userName: owner.userName, userId: owner.userId, wlTitle: title },
-    },
-  };
+  const { page } = useAppLocation();
 
   return {
-    collaborators,
-    bookmarkWishlist: toggleBookmark,
+    ...base,
     userRoles: roles,
-    isFavorite,
-    onSharedPage,
+    onSharedPage: page.shared,
     openWishlistEditor,
-    linkParams,
   };
 }

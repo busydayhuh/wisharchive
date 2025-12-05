@@ -1,5 +1,5 @@
 import { cn } from "@/shared/lib/css";
-import { useDepartment } from "@/shared/lib/react/useDepartment";
+import { useAppLocation } from "@/shared/lib/react/useAppLocation";
 import { ROUTES } from "@/shared/model/routes";
 import { useCurrentUser } from "@/shared/model/user/useCurrentUser";
 import { SidebarTrigger } from "@/shared/ui/kit/sidebar";
@@ -15,10 +15,11 @@ export function BreadcrumbsBar({
   isMobile: boolean;
   isUser: boolean;
 }) {
-  const { outside, hasBreadcrumbs } = useDepartment();
+  const { loginArea, page } = useAppLocation();
   const { user } = useCurrentUser();
+  const hasBreadcrumbs = page.wish || page.list || page.edit;
 
-  if (outside) return null;
+  if (loginArea) return null;
 
   return (
     <div

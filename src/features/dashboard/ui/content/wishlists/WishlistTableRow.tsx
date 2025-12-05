@@ -18,7 +18,7 @@ interface WishlistTableRowProps {
 function WishlistTableRow({ wishlist }: WishlistTableRowProps) {
   const {
     collaborators,
-    bookmarkWishlist,
+    toggleBookmark,
     isFavorite,
     onSharedPage,
     openWishlistEditor,
@@ -99,7 +99,7 @@ function WishlistTableRow({ wishlist }: WishlistTableRowProps) {
         <BookmarkButton
           variant="table"
           isFavorite={isFavorite}
-          onPressed={bookmarkWishlist}
+          onPressed={toggleBookmark}
         />
       </div>
     </div>

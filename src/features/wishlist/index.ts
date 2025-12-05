@@ -1,5 +1,6 @@
 export { useBookmark } from "./model/useBookmark";
 export { useWishlist } from "./model/useWishlist";
+export { useWishlistBase } from "./model/useWishlistBase";
 export { useWishlistDialog } from "./model/useWishlistDialog";
 export {
   configureWishlistPermissions,

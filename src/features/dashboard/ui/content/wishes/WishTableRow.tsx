@@ -1,10 +1,8 @@
 import { useWishcardMeta } from "@/features/dashboard/model/hooks/useWishcardMeta";
-import { useRoles } from "@/features/dashboard/model/store/access/useRoles";
 import { BookButton, FormattedPrice, WishImage } from "@/features/wish";
 import { WishlistControls } from "@/features/wishlist-controls";
 import "@/shared/assets/custom.css";
 import { cn } from "@/shared/lib/css";
-import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import type { WishDocumentType } from "@/shared/model/types";
 import { PriorityBadge, PRIVACY_ICONS, ShopBadge } from "@/shared/ui/Badges";
 import OwnerAvatar from "@/shared/ui/OwnerAvatar";
@@ -12,11 +10,9 @@ import { Link } from "react-router";
 import { QuickActions } from "./QuickActions";
 
 function WishTableRow({ wish }: { wish: WishDocumentType }) {
-  const { onBookedPage, onListPage, linkParams, onEditWish } =
+  const { linkParams, onEditWish, userRoles, showOwner, onListPage, isMobile } =
     useWishcardMeta(wish);
-  const userRoles = useRoles();
   const { isWishOwner, isBooker, isEditor } = userRoles;
-  const isMobile = useIsMobile();
 
   return (
     <div
@@ -69,7 +65,7 @@ function WishTableRow({ wish }: { wish: WishDocumentType }) {
       {/* Ссылка на магазин / владелец желания */}
       {/* Отображается при w >= 1024px */}
       <div className="hidden lg:block justify-self-center">
-        {onBookedPage || onListPage ? (
+        {showOwner ? (
           <OwnerAvatar
             userId={wish.ownerId}
             userName={wish.owner.userName}
