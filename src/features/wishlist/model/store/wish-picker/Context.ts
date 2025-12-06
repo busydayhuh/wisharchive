@@ -2,6 +2,6 @@ import { createContext } from "react";
 
 export type WishPickerContext = {
   pickerOpen: boolean;
-  openPicker: () => void;
+  openPicker: (id?: string) => void;
 };
 export const WishPickerContext = createContext<WishPickerContext | null>(null);

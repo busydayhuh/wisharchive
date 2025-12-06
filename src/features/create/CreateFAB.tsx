@@ -5,7 +5,7 @@ import { Button } from "@/shared/ui/kit/button";
 import { ListPlus, Orbit, Plus, Stars } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useWishlistDialog, useWishPicker } from "../wishlist";
 
 const fabVariants = {
@@ -51,9 +51,12 @@ const menuItem = {
 
 export function CreateFAB() {
   const [open, setOpen] = useState(false);
+
   const { openDialog } = useWishlistDialog();
   const { openPicker } = useWishPicker();
   const navigate = useNavigate();
+
+  const { listId } = useParams();
   const { page } = useAppLocation();
 
   const wrapperRef = useRef<HTMLDivElement | null>(null);
@@ -100,7 +103,7 @@ export function CreateFAB() {
                 icon={<Orbit />}
                 label="Из моих желаний"
                 onClick={() => {
-                  openPicker();
+                  openPicker(listId);
                   setOpen(false);
                 }}
               />
