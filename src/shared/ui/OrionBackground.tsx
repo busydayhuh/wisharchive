@@ -20,7 +20,7 @@ export default function OrionBackground() {
           <circle cx="468" cy="468" r="263.9" />
           <circle cx="468" cy="468" r="179.9" />
         </g>
-        <g className="blur-[2px] fill-muted" stroke-width=".2">
+        <g className="blur-[2px] fill-muted" strokeWidth=".2">
           <circle cx="615.5" cy="817.5" r="12" />
           <circle cx="929" cy="376" r="6.5" />
         </g>
