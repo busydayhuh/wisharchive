@@ -7,23 +7,27 @@ import type {
 } from "@/shared/model/types";
 import { type OptimisticUpdater } from "@/shared/model/useOptimisticMutation";
 import { useUpdateSWRCache } from "@/shared/model/useUpdateSWRCache";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useSWRConfig } from "swr";
+import { useWishlist } from "../useWishlist";
 
-export function useMoveWishes() {
+export function useMoveWishes(targetWishlistId: string) {
   const { update } = useWishMutations();
   const { mutate } = useSWRConfig();
-  const patchCache = usePatchWishlistCache();
+  const patchCache = usePatchWishlistCache(targetWishlistId);
 
-  const pickedWishes: WishDocumentType[] = useMemo(() => [], []);
+  const [pickedWishes, setPickedWishes] = useState<WishDocumentType[]>([]);
   const pickedIds: string[] = useMemo(
     () => pickedWishes.map(({ $id }) => $id),
     [pickedWishes]
   );
 
   const onPickWish = useCallback(
-    (wish: WishDocumentType) => pickedWishes.push(wish),
-    [pickedWishes]
+    (wish: WishDocumentType, added: boolean) =>
+      added
+        ? setPickedWishes((prev) => [...prev, wish])
+        : setPickedWishes((prev) => prev.filter(({ $id }) => $id !== wish.$id)),
+    []
   );
 
   const moveWishes = useCallback(
@@ -50,12 +54,13 @@ export function useMoveWishes() {
     },
     [mutate, patchCache, pickedIds, pickedWishes, update]
   );
-  return { onPickWish, moveWishes };
+  return { onPickWish, moveWishes, pickedIds };
 }
 
-function usePatchWishlistCache() {
+function usePatchWishlistCache(targetWishlistId: string) {
   const { updateSWRCache } = useUpdateSWRCache();
   const { mutate } = useSWRConfig();
+  const { wishlist } = useWishlist(targetWishlistId);
 
   const patchWishlistCache = useCallback(
     (
@@ -64,7 +69,7 @@ function usePatchWishlistCache() {
       pickedWishes: WishDocumentType[]
     ) => {
       const wishlistsUpdater: OptimisticUpdater = (prev) =>
-        prev.map(({ wl }) => {
+        prev.map((wl) => {
           const isTarget = wl.$id === targetWishlistId;
           const filteredWishes = wl.wishes.filter(
             (w: WishDocumentType) => !pickedIds.includes(w.$id)
@@ -101,12 +106,21 @@ function usePatchWishlistCache() {
       };
 
       updateSWRCache("wishlists", wishlistsUpdater);
+      updateSWRCache(`wishlist+${targetWishlistId}`, (wishes) => {
+        const filteredWishes = wishes.filter((w) => !pickedIds.includes(w.$id));
+        const addedWishes = pickedWishes.map((w) => ({
+          ...w,
+          wishlist: wishlist,
+          wishlistId: targetWishlistId,
+        }));
+        return [...filteredWishes, ...addedWishes];
+      });
       mutate(targetWishlistId, (wl) => (wl ? wishlistDocUpdater(wl) : wl), {
         rollbackOnError: true,
         revalidate: false,
       });
     },
-    [mutate, updateSWRCache]
+    [mutate, updateSWRCache, wishlist]
   );
 
   return patchWishlistCache;
