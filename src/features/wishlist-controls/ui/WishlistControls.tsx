@@ -56,7 +56,10 @@ export function WishlistControls({
     );
   }
   // убрать из wl [страница вишлиста]
-  if ((roles?.isEditor || roles?.isWishlistOwner) && onListPage)
+  if (
+    (roles?.isEditor || roles?.isWishlistOwner || roles?.isWishOwner) &&
+    onListPage
+  )
     return (
       <WishlistRemoveButton
         onRemove={remove}
