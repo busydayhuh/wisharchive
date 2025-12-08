@@ -9,7 +9,7 @@ import { type OptimisticUpdater } from "@/shared/model/useOptimisticMutation";
 import { useUpdateSWRCache } from "@/shared/model/useUpdateSWRCache";
 import { useCallback, useMemo, useState } from "react";
 import { useSWRConfig } from "swr";
-import { useWishlist } from "../useWishlist";
+import { useWishlist } from "./useWishlist";
 
 export function useMoveWishes(targetWishlistId: string) {
   const { update } = useWishMutations();

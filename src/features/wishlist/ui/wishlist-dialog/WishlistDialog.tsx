@@ -21,7 +21,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { useWishlistMutations } from "../../model/useWishlistMutations";
+import { useWishlistMutations } from "../../model/hooks/useWishlistMutations";
 import { Collaborators } from "../Collaborators";
 import { DeleteSection } from "./DeleteSection";
 import { WishlistFormFields } from "./WishlistFormFields";

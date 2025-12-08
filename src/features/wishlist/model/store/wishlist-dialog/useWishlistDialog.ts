@@ -1,8 +1,5 @@
-import { createContext, useContext } from "react";
-import type { WishlistDialogContextType } from "./WishlistDialogContext";
-
-export const WishlistDialogContext =
-  createContext<WishlistDialogContextType | null>(null);
+import { useContext } from "react";
+import { WishlistDialogContext } from "./Context";
 
 export function useWishlistDialog() {
   const ctx = useContext(WishlistDialogContext);

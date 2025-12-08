@@ -3,7 +3,7 @@ import PageBoundary from "@/shared/ui/PageBoundary";
 import { useParams } from "react-router";
 import { useAuth } from "../auth";
 import { ToolbarProvider, useAccess } from "../dashboard";
-import { useWishlist } from "./model/useWishlist";
+import { useWishlist } from "./model/hooks/useWishlist";
 import { WishlistLayout } from "./ui/WishlistLayout";
 import { WishlistSkeleton } from "./ui/WishlistSkeleton";
 

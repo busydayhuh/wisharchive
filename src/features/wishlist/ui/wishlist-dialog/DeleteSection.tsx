@@ -1,7 +1,7 @@
 import DeleteButton from "@/shared/ui/DeleteButton";
 import { FormLabel } from "@/shared/ui/kit/form";
 import { toast } from "sonner";
-import { useWishlistMutations } from "../../model/useWishlistMutations";
+import { useWishlistMutations } from "../../model/hooks/useWishlistMutations";
 
 type DeleteSectionProps = {
   wishlistId: string;
