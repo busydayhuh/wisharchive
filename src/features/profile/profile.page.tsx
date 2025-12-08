@@ -1,7 +1,7 @@
-import { useCurrentUser } from "@/shared/model/user/useCurrentUser";
-import { useUpdateSWRCache } from "@/shared/model/useUpdateSWRCache";
-import DefaultLoader from "@/shared/ui/DefaultLoader";
-import { ErrorMessage } from "@/shared/ui/ErrorMessage";
+import { useUpdateSWRCache } from "@/shared/hooks/useUpdateSWRCache";
+import { useCurrentUser } from "@/shared/hooks/user/useCurrentUser";
+import DefaultLoader from "@/shared/ui/components/DefaultLoader";
+import { ErrorMessage } from "@/shared/ui/components/ErrorMessage";
 import { useCallback } from "react";
 import { ProfilePageLayout } from "./ui/ProfilePageLayout";
 

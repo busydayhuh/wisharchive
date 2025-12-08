@@ -1,11 +1,11 @@
-import { cn } from "@/shared/lib/css";
-import { useDebounce } from "@/shared/lib/react/useDebounce";
-import { useIsMobile } from "@/shared/lib/react/useIsMobile";
+import { useDebounce } from "@/shared/hooks/useDebounce";
+import { useIsMobile } from "@/shared/hooks/useIsMobile";
 import type {
   UserDocumentType,
   WishDocumentType,
   WishlistDocumentType,
-} from "@/shared/model/types";
+} from "@/shared/types";
+import Searchbar from "@/shared/ui/components/Searchbar";
 import { Button } from "@/shared/ui/kit/button";
 import {
   Dialog,
@@ -14,7 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/shared/ui/kit/dialog";
-import Searchbar from "@/shared/ui/Searchbar";
+import { cn } from "@/shared/utils/css";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { CategoryPicker } from "./ui/CategoryPicker";

@@ -1,5 +1,5 @@
-import { useIsMobile } from "@/shared/lib/react/useIsMobile";
-import type { PathParams } from "@/shared/model/routes";
+import type { PathParams } from "@/shared/config/routes";
+import { useIsMobile } from "@/shared/hooks/useIsMobile";
 import {
   Breadcrumb,
   BreadcrumbEllipsis,

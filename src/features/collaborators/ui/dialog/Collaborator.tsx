@@ -1,7 +1,7 @@
 import type { CollaboratorType } from "@/features/collaborators/model/types";
-import { cn } from "@/shared/lib/css";
+import { UserAvatar } from "@/shared/ui/components/UserAvatar";
 import { Button } from "@/shared/ui/kit/button";
-import { UserAvatar } from "@/shared/ui/UserAvatar";
+import { cn } from "@/shared/utils/css";
 import { Loader2, MailCheck, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useCollabManager } from "../../model/store/collab-manager/useCollabManager";

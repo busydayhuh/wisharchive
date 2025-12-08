@@ -1,5 +1,5 @@
 import { useAuth } from "@/features/auth";
-import db from "@/shared/model/databases";
+import db from "@/shared/api/databases";
 import { Query } from "appwrite";
 import stableStringify from "fast-json-stable-stringify";
 import useSWR from "swr";

@@ -1,6 +1,5 @@
 import { useRoute } from "@/features/breadcrumbs";
-import { cn } from "@/shared/lib/css";
-import { ROUTES } from "@/shared/model/routes";
+import { ROUTES } from "@/shared/config/routes";
 import {
   Item,
   ItemContent,
@@ -8,6 +7,7 @@ import {
   ItemMedia,
   ItemTitle,
 } from "@/shared/ui/kit/item";
+import { cn } from "@/shared/utils/css";
 import { href } from "react-router";
 import type { AnyDocument, Category } from "../GlobalSearch";
 import { Media } from "./Media";

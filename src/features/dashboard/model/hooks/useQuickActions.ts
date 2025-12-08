@@ -1,7 +1,7 @@
 import { useAuth } from "@/features/auth";
 import { useWish, useWishMutations } from "@/features/wish";
-import type { WishlistDocumentType } from "@/shared/model/types";
-import { useUpdateSWRCache } from "@/shared/model/useUpdateSWRCache";
+import { useUpdateSWRCache } from "@/shared/hooks/useUpdateSWRCache";
+import type { WishlistDocumentType } from "@/shared/types";
 import { useCallback } from "react";
 
 export function useQuickActions(wishId: string) {

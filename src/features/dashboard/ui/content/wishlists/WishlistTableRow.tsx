@@ -5,8 +5,8 @@ import {
 } from "@/features/dashboard/model/hooks/useWishlistcardMeta";
 import { BookmarkButton, EditWishlistButton } from "@/features/wishlist";
 import "@/shared/assets/custom.css";
-import type { WishlistDocumentType } from "@/shared/model/types";
-import { RoleBadge } from "@/shared/ui/Badges";
+import type { WishlistDocumentType } from "@/shared/types";
+import { RoleBadge } from "@/shared/ui/components/Badges";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 import { EyeClosed } from "lucide-react";

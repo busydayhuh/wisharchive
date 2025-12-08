@@ -1,5 +1,5 @@
-import { cn } from "@/shared/lib/css";
 import { Toggle } from "@/shared/ui/kit/toggle";
+import { cn } from "@/shared/utils/css";
 import { Bookmark } from "lucide-react";
 
 export function BookmarkButton({

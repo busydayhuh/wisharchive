@@ -1,7 +1,7 @@
-import type { wishFormSchema } from "@/shared/model/formSchemas";
-import { ROUTES } from "@/shared/model/routes";
-import { customToast } from "@/shared/ui/CustomToast";
-import { ErrorMessage } from "@/shared/ui/ErrorMessage";
+import { ROUTES } from "@/shared/config/routes";
+import type { wishFormSchema } from "@/shared/formSchemas";
+import { customToast } from "@/shared/ui/components/CustomToast";
+import { ErrorMessage } from "@/shared/ui/components/ErrorMessage";
 import { href, useParams } from "react-router";
 import { toast } from "sonner";
 import type z from "zod";

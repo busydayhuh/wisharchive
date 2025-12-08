@@ -1,9 +1,9 @@
-import { cn } from "@/shared/lib/css";
-import { useAppLocation } from "@/shared/lib/react/useAppLocation";
-import { ROUTES } from "@/shared/model/routes";
-import { useCurrentUser } from "@/shared/model/user/useCurrentUser";
+import { ROUTES } from "@/shared/config/routes";
+import { useAppLocation } from "@/shared/hooks/useAppLocation";
+import { useCurrentUser } from "@/shared/hooks/user/useCurrentUser";
+import Logo from "@/shared/ui/components/Logo";
 import { SidebarTrigger } from "@/shared/ui/kit/sidebar";
-import Logo from "@/shared/ui/Logo";
+import { cn } from "@/shared/utils/css";
 import { href, Link } from "react-router-dom";
 import { OwnerInfoPopover } from "../dashboard";
 import { Breadcrumbs } from "./Breadcrumbs";

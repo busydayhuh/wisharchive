@@ -1,5 +1,6 @@
-import { useIsMobile } from "@/shared/lib/react/useIsMobile";
-import { ROUTES } from "@/shared/model/routes";
+import { ROUTES } from "@/shared/config/routes";
+import { useIsMobile } from "@/shared/hooks/useIsMobile";
+import { UserAvatar } from "@/shared/ui/components/UserAvatar";
 import {
   Dialog,
   DialogContent,
@@ -12,7 +13,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/shared/ui/kit/popover";
-import { UserAvatar } from "@/shared/ui/UserAvatar";
 import { useState } from "react";
 import { href, Link } from "react-router";
 

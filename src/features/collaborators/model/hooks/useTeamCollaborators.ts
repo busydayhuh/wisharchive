@@ -1,5 +1,5 @@
+import { useUsers } from "@/shared/hooks/user/useUsers";
 import { useMemo } from "react";
-import { useUsers } from "../../../../shared/model/user/useUsers";
 import type { CollaboratorType } from "../types";
 import { useTeamMembers } from "./useTeamMembers";
 

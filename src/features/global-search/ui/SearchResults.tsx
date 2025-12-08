@@ -1,6 +1,6 @@
-import { cn } from "@/shared/lib/css";
 import { ItemGroup } from "@/shared/ui/kit/item";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
+import { cn } from "@/shared/utils/css";
 import { Frown, Leaf, Wind } from "lucide-react";
 import type { AnyDocument, Category } from "../GlobalSearch";
 import { useGlobalSearch } from "../model/useGlobalSearch";

@@ -1,8 +1,11 @@
 import { useAuth } from "@/features/auth";
 import { useWishes } from "@/features/wish";
-import { useIsMobile } from "@/shared/lib/react/useIsMobile";
-import type { WishDocumentType } from "@/shared/model/types";
-import { notifyError, notifySuccessSimple } from "@/shared/ui/CustomToast";
+import {
+  notifyError,
+  notifySuccessSimple,
+} from "@/shared/entities/errors/notify";
+import { useIsMobile } from "@/shared/hooks/useIsMobile";
+import type { WishDocumentType } from "@/shared/types";
 import { Button } from "@/shared/ui/kit/button";
 import {
   Dialog,

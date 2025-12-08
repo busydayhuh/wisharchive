@@ -1,12 +1,12 @@
 import { useAuth } from "@/features/auth";
 import { BreadcrumbsBar } from "@/features/breadcrumbs";
 import { AppSidebar } from "@/features/sidebar";
-import { cn } from "@/shared/lib/css";
-import { useIsMobile } from "@/shared/lib/react/useIsMobile";
-import DefaultLoader from "@/shared/ui/DefaultLoader";
+import { useIsMobile } from "@/shared/hooks/useIsMobile";
+import DefaultLoader from "@/shared/ui/components/DefaultLoader";
+import MainContainer from "@/shared/ui/components/MainContainer";
+import OrionBackground from "@/shared/ui/components/OrionBackground";
 import { Toaster } from "@/shared/ui/kit/sonner";
-import MainContainer from "@/shared/ui/MainContainer";
-import OrionBackground from "@/shared/ui/OrionBackground";
+import { cn } from "@/shared/utils/css";
 import { Outlet, useNavigation } from "react-router-dom";
 
 function App() {

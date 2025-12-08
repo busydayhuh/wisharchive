@@ -1,5 +1,5 @@
 import { useAuth } from "@/features/auth";
-import { ROUTES } from "@/shared/model/routes";
+import { ROUTES } from "@/shared/config/routes";
 import { href, Navigate, Outlet } from "react-router-dom";
 
 export function ProtectedRoute() {

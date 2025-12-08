@@ -1,7 +1,7 @@
-import type { UserDocumentType } from "@/shared/model/types";
+import type { UserDocumentType } from "@/shared/types";
+import OwnerAvatar from "@/shared/ui/components/OwnerAvatar";
+import ShareOnSocials from "@/shared/ui/components/ShareOnSocials";
 import { Button } from "@/shared/ui/kit/button";
-import OwnerAvatar from "@/shared/ui/OwnerAvatar";
-import ShareOnSocials from "@/shared/ui/ShareOnSocials";
 import { Pencil } from "lucide-react";
 import { memo } from "react";
 

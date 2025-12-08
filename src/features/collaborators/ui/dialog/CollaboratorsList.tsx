@@ -1,6 +1,6 @@
 import type { CollaboratorType } from "@/features/collaborators/model/types";
-import type { UserDocumentType } from "@/shared/model/types";
-import { useUsers } from "@/shared/model/user/useUsers";
+import { useUsers } from "@/shared/hooks/user/useUsers";
+import type { UserDocumentType } from "@/shared/types";
 import { ScrollArea } from "@/shared/ui/kit/scroll-area";
 import { Frown, Loader2, Wind } from "lucide-react";
 import Collaborator from "./Collaborator";

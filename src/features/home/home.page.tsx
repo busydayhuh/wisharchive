@@ -1,11 +1,11 @@
-import { ROUTES } from "@/shared/model/routes";
+import { ROUTES } from "@/shared/config/routes";
 import { Link, href } from "react-router-dom";
 
 function Homepage() {
   return (
-    <div className="flex items-center justify-center grow h-full">
+    <div className="flex justify-center items-center h-full grow">
       <div className="flex flex-col gap-1">
-        <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+        <h2 className="first:mt-0 pb-2 border-b font-semibold text-3xl tracking-tight scroll-m-20">
           Hello from Homepage
         </h2>
         <Link to={href(ROUTES.WISHES, { userId: "my-user-id" })}>

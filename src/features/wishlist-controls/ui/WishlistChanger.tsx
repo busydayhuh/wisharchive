@@ -1,9 +1,9 @@
 import { useRoute } from "@/features/breadcrumbs";
-import { cn } from "@/shared/lib/css";
-import { ROUTES } from "@/shared/model/routes";
-import type { WishlistDocumentType } from "@/shared/model/types";
+import { ROUTES } from "@/shared/config/routes";
+import type { WishlistDocumentType } from "@/shared/types";
+import { ResponsiveSelect } from "@/shared/ui/components/ResponsiveSelect";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
-import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
+import { cn } from "@/shared/utils/css";
 import { ChevronDown } from "lucide-react";
 import { href } from "react-router";
 import { useWishlistOptions } from "../model/useWishlistOptions";

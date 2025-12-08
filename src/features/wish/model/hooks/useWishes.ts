@@ -1,6 +1,6 @@
 import type { Filter, SortState } from "@/features/dashboard/";
-import db from "@/shared/model/databases";
-import type { WishDocumentType } from "@/shared/model/types";
+import db from "@/shared/api/databases";
+import type { WishDocumentType } from "@/shared/types";
 import { Query, type Models } from "appwrite";
 import stableStringify from "fast-json-stable-stringify";
 import useSWRInfinite from "swr/infinite";

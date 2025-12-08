@@ -5,10 +5,14 @@ import {
 import { BookButton, FormattedPrice, WishImage } from "@/features/wish";
 import { WishlistControls } from "@/features/wishlist-controls";
 import "@/shared/assets/custom.css";
-import { cn } from "@/shared/lib/css";
-import type { WishDocumentType } from "@/shared/model/types";
-import { PriorityBadge, PRIVACY_ICONS, ShopBadge } from "@/shared/ui/Badges";
-import OwnerAvatar from "@/shared/ui/OwnerAvatar";
+import type { WishDocumentType } from "@/shared/types";
+import {
+  PriorityBadge,
+  PRIVACY_ICONS,
+  ShopBadge,
+} from "@/shared/ui/components/Badges";
+import OwnerAvatar from "@/shared/ui/components/OwnerAvatar";
+import { cn } from "@/shared/utils/css";
 import { Link } from "react-router";
 import { QuickActions } from "./QuickActions";
 

@@ -1,6 +1,5 @@
 import { useAuth } from "@/features/auth";
-import { cn } from "@/shared/lib/css";
-import { useIsMobile } from "@/shared/lib/react/useIsMobile";
+import { useIsMobile } from "@/shared/hooks/useIsMobile";
 import { Button } from "@/shared/ui/kit/button";
 import {
   Popover,
@@ -8,6 +7,7 @@ import {
   PopoverTrigger,
 } from "@/shared/ui/kit/popover";
 import { Toggle } from "@/shared/ui/kit/toggle";
+import { cn } from "@/shared/utils/css";
 import { ListFilterPlus, X } from "lucide-react";
 import { useCallback, useMemo, type JSX } from "react";
 import { useToolbar } from "../../model/store/toolbar/useToolbar";

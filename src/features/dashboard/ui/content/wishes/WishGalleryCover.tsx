@@ -1,8 +1,8 @@
 import type { AccessRoles } from "@/features/collaborators";
 import { BookButton, WishImage } from "@/features/wish";
-import { cn } from "@/shared/lib/css";
-import type { LinkParams, WishDocumentType } from "@/shared/model/types";
-import { PRIVACY_ICONS } from "@/shared/ui/Badges";
+import type { LinkParams, WishDocumentType } from "@/shared/types";
+import { PRIVACY_ICONS } from "@/shared/ui/components/Badges";
+import { cn } from "@/shared/utils/css";
 import { memo } from "react";
 import { Link } from "react-router";
 import { QuickActions } from "./QuickActions";

@@ -1,12 +1,9 @@
 import { useWishMutations } from "@/features/wish";
-import { sortBySequence } from "@/shared/lib/sortBySequence";
-import { handleError } from "@/shared/model/errors/handleError";
-import type {
-  WishDocumentType,
-  WishlistDocumentType,
-} from "@/shared/model/types";
-import { type OptimisticUpdater } from "@/shared/model/useOptimisticMutation";
-import { useUpdateSWRCache } from "@/shared/model/useUpdateSWRCache";
+import { handleError } from "@/shared/entities/errors/handleError";
+import { type OptimisticUpdater } from "@/shared/hooks/useOptimisticMutation";
+import { useUpdateSWRCache } from "@/shared/hooks/useUpdateSWRCache";
+import type { WishDocumentType, WishlistDocumentType } from "@/shared/types";
+import { sortBySequence } from "@/shared/utils/sortBySequence";
 import { useCallback, useMemo, useState } from "react";
 import { useSWRConfig } from "swr";
 import { useWishlist } from "./useWishlist";

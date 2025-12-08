@@ -1,5 +1,5 @@
-import { cn } from "@/shared/lib/css";
 import { Button } from "@/shared/ui/kit/button";
+import { cn } from "@/shared/utils/css";
 import { Pencil } from "lucide-react";
 
 export function EditWishlistButton({

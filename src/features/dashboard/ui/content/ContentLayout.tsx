@@ -1,8 +1,5 @@
-import { cn } from "@/shared/lib/css";
-import type {
-  WishDocumentType,
-  WishlistDocumentType,
-} from "@/shared/model/types";
+import type { WishDocumentType, WishlistDocumentType } from "@/shared/types";
+import { cn } from "@/shared/utils/css";
 import type { Models } from "appwrite";
 import { useToolbar } from "../../model/store/toolbar/useToolbar";
 import { AccessGate } from "./AccessGate";

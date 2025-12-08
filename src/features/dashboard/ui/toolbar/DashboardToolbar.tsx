@@ -1,5 +1,5 @@
-import { useIsMobile } from "@/shared/lib/react/useIsMobile";
-import { ROUTES } from "@/shared/model/routes";
+import { ROUTES } from "@/shared/config/routes";
+import { useIsMobile } from "@/shared/hooks/useIsMobile";
 import { useMatch } from "react-router";
 import { useToolbar } from "../../model/store/toolbar/useToolbar";
 import FiltersGroup from "./FiltersGroup";

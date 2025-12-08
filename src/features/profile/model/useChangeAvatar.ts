@@ -1,4 +1,4 @@
-import { uploadToStorage } from "@/shared/model/uploadToStorage";
+import { uploadToStorage } from "@/shared/api/uploadToStorage";
 import { useCallback, useState } from "react";
 import type { UpdateUserCache } from "../profile.page";
 import useProfileMutations from "./useProfileMutations";

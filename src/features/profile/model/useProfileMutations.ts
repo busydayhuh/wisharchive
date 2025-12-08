@@ -1,7 +1,7 @@
-import { appwriteService } from "@/shared/model/appwrite";
-import db from "@/shared/model/databases";
-import { handleError } from "@/shared/model/errors/handleError";
-import type { UserDocumentType } from "@/shared/model/types";
+import { appwriteService } from "@/shared/api/appwrite";
+import db from "@/shared/api/databases";
+import { handleError } from "@/shared/entities/errors/handleError";
+import type { UserDocumentType } from "@/shared/types";
 import { useCallback } from "react";
 
 function useProfileMutations() {

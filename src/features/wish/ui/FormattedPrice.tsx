@@ -1,5 +1,5 @@
-import { cn } from "@/shared/lib/css";
-import { CURRENCY } from "@/shared/lib/currency";
+import { cn } from "@/shared/utils/css";
+import { CURRENCY } from "@/shared/utils/currencyList";
 import { useMemo } from "react";
 import { NumericFormat } from "react-number-format";
 

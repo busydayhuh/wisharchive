@@ -1,6 +1,6 @@
 import { useLinkParams } from "@/features/breadcrumbs/";
-import { ROUTES } from "@/shared/model/routes";
-import type { WishDocumentType } from "@/shared/model/types";
+import { ROUTES } from "@/shared/config/routes";
+import type { WishDocumentType } from "@/shared/types";
 import { href, useNavigate } from "react-router-dom";
 
 export function useWishNavigation(wish: WishDocumentType) {

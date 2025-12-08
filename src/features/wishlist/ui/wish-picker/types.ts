@@ -1,4 +1,4 @@
-import type { WishDocumentType } from "@/shared/model/types";
+import type { WishDocumentType } from "@/shared/types";
 
 export type WishPickerContentProps = {
   wishes: WishDocumentType[];

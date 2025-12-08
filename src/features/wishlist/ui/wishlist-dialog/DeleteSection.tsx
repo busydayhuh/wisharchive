@@ -1,4 +1,4 @@
-import DeleteButton from "@/shared/ui/DeleteButton";
+import DeleteButton from "@/shared/ui/components/DeleteButton";
 import { FormLabel } from "@/shared/ui/kit/form";
 import { toast } from "sonner";
 import { useWishlistMutations } from "../../model/hooks/useWishlistMutations";

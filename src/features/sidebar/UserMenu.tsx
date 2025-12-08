@@ -9,9 +9,10 @@ import {
   SunMoon,
 } from "lucide-react";
 
-import { ROUTES } from "@/shared/model/routes";
-import { useTheme } from "@/shared/model/theme/createThemeProvider";
-import { useUser } from "@/shared/model/user/useUser";
+import { ROUTES } from "@/shared/config/routes";
+import { useUser } from "@/shared/hooks/user/useUser";
+import { useTheme } from "@/shared/store/theme/useTheme";
+import { UserAvatar } from "@/shared/ui/components/UserAvatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,7 +32,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/shared/ui/kit/sidebar";
-import { UserAvatar } from "@/shared/ui/UserAvatar";
 import { Link } from "react-router";
 import { useAuth } from "../auth";
 

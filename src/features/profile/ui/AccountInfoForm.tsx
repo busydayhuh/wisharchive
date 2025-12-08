@@ -1,5 +1,6 @@
 import { PassWithToggle } from "@/features/auth";
-import { accountInfoFormSchema as formSchema } from "@/shared/model/formSchemas";
+import { accountInfoFormSchema as formSchema } from "@/shared/formSchemas";
+import { SubmitBtn } from "@/shared/ui/components/SubmitBtn";
 import {
   Form,
   FormControl,
@@ -9,7 +10,6 @@ import {
   FormMessage,
 } from "@/shared/ui/kit/form";
 import { Input } from "@/shared/ui/kit/input";
-import { SubmitBtn } from "@/shared/ui/SubmitBtn";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";

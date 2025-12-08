@@ -1,7 +1,7 @@
-import { ROUTES } from "@/shared/model/routes";
-import { CopyProfileLinkBtn } from "@/shared/ui/CopyProfileLinkBtn";
+import { ROUTES } from "@/shared/config/routes";
+import { CopyProfileLinkBtn } from "@/shared/ui/components/CopyProfileLinkBtn";
+import { UserAvatar } from "@/shared/ui/components/UserAvatar";
 import { Button } from "@/shared/ui/kit/button";
-import { UserAvatar } from "@/shared/ui/UserAvatar";
 import { ArrowUpRight } from "lucide-react";
 import { href, Link } from "react-router-dom";
 

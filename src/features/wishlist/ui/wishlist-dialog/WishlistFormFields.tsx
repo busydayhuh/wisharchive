@@ -1,6 +1,5 @@
 import type { Roles } from "@/features/collaborators";
-import { cn } from "@/shared/lib/css";
-import { wishlistFormSchema as formSchema } from "@/shared/model/formSchemas";
+import { wishlistFormSchema as formSchema } from "@/shared/formSchemas";
 import {
   FormControl,
   FormDescription,
@@ -12,6 +11,7 @@ import {
 import { Input } from "@/shared/ui/kit/input";
 import { Switch } from "@/shared/ui/kit/switch";
 import { Textarea } from "@/shared/ui/kit/textarea";
+import { cn } from "@/shared/utils/css";
 import type { UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 

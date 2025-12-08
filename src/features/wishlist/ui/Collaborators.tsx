@@ -10,7 +10,7 @@ type CollaboratorsProps = {
   wishlistId: string;
   isPrivate: boolean;
   collaborators?: CollaboratorType[];
-  isLoading: boolean;
+  isLoading?: boolean;
   error?: Error;
   isOwner: boolean;
 };

@@ -1,5 +1,5 @@
-import db from "@/shared/model/databases";
-import type { WishDocumentType } from "@/shared/model/types";
+import db from "@/shared/api/databases";
+import type { WishDocumentType } from "@/shared/types";
 import useSWR from "swr";
 
 async function fetcher(wishId: string) {

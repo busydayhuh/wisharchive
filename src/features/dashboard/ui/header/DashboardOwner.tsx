@@ -1,8 +1,8 @@
-import { cn } from "@/shared/lib/css";
-import { useAppLocation } from "@/shared/lib/react/useAppLocation";
-import { useUser } from "@/shared/model/user/useUser";
+import { useAppLocation } from "@/shared/hooks/useAppLocation";
+import { useUser } from "@/shared/hooks/user/useUser";
+import { UserAvatar } from "@/shared/ui/components/UserAvatar";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
-import { UserAvatar } from "@/shared/ui/UserAvatar";
+import { cn } from "@/shared/utils/css";
 import { Ghost, Gift, Meh } from "lucide-react";
 import { memo } from "react";
 import { getUserBirthday } from "../../model/getUserBirthday";

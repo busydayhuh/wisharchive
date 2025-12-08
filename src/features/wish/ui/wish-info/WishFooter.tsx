@@ -1,5 +1,5 @@
 import type { AccessRoles } from "@/features/collaborators";
-import type { WishDocumentType } from "@/shared/model/types";
+import type { WishDocumentType } from "@/shared/types";
 import { memo } from "react";
 import { ArchiveButton } from "../actions/ArchiveButton";
 import { BookButton } from "../actions/BookButton";

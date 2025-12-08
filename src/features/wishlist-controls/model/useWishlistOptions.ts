@@ -1,7 +1,7 @@
 import { useAuth } from "@/features/auth";
 import { useCollabWishlists } from "@/features/dashboard";
-import { PRIVACY_ICONS } from "@/shared/ui/Badges";
-import { type Option } from "@/shared/ui/ResponsiveSelect";
+import { PRIVACY_ICONS } from "@/shared/ui/components/Badges";
+import { type Option } from "@/shared/ui/components/ResponsiveSelect";
 import { useMemo } from "react";
 
 type WishlistOption = Option & {

@@ -1,6 +1,6 @@
-import { cn } from "@/shared/lib/css";
-import { getFallbackColor } from "@/shared/lib/getFallbackColor";
-import type { WishDocumentType } from "@/shared/model/types";
+import type { WishDocumentType } from "@/shared/types";
+import { cn } from "@/shared/utils/css";
+import { getFallbackColor } from "@/shared/utils/getFallbackColor";
 import { ID } from "appwrite";
 
 export function WishlistTiles({

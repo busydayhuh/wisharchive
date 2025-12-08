@@ -1,4 +1,5 @@
-import { ROUTES } from "@/shared/model/routes";
+import { ROUTES } from "@/shared/config/routes";
+import Logo from "@/shared/ui/components/Logo";
 import {
   Sidebar,
   SidebarContent,
@@ -13,8 +14,6 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "@/shared/ui/kit/sidebar";
-import Logo from "@/shared/ui/Logo";
-import { ModeToggle } from "@/shared/ui/ModeToggle";
 import {
   Archive,
   Blend,
@@ -26,6 +25,7 @@ import {
 import { memo } from "react";
 import { href, Link, matchPath, NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "../auth";
+import { ModeToggle } from "./ModeToggle";
 import { UserMenu } from "./UserMenu";
 
 export const AppSidebar = memo(function AppSidebar() {

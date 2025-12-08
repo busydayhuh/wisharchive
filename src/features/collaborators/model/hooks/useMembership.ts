@@ -1,6 +1,6 @@
+import team from "@/shared/api/teams";
 import { useMemo } from "react";
 import useSWR from "swr";
-import team from "../../../../shared/model/teams";
 
 async function fetcher(teamId: string, membershipId: string) {
   const response = await team.getMember(teamId, membershipId);

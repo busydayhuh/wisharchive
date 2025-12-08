@@ -1,7 +1,7 @@
-import { cn } from "@/shared/lib/css";
-import { useAppLocation } from "@/shared/lib/react/useAppLocation";
-import { ROUTES } from "@/shared/model/routes";
+import { ROUTES } from "@/shared/config/routes";
+import { useAppLocation } from "@/shared/hooks/useAppLocation";
 import { Button } from "@/shared/ui/kit/button";
+import { cn } from "@/shared/utils/css";
 import { ListPlus, Orbit, Plus, Stars } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";

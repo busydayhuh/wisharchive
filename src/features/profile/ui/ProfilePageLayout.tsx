@@ -1,4 +1,4 @@
-import type { UserDocumentType } from "@/shared/model/types";
+import type { UserDocumentType } from "@/shared/types";
 import type { UpdateUserCache } from "../profile.page";
 import { AccountInfoForm } from "./AccountInfoForm";
 import DeleteAccountSection from "./DeleteAccountSection";

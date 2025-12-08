@@ -1,4 +1,4 @@
-import { ROUTES } from "@/shared/model/routes";
+import { ROUTES } from "@/shared/config/routes";
 import { useCallback, useEffect, useState } from "react";
 import { matchPath, useLocation } from "react-router";
 import type { DashboardType } from "../types";

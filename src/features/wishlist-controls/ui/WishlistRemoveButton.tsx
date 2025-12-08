@@ -1,5 +1,5 @@
-import { cn } from "@/shared/lib/css";
 import { Button } from "@/shared/ui/kit/button";
+import { cn } from "@/shared/utils/css";
 import { X } from "lucide-react";
 
 export default function WishlistRemoveButton({

@@ -1,6 +1,6 @@
-import { cn } from "@/shared/lib/css";
-import { getFallbackColor } from "@/shared/lib/getFallbackColor";
-import { BookedBadge } from "@/shared/ui/Badges";
+import { BookedBadge } from "@/shared/ui/components/Badges";
+import { cn } from "@/shared/utils/css";
+import { getFallbackColor } from "@/shared/utils/getFallbackColor";
 import { AnimatePresence } from "motion/react";
 import { memo } from "react";
 

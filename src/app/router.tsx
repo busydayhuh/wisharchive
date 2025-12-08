@@ -6,9 +6,9 @@ import {
   WishesPageWithLayout,
   WishlistPageWithLayout,
 } from "@/features/dashboard/";
-import { ROUTES } from "@/shared/model/routes.ts";
-import DefaultLoader from "@/shared/ui/DefaultLoader.tsx";
-import { NotFound } from "@/shared/ui/NotFound.tsx";
+import { ROUTES } from "@/shared/config/routes.ts";
+import DefaultLoader from "@/shared/ui/components/DefaultLoader.tsx";
+import { NotFound } from "@/shared/ui/components/NotFound.tsx";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import App from "./App.tsx";
 import { ProtectedRoute, UnauthOnlyRoute } from "./protected-route.tsx";

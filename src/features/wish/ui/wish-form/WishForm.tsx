@@ -1,10 +1,8 @@
-import { wishFormSchema as formSchema } from "@/shared/model/formSchemas";
-import { ROUTES } from "@/shared/model/routes";
-import type {
-  WishDocumentType,
-  WishlistDocumentType,
-} from "@/shared/model/types";
-import { customToast } from "@/shared/ui/CustomToast";
+import { ROUTES } from "@/shared/config/routes";
+import { wishFormSchema as formSchema } from "@/shared/formSchemas";
+import type { WishDocumentType, WishlistDocumentType } from "@/shared/types";
+import { customToast } from "@/shared/ui/components/CustomToast";
+import { SubmitBtn } from "@/shared/ui/components/SubmitBtn";
 import {
   Form,
   FormControl,
@@ -15,14 +13,13 @@ import {
 } from "@/shared/ui/kit/form";
 import { Input } from "@/shared/ui/kit/input";
 import { Textarea } from "@/shared/ui/kit/textarea";
-import { SubmitBtn } from "@/shared/ui/SubmitBtn";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
 import { href, useNavigate } from "react-router";
 import { toast } from "sonner";
 import type z from "zod";
-import DeleteButton from "../../../../shared/ui/DeleteButton";
+import DeleteButton from "../../../../shared/ui/components/DeleteButton";
 import { useWishMutations } from "../../model/hooks/useWishMutations";
 import { CurrencySelect } from "./CurrencySelect";
 import { PrioritySelect } from "./PrioritySelect";

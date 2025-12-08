@@ -1,12 +1,13 @@
-import type { Roles } from "@/features/collaborators";
-import type { WishlistDocumentType } from "@/shared/model/types";
+import type { CollaboratorType, Roles } from "@/features/collaborators";
+import type { WishlistDocumentType } from "@/shared/types";
 import { createContext } from "react";
 
 export type WishlistDialogContextType = {
   openDialog: (
     action: "create" | "edit",
     wishlist?: WishlistDocumentType,
-    roles?: Roles
+    roles?: Roles,
+    collaborators?: CollaboratorType[]
   ) => void;
   closeDialog: () => void;
 };

@@ -1,4 +1,7 @@
-import { notifyError, notifySuccessSimple } from "@/shared/ui/CustomToast";
+import {
+  notifyError,
+  notifySuccessSimple,
+} from "@/shared/entities/errors/notify";
 import { useState } from "react";
 import useMembershipMutations from "../../model/hooks/useMembershipMutations";
 import { useTeamCollaborators } from "../../model/hooks/useTeamCollaborators";

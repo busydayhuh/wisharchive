@@ -1,7 +1,7 @@
-import type { WishlistDocumentType } from "@/shared/model/types";
-import { type OptimisticUpdater } from "@/shared/model/useOptimisticMutation";
-import { useUpdateSWRCache } from "@/shared/model/useUpdateSWRCache";
-import { notifyError } from "@/shared/ui/CustomToast";
+import { notifyError } from "@/shared/entities/errors/notify";
+import { type OptimisticUpdater } from "@/shared/hooks/useOptimisticMutation";
+import { useUpdateSWRCache } from "@/shared/hooks/useUpdateSWRCache";
+import type { WishlistDocumentType } from "@/shared/types";
 import { useCallback } from "react";
 import { useWishlist } from "./useWishlist";
 import { useWishlistMutations } from "./useWishlistMutations";

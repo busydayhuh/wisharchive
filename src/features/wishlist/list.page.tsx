@@ -1,5 +1,5 @@
-import type { WishlistDocumentType } from "@/shared/model/types";
-import PageBoundary from "@/shared/ui/PageBoundary";
+import type { WishlistDocumentType } from "@/shared/types";
+import PageBoundary from "@/shared/ui/components/PageBoundary";
 import { useParams } from "react-router";
 import { useAuth } from "../auth";
 import { ToolbarProvider, useAccess } from "../dashboard";

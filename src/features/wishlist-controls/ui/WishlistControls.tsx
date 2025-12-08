@@ -1,11 +1,8 @@
 import type { AccessRoles } from "@/features/collaborators";
-import { useIsMobile } from "@/shared/lib/react/useIsMobile";
-import { ROUTES } from "@/shared/model/routes";
-import type {
-  WishDocumentType,
-  WishlistDocumentType,
-} from "@/shared/model/types";
-import { WishlistBadge } from "@/shared/ui/Badges";
+import { ROUTES } from "@/shared/config/routes";
+import { useIsMobile } from "@/shared/hooks/useIsMobile";
+import type { WishDocumentType, WishlistDocumentType } from "@/shared/types";
+import { WishlistBadge } from "@/shared/ui/components/Badges";
 import { useMatch } from "react-router";
 import useWishlistControls from "../model/useWishlistControls";
 import { WishlistChanger } from "./WishlistChanger";

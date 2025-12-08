@@ -1,13 +1,13 @@
-import db from "@/shared/model/databases";
-import { handleError } from "@/shared/model/errors/handleError";
-import team from "@/shared/model/teams";
-import type { UserDocumentType } from "@/shared/model/types";
+import db from "@/shared/api/databases";
+import team from "@/shared/api/teams";
+import { handleError } from "@/shared/entities/errors/handleError";
 import {
   useOptimisticMutation,
   type OptimisticUpdater,
-} from "@/shared/model/useOptimisticMutation";
-import { useRevalidateSWR } from "@/shared/model/useRevalidateSWR";
-import { useUpdateSWRCache } from "@/shared/model/useUpdateSWRCache";
+} from "@/shared/hooks/useOptimisticMutation";
+import { useRevalidateSWR } from "@/shared/hooks/useRevalidateSWR";
+import { useUpdateSWRCache } from "@/shared/hooks/useUpdateSWRCache";
+import type { UserDocumentType } from "@/shared/types";
 import { ID, Permission, Role, type Models } from "appwrite";
 import { useCallback } from "react";
 

@@ -1,7 +1,7 @@
 import type { AccessRoles, CollaboratorType } from "@/features/collaborators";
 import { useWishlistBase, useWishlistDialog } from "@/features/wishlist";
-import { useAppLocation } from "@/shared/lib/react/useAppLocation";
-import type { LinkParams, WishlistDocumentType } from "@/shared/model/types";
+import { useAppLocation } from "@/shared/hooks/useAppLocation";
+import type { LinkParams, WishlistDocumentType } from "@/shared/types";
 import { useRoles } from "../store/access/useRoles";
 
 export type WishlistcardMeta = {
@@ -23,7 +23,8 @@ export function useWishlistcardMeta(
   const roles = useRoles();
 
   const { openDialog } = useWishlistDialog();
-  const openWishlistEditor = () => openDialog("edit", wishlist, roles);
+  const openWishlistEditor = () =>
+    openDialog("edit", wishlist, roles, base.collaborators);
 
   const { page } = useAppLocation();
 

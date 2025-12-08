@@ -4,8 +4,7 @@ import { cva } from "class-variance-authority";
 import { ChevronLeft, ChevronRight, Menu } from "lucide-react";
 import * as React from "react";
 
-import { cn } from "@/shared/lib/css";
-import { useIsMobile } from "@/shared/lib/react/useIsMobile";
+import { useIsMobile } from "@/shared/hooks/useIsMobile";
 import { Button } from "@/shared/ui/kit/button";
 import { Input } from "@/shared/ui/kit/input";
 import { Separator } from "@/shared/ui/kit/separator";
@@ -23,6 +22,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/shared/ui/kit/tooltip";
+import { cn } from "@/shared/utils/css";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;

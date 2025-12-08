@@ -1,5 +1,5 @@
-import { UserAvatar } from "@/shared/ui/UserAvatar";
-import type { Category, AnyDocument } from "../GlobalSearch";
+import { UserAvatar } from "@/shared/ui/components/UserAvatar";
+import type { AnyDocument, Category } from "../GlobalSearch";
 
 export function Media({
   category,

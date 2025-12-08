@@ -1,10 +1,8 @@
-import type { Roles } from "@/features/collaborators";
-import { wishlistFormSchema as formSchema } from "@/shared/model/formSchemas";
-import type {
-  UserDocumentType,
-  WishlistDocumentType,
-} from "@/shared/model/types";
-import { useCurrentUser } from "@/shared/model/user/useCurrentUser";
+import type { CollaboratorType, Roles } from "@/features/collaborators";
+import { wishlistFormSchema as formSchema } from "@/shared/formSchemas";
+import { useCurrentUser } from "@/shared/hooks/user/useCurrentUser";
+import type { UserDocumentType, WishlistDocumentType } from "@/shared/types";
+import { SubmitBtn } from "@/shared/ui/components/SubmitBtn";
 import { Button } from "@/shared/ui/kit/button";
 import {
   Dialog,
@@ -16,7 +14,6 @@ import {
   DialogTitle,
 } from "@/shared/ui/kit/dialog";
 import { Form } from "@/shared/ui/kit/form";
-import { SubmitBtn } from "@/shared/ui/SubmitBtn";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -41,6 +38,7 @@ export type WishlistDialogPropsType = React.ComponentProps<"button"> & {
   action: "edit" | "create";
   wishlist?: WishlistDocumentType | null;
   roles?: Roles;
+  collaborators?: CollaboratorType[];
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 };
@@ -49,6 +47,7 @@ export function WishlistDialog({
   action = "edit",
   wishlist,
   roles,
+  collaborators,
   isOpen,
   setIsOpen,
 }: WishlistDialogPropsType) {
@@ -112,16 +111,14 @@ export function WishlistDialog({
             </DialogHeader>
 
             <WishlistFormFields form={form} roles={roles} />
-            {wishlist && (
+            {wishlist && collaborators && (
               <>
                 <p className="inline-block mt-5 mb-2 font-medium text-muted-foreground text-sm">
                   Соавторы списка
                 </p>
                 <Collaborators
                   wishlistId={wishlist.$id}
-                  editors={wishlist.editorsIds}
-                  readers={wishlist.readersIds}
-                  ownerId={wishlist.ownerId}
+                  collaborators={collaborators}
                   isPrivate={form?.watch("isPrivate") ?? wishlist.isPrivate}
                   isOwner={roles?.isWishlistOwner ?? false}
                 />

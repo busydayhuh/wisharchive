@@ -1,11 +1,11 @@
-import db from "@/shared/model/databases";
-import { handleError } from "@/shared/model/errors/handleError";
-import type { WishlistDocumentType } from "@/shared/model/types";
+import db from "@/shared/api/databases";
+import { handleError } from "@/shared/entities/errors/handleError";
 import {
   useOptimisticMutation,
   type OptimisticUpdater,
-} from "@/shared/model/useOptimisticMutation";
-import { useRevalidateSWR } from "@/shared/model/useRevalidateSWR";
+} from "@/shared/hooks/useOptimisticMutation";
+import { useRevalidateSWR } from "@/shared/hooks/useRevalidateSWR";
+import type { WishlistDocumentType } from "@/shared/types";
 import { ID, type Models } from "appwrite";
 import { useCallback } from "react";
 

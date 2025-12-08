@@ -1,5 +1,5 @@
 import type { WishRoles } from "@/features/collaborators";
-import type { WishDocumentType } from "@/shared/model/types";
+import type { WishDocumentType } from "@/shared/types";
 import { memo } from "react";
 import { useWishNavigation } from "../../model/hooks/useWishNavigation";
 import { WishDetails } from "./WishDetails";

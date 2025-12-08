@@ -1,11 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
-import { appwriteService } from "@/shared/model/appwrite";
-import db from "@/shared/model/databases";
+import { appwriteService } from "@/shared/api/appwrite";
+import db from "@/shared/api/databases";
 import {
   handleError,
   type ResponseType,
-} from "@/shared/model/errors/handleError";
-import { useRevalidateSWR } from "@/shared/model/useRevalidateSWR";
+} from "@/shared/entities/errors/handleError";
+import { useRevalidateSWR } from "@/shared/hooks/useRevalidateSWR";
 import { type Models } from "appwrite";
 import {
   createContext,

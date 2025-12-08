@@ -1,6 +1,6 @@
-import { cn } from "@/shared/lib/css";
-import { useIsMobile } from "@/shared/lib/react/useIsMobile";
-import { RoleBadge } from "@/shared/ui/Badges";
+import { useIsMobile } from "@/shared/hooks/useIsMobile";
+import { RoleBadge } from "@/shared/ui/components/Badges";
+import { AVATAR_SIZES, UserAvatar } from "@/shared/ui/components/UserAvatar";
 import {
   HoverCard,
   HoverCardContent,
@@ -14,7 +14,7 @@ import {
   ItemTitle,
 } from "@/shared/ui/kit/item";
 import { Popover, PopoverContent } from "@/shared/ui/kit/popover";
-import { AVATAR_SIZES, UserAvatar } from "@/shared/ui/UserAvatar";
+import { cn } from "@/shared/utils/css";
 import { PopoverTrigger } from "@radix-ui/react-popover";
 import { Frown } from "lucide-react";
 import { memo } from "react";

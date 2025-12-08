@@ -1,11 +1,11 @@
 import type { AccessRoles } from "@/features/collaborators";
 import { useQuickActions } from "@/features/dashboard/";
-import { useConfirmationDialog } from "@/shared/model/confirmation-dialog/useConfirmationDialog";
-import type {
-  WishDocumentType,
-  WishlistDocumentType,
-} from "@/shared/model/types";
-import { notifyError, notifySuccessExpanded } from "@/shared/ui/CustomToast";
+import {
+  notifyError,
+  notifySuccessExpanded,
+} from "@/shared/entities/errors/notify";
+import { useConfirmationDialog } from "@/shared/store/confirmation-dialog/useConfirmationDialog";
+import type { WishDocumentType, WishlistDocumentType } from "@/shared/types";
 import { useCallback } from "react";
 
 export default function useWishlistControls(

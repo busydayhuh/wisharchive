@@ -1,9 +1,8 @@
 import { useQuickActionItems } from "@/features/dashboard/model/hooks/useQuickActionItems";
-import { cn } from "@/shared/lib/css";
-import { useIsMobile } from "@/shared/lib/react/useIsMobile";
-import { type Action } from "@/shared/model/confirmation-dialog/ConfirmationDialogContext";
-import { useConfirmationDialog } from "@/shared/model/confirmation-dialog/useConfirmationDialog";
-import { IconBtnWithTooltip } from "@/shared/ui/IconBtnWithTooltip";
+import { useIsMobile } from "@/shared/hooks/useIsMobile";
+import { type Action } from "@/shared/store/confirmation-dialog/ConfirmationDialogProvider";
+import { useConfirmationDialog } from "@/shared/store/confirmation-dialog/useConfirmationDialog";
+import { IconBtnWithTooltip } from "@/shared/ui/components/IconBtnWithTooltip";
 import { Button } from "@/shared/ui/kit/button";
 import {
   DropdownMenu,
@@ -12,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/shared/ui/kit/dropdown-menu";
+import { cn } from "@/shared/utils/css";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Ellipsis } from "lucide-react";
 import { type JSX } from "react";

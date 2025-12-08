@@ -1,5 +1,7 @@
-import { userFormSchema as formSchema } from "@/shared/model/formSchemas";
-import type { Setter, UserDocumentType } from "@/shared/model/types";
+import { userFormSchema as formSchema } from "@/shared/formSchemas";
+import type { Setter, UserDocumentType } from "@/shared/types";
+import { ResponsiveSelect } from "@/shared/ui/components/ResponsiveSelect";
+import { SubmitBtn } from "@/shared/ui/components/SubmitBtn";
 import { Button } from "@/shared/ui/kit/button";
 import { Calendar } from "@/shared/ui/kit/calendar";
 import {
@@ -18,8 +20,6 @@ import {
   PopoverTrigger,
 } from "@/shared/ui/kit/popover";
 import { Textarea } from "@/shared/ui/kit/textarea";
-import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
-import { SubmitBtn } from "@/shared/ui/SubmitBtn";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ru } from "date-fns/locale";
 import { ChevronDownIcon } from "lucide-react";

@@ -1,8 +1,8 @@
 import type { AccessRoles } from "@/features/collaborators";
 import { useWishNavigation } from "@/features/wish";
-import { useAppLocation } from "@/shared/lib/react/useAppLocation";
-import { useIsMobile } from "@/shared/lib/react/useIsMobile";
-import type { LinkParams, WishDocumentType } from "@/shared/model/types";
+import { useAppLocation } from "@/shared/hooks/useAppLocation";
+import { useIsMobile } from "@/shared/hooks/useIsMobile";
+import type { LinkParams, WishDocumentType } from "@/shared/types";
 import { useRoles } from "../store/access/useRoles";
 
 export type WishcardMeta = {

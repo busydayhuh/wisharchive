@@ -1,7 +1,7 @@
 import { useAuth } from "@/features/auth";
 import { GlobalSearchDialog } from "@/features/global-search";
-import { useAppLocation } from "@/shared/lib/react/useAppLocation";
-import { useIsMobile } from "@/shared/lib/react/useIsMobile";
+import { useAppLocation } from "@/shared/hooks/useAppLocation";
+import { useIsMobile } from "@/shared/hooks/useIsMobile";
 import { Button } from "@/shared/ui/kit/button";
 import { memo } from "react";
 import Navigation from "../toolbar/Navigation";

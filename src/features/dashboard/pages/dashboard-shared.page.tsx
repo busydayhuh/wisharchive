@@ -1,4 +1,4 @@
-import { useInfiniteScroll } from "@/shared/lib/react/useInfiniteScroll";
+import { useInfiniteScroll } from "@/shared/hooks/useInfiniteScroll";
 import { useMemo } from "react";
 import { useCollabWishlists } from "../model/hooks/useCollabWishlists";
 import { useDashboard } from "../model/store/dashboard/useDashboard";

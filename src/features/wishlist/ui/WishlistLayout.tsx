@@ -1,6 +1,6 @@
 import type { AccessRoles } from "@/features/collaborators";
 import { DashboardLayout } from "@/features/dashboard";
-import type { WishlistDocumentType } from "@/shared/model/types";
+import type { WishlistDocumentType } from "@/shared/types";
 import { WishlistContent } from "./WishlistContent";
 import { WishlistHeader } from "./WishlistHeader";
 

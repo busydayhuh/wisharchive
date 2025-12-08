@@ -1,5 +1,5 @@
-import { cn } from "@/shared/lib/css";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
+import { cn } from "@/shared/utils/css";
 import type { Category } from "../GlobalSearch";
 
 const ITEM_SIZES = {

@@ -3,7 +3,7 @@ import type {
   QueryFilters as WishlistFilters,
 } from "@/features/wishlist";
 import { useWishlists } from "@/features/wishlist";
-import team from "@/shared/model/teams";
+import team from "@/shared/api/teams";
 import type { Models } from "appwrite";
 import useSWR from "swr";
 

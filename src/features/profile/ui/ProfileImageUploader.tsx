@@ -1,7 +1,7 @@
-import { cn } from "@/shared/lib/css";
-import useImageDrop from "@/shared/model/useImageDrop";
+import useImageDrop from "@/shared/hooks/useImageDrop";
+import { UserAvatar } from "@/shared/ui/components/UserAvatar";
 import { Button } from "@/shared/ui/kit/button";
-import { UserAvatar } from "@/shared/ui/UserAvatar";
+import { cn } from "@/shared/utils/css";
 import {
   Camera,
   Check,

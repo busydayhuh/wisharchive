@@ -1,6 +1,6 @@
-import type { Roles } from "@/features/collaborators";
+import type { CollaboratorType, Roles } from "@/features/collaborators";
 import WishlistDialog from "@/features/wishlist/ui/wishlist-dialog/WishlistDialog";
-import type { WishlistDocumentType } from "@/shared/model/types";
+import type { WishlistDocumentType } from "@/shared/types";
 import type { ReactNode } from "react";
 import { useCallback, useState } from "react";
 import {
@@ -12,6 +12,7 @@ type DialogState = {
   wishlist: WishlistDocumentType | null;
   action: "create" | "edit" | null;
   roles?: Roles;
+  collaborators?: CollaboratorType[];
 };
 
 export function WishlistDialogProvider({ children }: { children: ReactNode }) {
@@ -21,11 +22,12 @@ export function WishlistDialogProvider({ children }: { children: ReactNode }) {
   });
 
   const openDialog: WishlistDialogContextType["openDialog"] = useCallback(
-    (action, wishlist, roles) => {
+    (action, wishlist, roles, collaborators) => {
       setDialogState({
         action,
         wishlist: wishlist ?? null,
         roles,
+        collaborators,
       });
     },
     []
@@ -44,6 +46,7 @@ export function WishlistDialogProvider({ children }: { children: ReactNode }) {
           action={dialogState.action}
           wishlist={dialogState.wishlist}
           roles={dialogState.roles}
+          collaborators={dialogState.collaborators}
           isOpen={true}
           setIsOpen={(open) => {
             if (!open) closeDialog();

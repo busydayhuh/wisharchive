@@ -1,4 +1,5 @@
-import { ROUTES } from "@/shared/model/routes";
+import { ROUTES } from "@/shared/config/routes";
+import { SubmitBtn } from "@/shared/ui/components/SubmitBtn";
 import {
   Form,
   FormControl,
@@ -8,7 +9,6 @@ import {
   FormMessage,
 } from "@/shared/ui/kit/form";
 import { Input } from "@/shared/ui/kit/input";
-import { SubmitBtn } from "@/shared/ui/SubmitBtn";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { href, useNavigate } from "react-router-dom";

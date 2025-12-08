@@ -1,11 +1,14 @@
 import { Card } from "@/shared/ui/kit/card";
 
 import { useWishlist } from "@/features/wishlist";
-import { handleError } from "@/shared/model/errors/handleError";
-import { ROUTES } from "@/shared/model/routes";
-import team from "@/shared/model/teams";
-import { customToast, notifyError } from "@/shared/ui/CustomToast";
-import { ErrorMessage } from "@/shared/ui/ErrorMessage";
+import team from "@/shared/api/teams";
+import { ROUTES } from "@/shared/config/routes";
+import { handleError } from "@/shared/entities/errors/handleError";
+import {
+  notifyError,
+  notifySuccessExpanded,
+} from "@/shared/entities/errors/notify";
+import { ErrorMessage } from "@/shared/ui/components/ErrorMessage";
 import { Loader2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { href, useSearchParams } from "react-router";
@@ -51,11 +54,7 @@ function InvitationPage() {
         { wlTitle: params.teamName }
       );
 
-      customToast({
-        title: "Приглашение принято",
-        description: params.teamName,
-        icon: wlImageURL,
-      });
+      notifySuccessExpanded("Приглашение принято", params.teamName, wlImageURL);
     } catch (error) {
       const { errorMessage } = handleError(error);
       notifyError("Не удалось принять приглашение", errorMessage);

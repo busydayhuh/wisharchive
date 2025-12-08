@@ -1,5 +1,5 @@
-import db from "@/shared/model/databases";
-import type { WishlistDocumentType } from "@/shared/model/types";
+import db from "@/shared/api/databases";
+import type { WishlistDocumentType } from "@/shared/types";
 import useSWR from "swr";
 
 // Возвращает документ с информацией о конкретном вишлисте

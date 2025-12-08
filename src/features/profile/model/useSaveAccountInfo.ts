@@ -1,7 +1,4 @@
-import {
-  accountInfoFormSchema,
-  userFormSchema,
-} from "@/shared/model/formSchemas";
+import { accountInfoFormSchema, userFormSchema } from "@/shared/formSchemas";
 import { useCallback } from "react";
 import type { UseFormReturn } from "react-hook-form";
 import { toast } from "sonner";

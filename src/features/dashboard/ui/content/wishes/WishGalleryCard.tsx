@@ -1,10 +1,10 @@
 import { useWishcardMeta } from "@/features/dashboard/model/hooks/useWishcardMeta";
 import { FormattedPrice } from "@/features/wish";
 import { WishlistControls } from "@/features/wishlist-controls";
-import { cn } from "@/shared/lib/css";
-import type { WishDocumentType } from "@/shared/model/types";
-import { PriorityBadge } from "@/shared/ui/Badges";
-import OwnerAvatar from "@/shared/ui/OwnerAvatar";
+import type { WishDocumentType } from "@/shared/types";
+import { PriorityBadge } from "@/shared/ui/components/Badges";
+import OwnerAvatar from "@/shared/ui/components/OwnerAvatar";
+import { cn } from "@/shared/utils/css";
 import { Link } from "react-router";
 import { WishGalleryCover } from "./WishGalleryCover";
 

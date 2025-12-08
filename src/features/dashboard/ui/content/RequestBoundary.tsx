@@ -1,6 +1,6 @@
 import { useWishlistDialog } from "@/features/wishlist";
-import { ROUTES } from "@/shared/model/routes";
-import { ErrorMessage } from "@/shared/ui/ErrorMessage";
+import { ROUTES } from "@/shared/config/routes";
+import { ErrorMessage } from "@/shared/ui/components/ErrorMessage";
 import type { Models } from "appwrite";
 import { useNavigate } from "react-router";
 import { useDashboard } from "../../model/store/dashboard/useDashboard";

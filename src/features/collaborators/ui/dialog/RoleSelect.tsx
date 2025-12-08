@@ -1,4 +1,4 @@
-import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
+import { ResponsiveSelect } from "@/shared/ui/components/ResponsiveSelect";
 import { Eye, Pencil } from "lucide-react";
 import { useCollabManager } from "../../model/store/collab-manager/useCollabManager";
 

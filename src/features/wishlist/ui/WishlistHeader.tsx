@@ -1,16 +1,16 @@
 import type { Roles } from "@/features/collaborators";
-import { cn } from "@/shared/lib/css";
-import { useIsMobile } from "@/shared/lib/react/useIsMobile";
-import type { WishlistDocumentType } from "@/shared/model/types";
+import { useIsMobile } from "@/shared/hooks/useIsMobile";
+import type { WishlistDocumentType } from "@/shared/types";
+import ShareOnSocials from "@/shared/ui/components/ShareOnSocials";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/shared/ui/kit/accordion";
-import ShareOnSocials from "@/shared/ui/ShareOnSocials";
-import { useWishlistBase } from "../model/useWishlistBase";
-import { useWishlistDialog } from "../model/useWishlistDialog";
+import { cn } from "@/shared/utils/css";
+import { useWishlistBase } from "../model/hooks/useWishlistBase";
+import { useWishlistDialog } from "../model/store/wishlist-dialog/useWishlistDialog";
 import { BookmarkButton } from "./actions/BookmarkButton";
 import { EditWishlistButton } from "./actions/EditWishlistButton";
 import { Collaborators } from "./Collaborators";
@@ -34,7 +34,8 @@ export function WishlistHeader({
   const canEdit = userRoles?.isEditor || userRoles?.isWishlistOwner;
 
   const { openDialog } = useWishlistDialog();
-  const openWishlistEditor = () => openDialog("edit", wishlist, userRoles);
+  const openWishlistEditor = () =>
+    openDialog("edit", wishlist, userRoles, collaborators);
 
   if (isMobile)
     return (

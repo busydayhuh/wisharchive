@@ -1,11 +1,11 @@
-import type { wishFormSchema } from "@/shared/model/formSchemas";
-import type { WishDocumentType } from "@/shared/model/types";
-import ConfirmationDialog from "@/shared/ui/ConfirmationDialog";
+import type { wishFormSchema } from "@/shared/formSchemas";
+import type { WishDocumentType } from "@/shared/types";
+import ConfirmationDialog from "@/shared/ui/components/ConfirmationDialog";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { useBlocker } from "react-router";
 import type z from "zod";
-import { uploadToStorage } from "../../../shared/model/uploadToStorage";
+import { uploadToStorage } from "../../../shared/api/uploadToStorage";
 import BackButton from "./actions/BackButton";
 import { WishForm } from "./wish-form/WishForm";
 import WishImageUpload from "./WishImageUpload";

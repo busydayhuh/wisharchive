@@ -1,6 +1,6 @@
 import { ContentLayout, useToolbar } from "@/features/dashboard";
 import { useWishes } from "@/features/wish";
-import { useInfiniteScroll } from "@/shared/lib/react/useInfiniteScroll";
+import { useInfiniteScroll } from "@/shared/hooks/useInfiniteScroll";
 
 export function WishlistContent({ wishlistId }: { wishlistId: string }) {
   const { searchString, toolbarState } = useToolbar();

@@ -1,9 +1,9 @@
 import { CollaboratorsGroup } from "@/features/collaborators";
 import { useWishlistcardMeta } from "@/features/dashboard/model/hooks/useWishlistcardMeta";
 import { BookmarkButton, EditWishlistButton } from "@/features/wishlist";
-import { useIsMobile } from "@/shared/lib/react/useIsMobile";
-import type { WishlistDocumentType } from "@/shared/model/types";
-import { RoleBadge } from "@/shared/ui/Badges";
+import { useIsMobile } from "@/shared/hooks/useIsMobile";
+import type { WishlistDocumentType } from "@/shared/types";
+import { RoleBadge } from "@/shared/ui/components/Badges";
 import { EyeClosed } from "lucide-react";
 import { Link } from "react-router-dom";
 import { WishlistTiles } from "./WishlistTiles";

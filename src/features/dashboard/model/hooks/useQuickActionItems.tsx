@@ -1,4 +1,7 @@
-import { notifyError, notifySuccessExpanded } from "@/shared/ui/CustomToast";
+import {
+  notifyError,
+  notifySuccessExpanded,
+} from "@/shared/entities/errors/notify";
 import { Archive, ArchiveRestore, Edit2, Trash2 } from "lucide-react";
 import type { MenuItem } from "../../ui/content/wishes/QuickActions";
 import { useQuickActions } from "./useQuickActions";

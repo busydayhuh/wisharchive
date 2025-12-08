@@ -1,0 +1,61 @@
+import { useConfirmationDialog } from "@/shared/store/confirmation-dialog/useConfirmationDialog";
+import { IconBtnWithTooltip } from "@/shared/ui/components/IconBtnWithTooltip";
+import { Button } from "@/shared/ui/kit/button";
+import { cn } from "@/shared/utils/css";
+import { Trash2 } from "lucide-react";
+
+export function DeleteButton({
+  variant = "button",
+  action,
+  wishTitle,
+  buttonText = "Удалить",
+  className,
+}: {
+  variant: "button" | "quick-action";
+  wishTitle: string;
+  action: () => void;
+  buttonText?: string;
+} & React.ComponentProps<"div">) {
+  const { openConfDialog } = useConfirmationDialog();
+
+  const handleClick = () =>
+    openConfDialog({
+      action: "delete",
+      onConfirm: async () => action(),
+      name: wishTitle,
+    });
+
+  const iconBtn = (
+    <IconBtnWithTooltip tooltipText="Удалить">
+      <Button
+        onClick={handleClick}
+        variant="secondary"
+        size="icon"
+        className={cn(className)}
+        aria-label="Удалить"
+      >
+        <Trash2 />
+      </Button>
+    </IconBtnWithTooltip>
+  );
+
+  const extendedBtn = (
+    <Button
+      type="button"
+      aria-label="Удалить"
+      onClick={handleClick}
+      size="lg"
+      className={cn(
+        "bg-muted md:bg-transparent hover:bg-transparent shadow-none h-14 md:h-12 text-foreground hover:text-destructive",
+        className
+      )}
+    >
+      <Trash2 />
+      {buttonText}
+    </Button>
+  );
+
+  return variant === "button" ? extendedBtn : iconBtn;
+}
+
+export default DeleteButton;

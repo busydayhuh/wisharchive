@@ -1,5 +1,5 @@
-import { ROUTES } from "@/shared/model/routes";
-import type { LinkParams } from "@/shared/model/types";
+import { ROUTES } from "@/shared/config/routes";
+import type { LinkParams } from "@/shared/types";
 import { href } from "react-router-dom";
 import { useRoute } from "./useRoute";
 

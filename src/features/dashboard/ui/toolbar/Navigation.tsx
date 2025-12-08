@@ -1,5 +1,5 @@
-import { cn } from "@/shared/lib/css";
-import { ROUTES } from "@/shared/model/routes";
+import { ROUTES } from "@/shared/config/routes";
+import { cn } from "@/shared/utils/css";
 import { memo } from "react";
 import { href, NavLink, useParams } from "react-router";
 

@@ -1,6 +1,6 @@
 import { useAuth } from "@/features/auth";
 import { useRoute } from "@/features/breadcrumbs";
-import { ROUTES } from "@/shared/model/routes";
+import { ROUTES } from "@/shared/config/routes";
 import { useMemo } from "react";
 import { matchPath } from "react-router";
 import type { DashboardType } from "../types";

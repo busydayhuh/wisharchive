@@ -1,8 +1,8 @@
 import type { WishRoles } from "@/features/collaborators";
 import { WishlistControls } from "@/features/wishlist-controls";
-import type { WishDocumentType } from "@/shared/model/types";
-import { PriorityBadge, ShopBadge } from "@/shared/ui/Badges";
-import ExpandableText from "@/shared/ui/ExpandableText";
+import type { WishDocumentType } from "@/shared/types";
+import { PriorityBadge, ShopBadge } from "@/shared/ui/components/Badges";
+import ExpandableText from "@/shared/ui/components/ExpandableText";
 import { memo } from "react";
 
 type WishDetailsProps = {

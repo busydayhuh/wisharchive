@@ -1,4 +1,4 @@
-import { useLocalStorage } from "@/shared/lib/react/useLocalStorage";
+import { useLocalStorage } from "@/shared/hooks/useLocalStorage";
 import { useState, type ReactNode } from "react";
 import type { DashboardType, ToolbarState } from "../../types";
 import { ToolbarContext } from "./Context";

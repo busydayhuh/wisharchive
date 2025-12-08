@@ -1,5 +1,5 @@
-import type { Setter } from "@/shared/model/types";
-import Searchbar from "@/shared/ui/Searchbar";
+import type { Setter } from "@/shared/types";
+import Searchbar from "@/shared/ui/components/Searchbar";
 
 export function CollaboratorSearch({
   searchString,

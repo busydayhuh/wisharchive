@@ -1,8 +1,8 @@
-import type { wishFormSchema } from "@/shared/model/formSchemas";
-import { ROUTES } from "@/shared/model/routes";
-import { useCurrentUser } from "@/shared/model/user/useCurrentUser";
-import { customToast } from "@/shared/ui/CustomToast";
-import { ErrorMessage } from "@/shared/ui/ErrorMessage";
+import { ROUTES } from "@/shared/config/routes";
+import type { wishFormSchema } from "@/shared/formSchemas";
+import { useCurrentUser } from "@/shared/hooks/user/useCurrentUser";
+import { customToast } from "@/shared/ui/components/CustomToast";
+import { ErrorMessage } from "@/shared/ui/components/ErrorMessage";
 import { href } from "react-router";
 import { toast } from "sonner";
 import type z from "zod";
@@ -59,11 +59,8 @@ function WishAddPage() {
   if (error)
     return (
       <ErrorMessage
-        variant="default-error"
-        message="Что-то пошло не так"
-        description="Повторите попытку позже"
+        variant="default"
         withButton={isLoggedIn}
-        buttonText="К моим желаниям"
         action={() =>
           navigateWithState(href(ROUTES.WISHES, { userId: authUser!.$id }))
         }

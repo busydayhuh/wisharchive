@@ -1,5 +1,5 @@
-import type { wishFormSchema } from "@/shared/model/formSchemas";
-import type { WishlistDocumentType } from "@/shared/model/types";
+import type { wishFormSchema } from "@/shared/formSchemas";
+import type { WishlistDocumentType } from "@/shared/types";
 import type z from "zod";
 
 export function normalizeWishData(

@@ -1,4 +1,4 @@
-import type { WishlistDocumentType } from "@/shared/model/types";
+import type { WishlistDocumentType } from "@/shared/types";
 import type { Roles, WishRoles } from "./types";
 
 export function resolveWishlistRoles(

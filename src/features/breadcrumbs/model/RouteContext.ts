@@ -1,4 +1,4 @@
-import type { LinkParams } from "@/shared/model/types";
+import type { LinkParams } from "@/shared/types";
 import { createContext } from "react";
 import type { Location, Params } from "react-router";
 

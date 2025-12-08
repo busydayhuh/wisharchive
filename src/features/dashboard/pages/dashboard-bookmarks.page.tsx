@@ -1,5 +1,5 @@
 import { useWishlists } from "@/features/wishlist";
-import { useInfiniteScroll } from "@/shared/lib/react/useInfiniteScroll";
+import { useInfiniteScroll } from "@/shared/hooks/useInfiniteScroll";
 import { useDashboard } from "../model/store/dashboard/useDashboard";
 import { useToolbar } from "../model/store/toolbar/useToolbar";
 import { wrapDashboardPage } from "../model/wrapDashboardPage";

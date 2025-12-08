@@ -1,5 +1,5 @@
-import { cn } from "@/shared/lib/css";
-import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
+import { ResponsiveSelect } from "@/shared/ui/components/ResponsiveSelect";
+import { cn } from "@/shared/utils/css";
 import { ChevronDown } from "lucide-react";
 import { useToolbar } from "../../model/store/toolbar/useToolbar";
 import { toolbarConfigs } from "../../model/toolbarConfig";

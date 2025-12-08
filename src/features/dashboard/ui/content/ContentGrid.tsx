@@ -1,4 +1,4 @@
-import { cn } from "@/shared/lib/css";
+import { cn } from "@/shared/utils/css";
 import React from "react";
 
 export function ContentGrid({

@@ -1,6 +1,6 @@
-import { cn } from "@/shared/lib/css";
-import type { Setter } from "@/shared/model/types";
+import type { Setter } from "@/shared/types";
 import { Button } from "@/shared/ui/kit/button";
+import { cn } from "@/shared/utils/css";
 import imageCompression from "browser-image-compression";
 import { CircleX, ImageDown, Loader2, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";

@@ -1,9 +1,12 @@
 import { useQuickActions } from "@/features/dashboard";
-import { cn } from "@/shared/lib/css";
-import { useConfirmationDialog } from "@/shared/model/confirmation-dialog/useConfirmationDialog";
-import { notifyError, notifySuccessExpanded } from "@/shared/ui/CustomToast";
-import { IconBtnWithTooltip } from "@/shared/ui/IconBtnWithTooltip";
+import {
+  notifyError,
+  notifySuccessExpanded,
+} from "@/shared/entities/errors/notify";
+import { useConfirmationDialog } from "@/shared/store/confirmation-dialog/useConfirmationDialog";
+import { IconBtnWithTooltip } from "@/shared/ui/components/IconBtnWithTooltip";
 import { Toggle } from "@/shared/ui/kit/toggle";
+import { cn } from "@/shared/utils/css";
 import { cva } from "class-variance-authority";
 import { LockKeyhole, LockKeyholeOpen } from "lucide-react";
 import { memo } from "react";

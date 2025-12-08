@@ -1,5 +1,5 @@
-import { CURRENCY } from "@/shared/lib/currency";
-import { ResponsiveSelect } from "@/shared/ui/ResponsiveSelect";
+import { ResponsiveSelect } from "@/shared/ui/components/ResponsiveSelect";
+import { CURRENCY } from "@/shared/utils/currencyList";
 import { ChevronDown } from "lucide-react";
 import { useMemo } from "react";
 
