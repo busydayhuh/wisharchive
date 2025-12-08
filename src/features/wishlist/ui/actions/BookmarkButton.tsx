@@ -1,3 +1,4 @@
+import { useProtectedAction } from "@/shared/hooks/useProtectedAction";
 import { Toggle } from "@/shared/ui/kit/toggle";
 import { cn } from "@/shared/utils/css";
 import { Bookmark } from "lucide-react";
@@ -12,6 +13,8 @@ export function BookmarkButton({
   onPressed: (pressed: boolean) => void;
   variant?: "gallery" | "table" | "page";
 }) {
+  const protectedAction = useProtectedAction();
+
   return (
     <Toggle
       className={cn(
@@ -24,7 +27,7 @@ export function BookmarkButton({
         className
       )}
       defaultPressed={isFavorite}
-      onPressedChange={onPressed}
+      onPressedChange={(pressed) => protectedAction(() => onPressed(pressed))}
     >
       <Bookmark
         className={cn(

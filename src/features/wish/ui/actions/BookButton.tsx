@@ -3,6 +3,7 @@ import {
   notifyError,
   notifySuccessExpanded,
 } from "@/shared/entities/errors/notify";
+import { useProtectedAction } from "@/shared/hooks/useProtectedAction";
 import { useConfirmationDialog } from "@/shared/store/confirmation-dialog/useConfirmationDialog";
 import { IconBtnWithTooltip } from "@/shared/ui/components/IconBtnWithTooltip";
 import { Toggle } from "@/shared/ui/kit/toggle";
@@ -44,6 +45,7 @@ export const BookButton = memo(function BookButton({
 }) {
   const { openConfDialog } = useConfirmationDialog();
   const { bookWish } = useQuickActions(wishId);
+  const protectedAction = useProtectedAction();
 
   const handlePress = () =>
     openConfDialog({
@@ -71,7 +73,7 @@ export const BookButton = memo(function BookButton({
     <Toggle
       defaultPressed={isBookedByCurrentUser}
       className={cn(bookButtonVariants({ triggerVariant }), className)}
-      onPressedChange={handlePress}
+      onPressedChange={() => protectedAction(() => handlePress())}
       aria-label={title}
       disabled={bookedBySomebody}
     >
@@ -86,7 +88,7 @@ export const BookButton = memo(function BookButton({
         defaultPressed={isBookedByCurrentUser}
         aria-label={title}
         className={cn(bookButtonVariants({ triggerVariant }), className)}
-        onPressedChange={handlePress}
+        onPressedChange={() => protectedAction(() => handlePress())}
       >
         {isBookedByCurrentUser ? <LockKeyholeOpen /> : <LockKeyhole />}
       </Toggle>
