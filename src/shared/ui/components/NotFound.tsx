@@ -1,5 +1,5 @@
+import NotFoundUrl from "@/shared/assets/images/not-found.svg";
 import { Link } from "react-router";
-import NotFoundUrl from "../assets/images/not-found.svg";
 import { Button } from "../kit/button";
 
 export function NotFound() {

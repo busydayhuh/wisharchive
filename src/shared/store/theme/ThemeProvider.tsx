@@ -1,6 +1,6 @@
 import { useLocalStorage } from "@/shared/hooks/useLocalStorage";
 import { useEffect, useState } from "react";
-import { ThemeProviderContext } from "./useTheme";
+import { ThemeProviderContext } from "./Context";
 
 export type Theme = "dark" | "light" | "system";
 
