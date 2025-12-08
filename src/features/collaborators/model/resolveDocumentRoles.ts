@@ -7,7 +7,13 @@ export function resolveWishlistRoles(
   ownerId: string,
   userId?: string
 ): Roles | undefined {
-  if (!userId) return;
+  if (!userId)
+    return {
+      isWishlistOwner: false,
+      isReader: false,
+      isEditor: false,
+    };
+
   return {
     isWishlistOwner: ownerId === userId,
     isReader: readersIds.includes(userId),
@@ -21,7 +27,15 @@ export function resolveWishRoles(
   bookerId: string | null,
   userId?: string
 ): WishRoles | undefined {
-  if (!userId) return;
+  if (!userId)
+    return {
+      isWishlistOwner: false,
+      isReader: false,
+      isEditor: false,
+      isWishOwner: false,
+      isBooker: false,
+    };
+
   let teamRoles: Roles;
 
   if (!wishlist) {
