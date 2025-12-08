@@ -1,10 +1,7 @@
-import { ROUTES } from "@/shared/config/routes";
 import { useAppLocation } from "@/shared/hooks/useAppLocation";
 import { useCurrentUser } from "@/shared/hooks/user/useCurrentUser";
-import Logo from "@/shared/ui/components/Logo";
 import { SidebarTrigger } from "@/shared/ui/kit/sidebar";
 import { cn } from "@/shared/utils/css";
-import { href, Link } from "react-router-dom";
 import { OwnerInfoPopover } from "../dashboard";
 import { Breadcrumbs } from "./Breadcrumbs";
 
@@ -33,15 +30,7 @@ export function BreadcrumbsBar({
           <SidebarTrigger />
         </div>
       )}
-      {hasBreadcrumbs ? (
-        <Breadcrumbs />
-      ) : (
-        isMobile && (
-          <Link to={href(ROUTES.DASHBOARD, { userId: user?.userId ?? "" })}>
-            <Logo variant="inverted" />
-          </Link>
-        )
-      )}
+      {hasBreadcrumbs && <Breadcrumbs />}
       {isMobile && user && !hasBreadcrumbs && (
         <OwnerInfoPopover
           size="sm"

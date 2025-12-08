@@ -3,9 +3,8 @@ import { useUser } from "@/shared/hooks/user/useUser";
 import { UserAvatar } from "@/shared/ui/components/UserAvatar";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
 import { cn } from "@/shared/utils/css";
-import { Ghost, Gift, Meh } from "lucide-react";
+import { Ghost, Meh } from "lucide-react";
 import { memo } from "react";
-import { getUserBirthday } from "../../model/getUserBirthday";
 import { OwnerInfoPopover } from "./OwnerInfoPopover";
 
 const DashboardOwner = memo(function DashboardOwner({
@@ -72,14 +71,8 @@ const DashboardOwner = memo(function DashboardOwner({
           <p className="text-muted-foreground text-xs md:text-sm truncate leading-tight">
             @{user.userId}
           </p>
-          {user.birthDate && (
-            <p className="inline-flex items-center gap-1 font-headers text-muted-foreground text-sm leading-none">
-              <Gift className="size-3" />
-              {getUserBirthday(user.birthDate as string)}
-            </p>
-          )}
 
-          <p className="mt-1 text-muted-foreground text-xs md:text-sm truncate leading-tight">
+          <p className="text-muted-foreground text-xs md:text-sm truncate leading-tight">
             {user.bio}
           </p>
         </div>

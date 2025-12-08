@@ -2,7 +2,6 @@ import { useAuth } from "@/features/auth";
 import { GlobalSearchDialog } from "@/features/global-search";
 import { useAppLocation } from "@/shared/hooks/useAppLocation";
 import { useIsMobile } from "@/shared/hooks/useIsMobile";
-import { Button } from "@/shared/ui/kit/button";
 import { memo } from "react";
 import Navigation from "../toolbar/Navigation";
 import DashboardOwner from "./DashboardOwner";
@@ -49,7 +48,7 @@ const DashboardHeader = memo(function DashboardHeader({
         <Navigation />
       </div>
       <div className="flex justify-self-end items-center gap-4">
-        {isLoggedIn ? <GlobalSearchDialog /> : <Button>Войти</Button>}
+        {isLoggedIn && <GlobalSearchDialog />}
       </div>
     </div>
   );

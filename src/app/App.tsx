@@ -1,6 +1,8 @@
 import { useAuth } from "@/features/auth";
 import { BreadcrumbsBar } from "@/features/breadcrumbs";
+import { Header } from "@/features/header";
 import { AppSidebar } from "@/features/sidebar";
+import { useAppLocation } from "@/shared/hooks/useAppLocation";
 import { useIsMobile } from "@/shared/hooks/useIsMobile";
 import DefaultLoader from "@/shared/ui/components/DefaultLoader";
 import MainContainer from "@/shared/ui/components/MainContainer";
@@ -11,6 +13,7 @@ import { Outlet, useNavigation } from "react-router-dom";
 
 function App() {
   const { isLoggedIn } = useAuth();
+  const { loginArea } = useAppLocation();
   const isMobile = useIsMobile();
 
   const isLoading = useNavigation().state === "loading";
@@ -18,8 +21,9 @@ function App() {
   return (
     <>
       {isLoggedIn && <AppSidebar />}
-      {isLoggedIn && <OrionBackground />}
+      {!loginArea && <OrionBackground />}
       <MainContainer>
+        {!isLoggedIn && <Header />}
         <BreadcrumbsBar isMobile={isMobile} isUser={isLoggedIn} />
         <Outlet />
         {isLoading && (

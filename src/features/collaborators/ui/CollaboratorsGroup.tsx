@@ -47,7 +47,7 @@ export function CollaboratorsGroup(props: CollaboratorsAvatarsProps) {
     <div className="flex flex-col gap-2.5 w-full">
       {props.collaborators &&
         props.collaborators.map((c) => (
-          <Item className="p-0" size="sm">
+          <Item className="p-0" size="sm" key={c.userId}>
             <ItemMedia variant="image">
               <UserAvatar
                 size="md"
