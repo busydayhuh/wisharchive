@@ -2,6 +2,7 @@ import { useAuth } from "@/features/auth";
 import { useWishes } from "@/features/wish";
 import { useIsMobile } from "@/shared/lib/react/useIsMobile";
 import type { WishDocumentType } from "@/shared/model/types";
+import { notifyError, notifySuccessSimple } from "@/shared/ui/CustomToast";
 import { Button } from "@/shared/ui/kit/button";
 import {
   Dialog,
@@ -53,6 +54,15 @@ export default function WishPicker({
   const { onPickWish, moveWishes, pickedIds } = useMoveWishes(wishlistId);
   const isDisabled = pickedIds.length === 0;
 
+  const onMoveWishes = async () => {
+    const { ok } = await moveWishes(wishlistId);
+    if (!ok) {
+      notifyError("Не удалось перенести желания", "Повторите попытку позже");
+      return;
+    }
+    notifySuccessSimple("Желания перенесены");
+  };
+
   if (isMobile)
     return (
       <Sheet open={pickerOpen} onOpenChange={setPickerOpen}>
@@ -72,11 +82,7 @@ export default function WishPicker({
           </WishPickerBoundary>
           <SheetFooter>
             <SheetClose asChild>
-              <Button
-                size="lg"
-                onClick={() => moveWishes(wishlistId)}
-                disabled={isDisabled}
-              >
+              <Button size="lg" onClick={onMoveWishes} disabled={isDisabled}>
                 Перенести
               </Button>
             </SheetClose>
@@ -103,11 +109,7 @@ export default function WishPicker({
         </WishPickerBoundary>
         <DialogFooter className="bottom-2 left-1/2 fixed -translate-x-1/2">
           <DialogClose asChild>
-            <Button
-              size="xl"
-              onClick={() => moveWishes(wishlistId)}
-              disabled={isDisabled}
-            >
+            <Button size="xl" onClick={onMoveWishes} disabled={isDisabled}>
               Перенести
             </Button>
           </DialogClose>
