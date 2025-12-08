@@ -74,7 +74,7 @@ export function CollaboratorsGroup(props: CollaboratorsAvatarsProps) {
         <PopoverTrigger>
           <CollaboratorsAvatars {...props} />
         </PopoverTrigger>
-        <PopoverContent>{listElements}</PopoverContent>
+        <PopoverContent align="start">{listElements}</PopoverContent>
       </Popover>
     );
 
@@ -83,7 +83,9 @@ export function CollaboratorsGroup(props: CollaboratorsAvatarsProps) {
       <HoverCardTrigger>
         <CollaboratorsAvatars {...props} />
       </HoverCardTrigger>
-      <HoverCardContent className="w-fit">{listElements}</HoverCardContent>
+      <HoverCardContent className="w-fit" align="start">
+        {listElements}
+      </HoverCardContent>
     </HoverCard>
   );
 }

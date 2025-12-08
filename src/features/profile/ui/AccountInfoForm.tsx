@@ -50,7 +50,7 @@ export function AccountInfoForm({
         onSubmit={form.handleSubmit(async (values) =>
           saveAccountInfo(values, form, userDocumentId)
         )}
-        className="flex flex-col gap-4 md:gap-6 mx-auto mt-3 md:mt-0 px-2 md:px-0 pb-2 w-full lg:max-w-3xl max-w-4xl"
+        className="flex flex-col gap-4 md:gap-6 mx-auto mt-3 md:mt-0 px-2 md:px-0 pb-2 w-full lg:max-w-3xl xl:max-w-4xl"
       >
         <p className="font-semibold text-xl lg:text-2xl">Логин и пароль</p>
         <FormField

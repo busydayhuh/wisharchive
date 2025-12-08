@@ -23,7 +23,7 @@ export function ProfilePageLayout({
         userId={profileInfo.userId}
         name={profileInfo.userName}
       />
-      <div className="gap-4 lg:gap-20 grid grid-cols-1 lg:grid-cols-2">
+      <div className="gap-4 lg:gap-20 grid grid-cols-1 lg:grid-cols-2 w-full">
         <div className="w-full">
           <PersonalInfoForm
             userInfo={profileInfo}
