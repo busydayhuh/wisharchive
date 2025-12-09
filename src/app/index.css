@@ -8,7 +8,6 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -53,23 +52,7 @@
   --font-emoji: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
     "sans-serif";
   --inset-shadow-base: inset 0px 0px 120px 20px var(--color-zinc-700);
-
   --animate-gradient-button: gradient-button 16s linear infinite;
-
-  @keyframes bounce-out-down {
-    0% {
-      opacity: 0;
-    }
-    20% {
-      opacity: 1;
-      transform: translateY(-40px);
-    }
-
-    100% {
-      opacity: 0;
-      transform: translateY(-40px);
-    }
-  }
 
   @keyframes gradient-button {
     0% {
