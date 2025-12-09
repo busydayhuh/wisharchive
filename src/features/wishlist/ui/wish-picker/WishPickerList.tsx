@@ -2,6 +2,7 @@ import { WishImage } from "@/features/wish";
 import { Checkbox } from "@/shared/ui/kit/checkbox";
 import { Item, ItemContent, ItemMedia, ItemTitle } from "@/shared/ui/kit/item";
 import { Label } from "@/shared/ui/kit/label";
+import { Skeleton } from "@/shared/ui/kit/skeleton";
 import type { WishPickerContentProps } from "./types";
 
 export function WishPickerList({ wishes, onPickWish }: WishPickerContentProps) {
@@ -35,6 +36,19 @@ export function WishPickerList({ wishes, onPickWish }: WishPickerContentProps) {
               </ItemContent>
             </Item>
           </Label>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function WishPickerListSkeleton() {
+  return (
+    <div className="flex flex-col gap-0.5 overflow-y-scroll">
+      {[...Array(5)].map((_, index) => (
+        <div className="flex items-center gap-2" key={"skeleton" + index}>
+          <Skeleton className="rounded-sm size-10" />
+          <Skeleton className="rounded-md w-full h-6"></Skeleton>
         </div>
       ))}
     </div>

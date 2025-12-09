@@ -5,7 +5,6 @@ import {
   notifySuccessSimple,
 } from "@/shared/entities/errors/notify";
 import { useIsMobile } from "@/shared/hooks/useIsMobile";
-import type { WishDocumentType } from "@/shared/types";
 import { Button } from "@/shared/ui/kit/button";
 import {
   Dialog,
@@ -23,11 +22,10 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/shared/ui/kit/sheet";
-import { Frown, Leaf, Wind } from "lucide-react";
-import { useMemo } from "react";
 import { useMoveWishes } from "../../model/hooks/useMoveWishes";
-import { WishPickerGrid } from "./WishPickerGrid";
-import { WishPickerList } from "./WishPickerList";
+import { WishPickerBoundary } from "./WishPickerBoundary";
+import { WishPickerGrid, WishPickerGridSkeleton } from "./WishPickerGrid";
+import { WishPickerList, WishPickerListSkeleton } from "./WishPickerList";
 
 type WishPickerProps = {
   pickerOpen: boolean;
@@ -79,7 +77,7 @@ export default function WishPicker({
             wishes={wishes}
             isLoading={isLoading}
             error={error}
-            skeleton={<>Загрузка...</>}
+            skeleton={<WishPickerListSkeleton />}
           >
             {(safeItems) => (
               <WishPickerList wishes={safeItems} onPickWish={onPickWish} />
@@ -107,7 +105,7 @@ export default function WishPicker({
           wishes={wishes}
           isLoading={isLoading}
           error={error}
-          skeleton={<>Загрузка...</>}
+          skeleton={<WishPickerGridSkeleton />}
         >
           {(safeItems) => (
             <WishPickerGrid wishes={safeItems} onPickWish={onPickWish} />
@@ -123,48 +121,4 @@ export default function WishPicker({
       </DialogContent>
     </Dialog>
   );
-}
-
-function WishPickerBoundary({
-  wishes,
-  error,
-  isLoading,
-  skeleton,
-  wishlistId,
-  children,
-}: {
-  wishes?: WishDocumentType[];
-  error?: unknown;
-  isLoading: boolean;
-  skeleton: React.ReactNode;
-  wishlistId: string;
-  children: (safeItems: WishDocumentType[]) => React.ReactNode;
-}) {
-  const filteredWishes = useMemo(
-    () => wishes?.filter((w) => w.wishlistId !== wishlistId) ?? [],
-    [wishes, wishlistId]
-  );
-
-  if (isLoading) return skeleton;
-
-  if (error)
-    return (
-      <p className="flex flex-col items-center gap-1 mt-2 md:mt-4 text-muted-foreground text-sm">
-        <Frown />
-        Не удалось загрузить желания
-      </p>
-    );
-
-  if (wishes && filteredWishes.length === 0)
-    return (
-      <p className="flex flex-col items-center gap-1 mt-2 md:mt-4 text-muted-foreground text-sm">
-        <span className="inline-flex items-center">
-          <Wind className="stroke-[1.5px]" />
-          <Leaf className="size-4" />
-        </span>
-        Нет желаний
-      </p>
-    );
-
-  if (wishes) return children(filteredWishes);
 }

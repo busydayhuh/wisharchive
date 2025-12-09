@@ -1,6 +1,7 @@
 import { WishImage } from "@/features/wish";
 import { Checkbox } from "@/shared/ui/kit/checkbox";
 import { Label } from "@/shared/ui/kit/label";
+import { Skeleton } from "@/shared/ui/kit/skeleton";
 import type { WishPickerContentProps } from "./types";
 
 export function WishPickerGrid({ wishes, onPickWish }: WishPickerContentProps) {
@@ -33,6 +34,22 @@ export function WishPickerGrid({ wishes, onPickWish }: WishPickerContentProps) {
               </p>
             </div>
           </Label>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function WishPickerGridSkeleton() {
+  return (
+    <div className="gap-2.5 grid grid-cols-5 w-full h-[calc(100%-3rem)] overflow-scroll">
+      {[...Array(5)].map((_, index) => (
+        <div
+          className="flex flex-col gap-2 mb-4 md:mb-8"
+          key={"skeleton" + index}
+        >
+          <Skeleton className="rounded-xl md:rounded-3xl w-full aspect-[4/5]"></Skeleton>
+          <Skeleton className="rounded-md w-full h-6"></Skeleton>
         </div>
       ))}
     </div>
