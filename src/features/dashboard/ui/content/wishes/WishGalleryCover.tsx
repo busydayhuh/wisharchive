@@ -1,6 +1,6 @@
-import type { AccessRoles } from "@/features/collaborators";
+import type { WishcardMeta } from "@/features/dashboard/model/hooks/useWishcardMeta";
 import { BookButton, WishImage } from "@/features/wish";
-import type { LinkParams, WishDocumentType } from "@/shared/types";
+import type { WishDocumentType } from "@/shared/types";
 import { PRIVACY_ICONS } from "@/shared/ui/components/Badges";
 import { cn } from "@/shared/utils/css";
 import { memo } from "react";
@@ -9,22 +9,20 @@ import { QuickActions } from "./QuickActions";
 
 export const WishGalleryCover = memo(function WishGalleryCover({
   wish,
-  onEditWish,
-  userRoles,
-  linkParams,
-  isMobile,
+  meta,
 }: {
   wish: WishDocumentType;
-  onEditWish: () => void;
-  userRoles?: AccessRoles;
-  linkParams: LinkParams;
-  isMobile: boolean;
+  meta: WishcardMeta;
 }) {
+  const { linkParams, isMobile, userRoles, onEditWish, onListPage } = meta;
+
   return (
     <div className={cn("relative rounded-2xl overflow-hidden")}>
       <Link to={linkParams.to} state={linkParams.state}>
         <WishImage
           wishId={wish.$id}
+          isPrivate={wish.wishlist?.isPrivate ?? false}
+          withBlur={!onListPage}
           url={wish.imageURL}
           alt={wish.title}
           variant="gallery"

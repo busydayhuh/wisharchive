@@ -16,7 +16,7 @@ const wishImageVariants = {
     icon: "w-6 h-6 md:w-10 md:h-10",
   },
   page: {
-    img: "lg:rounded-[3rem] rounded-3xl max-h-[24rem] md:max-h-[40rem] 2xl:max-h-[56rem]",
+    img: "lg:rounded-[3rem] md:rounded-3xl max-h-[24rem] md:max-h-[40rem] 2xl:max-h-[56rem]",
     fallback: "aspect-[4/5]",
     icon: "",
   },
@@ -24,12 +24,16 @@ const wishImageVariants = {
 
 export const WishImage = memo(function WishImage({
   wishId,
+  isPrivate,
+  withBlur = false,
   url,
   alt,
   isBooked,
   variant = "gallery",
 }: {
   wishId: string;
+  isPrivate?: boolean;
+  withBlur?: boolean;
   url?: string | null;
   alt?: string;
   isBooked?: boolean;
@@ -47,7 +51,10 @@ export const WishImage = memo(function WishImage({
           <img
             src={url}
             alt={alt}
-            className={cn("w-full h-full object-cover")}
+            className={cn(
+              "w-full h-full object-cover",
+              isPrivate && withBlur && "blur-xs hover:blur-none"
+            )}
           />
           <AnimatePresence initial={false}>
             {isBooked && variant !== "page" && (

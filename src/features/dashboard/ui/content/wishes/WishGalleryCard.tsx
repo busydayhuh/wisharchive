@@ -9,8 +9,8 @@ import { Link } from "react-router";
 import { WishGalleryCover } from "./WishGalleryCover";
 
 function WishGalleryCard({ wish }: { wish: WishDocumentType }) {
-  const { linkParams, onEditWish, showOwner, userRoles, isMobile } =
-    useWishcardMeta(wish);
+  const meta = useWishcardMeta(wish);
+  const { userRoles, linkParams, showOwner } = meta;
 
   return (
     <div
@@ -18,13 +18,7 @@ function WishGalleryCard({ wish }: { wish: WishDocumentType }) {
         "relative flex flex-col gap-2 mb-4 md:mb-8 overflow-hidden"
       )}
     >
-      <WishGalleryCover
-        wish={wish}
-        userRoles={userRoles}
-        linkParams={linkParams}
-        onEditWish={onEditWish}
-        isMobile={isMobile}
-      />
+      <WishGalleryCover wish={wish} meta={meta} />
 
       {!wish.isArchived && (
         <WishlistControls

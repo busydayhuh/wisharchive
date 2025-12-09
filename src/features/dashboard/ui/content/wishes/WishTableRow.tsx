@@ -51,6 +51,8 @@ function WishRowImage({ wish, meta }: RowProps) {
     >
       <div className="relative">
         <WishImage
+          isPrivate={wish.wishlist?.isPrivate ?? false}
+          withBlur={!meta.onListPage}
           wishId={wish.$id}
           url={wish.imageURL}
           alt={wish.title}
@@ -58,7 +60,7 @@ function WishRowImage({ wish, meta }: RowProps) {
           variant="table"
         />
         {isMobile && wish.wishlist?.isPrivate && (
-          <div className="top-2 left-2 absolute flex justify-center items-center rounded-full w-6 h-6 overflow-hidden">
+          <div className="top-2 left-2 absolute flex justify-center items-center bg-pink-bg rounded-full w-6 h-6 overflow-hidden">
             {PRIVACY_ICONS.private}
           </div>
         )}
@@ -145,22 +147,15 @@ function WishRowControls({ wish, meta }: RowProps) {
 }
 
 function WishRowActions({ wish, meta }: RowProps) {
-  const { userRoles, onListPage, onEditWish } = meta;
-  const { isWishOwner, isEditor, isBooker } = userRoles;
+  const { userRoles, onEditWish } = meta;
+  const { isWishOwner, isBooker } = userRoles;
+
   return (
     <div
       className="justify-self-end lg:justify-self-center"
       style={{ gridArea: "actions" }}
     >
-      {onListPage && (isWishOwner || isEditor) ? (
-        <WishlistControls
-          wish={wish}
-          wishlist={wish.wishlist}
-          roles={userRoles}
-          variant="table"
-          className="w-fit h-9 font-medium text-xs lg:text-sm"
-        />
-      ) : isWishOwner ? (
+      {isWishOwner ? (
         <QuickActions
           imageURL={wish.imageURL ?? undefined}
           wishId={wish.$id}
