@@ -5,12 +5,11 @@ import type { WishlistDocumentType } from "@/shared/types";
 import { useCallback } from "react";
 
 export function useQuickActions(wishId: string) {
-  const { current } = useAuth();
+  const { userId } = useAuth();
   const { wish } = useWish(wishId);
   const { update, deleteW } = useWishMutations();
   const { updateSWRCache, addToCacheList, removeFromCacheList } =
     useUpdateSWRCache();
-  const userId = current?.$id;
 
   const perform = useCallback(
     async ({

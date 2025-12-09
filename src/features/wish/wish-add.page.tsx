@@ -14,7 +14,7 @@ import WishEditor from "./ui/WishEditor";
 import { WishEditorSkeleton } from "./ui/WishEditorSkeleton";
 
 function WishAddPage() {
-  const { current: authUser, isLoggedIn } = useAuth();
+  const { userId, isLoggedIn } = useAuth();
   const { user, isLoading, error } = useCurrentUser();
   const { create } = useWishMutations();
   const { navigateWithState } = useRoute();
@@ -22,7 +22,7 @@ function WishAddPage() {
   async function onAddWish(
     formData: z.infer<typeof wishFormSchema> & { imageURL?: string | null }
   ) {
-    if (!user) return;
+    if (!user || !userId) return;
 
     const wish = {
       ...normalizeWishData(formData),
@@ -62,7 +62,7 @@ function WishAddPage() {
         variant="default"
         withButton={isLoggedIn}
         action={() =>
-          navigateWithState(href(ROUTES.WISHES, { userId: authUser!.$id }))
+          navigateWithState(href(ROUTES.WISHES, { userId: userId! }))
         }
       />
     );

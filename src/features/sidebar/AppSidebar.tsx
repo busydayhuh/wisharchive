@@ -29,7 +29,7 @@ import { ModeToggle } from "./ModeToggle";
 import { UserMenu } from "./UserMenu";
 
 export const AppSidebar = memo(function AppSidebar() {
-  const { current } = useAuth();
+  const { userId } = useAuth();
   const { pathname: currentPath } = useLocation();
   const { isMobile } = useSidebar();
 
@@ -37,12 +37,12 @@ export const AppSidebar = memo(function AppSidebar() {
     {
       name: "Мои желания",
       icon: <Orbit />,
-      href: href(ROUTES.WISHES, { userId: current!.$id }),
+      href: href(ROUTES.WISHES, { userId: userId! }),
     },
     {
       name: "Мои списки",
       icon: <List />,
-      href: href(ROUTES.WISHLISTS, { userId: current!.$id }),
+      href: href(ROUTES.WISHLISTS, { userId: userId! }),
     },
     {
       name: "Хочу подарить",

@@ -36,9 +36,9 @@ import { Link } from "react-router";
 import { useAuth } from "../auth";
 
 export function UserMenu() {
-  const { current, logout } = useAuth();
+  const { current, logout, userId } = useAuth();
   const { isMobile } = useSidebar();
-  const { user } = useUser(current?.$id ?? null);
+  const { user } = useUser(userId ?? null);
   const { theme, setTheme } = useTheme();
 
   const onThemeChange = (
@@ -60,7 +60,7 @@ export function UserMenu() {
             >
               <UserAvatar
                 name={user?.userName ?? ""}
-                id={current?.$id ?? ""}
+                id={userId ?? ""}
                 avatarURL={user?.avatarURL ?? undefined}
                 size="md"
                 className="border-0 w-8 h-8 text-foreground shrink-0"
@@ -82,7 +82,7 @@ export function UserMenu() {
               <div className="flex items-center gap-2 px-1 py-1.5 text-sm text-left">
                 <UserAvatar
                   name={user?.userName ?? ""}
-                  id={current?.$id ?? ""}
+                  id={userId ?? ""}
                   avatarURL={user?.avatarURL ?? undefined}
                   size="md"
                 />
