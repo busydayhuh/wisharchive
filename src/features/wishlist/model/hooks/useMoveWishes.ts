@@ -12,6 +12,7 @@ export function useMoveWishes(targetWishlistId: string) {
   const { update } = useWishMutations();
   const { mutate } = useSWRConfig();
   const patchCache = usePatchWishlistCache(targetWishlistId);
+  const { wishlist } = useWishlist(targetWishlistId);
 
   const [pickedWishes, setPickedWishes] = useState<WishDocumentType[]>([]);
   const pickedIds: string[] = useMemo(
@@ -35,7 +36,7 @@ export function useMoveWishes(targetWishlistId: string) {
         await Promise.all(
           pickedIds.map((id) =>
             update(id, {
-              wishlist: targetWishlistId,
+              wishlist: wishlist,
               wishlistId: targetWishlistId,
             })
           )
@@ -49,7 +50,7 @@ export function useMoveWishes(targetWishlistId: string) {
         return handleError(error);
       }
     },
-    [mutate, patchCache, pickedIds, pickedWishes, update]
+    [mutate, patchCache, pickedIds, pickedWishes, update, wishlist]
   );
   return { onPickWish, moveWishes, pickedIds };
 }
