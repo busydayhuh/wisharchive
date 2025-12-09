@@ -24,6 +24,7 @@ import {
   SheetTitle,
 } from "@/shared/ui/kit/sheet";
 import { Frown, Leaf, Wind } from "lucide-react";
+import { useMemo } from "react";
 import { useMoveWishes } from "../../model/hooks/useMoveWishes";
 import { WishPickerGrid } from "./WishPickerGrid";
 import { WishPickerList } from "./WishPickerList";
@@ -74,6 +75,7 @@ export default function WishPicker({
             <SheetTitle>Выберите желания</SheetTitle>
           </SheetHeader>
           <WishPickerBoundary
+            wishlistId={wishlistId}
             wishes={wishes}
             isLoading={isLoading}
             error={error}
@@ -96,11 +98,12 @@ export default function WishPicker({
 
   return (
     <Dialog open={pickerOpen} onOpenChange={setPickerOpen}>
-      <DialogContent className="min-w-[calc(100%-10rem)] h-[calc(100%-6rem)]">
+      <DialogContent className="flex flex-col gap-6 min-w-[calc(100%-10rem)] h-[calc(100%-6rem)]">
         <DialogHeader>
           <DialogTitle>Перенести желания в этот список</DialogTitle>
         </DialogHeader>
         <WishPickerBoundary
+          wishlistId={wishlistId}
           wishes={wishes}
           isLoading={isLoading}
           error={error}
@@ -127,14 +130,21 @@ function WishPickerBoundary({
   error,
   isLoading,
   skeleton,
+  wishlistId,
   children,
 }: {
   wishes?: WishDocumentType[];
   error?: unknown;
   isLoading: boolean;
   skeleton: React.ReactNode;
+  wishlistId: string;
   children: (safeItems: WishDocumentType[]) => React.ReactNode;
 }) {
+  const filteredWishes = useMemo(
+    () => wishes?.filter((w) => w.wishlistId !== wishlistId) ?? [],
+    [wishes, wishlistId]
+  );
+
   if (isLoading) return skeleton;
 
   if (error)
@@ -145,7 +155,7 @@ function WishPickerBoundary({
       </p>
     );
 
-  if (wishes && wishes.length === 0)
+  if (wishes && filteredWishes.length === 0)
     return (
       <p className="flex flex-col items-center gap-1 mt-2 md:mt-4 text-muted-foreground text-sm">
         <span className="inline-flex items-center">
@@ -156,5 +166,5 @@ function WishPickerBoundary({
       </p>
     );
 
-  if (wishes) return children(wishes);
+  if (wishes) return children(filteredWishes);
 }
