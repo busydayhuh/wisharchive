@@ -51,7 +51,7 @@ export function RelatedWishes({
     );
   if (error) return null;
 
-  if (relatedWishes)
+  if (relatedWishes && relatedWishes.length > 0)
     return (
       <div className="space-y-3 md:space-y-6 mx-2 md:mx-auto md:max-w-[96%]">
         <div className="flex flex-wrap justify-between items-center">
@@ -105,4 +105,6 @@ export function RelatedWishes({
         </ContentGrid>
       </div>
     );
+
+  return null;
 }
