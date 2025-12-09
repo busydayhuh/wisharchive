@@ -12,5 +12,10 @@ export const notifySuccessSimple = (message: string, description?: string) =>
 export const notifySuccessExpanded = (
   message: string,
   title: string,
-  imageURL?: string
-) => customToast({ title: message, description: title, icon: imageURL });
+  imageURL?: string,
+  button?: {
+    label?: string;
+    onClick?: () => void;
+  }
+) =>
+  customToast({ title: message, description: title, icon: imageURL, button });

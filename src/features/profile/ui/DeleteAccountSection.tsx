@@ -1,9 +1,9 @@
+import { notifyError } from "@/shared/entities/errors/notify";
 import { Button } from "@/shared/ui/kit/button";
 import { Checkbox } from "@/shared/ui/kit/checkbox";
 import { Label } from "@/shared/ui/kit/label";
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
-import { toast } from "sonner";
 import useProfileMutations from "../model/useProfileMutations";
 
 function DeleteAccountSection() {
@@ -14,9 +14,7 @@ function DeleteAccountSection() {
     const { ok } = await deleteProfile();
 
     if (!ok) {
-      toast.error("Не удалось удалить аккаунт", {
-        description: "Повторите попытку позже",
-      });
+      notifyError("Не удалось удалить аккаунт");
     }
   };
 

@@ -1,7 +1,10 @@
+import {
+  notifyError,
+  notifySuccessSimple,
+} from "@/shared/entities/errors/notify";
 import { accountInfoFormSchema, userFormSchema } from "@/shared/formSchemas";
 import { useCallback } from "react";
 import type { UseFormReturn } from "react-hook-form";
-import { toast } from "sonner";
 import type z from "zod";
 import type { UpdateUserCache } from "../profile.page";
 import type { FormValues as AccountValues } from "../ui/AccountInfoForm";
@@ -36,13 +39,11 @@ export function useSaveInfo() {
               { shouldFocus: true }
             );
 
-          toast.error("Не удалось обновить данные", {
-            description: "Повторите попытку позже",
-          });
+          notifyError("Не удалось обновить данные");
 
           return;
         }
-        toast.success("Email успешно обновлён");
+        notifySuccessSimple("Email успешно обновлён");
       }
 
       if (form.getFieldState("password").isDirty && values.password) {
@@ -59,7 +60,7 @@ export function useSaveInfo() {
           );
           return;
         }
-        toast.success("Пароль успешно обновлён");
+        notifySuccessSimple("Пароль успешно обновлён");
       }
     },
     [changeEmail, changePassword]
@@ -86,14 +87,12 @@ export function useSaveInfo() {
         (accountNameChange && !accountNameChange.ok) ||
         !documentInfoChange.ok
       ) {
-        toast.error("Не удалось обновить профиль", {
-          description: "Повторите попытку позже",
-        });
+        notifyError("Не удалось обновить профиль");
         return;
       }
 
       updateUserCache(userDocumentId, values);
-      toast.success("Профиль успешно обновлён");
+      notifySuccessSimple("Профиль успешно обновлён");
     },
     [changeName, changePersonalInfo]
   );

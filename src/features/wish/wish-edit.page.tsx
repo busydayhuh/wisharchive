@@ -1,9 +1,11 @@
 import { ROUTES } from "@/shared/config/routes";
+import {
+  notifyError,
+  notifySuccessExpanded,
+} from "@/shared/entities/errors/notify";
 import type { wishFormSchema } from "@/shared/formSchemas";
-import { customToast } from "@/shared/ui/components/CustomToast";
 import { ErrorMessage } from "@/shared/ui/components/ErrorMessage";
 import { href, useParams } from "react-router";
-import { toast } from "sonner";
 import type z from "zod";
 import { useAuth } from "../auth";
 import { useRoute } from "../breadcrumbs";
@@ -30,14 +32,11 @@ function WishEditPage() {
     const { ok, response } = await update(wishId, wishUpdates);
 
     if (!ok) {
-      toast.error("Не удалось сохранить изменения");
+      notifyError("Не удалось сохранить изменения");
       return;
     }
-    customToast({
-      title: "Сохранено",
-      description: response!.title,
-      icon: response!.imageURL,
-    });
+
+    notifySuccessExpanded("Сохранено", response!.title, response!.imageURL);
     navigateWithState(
       href(ROUTES.WISH, { wishId, userId: response!.ownerId }),
       {

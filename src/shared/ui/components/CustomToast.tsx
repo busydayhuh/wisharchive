@@ -53,7 +53,7 @@ function CustomToast(props: ToastProps) {
   );
 }
 
-interface ToastProps {
+export interface ToastProps {
   id: string | number;
   title: string;
   description?: string;

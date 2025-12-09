@@ -1,6 +1,9 @@
+import {
+  notifyError,
+  notifySuccessSimple,
+} from "@/shared/entities/errors/notify";
 import DeleteButton from "@/shared/ui/components/DeleteButton";
 import { FormLabel } from "@/shared/ui/kit/form";
-import { toast } from "sonner";
 import { useWishlistMutations } from "../../model/hooks/useWishlistMutations";
 
 type DeleteSectionProps = {
@@ -20,11 +23,11 @@ export function DeleteSection({
     const { ok } = await actions.delete(wishlistId);
 
     if (!ok) {
-      toast.error("Не удалось удалить список");
+      notifyError("Не удалось удалить список");
       return;
     }
 
-    toast.success("Список удален", { description: wishlistTitle });
+    notifySuccessSimple("Список удален", wishlistTitle);
     setDialogOpen(false);
   }
 

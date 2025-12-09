@@ -1,4 +1,8 @@
 import type { CollaboratorType, Roles } from "@/features/collaborators";
+import {
+  notifyError,
+  notifySuccessSimple,
+} from "@/shared/entities/errors/notify";
 import { wishlistFormSchema as formSchema } from "@/shared/formSchemas";
 import { useCurrentUser } from "@/shared/hooks/user/useCurrentUser";
 import type { UserDocumentType, WishlistDocumentType } from "@/shared/types";
@@ -16,7 +20,6 @@ import {
 import { Form } from "@/shared/ui/kit/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { z } from "zod";
 import { useWishlistMutations } from "../../model/hooks/useWishlistMutations";
 import { Collaborators } from "../Collaborators";
@@ -77,10 +80,10 @@ export function WishlistDialog({
         privacyChanged
       );
       if (!ok) {
-        toast.error("Не удалось сохранить изменения");
+        notifyError("Не удалось сохранить изменения");
         return;
       }
-      toast.success("Изменения сохранены");
+      notifySuccessSimple("Изменения сохранены");
       setIsOpen(false);
     }
 
@@ -91,10 +94,10 @@ export function WishlistDialog({
         owner: docId as unknown as UserDocumentType,
       });
       if (!ok) {
-        toast.error("Не удалось сохранить список");
+        notifyError("Не удалось сохранить список");
         return;
       }
-      toast.success("Список создан", { description: response!.title });
+      notifySuccessSimple("Список создан", response!.title);
       setIsOpen(false);
     }
   }

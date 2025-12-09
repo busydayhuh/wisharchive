@@ -1,7 +1,10 @@
 import { ROUTES } from "@/shared/config/routes";
+import {
+  notifyError,
+  notifySuccessExpanded,
+} from "@/shared/entities/errors/notify";
 import { wishFormSchema as formSchema } from "@/shared/formSchemas";
 import type { WishDocumentType, WishlistDocumentType } from "@/shared/types";
-import { customToast } from "@/shared/ui/components/CustomToast";
 import { SubmitBtn } from "@/shared/ui/components/SubmitBtn";
 import {
   Form,
@@ -17,7 +20,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
 import { href, useNavigate } from "react-router";
-import { toast } from "sonner";
 import type z from "zod";
 import DeleteButton from "../../../../shared/ui/components/DeleteButton";
 import { useWishMutations } from "../../model/hooks/useWishMutations";
@@ -68,17 +70,15 @@ export function WishForm({
     const { ok } = await actions.deleteW(wish!.$id);
 
     if (!ok) {
-      toast.error("Не удалось удалить желание", {
-        description: "Попробуйте повторить позже",
-      });
+      notifyError("Не удалось удалить желание");
       return;
     }
 
-    customToast({
-      title: "Желание удалено",
-      description: wish?.title,
-      icon: wish?.imageURL ?? undefined,
-    });
+    notifySuccessExpanded(
+      "Желание удалено",
+      wish!.title,
+      wish!.imageURL ?? undefined
+    );
     navigate(href(ROUTES.WISHES, { userId: wish!.ownerId }));
   };
 
