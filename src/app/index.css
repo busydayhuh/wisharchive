@@ -123,7 +123,7 @@
   --radius: 1rem;
   --logo-default: oklch(0.14 0 285.86);
   --logo-inverted: oklch(0.2 0 0);
-  --overlay: oklch(24.462% 0.00151 16.245 / 0.373);
+  --overlay: oklch(8.126% 0.04068 311.989 / 0.608);
 }
 
 .dark {
@@ -162,7 +162,7 @@
   --sidebar-accent-foreground: oklch(0.99 0 0);
   --sidebar-border: oklch(100% 0.00011 271.152 / 0);
   --sidebar-ring: oklch(0.93 0.03 273.66);
-  --logo-default: oklch(0.14 0 285.86);
+  --logo-default: oklch(1 0 0);
   --logo-inverted: oklch(1 0 0);
   --overlay: oklch(97.015% 0.00011 271.152 / 0.252);
 }
@@ -188,7 +188,7 @@
     .group-card-wrapper:hover .cover-overlay,
     .group-card-wrapper:focus-within .cover-overlay,
     .group-card-wrapper:has([aria-expanded="true"]) .cover-overlay {
-      @apply visible bg-overlay transition-all duration-300;
+      @apply visible bg-linear-to-t from-20% from-overlay to-transparent transition-all duration-300;
     }
   }
 
