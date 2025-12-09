@@ -8,7 +8,7 @@ export type Crumb = {
 
 export const breadcrumbMap: Record<string, Crumb> = {
   [ROUTES.WISHES]: {
-    label: (params, data) => `Желания ${params.userId || data?.userId}`,
+    label: (params, data) => `${params.userId || data?.userId}`,
     parents: [ROUTES.DASHBOARD],
   },
   [ROUTES.WISHLISTS]: {

@@ -57,7 +57,7 @@ export function Breadcrumbs({ className }: { className?: string }) {
 
   return (
     <Breadcrumb className={className}>
-      <BreadcrumbList>
+      <BreadcrumbList className="flex-nowrap">
         {chain.map((crumb, i) => {
           const isLast = i === chain.length - 1;
           const mergedParams = state?.prevParams
@@ -80,7 +80,7 @@ export function Breadcrumbs({ className }: { className?: string }) {
             <Fragment key={crumb.path}>
               <BreadcrumbItem>
                 {isLast ? (
-                  <BreadcrumbPage className="max-w-[20ch] md:max-w-full truncate">
+                  <BreadcrumbPage className="line-clamp-1">
                     {crumb.label}
                   </BreadcrumbPage>
                 ) : (
