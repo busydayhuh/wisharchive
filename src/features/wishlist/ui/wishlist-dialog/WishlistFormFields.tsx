@@ -18,9 +18,10 @@ import { z } from "zod";
 type FormFieldsProps = {
   form: UseFormReturn<z.infer<typeof formSchema>>;
   roles?: Roles;
+  action: "edit" | "create";
 };
 
-export function WishlistFormFields({ form, roles }: FormFieldsProps) {
+export function WishlistFormFields({ form, roles, action }: FormFieldsProps) {
   const isNotOwner = !roles || (roles && !roles.isWishlistOwner);
   return (
     <div className="space-y-6">
@@ -66,7 +67,7 @@ export function WishlistFormFields({ form, roles }: FormFieldsProps) {
                 <Switch
                   checked={field.value}
                   onCheckedChange={field.onChange}
-                  disabled={isNotOwner}
+                  disabled={isNotOwner && action !== "create"}
                 />
               </FormControl>
               <div className="flex flex-col gap-1">

@@ -62,6 +62,7 @@ export function WishlistDialog({
 
   const actions = useWishlistMutations();
   const { user } = useCurrentUser();
+  const showCollabs = wishlist && collaborators && roles?.isWishlistOwner;
 
   async function onSaveChanges(values: z.infer<typeof formSchema>) {
     if (!user) return;
@@ -110,23 +111,20 @@ export function WishlistDialog({
               </DialogDescription>
             </DialogHeader>
 
-            <WishlistFormFields form={form} roles={roles} />
-            {wishlist && collaborators && (
+            <WishlistFormFields form={form} roles={roles} action={action} />
+            {showCollabs && (
               <>
                 <p className="inline-block mt-5 mb-2 font-medium text-muted-foreground text-sm">
                   Соавторы списка
                 </p>
-                <Collaborators
-                  wishlistId={wishlist.$id}
-                  collaborators={collaborators}
-                  isPrivate={form?.watch("isPrivate") ?? wishlist.isPrivate}
-                  isOwner={roles?.isWishlistOwner ?? false}
-                />
-                {!roles?.isWishlistOwner && (
-                  <p className="text-muted-foreground text-xs">
-                    Только владелец может редактировать список соавторов
-                  </p>
-                )}
+                <div className="flex flex-row items-center gap-2">
+                  <Collaborators
+                    wishlistId={wishlist.$id}
+                    collaborators={collaborators}
+                    isPrivate={form?.watch("isPrivate") ?? wishlist.isPrivate}
+                    isOwner={roles?.isWishlistOwner ?? false}
+                  />
+                </div>
                 {roles?.isWishlistOwner && (
                   <DeleteSection
                     wishlistId={wishlist.$id}
