@@ -1,25 +1,14 @@
-import { Card } from "@/shared/ui/kit/card";
-
 import { useWishlist } from "@/features/wishlist";
-import team from "@/shared/api/teams";
-import { ROUTES } from "@/shared/config/routes";
-import { handleError } from "@/shared/entities/errors/handleError";
-import {
-  notifyError,
-  notifySuccessExpanded,
-} from "@/shared/entities/errors/notify";
 import { ErrorMessage } from "@/shared/ui/components/ErrorMessage";
+import { Card } from "@/shared/ui/kit/card";
 import { Loader2 } from "lucide-react";
 import { useMemo, useState } from "react";
-import { href, useSearchParams } from "react-router";
-import { useAuth } from "../auth";
-import { useRoute } from "../breadcrumbs";
+import { useSearchParams } from "react-router";
+import { useAcceptInvite } from "./model/hooks/useAcceptInvite";
 import { useMembership } from "./model/hooks/useMembership";
 import { InvitationCard } from "./ui/InvitationCard";
 
 function InvitationPage() {
-  const { isLoggedIn, initSession } = useAuth();
-  const { navigateWithState } = useRoute();
   const [searchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
 
@@ -32,37 +21,7 @@ function InvitationPage() {
     () => (membership?.roles.includes("editors") ? "редактора" : "читателя"),
     [membership]
   );
-
-  const onAcceptInvite = async () => {
-    try {
-      setLoading(true);
-
-      await team.acceptInvite(
-        params.teamId!,
-        params.membershipId!,
-        params.userId!,
-        params.secret!
-      );
-
-      if (!isLoggedIn) await initSession();
-
-      navigateWithState(
-        href(ROUTES.WISHLIST, {
-          userId: wishlist!.ownerId,
-          listId: params.teamId!,
-        }),
-        { wlTitle: params.teamName }
-      );
-
-      notifySuccessExpanded("Приглашение принято", params.teamName, wlImageURL);
-    } catch (error) {
-      const { errorMessage } = handleError(error);
-      notifyError("Не удалось принять приглашение", errorMessage);
-      return;
-    } finally {
-      setLoading(false);
-    }
-  };
+  const acceptInvite = useAcceptInvite();
 
   if (isLoading)
     return (
@@ -72,7 +31,6 @@ function InvitationPage() {
         </Card>
       </div>
     );
-
   if (error) return <ErrorMessage variant="default" />;
   if (wishlist)
     return (
@@ -84,7 +42,9 @@ function InvitationPage() {
           wlTitle={wishlist.title}
           wlOwnerId={wishlist.ownerId}
           loading={loading}
-          onAcceptInvite={onAcceptInvite}
+          onAcceptInvite={() =>
+            acceptInvite(params, setLoading, wishlist!.ownerId, wlImageURL)
+          }
         />
       </div>
     );
