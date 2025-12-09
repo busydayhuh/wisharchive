@@ -113,9 +113,10 @@ export function WishForm({
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Описание</FormLabel>
+              <FormLabel htmlFor="description">Описание</FormLabel>
               <FormControl>
                 <Textarea
+                  id="description"
                   {...field}
                   className="h-24 md:h-28 text-sm md:text-base resize-none"
                   placeholder="Добавьте описание или примечание к желанию"
@@ -130,7 +131,7 @@ export function WishForm({
           name="priority"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Приоритет</FormLabel>
+              <FormLabel htmlFor="priority">Приоритет</FormLabel>
               <PrioritySelect
                 setPriority={(value: number) => field.onChange(String(value))}
                 priority={Number(field.value)}
@@ -144,12 +145,13 @@ export function WishForm({
           name="shopURL"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Ссылка на магазин</FormLabel>
+              <FormLabel htmlFor="shopURL">Ссылка на магазин</FormLabel>
               <FormControl>
                 <Input
                   {...field}
                   className="w-full text-sm md:text-base"
                   placeholder="https://"
+                  id="shopURL"
                 />
               </FormControl>
               <FormMessage />
@@ -157,7 +159,7 @@ export function WishForm({
           )}
         />
         <div className="flex flex-col gap-2">
-          <FormLabel>Цена</FormLabel>
+          <FormLabel htmlFor="price">Цена</FormLabel>
           <div className="flex justify-between items-center gap-1 bg-secondary pr-2 focus-within:border-ring rounded-md focus-within:ring-[3px] focus-within:ring-ring/50 md:w-fit">
             <FormField
               control={form.control}
@@ -207,7 +209,9 @@ export function WishForm({
             name="wishlistId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="mb-1">Выберите вишлист</FormLabel>
+                <FormLabel className="mb-1" htmlFor="wishlistId">
+                  Выберите вишлист
+                </FormLabel>
                 <WishlistSelect
                   selectedValue={field.value}
                   onSelect={(

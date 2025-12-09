@@ -49,9 +49,9 @@ function LoginForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel htmlFor="email">Email</FormLabel>
               <FormControl>
-                <Input placeholder="example@gmail.com" {...field} />
+                <Input placeholder="example@gmail.com" {...field} id="email" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -62,9 +62,9 @@ function LoginForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Пароль</FormLabel>
+              <FormLabel htmlFor="password">Пароль</FormLabel>
               <FormControl>
-                <PassWithToggle {...field} />
+                <PassWithToggle {...field} id="password" />
               </FormControl>
               <FormMessage />
             </FormItem>

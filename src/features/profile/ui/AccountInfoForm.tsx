@@ -79,7 +79,11 @@ export function AccountInfoForm({
             <FormItem>
               <FormLabel htmlFor="password">Новый пароль</FormLabel>
               <FormControl>
-                <PassWithToggle {...field} className="text-sm md:text-base" />
+                <PassWithToggle
+                  {...field}
+                  className="text-sm md:text-base"
+                  id="password"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -102,6 +106,7 @@ export function AccountInfoForm({
                     <PassWithToggle
                       {...field}
                       className="text-sm md:text-base"
+                      id="oldPassword"
                     />
                   </FormControl>
                   <FormMessage />

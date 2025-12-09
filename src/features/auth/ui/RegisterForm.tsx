@@ -64,11 +64,11 @@ function RegisterForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
+              <FormLabel htmlFor="email">
                 Email<span className="text-destructive">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder="example@gmail.com" {...field} />
+                <Input placeholder="example@gmail.com" {...field} id="email" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -79,11 +79,11 @@ function RegisterForm() {
           name="nickname"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
+              <FormLabel htmlFor="nickname">
                 Никнейм<span className="text-destructive">*</span>
               </FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} id="nickname" />
               </FormControl>
               <FormDescription>
                 Короткое имя, по которому друзья смогут найти ваш аккаунт
@@ -97,11 +97,11 @@ function RegisterForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
+              <FormLabel htmlFor="name">
                 Полное имя<span className="text-destructive">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder="Василиса Премудрая" {...field} />
+                <Input placeholder="Василиса Премудрая" {...field} id="name" />
               </FormControl>
               <FormDescription>
                 Можно изменить в настройках аккаунта позже
@@ -115,11 +115,11 @@ function RegisterForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
+              <FormLabel htmlFor="password">
                 Пароль<span className="text-destructive">*</span>
               </FormLabel>
               <FormControl>
-                <PassWithToggle {...field} />
+                <PassWithToggle {...field} id="password" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -130,11 +130,11 @@ function RegisterForm() {
           name="confirmPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
+              <FormLabel htmlFor="confirmPassword">
                 Повторите пароль<span className="text-destructive">*</span>
               </FormLabel>
               <FormControl>
-                <PassWithToggle {...field} />
+                <PassWithToggle {...field} id="password" />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -30,11 +30,11 @@ export function WishlistFormFields({ form, roles, action }: FormFieldsProps) {
         name="title"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="gap-1 font-semibold">
+            <FormLabel className="gap-1 font-semibold" htmlFor="title">
               Название <span className="text-destructive">*</span>
             </FormLabel>
             <FormControl>
-              <Input {...field} />
+              <Input {...field} id="title" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -45,12 +45,13 @@ export function WishlistFormFields({ form, roles, action }: FormFieldsProps) {
         name="description"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Описание</FormLabel>
+            <FormLabel htmlFor="description">Описание</FormLabel>
             <FormControl>
               <Textarea
                 {...field}
                 className="rounded-xl h-24 md:h-28 resize-none"
                 placeholder="Добавьте заметку к списку"
+                id="description"
               />
             </FormControl>
             <FormMessage />
@@ -68,6 +69,7 @@ export function WishlistFormFields({ form, roles, action }: FormFieldsProps) {
                   checked={field.value}
                   onCheckedChange={field.onChange}
                   disabled={isNotOwner && action !== "create"}
+                  id="isPrivate"
                 />
               </FormControl>
               <div className="flex flex-col gap-1">
@@ -76,6 +78,7 @@ export function WishlistFormFields({ form, roles, action }: FormFieldsProps) {
                     field.value && "text-foreground",
                     "cursor-pointer"
                   )}
+                  htmlFor="isPrivate"
                 >
                   Секретный список
                 </FormLabel>

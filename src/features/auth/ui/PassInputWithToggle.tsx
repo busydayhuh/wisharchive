@@ -4,7 +4,10 @@ import { Eye, EyeClosed } from "lucide-react";
 import { useState } from "react";
 import type { ControllerRenderProps } from "react-hook-form";
 
-type PassWithToggleProps = ControllerRenderProps & { className?: string };
+type PassWithToggleProps = ControllerRenderProps & {
+  className?: string;
+  id?: string;
+};
 
 export function PassWithToggle(props: PassWithToggleProps) {
   const [passVisible, setPassVisible] = useState(false);

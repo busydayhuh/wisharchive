@@ -146,6 +146,7 @@ export function PersonalInfoForm({
                   value={field.value ?? ""}
                   className="h-24 md:h-28 text-sm md:text-base resize-none"
                   placeholder="Расскажите о себе"
+                  id="bio"
                 />
               </FormControl>
               <FormDescription>Макс. 150 символов</FormDescription>
