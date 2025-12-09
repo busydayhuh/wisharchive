@@ -8,10 +8,9 @@ const Navigation = memo(function Navigation() {
 
   const styles = ({ isActive }: { isActive: boolean }) =>
     cn(
-      "px-2 py-1 text-sm transition",
+      "hover:bg-transparent px-2 py-1 font-semibold text-muted-foreground hover:text-foreground text-sm transition-all duration-300",
       isActive &&
-        "pointer-events-none border-b-3 border-b-foreground font-semibold",
-      !isActive && "hover:bg-ring/20 text-muted-foreground font-semibold"
+        "pointer-events-none border-b-3 border-b-foreground text-foreground"
     );
 
   if (userId)
