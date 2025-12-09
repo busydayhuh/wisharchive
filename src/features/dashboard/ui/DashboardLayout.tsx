@@ -21,7 +21,7 @@ export function DashboardLayout({
         localStorageKey={meta.localStorageKey}
         key={meta.dashboardType}
       >
-        <div className="relative px-1 md:px-0">
+        <div className="relative space-y-2 md:space-y-0 mt-2 px-1 md:px-0">
           {header ? header : <DashboardHeader {...meta} />}
           <DashboardToolbar isOwner={meta.isDashboardOwner} />
           <ContentWrapper>{children}</ContentWrapper>

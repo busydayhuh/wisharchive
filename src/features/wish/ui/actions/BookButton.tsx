@@ -9,7 +9,7 @@ import { IconBtnWithTooltip } from "@/shared/ui/components/IconBtnWithTooltip";
 import { Toggle } from "@/shared/ui/kit/toggle";
 import { cn } from "@/shared/utils/css";
 import { cva } from "class-variance-authority";
-import { LockKeyhole, LockKeyholeOpen } from "lucide-react";
+import { Lock, LockOpenIcon } from "lucide-react";
 import { memo } from "react";
 
 const bookButtonVariants = cva(
@@ -77,7 +77,7 @@ export const BookButton = memo(function BookButton({
       aria-label={title}
       disabled={bookedBySomebody}
     >
-      {isBookedByCurrentUser ? <LockKeyholeOpen /> : <LockKeyhole />}
+      {isBookedByCurrentUser ? <LockOpenIcon /> : <Lock />}
       {title}
     </Toggle>
   );
@@ -90,7 +90,7 @@ export const BookButton = memo(function BookButton({
         className={cn(bookButtonVariants({ triggerVariant }), className)}
         onPressedChange={() => protectedAction(() => handlePress())}
       >
-        {isBookedByCurrentUser ? <LockKeyholeOpen /> : <LockKeyhole />}
+        <Lock />
       </Toggle>
     </IconBtnWithTooltip>
   );

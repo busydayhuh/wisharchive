@@ -9,6 +9,7 @@ import {
   AccordionTrigger,
 } from "@/shared/ui/kit/accordion";
 import { cn } from "@/shared/utils/css";
+import { Eye, EyeClosed } from "lucide-react";
 import { useWishlistBase } from "../model/hooks/useWishlistBase";
 import { useWishlistDialog } from "../model/store/wishlist-dialog/useWishlistDialog";
 import { BookmarkButton } from "./actions/BookmarkButton";
@@ -40,7 +41,7 @@ export function WishlistHeader({
   if (isMobile)
     return (
       <div className="space-y-4 mb-2">
-        <WishlistName title={title} isPrivate={isPrivate} />
+        <WishlistName title={title} isPrivate={isPrivate} isMobile={isMobile} />
 
         <div className="flex justify-between items-center">
           <Collaborators
@@ -72,7 +73,7 @@ export function WishlistHeader({
   return (
     <div className="space-y-4 mt-2 mb-3 lg:mb-5">
       <div className="flex justify-between items-center gap-4">
-        <WishlistName title={title} isPrivate={isPrivate} />
+        <WishlistName title={title} isPrivate={isPrivate} isMobile={isMobile} />
 
         <div className="flex items-center gap-2">
           {canEdit && (
@@ -107,22 +108,27 @@ export function WishlistHeader({
 export function WishlistName({
   title,
   isPrivate,
+  isMobile,
 }: {
   title: string;
   isPrivate: boolean;
+  isMobile: boolean;
 }) {
+  const privateText = isMobile ? <EyeClosed /> : "приватный";
+  const publicText = isMobile ? <Eye /> : "открытый";
+
   return (
     <div className="flex items-center gap-3 lg:gap-5">
-      <p className="font-headers font-bold text-2xl lg:text-3xl 2xl:text-4xl line-clamp-2 lg:line-clamp-none leading-6 lg:leading-8">
+      <p className="font-headers font-bold text-2xl lg:text-3xl 2xl:text-4xl line-clamp-2 lg:line-clamp-none">
         {title}
       </p>
       <p
         className={cn(
-          "inline-flex px-2 py-1 rounded-sm text-xs",
+          "inline-flex justify-center items-center px-1 md:px-2 py-1 rounded-full md:rounded-sm w-6 md:w-auto h-6 [&_svg]:size-3 text-xs",
           isPrivate ? "bg-pink-bg text-pink-950" : "bg-blue-bg text-blue"
         )}
       >
-        {isPrivate ? "приватный" : "публичный"}
+        {isPrivate ? privateText : publicText}
       </p>
     </div>
   );

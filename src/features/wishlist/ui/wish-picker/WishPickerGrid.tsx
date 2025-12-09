@@ -5,12 +5,12 @@ import type { WishPickerContentProps } from "./types";
 
 export function WishPickerGrid({ wishes, onPickWish }: WishPickerContentProps) {
   return (
-    <div className="gap-2.5 grid grid-cols-5 w-full max-h-[calc(100%-3rem)] overflow-scroll">
+    <div className="gap-2.5 grid grid-cols-5 w-full h-[calc(100%-3rem)] overflow-scroll">
       {wishes.map((wish) => (
         <div className="relative px-1 py-1" key={wish.$id}>
           <Checkbox
             id={wish.$id}
-            className="peer/box top-2 right-3 z-100 absolute rounded-full size-6"
+            className="peer/box top-3 right-3 z-100 absolute rounded-full size-6"
             onCheckedChange={(checked) => {
               onPickWish(wish, Boolean(checked));
             }}

@@ -61,7 +61,7 @@ export const PRIVACY_ICONS = {
     </span>
   ),
   private: (
-    <span className="p-1.5 rounded-sm [&_svg]:size-3 text-pink">
+    <span className="p-1.5 rounded-sm [&_svg]:size-3 text-foreground">
       <EyeClosed className="stroke-[2px]" />
     </span>
   ),

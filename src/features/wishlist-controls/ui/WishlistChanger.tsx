@@ -73,7 +73,7 @@ export function WishlistChanger({
             </div>
           )}
           title="Выберите список"
-          triggerClassName="h-10 bg-secondary rounded-r-md rounded-l-none flex items-center justify-center md:pl-0 py-5 px-2 md:pr-2 hover:bg-secondary/90"
+          triggerClassName="h-10 bg-secondary rounded-r-md rounded-l-none flex items-center justify-center md:pl-0 py-5 px-2 md:pr-2 hover:bg-secondary/90 focus-visible:ring-0 focus-visible:border-0"
           contentClassName={cn("max-h-md", variant === "dashboard" && "w-xs")}
         />
       </div>

@@ -6,10 +6,9 @@ import {
 import { BookmarkButton, EditWishlistButton } from "@/features/wishlist";
 import "@/shared/assets/custom.css";
 import type { WishlistDocumentType } from "@/shared/types";
-import { RoleBadge } from "@/shared/ui/components/Badges";
+import { PRIVACY_ICONS, RoleBadge } from "@/shared/ui/components/Badges";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
-import { EyeClosed } from "lucide-react";
 import { useMemo } from "react";
 import { Link } from "react-router";
 import { WishlistTiles } from "./WishlistTiles";
@@ -40,7 +39,7 @@ function WishlistRowImage({ wishlist, meta }: WishlistRowProps) {
       <WishlistTiles wishes={wishlist.wishes} variant="table" />
       {wishlist.isPrivate && (
         <div className="top-4 left-0 absolute flex justify-center items-center bg-pink-bg rounded-full w-6 md:w-8 h-6 md:h-8 overflow-clip">
-          <EyeClosed className="size-3" />
+          {PRIVACY_ICONS.private}
         </div>
       )}
     </Link>
