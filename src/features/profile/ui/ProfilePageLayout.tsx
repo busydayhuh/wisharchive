@@ -1,7 +1,6 @@
 import type { UserDocumentType } from "@/shared/types";
 import type { UpdateUserCache } from "../profile.page";
 import { AccountInfoForm } from "./AccountInfoForm";
-import DeleteAccountSection from "./DeleteAccountSection";
 import { PersonalInfoForm } from "./PersonalInfoForm";
 import { UserInfoHeader } from "./UserInfoHeader";
 
@@ -36,7 +35,7 @@ export function ProfilePageLayout({
             email={profileInfo.userEmail}
             userDocumentId={profileInfo.$id}
           />
-          <DeleteAccountSection />
+          {/* <DeleteAccountSection /> */}
         </div>
       </div>
     </div>

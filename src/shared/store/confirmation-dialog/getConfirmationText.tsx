@@ -64,6 +64,17 @@ export function getConfirmationText(
       ),
       actionText: isActive ? "Вернуть" : "Переместить",
     },
+
+    deactivate: {
+      title: "Блокировка аккаунта",
+      description: (
+        <p>
+          Ваш аккаунт будет заблокирован и вы будете перенаправлены на страницу
+          входа в Wisharchive. Вы уверены, что хотите продолжить?
+        </p>
+      ),
+      actionText: "Удалить аккаунт",
+    },
   };
 
   return map[action];

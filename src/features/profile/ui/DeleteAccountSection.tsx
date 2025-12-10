@@ -1,4 +1,9 @@
-import { notifyError } from "@/shared/entities/errors/notify";
+import { useAuth } from "@/features/auth";
+import {
+  notifyError,
+  notifySuccessSimple,
+} from "@/shared/entities/errors/notify";
+import { useConfirmationDialog } from "@/shared/store/confirmation-dialog/useConfirmationDialog";
 import { Button } from "@/shared/ui/kit/button";
 import { Checkbox } from "@/shared/ui/kit/checkbox";
 import { Label } from "@/shared/ui/kit/label";
@@ -7,15 +12,27 @@ import { useState } from "react";
 import useProfileMutations from "../model/useProfileMutations";
 
 function DeleteAccountSection() {
-  const { deleteProfile } = useProfileMutations();
   const [confirmation, setConfirmation] = useState(false);
 
-  const onDelete = async () => {
-    const { ok } = await deleteProfile();
+  const { deleteProfile } = useProfileMutations();
+  const { initSession } = useAuth();
+  const { openConfDialog } = useConfirmationDialog();
 
-    if (!ok) {
-      notifyError("Не удалось удалить аккаунт");
-    }
+  const onDelete = async () => {
+    openConfDialog({
+      onConfirm: async () => {
+        const { ok } = await deleteProfile();
+
+        if (!ok) {
+          notifyError("Не удалось удалить аккаунт");
+          return;
+        }
+
+        notifySuccessSimple("Аккаунт заблокирован");
+        initSession();
+      },
+      action: "deactivate",
+    });
   };
 
   return (

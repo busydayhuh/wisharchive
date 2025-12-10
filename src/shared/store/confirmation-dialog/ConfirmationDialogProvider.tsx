@@ -3,7 +3,7 @@ import { useCallback, useState, type ReactNode } from "react";
 import { ConfirmationDialogContext } from "./Context";
 import { getConfirmationText } from "./getConfirmationText";
 
-export type Action = "delete" | "archive" | "book" | "edit";
+export type Action = "delete" | "archive" | "book" | "edit" | "deactivate";
 
 export type OpenConfDialogProps = {
   action?: Action;
