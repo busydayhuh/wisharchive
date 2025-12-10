@@ -124,6 +124,11 @@ export const router = createBrowserRouter([
             lazy: () => import("@/features/auth/signup.page"),
             HydrateFallback: DefaultLoader,
           },
+          {
+            path: ROUTES.RECOVERY,
+            lazy: () => import("@/features/auth/recovery.page"),
+            HydrateFallback: DefaultLoader,
+          },
         ],
       },
       { path: "/not-found", element: <NotFound /> },
