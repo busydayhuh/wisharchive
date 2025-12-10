@@ -6,7 +6,12 @@ export function useAppLocation() {
 
   const loginArea = Boolean(
     matchRoutes(
-      [{ path: ROUTES.HOME }, { path: ROUTES.LOGIN }, { path: ROUTES.SIGNUP }],
+      [
+        { path: ROUTES.HOME },
+        { path: ROUTES.LOGIN },
+        { path: ROUTES.SIGNUP },
+        { path: ROUTES.RECOVERY },
+      ],
       pathname
     )
   );

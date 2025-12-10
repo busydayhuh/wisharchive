@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { href, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { useAuth } from "../model/authContext";
+import { ForgotPassDialog } from "./ForgotPassDialog";
 import { PassWithToggle } from "./PassInputWithToggle";
 
 const formSchema = z.object({
@@ -42,46 +43,55 @@ function LoginForm() {
   };
 
   return (
-    <Form {...form}>
-      <form className="space-y-4" onSubmit={form.handleSubmit(onLogin)}>
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel htmlFor="email">Email</FormLabel>
-              <FormControl>
-                <Input placeholder="example@gmail.com" {...field} id="email" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+    <div className="relative">
+      <Form {...form}>
+        <form className="space-y-4" onSubmit={form.handleSubmit(onLogin)}>
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel htmlFor="email">Email</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="example@gmail.com"
+                    {...field}
+                    id="email"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel htmlFor="password">Пароль</FormLabel>
+                <FormControl>
+                  <PassWithToggle {...field} id="password" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {form.formState.errors && (
+            <div className="text-destructive text-sm">
+              {form.formState.errors.root?.message}
+            </div>
           )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel htmlFor="password">Пароль</FormLabel>
-              <FormControl>
-                <PassWithToggle {...field} id="password" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        {form.formState.errors && (
-          <div className="text-destructive text-sm">
-            {form.formState.errors.root?.message}
-          </div>
-        )}
-        <SubmitBtn
-          isSubmitting={form.formState.isSubmitting}
-          text="Войти"
-          className="px-6"
-        />
-      </form>
-    </Form>
+          <SubmitBtn
+            isSubmitting={form.formState.isSubmitting}
+            text="Войти"
+            className="px-6"
+          />
+        </form>
+      </Form>
+      <div className="right-0 bottom-1 absolute w-fit">
+        <ForgotPassDialog />
+      </div>
+    </div>
   );
 }
 

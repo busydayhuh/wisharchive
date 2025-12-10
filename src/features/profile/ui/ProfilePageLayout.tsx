@@ -13,7 +13,7 @@ export function ProfilePageLayout({
 }) {
   return (
     <div className="space-y-6 lg:space-y-10 mx-auto mt-3 lg:mt-0 mb-6">
-      <p className="px-2 lg:px-0 font-bold text-2xl md:text-3xl lg:text-4xl">
+      <p className="px-2 lg:px-0 font-headers font-bold text-2xl md:text-3xl lg:text-4xl">
         Редактировать профиль
       </p>
 

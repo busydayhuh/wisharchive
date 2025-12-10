@@ -18,15 +18,15 @@ function AuthLayout({
   title: ReactNode;
   description: ReactNode;
   form: ReactNode;
-  footerText: ReactNode;
+  footerText?: ReactNode;
 }) {
   return (
     <GradientBg>
       <div className="grid grid-cols-1 lg:grid-cols-2 w-full h-screen">
         <div className="flex justify-center items-center bg-background">
           <Card className="bg-background shadow-none border-0 w-full max-w-xl">
-            <CardHeader>
-              <CardTitle className="font-bold text-2xl lg:text-3xl">
+            <CardHeader className="space-y-1.5">
+              <CardTitle className="font-headers font-bold text-2xl lg:text-4xl">
                 {title}
               </CardTitle>
               <CardDescription className="text-sm">
@@ -34,11 +34,13 @@ function AuthLayout({
               </CardDescription>
             </CardHeader>
             <CardContent>{form}</CardContent>
-            <CardFooter>
-              <div className="flex items-baseline mt-20 [&_button]:px-2 text-sm">
-                {footerText}
-              </div>
-            </CardFooter>
+            {footerText && (
+              <CardFooter>
+                <div className="flex items-baseline mt-20 [&_button]:px-2 text-sm">
+                  {footerText}
+                </div>
+              </CardFooter>
+            )}
           </Card>
         </div>
       </div>
