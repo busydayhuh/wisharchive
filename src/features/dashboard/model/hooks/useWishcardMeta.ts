@@ -2,7 +2,12 @@ import type { AccessRoles } from "@/features/collaborators";
 import { useWishNavigation } from "@/features/wish";
 import { useAppLocation } from "@/shared/hooks/useAppLocation";
 import { useIsMobile } from "@/shared/hooks/useIsMobile";
-import type { LinkParams, WishDocumentType } from "@/shared/types";
+import { useUser } from "@/shared/hooks/user/useUser";
+import type {
+  LinkParams,
+  UserDocumentType,
+  WishDocumentType,
+} from "@/shared/types";
 import { useRoles } from "../store/access/useRoles";
 
 export type WishcardMeta = {
@@ -13,6 +18,7 @@ export type WishcardMeta = {
   onBookedPage: boolean;
   userRoles: AccessRoles;
   isMobile: boolean;
+  owner?: UserDocumentType;
 };
 
 export function useWishcardMeta(wish: WishDocumentType): WishcardMeta {
@@ -21,6 +27,7 @@ export function useWishcardMeta(wish: WishDocumentType): WishcardMeta {
   const { page } = useAppLocation();
   const showOwner = page.list || page.booked;
   const isMobile = useIsMobile();
+  const { user: owner } = useUser(wish.ownerId);
 
   return {
     linkParams,
@@ -30,5 +37,6 @@ export function useWishcardMeta(wish: WishDocumentType): WishcardMeta {
     onBookedPage: page.booked,
     userRoles,
     isMobile,
+    owner,
   };
 }

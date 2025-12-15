@@ -15,9 +15,11 @@ export function useMembership(teamId?: string, membershipId?: string) {
     [membershipId, teamId]
   );
 
-  const { data: membership } = useSWR(key, ([, teamId, membershipId]) =>
-    fetcher(teamId, membershipId)
-  );
+  const {
+    data: membership,
+    isLoading,
+    error,
+  } = useSWR(key, ([, teamId, membershipId]) => fetcher(teamId, membershipId));
 
-  return { membership };
+  return { membership, isLoading, error };
 }

@@ -10,7 +10,7 @@ import { WishGalleryCover } from "./WishGalleryCover";
 
 function WishGalleryCard({ wish }: { wish: WishDocumentType }) {
   const meta = useWishcardMeta(wish);
-  const { userRoles, linkParams, showOwner } = meta;
+  const { userRoles, linkParams, showOwner, owner } = meta;
 
   return (
     <div
@@ -52,11 +52,11 @@ function WishGalleryCard({ wish }: { wish: WishDocumentType }) {
         )}
       </Link>
       <div className="flex justify-between items-center gap-1">
-        {showOwner && (
+        {showOwner && owner && (
           <OwnerAvatar
-            userId={wish.ownerId}
-            userName={wish.owner.userName}
-            avatarURL={wish.owner.avatarURL}
+            userId={owner.userId}
+            userName={owner.userName}
+            avatarURL={owner.avatarURL}
             className="[&_.owner-name]:hidden lg:[&_.owner-name]:inline text-xs md:text-sm"
           />
         )}

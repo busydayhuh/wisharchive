@@ -56,7 +56,7 @@ export function useWishMutations() {
           keyword: "wishes",
         });
 
-        await revalidate("wishes");
+        //await revalidate("wishes");
         return { ok: true, response: newWish };
       } catch (error) {
         return handleError(error);

@@ -109,17 +109,17 @@ function WishRowPriority({ priority }: { priority: "0" | "1" | "2" }) {
 }
 
 function WishRowAdditionalInfo({ wish, meta }: RowProps) {
-  const { showOwner } = meta;
+  const { showOwner, owner } = meta;
   return (
     <div
       className="hidden lg:flex justify-center"
       style={{ gridArea: "additional" }}
     >
-      {showOwner ? (
+      {showOwner && owner ? (
         <OwnerAvatar
-          userId={wish.ownerId}
-          userName={wish.owner.userName}
-          avatarURL={wish.owner.avatarURL}
+          userId={owner.ownerId}
+          userName={owner.userName}
+          avatarURL={owner.avatarURL}
         />
       ) : (
         wish.shopURL && <ShopBadge shopURL={wish.shopURL} />

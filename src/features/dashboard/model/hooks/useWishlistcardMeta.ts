@@ -13,6 +13,7 @@ export type WishlistcardMeta = {
   collabsError?: Error;
   userRoles: AccessRoles;
   onSharedPage: boolean;
+  inBookmarks: boolean;
   openWishlistEditor: () => void;
 };
 
@@ -32,6 +33,7 @@ export function useWishlistcardMeta(
     ...base,
     userRoles: roles,
     onSharedPage: page.shared,
+    inBookmarks: page.bookmarks,
     openWishlistEditor,
   };
 }

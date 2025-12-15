@@ -19,6 +19,7 @@ export function useWishlistOptions(selectedValue: string | null) {
     "all",
     userId
   );
+
   const optionValue = useMemo(() => selectedValue ?? "none", [selectedValue]);
   const options: WishlistOption[] = useMemo(
     () => [

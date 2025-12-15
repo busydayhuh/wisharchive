@@ -55,7 +55,11 @@ export const BookButton = memo(function BookButton({
           notifyError("Не удалось забронировать желание");
           return;
         }
-        notifySuccessExpanded("Хочу подарить", wishTitle, imageURL);
+        notifySuccessExpanded(
+          isBookedByCurrentUser ? "Бронь отменена" : "Хочу подарить",
+          wishTitle,
+          imageURL
+        );
       },
       action: "book",
       isActive: isBookedByCurrentUser,

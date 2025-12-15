@@ -43,7 +43,7 @@ export function OwnerInfoPopover({
 
   const content = (
     <div className="space-y-4">
-      <p className="font-headers font-semibold text-muted-foreground text-xs">
+      <p className="px-2 font-semibold text-muted-foreground text-xs">
         Вы вошли как
       </p>
       <div className="flex items-center gap-4 px-2">
@@ -59,12 +59,12 @@ export function OwnerInfoPopover({
         </div>
       </div>
       <div className="grid">
-        <p className="mb-2 font-semibold text-muted-foreground text-xs">
+        <p className="mb-2 px-2 font-semibold text-muted-foreground text-xs">
           Профиль
         </p>
         <Link
           to={ROUTES.PROFILE}
-          className="hover:bg-accent px-2 py-1.5 rounded-sm w-full font-medium text-sm"
+          className="hover:bg-accent px-2 py-1.5 rounded-sm w-full text-sm"
           onClick={() => setOpen(false)}
         >
           Редактировать
@@ -74,7 +74,7 @@ export function OwnerInfoPopover({
             pathname: href(ROUTES.WISHES, { userId: id }),
             search: "?view=profile",
           }}
-          className="hover:bg-accent px-2 py-1.5 rounded-sm w-full font-medium text-sm"
+          className="hover:bg-accent px-2 py-1.5 rounded-sm w-full text-sm"
           onClick={() => setOpen(false)}
         >
           На страницу профиля

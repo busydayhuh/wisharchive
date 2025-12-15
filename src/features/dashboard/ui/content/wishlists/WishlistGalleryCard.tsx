@@ -4,6 +4,7 @@ import { BookmarkButton, EditWishlistButton } from "@/features/wishlist";
 import { useIsMobile } from "@/shared/hooks/useIsMobile";
 import type { WishlistDocumentType } from "@/shared/types";
 import { RoleBadge } from "@/shared/ui/components/Badges";
+import OwnerAvatar from "@/shared/ui/components/OwnerAvatar";
 import { EyeClosed } from "lucide-react";
 import { Link } from "react-router-dom";
 import { WishlistTiles } from "./WishlistTiles";
@@ -17,6 +18,7 @@ function WishlistGalleryCard({ wishlist }: { wishlist: WishlistDocumentType }) {
     openWishlistEditor,
     userRoles,
     linkParams,
+    inBookmarks,
   } = useWishlistcardMeta(wishlist);
 
   const isMobile = useIsMobile();
@@ -58,13 +60,23 @@ function WishlistGalleryCard({ wishlist }: { wishlist: WishlistDocumentType }) {
           </p>
 
           {/* Соавторы */}
-          {collaborators && (
-            <CollaboratorsGroup
-              collaborators={collaborators}
+          {inBookmarks ? (
+            <OwnerAvatar
+              userId={wishlist.ownerId}
+              userName={wishlist.owner.userName}
+              avatarURL={wishlist.owner.avatarURL}
               size="sm"
-              maxVisible={3}
-              hideOwner={true}
+              className="[&_.owner-name]:hidden"
             />
+          ) : (
+            collaborators && (
+              <CollaboratorsGroup
+                collaborators={collaborators}
+                size="sm"
+                maxVisible={3}
+                hideOwner={true}
+              />
+            )
           )}
         </div>
       </Link>

@@ -25,7 +25,7 @@ function WishesPage() {
   useInfiniteScroll({
     loadMore: () => setSize(size + 1),
     disabled: isValidating || reachedEnd,
-    offset: 0,
+    offset: 200,
   });
 
   return (

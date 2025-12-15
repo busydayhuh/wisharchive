@@ -9,7 +9,7 @@ type UseInfiniteScrollOptions = {
 export function useInfiniteScroll({
   loadMore,
   disabled = false,
-  offset = 0,
+  offset = 200,
 }: UseInfiniteScrollOptions) {
   useEffect(() => {
     if (disabled) return;

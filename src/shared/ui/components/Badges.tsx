@@ -45,7 +45,7 @@ export const ROLES = {
   editor: {
     title: "редактор",
     icon: <Pencil />,
-    colors: "bg-pink-bg text-pink-900",
+    colors: "bg-pink-bg text-pink",
   },
   owner: {
     title: "владелец",
@@ -156,7 +156,7 @@ export function WishlistBadge({
       )}
     >
       {isPrivate && <EyeClosed />}
-      <span className="max-w-[20ch] truncate">{title}</span>
+      <span className="max-w-[16ch] truncate">{title}</span>
     </Link>
   );
 }

@@ -103,8 +103,7 @@ function usePatchWishlistCache(targetWishlistId: string) {
         };
       };
 
-      updateSWRCache("wishlists", wishlistsUpdater);
-      updateSWRCache(`wishlist+${targetWishlistId}`, (wishes) => {
+      const wishlistContentUpdater: OptimisticUpdater = (wishes) => {
         const filteredWishes = wishes.filter((w) => !pickedIds.includes(w.$id));
         const addedWishes = pickedWishes.map((w) => ({
           ...w,
@@ -112,7 +111,11 @@ function usePatchWishlistCache(targetWishlistId: string) {
           wishlistId: targetWishlistId,
         }));
         return [...filteredWishes, ...addedWishes];
-      });
+      };
+
+      updateSWRCache("wishlists", wishlistsUpdater);
+      updateSWRCache(`wishlist+${targetWishlistId}`, wishlistContentUpdater);
+
       mutate(targetWishlistId, (wl) => (wl ? wishlistDocUpdater(wl) : wl), {
         rollbackOnError: true,
         revalidate: false,
