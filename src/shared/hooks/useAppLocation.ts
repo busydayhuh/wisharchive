@@ -18,6 +18,7 @@ export function useAppLocation() {
   const page = {
     list: Boolean(useMatch(ROUTES.WISHLIST)),
     booked: Boolean(useMatch(ROUTES.BOOKED)),
+    bookmarks: Boolean(useMatch(ROUTES.BOOKMARKS)),
     shared: Boolean(useMatch(ROUTES.SHARED)),
     wish: Boolean(useMatch(ROUTES.WISH)),
     edit: Boolean(useMatch(ROUTES.EDIT)),
