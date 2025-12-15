@@ -65,7 +65,7 @@ const team: TeamApiType = {
   addEditor: (teamId, email, userId) =>
     teams.createMembership(
       teamId,
-      ["editors", "readers"],
+      ["editors"],
       email,
       userId,
       undefined,
