@@ -5,10 +5,13 @@ import {
   handleError,
   type ResponseType,
 } from "@/shared/entities/errors/handleError";
+import { clearLocalFilters } from "@/shared/hooks/useLocalStorage";
 import { useRevalidateSWR } from "@/shared/hooks/useRevalidateSWR";
+import { useUpdateSWRCache } from "@/shared/hooks/useUpdateSWRCache";
 import { type Models } from "appwrite";
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -54,6 +57,7 @@ export function useAuth() {
 export function UserProvider(props: { children: ReactNode }) {
   const navigate = useNavigate();
   const { revalidate } = useRevalidateSWR();
+  const { clearCache } = useUpdateSWRCache();
 
   const [session, setSession] = useState<Session>(null);
   const [user, setUser] = useState<User>(null);
@@ -66,6 +70,7 @@ export function UserProvider(props: { children: ReactNode }) {
       );
       setSession(loggedIn);
       init();
+      revalidate("currentUserTeams");
 
       return { ok: true };
     } catch (error) {
@@ -78,6 +83,9 @@ export function UserProvider(props: { children: ReactNode }) {
       await appwriteService.account.deleteSession("current");
       setSession(null);
       setUser(null);
+
+      clearCache();
+      clearLocalFilters();
 
       navigate("/login");
 
@@ -103,7 +111,6 @@ export function UserProvider(props: { children: ReactNode }) {
       });
 
       await login(data);
-      revalidate("users");
 
       return { ok: true };
     } catch (error) {
@@ -111,18 +118,18 @@ export function UserProvider(props: { children: ReactNode }) {
     }
   }
 
-  async function init() {
+  const init = useCallback(async () => {
     try {
       const loggedIn = await appwriteService.account.get();
       setUser(loggedIn);
     } catch {
       setUser(null);
     }
-  }
+  }, []);
 
   useEffect(() => {
     init();
-  }, []);
+  }, [init]);
 
   return (
     <UserContext.Provider
