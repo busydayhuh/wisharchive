@@ -12,7 +12,6 @@ type GlobalSearchParams = {
 
 async function fetcher(category: Category, queries: string[]) {
   const response = await db[category].list(queries);
-
   return response.documents;
 }
 
@@ -20,12 +19,12 @@ export function useGlobalSearch(searchParams: GlobalSearchParams) {
   const { userId } = useAuth();
 
   const queries =
-    searchParams.search !== undefined
+    searchParams.search !== undefined && userId
       ? getGlobalQueries(searchParams, userId)
       : null;
   const key =
     searchParams.search !== undefined && queries
-      ? ["global", stableStringify(searchParams)]
+      ? ["global", stableStringify(searchParams), userId]
       : null;
 
   const {
