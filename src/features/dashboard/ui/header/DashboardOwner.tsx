@@ -4,10 +4,9 @@ import { UserAvatar } from "@/shared/ui/components/UserAvatar";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
 import { cn } from "@/shared/utils/css";
 import { Ghost, Meh } from "lucide-react";
-import { memo } from "react";
 import { OwnerInfoPopover } from "./OwnerInfoPopover";
 
-const DashboardOwner = memo(function DashboardOwner({
+function DashboardOwner({
   userId,
   isOwner,
   className,
@@ -19,20 +18,7 @@ const DashboardOwner = memo(function DashboardOwner({
   const { user, isLoading, error } = useUser(userId);
   const { hasSearchParams: profileView } = useAppLocation();
 
-  if (isLoading)
-    return isOwner ? (
-      <Skeleton className="rounded-full size-12" />
-    ) : (
-      <div className="flex items-center gap-3">
-        <Skeleton className="rounded-full size-12" />
-        <div className="space-y-1">
-          <Skeleton className="w-36 h-6" />
-          <Skeleton className="w-30 h-6" />
-        </div>
-      </div>
-    );
-
-  if (error || !user)
+  if (error)
     return isOwner ? (
       <div className="place-content-center grid bg-muted/80 rounded-full size-12">
         <Meh className="text-muted-foreground" />
@@ -45,6 +31,19 @@ const DashboardOwner = memo(function DashboardOwner({
         <p className="font-semibold text-lg md:text-2xl truncate leading-tight">
           Пользователь не найден
         </p>
+      </div>
+    );
+
+  if (isLoading || !user)
+    return isOwner ? (
+      <Skeleton className="rounded-full size-12" />
+    ) : (
+      <div className="flex flex-col items-center gap-3">
+        <Skeleton className="rounded-full size-12" />
+        <div className="flex flex-col justify-center items-center gap-1">
+          <Skeleton className="w-36 h-6" />
+          <Skeleton className="w-30 h-6" />
+        </div>
       </div>
     );
 
@@ -88,6 +87,6 @@ const DashboardOwner = memo(function DashboardOwner({
         email={user.userEmail}
       />
     );
-});
+}
 
 export default DashboardOwner;

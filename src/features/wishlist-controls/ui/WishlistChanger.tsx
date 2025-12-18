@@ -42,40 +42,39 @@ export function WishlistChanger({
   if (isLoading) return <Skeleton className={cn("w-32 h-10", className)} />;
   if (error) return null;
 
-  if (wishlists)
-    return (
-      <div
-        className={cn("flex items-center rounded-md overflow-clip", className)}
+  return (
+    <div
+      className={cn("flex items-center rounded-md overflow-clip", className)}
+    >
+      <button
+        className={cn(
+          "flex items-center gap-1.5 bg-secondary hover:bg-secondary/90 shadow-none px-1.5 py-1 pr-2 border-r-1 border-r-border/60 rounded-l-md h-10 font-normal",
+          selectedOption?.value !== "none"
+            ? "cursor-pointer"
+            : "text-muted-foreground"
+        )}
+        onClick={goToWishlist}
       >
-        <button
-          className={cn(
-            "flex items-center gap-1.5 bg-secondary hover:bg-secondary/90 shadow-none px-1.5 py-1 pr-2 border-r-1 border-r-border/60 rounded-l-md h-10 font-normal",
-            selectedOption?.value !== "none"
-              ? "cursor-pointer"
-              : "text-muted-foreground"
-          )}
-          onClick={goToWishlist}
-        >
-          {selectedOption?.icon}
-          <span className="max-w-[10ch] truncate">{selectedOption?.label}</span>
-        </button>
+        {selectedOption?.icon}
+        <span className="max-w-[10ch] truncate">{selectedOption?.label}</span>
+      </button>
 
-        <ResponsiveSelect
-          selectedValue={optionValue}
-          onSelect={(value) => {
-            const selectedList = wishlists?.find((wl) => wl.$id === value);
-            onSelect(value, selectedList);
-          }}
-          options={options}
-          renderSelected={() => (
-            <div className="md:hidden">
-              <ChevronDown className="size-4 text-muted-foreground" />
-            </div>
-          )}
-          title="Выберите список"
-          triggerClassName="h-10 bg-secondary rounded-r-md rounded-l-none flex items-center justify-center md:pl-0 py-5 px-2 md:pr-2 hover:bg-secondary/90 focus-visible:ring-0 focus-visible:border-0"
-          contentClassName={cn("max-h-md", variant === "dashboard" && "w-xs")}
-        />
-      </div>
-    );
+      <ResponsiveSelect
+        selectedValue={optionValue}
+        onSelect={(value) => {
+          const selectedList = wishlists?.find((wl) => wl.$id === value);
+          onSelect(value, selectedList);
+        }}
+        options={options}
+        renderSelected={() => (
+          <div className="md:hidden">
+            <ChevronDown className="size-4 text-muted-foreground" />
+          </div>
+        )}
+        title="Выберите список"
+        triggerClassName="h-10 bg-secondary rounded-r-md rounded-l-none flex items-center justify-center md:pl-0 py-5 px-2 md:pr-2 hover:bg-secondary/90 focus-visible:ring-0 focus-visible:border-0"
+        contentClassName={cn("max-h-md", variant === "dashboard" && "w-2xs")}
+      />
+    </div>
+  );
 }

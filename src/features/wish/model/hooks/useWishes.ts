@@ -15,6 +15,7 @@ type QueryFilters = {
   archived?: boolean;
   sort: SortState;
   filters: Filter[] | [];
+  limit?: number;
 };
 
 const QUANTITY_LIMIT = 10;
@@ -65,7 +66,7 @@ export function useWishes(
 }
 
 function getWishQueries(filters: QueryFilters): string[] {
-  const queries: string[] = [Query.limit(QUANTITY_LIMIT)];
+  const queries: string[] = [Query.limit(filters.limit || QUANTITY_LIMIT)];
   const toolbarFilters =
     filters.filters && filters.filters.length > 0 ? filters.filters : null;
 

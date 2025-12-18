@@ -270,7 +270,7 @@ function SidebarTrigger({
         className,
         isMobile && "has-[>svg]:px-0",
         !isMobile &&
-          "rounded-full rounded-tl-none rounded-bl-none bg-sidebar text-sidebar-foreground"
+          "rounded-full rounded-tl-none rounded-bl-none bg-sidebar text-sidebar-foreground p-1.5"
       )}
       onClick={(event) => {
         onClick?.(event);
@@ -280,10 +280,14 @@ function SidebarTrigger({
     >
       {isMobile ? (
         <Menu className="size-4 text-muted-foreground" />
-      ) : state === "collapsed" ? (
-        <ChevronRight className="size-3" />
       ) : (
-        <ChevronLeft className="size-3" />
+        <div className="flex justify-center items-center bg-sidebar-accent rounded-full size-5 text-sidebar-accent-foreground">
+          {state === "collapsed" ? (
+            <ChevronRight className="size-3" />
+          ) : (
+            <ChevronLeft className="size-3" />
+          )}
+        </div>
       )}
       <span className="sr-only">Открыть/закрыть меню</span>
     </Button>

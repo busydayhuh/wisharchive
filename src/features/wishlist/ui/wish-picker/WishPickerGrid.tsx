@@ -21,7 +21,7 @@ export function WishPickerGrid({ wishes, onPickWish }: WishPickerContentProps) {
               htmlFor={wish.$id}
               className="peer-data-[state=checked]/box:[&_.image]:outline-3 peer-data-[state=checked]/box:[&_.image]:outline-foreground"
             >
-              <div className="gap-1 grid">
+              <div className="gap-1 grid w-full h-full">
                 <div className="rounded-3xl image">
                   <WishImage
                     wishId={wish.$id}

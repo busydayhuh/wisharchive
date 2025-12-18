@@ -41,6 +41,7 @@ export function useWishlists(
     previousPageData: Models.Document[] | null
   ) => {
     if (!filters) return null;
+    if (filters.teams && filters.teams.length === 0) return null;
 
     // дошли до конца
     if (previousPageData && previousPageData.length === 0) return null;

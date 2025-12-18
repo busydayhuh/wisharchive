@@ -3,7 +3,6 @@ import { GlobalSearchDialog } from "@/features/global-search";
 import { useAppLocation } from "@/shared/hooks/useAppLocation";
 import { useIsMobile } from "@/shared/hooks/useIsMobile";
 import { cn } from "@/shared/utils/css";
-import { memo } from "react";
 import Navigation from "../toolbar/Navigation";
 import DashboardOwner from "./DashboardOwner";
 
@@ -13,7 +12,7 @@ type DashboardHeaderProps = {
   isDashboardOwner: boolean;
 };
 
-const DashboardHeader = memo(function DashboardHeader({
+function DashboardHeader({
   dashboardHeader,
   dashboardOwnerId,
   isDashboardOwner = true,
@@ -58,6 +57,6 @@ const DashboardHeader = memo(function DashboardHeader({
       </div>
     </div>
   );
-});
+}
 
 export default DashboardHeader;

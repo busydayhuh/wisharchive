@@ -64,6 +64,7 @@ export function useWishlistMutations() {
         });
 
         await revalidate("wishlists");
+        revalidate("currentUserTeams");
         return { ok: true, response: newWishlist };
       } catch (error) {
         return handleError(error);

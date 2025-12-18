@@ -15,7 +15,6 @@ function App() {
   const { isLoggedIn } = useAuth();
   const { loginArea } = useAppLocation();
   const isMobile = useIsMobile();
-
   const isLoading = useNavigation().state === "loading";
 
   return (

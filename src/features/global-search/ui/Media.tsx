@@ -12,7 +12,7 @@ export function Media({
     return (
       <UserAvatar
         size="md"
-        avatarURL={item.avatarURL}
+        avatarURL={item.avatarURL ?? undefined}
         name={item.userName}
         id={item.userId}
       />
@@ -20,8 +20,8 @@ export function Media({
   if (category === "wishes")
     return (
       <img
-        src={item.imageURL}
-        alt={item.title[0] || ""}
+        src={item.imageURL ?? undefined}
+        alt={item.title?.[0] || ""}
         className="flex justify-center items-center bg-muted font-medium"
       />
     );
@@ -29,7 +29,7 @@ export function Media({
     return (
       <img
         src={item.wishes?.at(-1)?.imageURL}
-        alt={item.title[0] || ""}
+        alt={item.title?.[0] || ""}
         className="flex justify-center items-center bg-muted font-medium"
       />
     );

@@ -42,7 +42,7 @@ export function SearchResults({
         ))}
       </div>
     );
-  if (error)
+  if (error || (!isLoading && !results))
     return (
       <p className="flex flex-col items-center gap-1 mt-2 md:mt-4 text-muted-foreground text-sm">
         <Frown />

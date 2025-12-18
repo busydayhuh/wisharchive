@@ -49,6 +49,7 @@ export default function WishPicker({
         direction: "desc",
       },
       filters: [],
+      limit: 100,
     },
     "main-wishes",
     userId

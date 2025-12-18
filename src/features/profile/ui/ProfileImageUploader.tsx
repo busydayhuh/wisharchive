@@ -161,7 +161,7 @@ function SaveButton({
       className="rounded-2xl"
       type="button"
     >
-      {defaultState && <>Обновить аватар</>}
+      {defaultState && <>Сохранить аватар</>}
       {isLoading && (
         <>
           <Loader2 className="animate-spin" />
