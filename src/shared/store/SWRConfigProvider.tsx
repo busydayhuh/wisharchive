@@ -1,25 +1,21 @@
 import { SWRConfig } from "swr";
 
 const isProd = import.meta.env.PROD;
-
-const swrConfig = {
+const prodSWR = {
   revalidateOnFocus: false,
   revalidateOnReconnect: false,
   shouldRetryOnError: false,
-  dedupingInterval: 10 * 60 * 1000,
-  revalidateOnMount: false,
+  dedupingInterval: 10 * 60 * 1000, // 10 минут
+  focusThrottleInterval: 0,
   errorRetryCount: 0,
   revalidateIfStale: false,
 };
-
-const devConfig = {
-  ...swrConfig,
+const devSWR = {
+  ...prodSWR,
+  dedupingInterval: 60 * 60 * 1000, // 1 час
   provider: () => new Map(),
-  dedupingInterval: 60 * 60 * 1000,
 };
 
 export function SWRConfigProvider({ children }: { children: React.ReactNode }) {
-  return (
-    <SWRConfig value={isProd ? swrConfig : devConfig}>{children}</SWRConfig>
-  );
+  return <SWRConfig value={isProd ? prodSWR : devSWR}>{children}</SWRConfig>;
 }
