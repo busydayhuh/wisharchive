@@ -44,3 +44,14 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
 
   return [storedValue, setValue] as const;
 }
+
+export function clearLocalFilters() {
+  try {
+    const keysToClear = Object.keys(window.localStorage).filter(
+      (k) => k !== "vite-ui-theme"
+    );
+    keysToClear.forEach((k) => window.localStorage.removeItem(k));
+  } catch (error) {
+    console.error("Не удалось очистить localStorage", error);
+  }
+}
