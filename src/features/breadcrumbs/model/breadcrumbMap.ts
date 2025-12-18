@@ -16,11 +16,11 @@ export const breadcrumbMap: Record<string, Crumb> = {
     parents: [ROUTES.DASHBOARD],
   },
   [ROUTES.WISH]: {
-    label: (params, data) => data?.wishTitle || params.wishId || "",
+    label: (_, data) => data?.wishTitle || "Желание",
     parents: [ROUTES.WISHES, ROUTES.WISHLIST, ROUTES.BOOKED, ROUTES.ARCHIVED],
   },
   [ROUTES.WISHLIST]: {
-    label: (params, data) => data?.wlTitle || params.listId || "",
+    label: (_, data) => data?.wlTitle || "Список",
     parents: [ROUTES.WISHLISTS, ROUTES.SHARED, ROUTES.BOOKMARKS],
   },
   [ROUTES.EDIT]: {
