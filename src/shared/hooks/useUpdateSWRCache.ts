@@ -57,5 +57,10 @@ export function useUpdateSWRCache() {
     []
   );
 
-  return { updateSWRCache, addToCacheList, removeFromCacheList };
+  const clearCache = useCallback(
+    () => mutate(() => true, undefined, { revalidate: false }),
+    [mutate]
+  );
+
+  return { updateSWRCache, addToCacheList, removeFromCacheList, clearCache };
 }
