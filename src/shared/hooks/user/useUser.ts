@@ -7,7 +7,11 @@ import useSWR from "swr";
 
 async function fetcher(userId: string) {
   const response = await db.users.list([Query.equal("userId", userId)]);
+  console.log("response, userId :>> ", response, userId);
 
+  if (!response.documents.length) {
+    throw new Error("USER_NOT_READY");
+  }
   return response.documents[0] as UserDocumentType;
 }
 
@@ -17,12 +21,13 @@ export function useUser(userId?: string | null) {
     data: user,
     isLoading,
     error,
+    mutate,
   } = useSWR(key, ([, userId]) => fetcher(userId), {
-    onError: (err) => {
-      console.error("Ошибка SWR для ключа", userId, err);
-      console.trace();
-    },
+    shouldRetryOnError: true,
+    errorRetryInterval: 1000,
+    dedupingInterval: 0,
+    errorRetryCount: 3,
   });
 
-  return { user, isLoading, error };
+  return { user, isLoading, error, mutate };
 }
