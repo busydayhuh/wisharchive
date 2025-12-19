@@ -51,6 +51,7 @@
   --font-headers: "Manrope", "sans-serif";
   --font-emoji: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
     "sans-serif";
+  --font-grandis: "Grandis Extended", "sans-serif";
   --inset-shadow-base: inset 0px 0px 120px 20px var(--color-zinc-700);
   --animate-gradient-button: gradient-button 16s linear infinite;
 
@@ -211,5 +212,14 @@
 
   body {
     @apply bg-background rounded-xl font-display text-foreground leading-tight;
+  }
+
+  @font-face {
+    font-family: "Grandis Extended";
+    src: url("/src/shared/assets/fonts/GrandisExtended-Regular.woff2")
+      format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
   }
 }

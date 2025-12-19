@@ -22,13 +22,25 @@ export function Header() {
           <LogoExtended variant="default" />
         )}
       </Link>
-      <Button
-        className="rounded-3xl text-xs md:text-sm"
-        size={isMobile ? "sm" : "default"}
-        onClick={() => navigate(ROUTES.LOGIN)}
-      >
-        Войти
-      </Button>
+      <div className="flex items-center gap-2">
+        {page.home && (
+          <Button
+            className="text-xs md:text-sm"
+            variant="link"
+            size={isMobile ? "sm" : "default"}
+            onClick={() => navigate(ROUTES.SIGNUP)}
+          >
+            Регистрация
+          </Button>
+        )}
+        <Button
+          className="rounded-3xl text-xs md:text-sm"
+          size={isMobile ? "sm" : "default"}
+          onClick={() => navigate(ROUTES.LOGIN)}
+        >
+          Войти
+        </Button>
+      </div>
     </div>
   );
 }

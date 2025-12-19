@@ -13,14 +13,14 @@ import { Outlet, useNavigation } from "react-router-dom";
 
 function App() {
   const { isLoggedIn } = useAuth();
-  const { loginArea } = useAppLocation();
+  const { loginArea, page } = useAppLocation();
   const isMobile = useIsMobile();
   const isLoading = useNavigation().state === "loading";
 
   return (
     <>
       {isLoggedIn && <AppSidebar />}
-      {!loginArea && <OrionBackground />}
+      {!loginArea && !page.home && <OrionBackground />}
       <MainContainer>
         {!isLoggedIn && <Header />}
         <BreadcrumbsBar isMobile={isMobile} isUser={isLoggedIn} />
