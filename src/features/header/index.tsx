@@ -5,6 +5,7 @@ import Logo from "@/shared/ui/components/Logo";
 import LogoExtended from "@/shared/ui/components/LogoExtended";
 import { Button } from "@/shared/ui/kit/button";
 import { Link, useNavigate } from "react-router";
+import { ModeToggle } from "../sidebar";
 
 export function Header() {
   const navigate = useNavigate();
@@ -24,14 +25,17 @@ export function Header() {
       </Link>
       <div className="flex items-center gap-2">
         {page.home && (
-          <Button
-            className="text-xs md:text-sm"
-            variant="link"
-            size={isMobile ? "sm" : "default"}
-            onClick={() => navigate(ROUTES.SIGNUP)}
-          >
-            Регистрация
-          </Button>
+          <>
+            <ModeToggle withText={false} />
+            <Button
+              className="text-xs md:text-sm"
+              variant="link"
+              size={isMobile ? "sm" : "default"}
+              onClick={() => navigate(ROUTES.SIGNUP)}
+            >
+              Регистрация
+            </Button>
+          </>
         )}
         <Button
           className="rounded-3xl text-xs md:text-sm"

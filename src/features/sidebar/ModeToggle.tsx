@@ -2,7 +2,7 @@ import { Moon, Sun } from "lucide-react";
 import { useTheme } from "../../shared/store/theme/useTheme";
 import { cn } from "../../shared/utils/css";
 
-export function ModeToggle() {
+export function ModeToggle({ withText = true }) {
   const { setTheme, colorScheme, setColorScheme } = useTheme();
 
   const onThemeChange = (value: "light" | "dark") => {
@@ -10,6 +10,8 @@ export function ModeToggle() {
     setTheme(newMode);
     setColorScheme(newMode);
   };
+
+  const text = colorScheme === "dark" ? "Тёмная тема" : "Светлая тема";
 
   return (
     <div
@@ -30,7 +32,7 @@ export function ModeToggle() {
           )}
         />
       </span>
-      {colorScheme === "dark" ? "Тёмная тема" : "Светлая тема"}
+      {withText && text}
     </div>
   );
 }

@@ -34,6 +34,7 @@
   --color-indigo-bg: var(--indigo-bg);
   --color-blue: var(--blue);
   --color-blue-bg: var(--blue-bg);
+  --color-landing-circle: var(--landing-circle);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -96,6 +97,7 @@
   --indigo-bg: oklch(44.881% 0.15235 268.287);
   --blue: oklch(50.647% 0.12715 262.528);
   --blue-bg: oklch(85.238% 0.04678 263.712);
+  --landing-circle: oklch(83.03% 0.08445 279.941);
   --sidebar: oklch(89.99% 0.00325 15.484);
   --sidebar-foreground: oklch(0.2 0 0);
   --sidebar-primary: oklch(0.2 0 0);
@@ -138,6 +140,7 @@
   --indigo-bg: oklch(80.024% 0.06692 302.718);
   --blue: oklch(89.669% 0.02199 265.785);
   --blue-bg: oklch(60.355% 0.16757 262.527);
+  --landing-circle: oklch(28.021% 0.15861 267.63);
   --sidebar: oklch(0.21 0.01 285.93);
   --sidebar-foreground: oklch(0.99 0 0);
   --sidebar-primary: oklch(0.97 0 0);
