@@ -29,12 +29,12 @@ export const IMAGES: HeroImageType[] = [
     blur: true,
     position: {
       side: "",
-      full: "top-[2%] left-[28%]",
+      full: "-top-[5%] left-[20%]",
       z: "z-1",
     },
     size: {
       side: "w-[5rem] aspect-[3/4]",
-      full: "w-[10rem] aspect-[3/4]",
+      full: "w-[5rem] sm:w-[7rem] lg:w-[10rem] aspect-[3/4]",
     },
     hasButton: false,
     buttonPosition: "",
@@ -45,15 +45,15 @@ export const IMAGES: HeroImageType[] = [
     blur: false,
     position: {
       side: "",
-      full: "left-[21%] top-[30%]",
+      full: "-left-[7%] sm:left-0 md:-left-[4%] lg:left-[10%] top-[30%]",
       z: "z-5",
     },
     size: {
       side: "",
-      full: "w-[13rem] aspect-[16/19]",
+      full: "w-[7rem] sm:w-[10rem] lg:w-[13rem] aspect-[16/19]",
     },
     hasButton: true,
-    buttonPosition: "left-3 -bottom-4",
+    buttonPosition: "sm:left-3 left-1/2 -bottom-4",
   },
   {
     name: "calendar",
@@ -61,12 +61,12 @@ export const IMAGES: HeroImageType[] = [
     blur: false,
     position: {
       side: "",
-      full: "w-[10rem] aspect-square",
-      z: "",
+      full: "left-[20%] bottom-[5%] lg:bottom-[10%]",
+      z: "z-4",
     },
     size: {
       side: "",
-      full: "",
+      full: "w-[5rem] sm:w-[7rem] lg:w-[10rem] aspect-square",
     },
     hasButton: false,
     buttonPosition: "",
@@ -77,12 +77,12 @@ export const IMAGES: HeroImageType[] = [
     blur: false,
     position: {
       side: "",
-      full: "",
-      z: "",
+      full: "top-[1%] right-[28%]",
+      z: "z-2",
     },
     size: {
       side: "",
-      full: "w-[10rem] aspect-square",
+      full: "w-[5rem] sm:w-[7rem] lg:w-[10rem] aspect-square",
     },
     hasButton: true,
     buttonPosition: "right-2 -bottom-3",
@@ -93,12 +93,12 @@ export const IMAGES: HeroImageType[] = [
     blur: false,
     position: {
       side: "",
-      full: "",
-      z: "",
+      full: "lg:right-[8%] -right-0 top-[20%]",
+      z: "z-1",
     },
     size: {
       side: "",
-      full: "w-[17rem] aspect-[5/4]",
+      full: "w-[8rem] sm:w-[12rem] lg:w-[15rem] aspect-[5/4]",
     },
     hasButton: false,
     buttonPosition: "",
@@ -109,12 +109,12 @@ export const IMAGES: HeroImageType[] = [
     blur: true,
     position: {
       side: "",
-      full: "",
+      full: "lg:bottom-[5%] bottom-[1%] right-[10%]",
       z: "",
     },
     size: {
       side: "",
-      full: "w-[15rem] aspect-square",
+      full: "w-[7rem] sm:w-[10rem] lg:w-[14rem] aspect-[16/19]",
     },
     hasButton: false,
     buttonPosition: "",

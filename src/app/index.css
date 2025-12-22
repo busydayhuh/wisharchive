@@ -225,4 +225,13 @@
     font-style: normal;
     font-display: swap;
   }
+
+  @font-face {
+    font-family: "Grandis Extended";
+    src: url("/src/shared/assets/fonts/GrandisExtended-Medium.woff2")
+      format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
 }
