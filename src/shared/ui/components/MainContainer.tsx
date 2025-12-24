@@ -16,7 +16,7 @@ function MainContainer({
     <main
       className={cn(
         "relative lg:px-5 md:pb-4 md:pl-2 lg:pl-8 w-full",
-        loginArea && "!p-0 !m-0",
+        (loginArea || page.home) && "!p-0 !m-0",
         slimPage && "mx-auto max-w-[100rem] md:mt-2"
       )}
     >

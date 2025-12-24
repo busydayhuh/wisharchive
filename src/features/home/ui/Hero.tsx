@@ -8,12 +8,12 @@ export function Hero() {
   const { ref, onPointerMove, mouseX, mouseY } = useParallax();
 
   return (
-    <div
-      className="flex flex-col items-center gap-5 md:gap-7 2xl:gap-18 pt-5 md:pt-0 w-full"
-      ref={ref}
-      onPointerMove={onPointerMove}
-    >
-      <div className="relative flex justify-center items-center border-1 border-red-700 w-full h-[20rem] sm:h-[30rem] lg:h-[45rem]">
+    <div className="flex flex-col items-center gap-7 lg:gap-12 2xl:gap-18 pt-5 md:pt-0 w-full">
+      <div
+        className="relative flex justify-center items-center border-1 border-red-700 w-full h-[20rem] sm:h-[30rem] lg:h-[45rem]"
+        ref={ref}
+        onPointerMove={onPointerMove}
+      >
         <GradientCircle className="-z-10 w-full md:w-[70%]" />
         <Slogan className="z-100 absolute w-[min(70%,47rem)] text-foreground" />
 

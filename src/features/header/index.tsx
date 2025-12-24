@@ -4,6 +4,7 @@ import { useIsMobile } from "@/shared/hooks/useIsMobile";
 import Logo from "@/shared/ui/components/Logo";
 import LogoExtended from "@/shared/ui/components/LogoExtended";
 import { Button } from "@/shared/ui/kit/button";
+import { cn } from "@/shared/utils/css";
 import { Link, useNavigate } from "react-router";
 import { ModeToggle } from "../sidebar";
 
@@ -15,7 +16,12 @@ export function Header() {
   if (page.wish || page.list || loginArea) return null;
 
   return (
-    <div className="flex justify-between items-center mx-auto mt-1 px-2 md:px-0 pb-1.5 border-b-1 md:border-b-0 w-full">
+    <div
+      className={cn(
+        "flex justify-between items-center mx-auto mt-1 px-2 md:px-0 pb-1.5 border-b-1 md:border-b-0 w-full",
+        page.home && "px-2 md:px-5"
+      )}
+    >
       <Link to={ROUTES.HOME}>
         {isMobile ? (
           <Logo variant="default" />

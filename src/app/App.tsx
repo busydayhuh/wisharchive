@@ -28,7 +28,7 @@ function App() {
         {isLoading && (
           <div
             className={cn(
-              "z-50 fixed inset-0 flex justify-center items-center bg-background transition-opacity duration-300",
+              "z-2000 fixed inset-0 flex justify-center items-center bg-background transition-opacity duration-300",
               isLoading
                 ? "opacity-100 pointer-events-auto"
                 : "opacity-0 pointer-events-none"
