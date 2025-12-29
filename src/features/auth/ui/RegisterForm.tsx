@@ -1,5 +1,7 @@
+import { Policy } from "@/features/home";
 import { ROUTES } from "@/shared/config/routes";
 import { SubmitBtn } from "@/shared/ui/components/SubmitBtn";
+import { Checkbox } from "@/shared/ui/kit/checkbox";
 import {
   Form,
   FormControl,
@@ -10,7 +12,9 @@ import {
   FormMessage,
 } from "@/shared/ui/kit/form";
 import { Input } from "@/shared/ui/kit/input";
+import { Label } from "@/shared/ui/kit/label";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { href, useNavigate } from "react-router";
 import { z } from "zod";
@@ -48,6 +52,7 @@ function RegisterForm() {
   });
   const { current, register } = useAuth();
   const navigate = useNavigate();
+  const [agreed, setAgreed] = useState(false);
 
   const onRegister = async (values: z.infer<typeof formSchema>) => {
     const { ok, errorMessage } = await register(values);
@@ -145,9 +150,27 @@ function RegisterForm() {
             {form.formState.errors.root?.message}
           </div>
         )}
+        <div className="flex items-start gap-3">
+          <Checkbox
+            id="toggle"
+            checked={agreed}
+            onCheckedChange={(checked: boolean) => setAgreed(checked)}
+            className="bg-muted"
+          />
+          <Label htmlFor="toggle" className="inline font-normal cursor-pointer">
+            Я принимаю условия{" "}
+            <Policy
+              text="политики конфиденциальности"
+              className="inline underline"
+            />{" "}
+            <span className="text-destructive">*</span>
+          </Label>
+        </div>
         <SubmitBtn
           isSubmitting={form.formState.isSubmitting}
+          isDirty={agreed}
           text="Зарегистрироваться"
+          className="mt-4"
         />
       </form>
     </Form>

@@ -61,7 +61,7 @@ export function About() {
   const { colorScheme } = useTheme();
 
   return (
-    <div className="space-y-10 md:space-y-12 lg:space-y-20 2xl:space-y-30 mx-2 2xl:mx-10 xl:mx-6 border-1 border-blue-700">
+    <div className="space-y-10 md:space-y-12 lg:space-y-20 2xl:space-y-30 mx-2 2xl:mx-10 xl:mx-6">
       {IMAGES.map((image) => {
         return (
           <motion.div

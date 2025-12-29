@@ -1,5 +1,6 @@
 import { ROUTES } from "@/shared/config/routes";
 import { SubmitBtn } from "@/shared/ui/components/SubmitBtn";
+import { Button } from "@/shared/ui/kit/button";
 import {
   Form,
   FormControl,
@@ -46,6 +47,17 @@ function LoginForm() {
     <div className="relative">
       <Form {...form}>
         <form className="space-y-4" onSubmit={form.handleSubmit(onLogin)}>
+          <Button
+            className="bg-blue-bg/60 hover:bg-blue-bg/50 mb-6 rounded-3xl w-fit font-normal text-blue text-xs"
+            onClick={(e) => {
+              e.preventDefault();
+              form.setValue("email", "valeria.busyday@yandex.ru");
+              form.setValue("password", "newpass!");
+            }}
+            type="button"
+          >
+            Войти в демо-аккаунт
+          </Button>
           <FormField
             control={form.control}
             name="email"

@@ -16,7 +16,7 @@ export function BreadcrumbsBar({
   const { user } = useCurrentUser();
   const hasBreadcrumbs = page.wish || page.list || page.edit;
 
-  if (loginArea) return null;
+  if (loginArea || page.home) return null;
 
   return (
     <div

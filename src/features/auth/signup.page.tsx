@@ -7,7 +7,7 @@ function SignupPage() {
   return (
     <AuthLayout
       title="Регистрация в Wisharchive"
-      description="Создайте аккаунт и сохраняйте свои желания ✨"
+      description="Создайте аккаунт и сохраняйте свои желания"
       form={<RegisterForm />}
       footerText={
         <>

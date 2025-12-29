@@ -19,7 +19,7 @@ export function Header() {
     <div
       className={cn(
         "flex justify-between items-center mx-auto mt-1 px-2 md:px-0 pb-1.5 border-b-1 md:border-b-0 w-full",
-        page.home && "px-2 md:px-5"
+        page.home && "px-2 md:px-5 md:pt-2"
       )}
     >
       <Link to={ROUTES.HOME}>

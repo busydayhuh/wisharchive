@@ -8,9 +8,9 @@ export function Hero() {
   const { ref, onPointerMove, mouseX, mouseY } = useParallax();
 
   return (
-    <div className="flex flex-col items-center gap-7 lg:gap-12 2xl:gap-18 pt-5 md:pt-0 w-full">
+    <div className="flex flex-col items-center gap-7 lg:gap-12 2xl:gap-18 mt-10 w-full">
       <div
-        className="relative flex justify-center items-center border-1 border-red-700 w-full h-[20rem] sm:h-[30rem] lg:h-[45rem]"
+        className="relative flex justify-center items-center w-full h-[20rem] sm:h-[30rem] lg:h-[40rem] 2xl:h-[45rem]"
         ref={ref}
         onPointerMove={onPointerMove}
       >
