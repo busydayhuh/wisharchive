@@ -19,7 +19,6 @@ export async function uploadToStorage(blob: File) {
       response: appwriteService.storage.getFileView(bucketId, uploadedFile.$id),
     };
   } catch (error) {
-    console.log("Не удалось загрузить файл");
     return handleError(error);
   }
 }

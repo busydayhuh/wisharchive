@@ -20,8 +20,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
         // только если ключа нет, берём initialValue
         setStoredValue(initialValue);
       }
-    } catch (error) {
-      console.error(`Ошибка чтения localStorage по ключу "${key}":`, error);
+    } catch {
       setStoredValue(initialValue);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -29,15 +28,11 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
 
   const setValue = useCallback(
     (value: T | ((prev: T) => T)) => {
-      try {
-        setStoredValue((prev) => {
-          const valueToStore = value instanceof Function ? value(prev) : value;
-          window.localStorage.setItem(key, JSON.stringify(valueToStore));
-          return valueToStore;
-        });
-      } catch (error) {
-        console.error(`Ошибка записи localStorage по ключу "${key}":`, error);
-      }
+      setStoredValue((prev) => {
+        const valueToStore = value instanceof Function ? value(prev) : value;
+        window.localStorage.setItem(key, JSON.stringify(valueToStore));
+        return valueToStore;
+      });
     },
     [key]
   );
@@ -46,12 +41,8 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
 }
 
 export function clearLocalFilters() {
-  try {
-    const keysToClear = Object.keys(window.localStorage).filter(
-      (k) => k !== "vite-ui-theme"
-    );
-    keysToClear.forEach((k) => window.localStorage.removeItem(k));
-  } catch (error) {
-    console.error("Не удалось очистить localStorage", error);
-  }
+  const keysToClear = Object.keys(window.localStorage).filter(
+    (k) => k !== "vite-ui-theme"
+  );
+  keysToClear.forEach((k) => window.localStorage.removeItem(k));
 }

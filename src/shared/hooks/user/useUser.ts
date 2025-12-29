@@ -7,7 +7,6 @@ import useSWR from "swr";
 
 async function fetcher(userId: string) {
   const response = await db.users.list([Query.equal("userId", userId)]);
-  console.log("response, userId :>> ", response, userId);
 
   if (!response.documents.length) {
     throw new Error("USER_NOT_READY");

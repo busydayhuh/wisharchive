@@ -35,7 +35,6 @@ export function ProfilePageLayout({
             email={profileInfo.userEmail}
             userDocumentId={profileInfo.$id}
           />
-          {/* <DeleteAccountSection /> */}
         </div>
       </div>
     </div>

@@ -26,7 +26,6 @@ export function useOptimisticMutation() {
         // основное действие с API
         return await params.action();
       } catch (error) {
-        console.log("Ошибка мутации", error);
         // запрашиваем актуальные данные для отката
         updateSWRCache(params.keyword);
         params.extraKeys?.forEach((key) => mutate(key));
