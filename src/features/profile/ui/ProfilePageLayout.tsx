@@ -29,13 +29,11 @@ export function ProfilePageLayout({
             updateUserCache={updateUserCache}
           />
         </div>
-
         <div className="space-y-4 lg:space-y-10">
           <AccountInfoForm
             email={profileInfo.userEmail}
             userDocumentId={profileInfo.$id}
           />
-          {/* <DeleteAccountSection /> */}
         </div>
       </div>
     </div>

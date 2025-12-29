@@ -29,10 +29,6 @@ export function useUsers(searchStrings: string[] | null) {
     isLoading,
     error,
   } = useSWR(key, ([, searchStrings]) => fetcher(JSON.parse(searchStrings)), {
-    onError: (err) => {
-      console.error("Ошибка SWR хук useUsers для ключа", searchStrings, err);
-      console.trace();
-    },
     keepPreviousData: true,
   });
   return { users, isLoading, error };

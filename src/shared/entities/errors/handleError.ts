@@ -22,13 +22,11 @@ const appwriteErrorsMap = new Map([
 
 export function handleError(err: unknown): ResponseType {
   if (err instanceof AppwriteException) {
-    console.error(err);
     return {
       ok: false,
       errorMessage: appwriteErrorsMap.get(err.type) || err.message,
       errorType: err.type,
     };
   }
-  console.error("Unknown error", err);
   return { ok: false, errorMessage: "Unknown error" };
 }
