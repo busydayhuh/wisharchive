@@ -33,7 +33,7 @@ export function useMoveWishes(targetWishlistId: string) {
       patchCache(targetWishlistId, pickedIds, pickedWishes);
 
       try {
-        await Promise.all(
+        const results = await Promise.all(
           pickedIds.map((id) =>
             update(id, {
               wishlist: wishlist,
@@ -41,6 +41,9 @@ export function useMoveWishes(targetWishlistId: string) {
             })
           )
         );
+
+        if (results.some((r) => !r.ok)) throw new Error("Что-то пошло не так");
+
         return { ok: true };
       } catch (error) {
         mutate("wishlists");
