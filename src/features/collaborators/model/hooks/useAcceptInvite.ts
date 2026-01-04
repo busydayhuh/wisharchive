@@ -8,7 +8,7 @@ import {
   notifySuccessExpanded,
 } from "@/shared/entities/errors/notify";
 import { useCallback } from "react";
-import { href } from "react-router";
+import { href } from "react-router-dom";
 
 export function useAcceptInvite() {
   const { isLoggedIn, initSession } = useAuth();

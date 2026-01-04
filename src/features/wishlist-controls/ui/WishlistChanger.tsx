@@ -5,7 +5,7 @@ import { ResponsiveSelect } from "@/shared/ui/components/ResponsiveSelect";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
 import { cn } from "@/shared/utils/css";
 import { ChevronDown } from "lucide-react";
-import { href } from "react-router";
+import { href } from "react-router-dom";
 import { useWishlistOptions } from "../model/useWishlistOptions";
 
 export function WishlistChanger({

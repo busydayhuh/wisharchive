@@ -8,7 +8,7 @@ import {
   ItemTitle,
 } from "@/shared/ui/kit/item";
 import { cn } from "@/shared/utils/css";
-import { href } from "react-router";
+import { href } from "react-router-dom";
 import type { AnyDocument, Category } from "../GlobalSearch";
 import { Media } from "./Media";
 

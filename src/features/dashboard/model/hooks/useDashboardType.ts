@@ -1,6 +1,6 @@
 import { ROUTES } from "@/shared/config/routes";
 import { useCallback, useEffect, useState } from "react";
-import { matchPath, useLocation } from "react-router";
+import { matchPath, useLocation } from "react-router-dom";
 import type { DashboardType } from "../types";
 
 const DASHBOARD_TYPES: Record<string, DashboardType> = {

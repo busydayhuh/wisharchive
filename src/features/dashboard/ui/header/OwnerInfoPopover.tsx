@@ -14,7 +14,7 @@ import {
   PopoverTrigger,
 } from "@/shared/ui/kit/popover";
 import { useState } from "react";
-import { href, Link } from "react-router";
+import { href, Link } from "react-router-dom";
 
 export function OwnerInfoPopover({
   avatarURL,

@@ -3,7 +3,7 @@ import { ErrorMessage } from "@/shared/ui/components/ErrorMessage";
 import { Card } from "@/shared/ui/kit/card";
 import { Loader2 } from "lucide-react";
 import { useMemo, useState } from "react";
-import { useSearchParams } from "react-router";
+import { useSearchParams } from "react-router-dom";
 import { useAcceptInvite } from "./model/hooks/useAcceptInvite";
 import { useMembership } from "./model/hooks/useMembership";
 import { InvitationCard } from "./ui/InvitationCard";

@@ -10,7 +10,7 @@ import {
   Users2,
 } from "lucide-react";
 import { motion } from "motion/react";
-import { href, Link } from "react-router";
+import { href, Link } from "react-router-dom";
 import { ROUTES } from "../../config/routes";
 import { cn } from "../../utils/css";
 import { formatUrl } from "../../utils/formatUrl";

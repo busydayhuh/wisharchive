@@ -5,7 +5,7 @@ import Logo from "@/shared/ui/components/Logo";
 import LogoExtended from "@/shared/ui/components/LogoExtended";
 import { Button } from "@/shared/ui/kit/button";
 import { cn } from "@/shared/utils/css";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import { ModeToggle } from "../sidebar";
 
 export function Header() {

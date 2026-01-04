@@ -1,6 +1,6 @@
 import type { WishlistDocumentType } from "@/shared/types";
 import PageBoundary from "@/shared/ui/components/PageBoundary";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { useAuth } from "../auth";
 import { ToolbarProvider, useAccess } from "../dashboard";
 import { useWishlist } from "./model/hooks/useWishlist";

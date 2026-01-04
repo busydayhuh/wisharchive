@@ -1,6 +1,6 @@
 import { Button, buttonVariants } from "@/shared/ui/kit/button";
 import type { VariantProps } from "class-variance-authority";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 type BackButtonProps = {
   confirmation?: boolean;

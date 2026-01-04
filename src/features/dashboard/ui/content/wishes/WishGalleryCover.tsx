@@ -4,7 +4,7 @@ import type { WishDocumentType } from "@/shared/types";
 import { PRIVACY_ICONS } from "@/shared/ui/components/Badges";
 import { cn } from "@/shared/utils/css";
 import { memo } from "react";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { QuickActions } from "./QuickActions";
 
 export const WishGalleryCover = memo(function WishGalleryCover({

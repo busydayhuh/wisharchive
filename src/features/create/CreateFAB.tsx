@@ -5,7 +5,7 @@ import { cn } from "@/shared/utils/css";
 import { ListPlus, Orbit, Plus, Stars } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 import { useWishlistDialog, useWishPicker } from "../wishlist";
 
 const fabVariants = {

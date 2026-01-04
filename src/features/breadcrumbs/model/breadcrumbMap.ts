@@ -1,5 +1,5 @@
 import { ROUTES } from "@/shared/config/routes";
-import { type Params } from "react-router";
+import { type Params } from "react-router-dom";
 
 export type Crumb = {
   label: string | ((params: Params, data?: Record<string, string>) => string);

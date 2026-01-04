@@ -1,5 +1,5 @@
 import { ROUTES } from "@/shared/config/routes";
-import { matchRoutes, useLocation, useMatch } from "react-router";
+import { matchRoutes, useLocation, useMatch } from "react-router-dom";
 
 export function useAppLocation() {
   const { pathname, search } = useLocation();

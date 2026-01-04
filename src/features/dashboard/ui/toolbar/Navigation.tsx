@@ -1,7 +1,7 @@
 import { ROUTES } from "@/shared/config/routes";
 import { cn } from "@/shared/utils/css";
 import { memo } from "react";
-import { href, NavLink, useParams } from "react-router";
+import { href, NavLink, useParams } from "react-router-dom";
 
 const Navigation = memo(function Navigation() {
   const { userId } = useParams();

@@ -3,7 +3,7 @@ import { ROUTES } from "@/shared/config/routes";
 import { useIsMobile } from "@/shared/hooks/useIsMobile";
 import type { WishDocumentType, WishlistDocumentType } from "@/shared/types";
 import { WishlistBadge } from "@/shared/ui/components/Badges";
-import { useMatch } from "react-router";
+import { useMatch } from "react-router-dom";
 import useWishlistControls from "../model/useWishlistControls";
 import { WishlistChanger } from "./WishlistChanger";
 import WishlistRemoveButton from "./WishlistRemoveButton";

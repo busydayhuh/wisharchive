@@ -13,7 +13,7 @@ import {
 } from "@/shared/ui/components/Badges";
 import OwnerAvatar from "@/shared/ui/components/OwnerAvatar";
 import { cn } from "@/shared/utils/css";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { QuickActions } from "./QuickActions";
 
 type RowProps = {

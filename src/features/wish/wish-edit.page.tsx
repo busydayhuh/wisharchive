@@ -5,7 +5,7 @@ import {
 } from "@/shared/entities/errors/notify";
 import type { wishFormSchema } from "@/shared/formSchemas";
 import { ErrorMessage } from "@/shared/ui/components/ErrorMessage";
-import { href, useParams } from "react-router";
+import { href, useParams } from "react-router-dom";
 import type z from "zod";
 import { useAuth } from "../auth";
 import { useRoute } from "../breadcrumbs";

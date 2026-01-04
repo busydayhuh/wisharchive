@@ -3,7 +3,7 @@ import type { WishDocumentType } from "@/shared/types";
 import ConfirmationDialog from "@/shared/ui/components/ConfirmationDialog";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
-import { useBlocker } from "react-router";
+import { useBlocker } from "react-router-dom";
 import type z from "zod";
 import { uploadToStorage } from "../../../shared/api/uploadToStorage";
 import BackButton from "./actions/BackButton";

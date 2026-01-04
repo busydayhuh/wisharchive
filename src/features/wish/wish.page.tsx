@@ -1,6 +1,6 @@
 import type { WishDocumentType } from "@/shared/types";
 import PageBoundary from "@/shared/ui/components/PageBoundary";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { useAuth } from "../auth";
 import type { WishRoles } from "../collaborators";
 import { useAccess } from "../dashboard";

@@ -1,6 +1,6 @@
 import { ROUTES } from "@/shared/config/routes";
 import type { UserDocumentType } from "@/shared/types";
-import { href, Link } from "react-router";
+import { href, Link } from "react-router-dom";
 import { cn } from "../../utils/css";
 import { UserAvatar } from "./UserAvatar";
 

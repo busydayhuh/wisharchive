@@ -1,5 +1,5 @@
 import type { Models } from "appwrite";
-import { href, useNavigate } from "react-router";
+import { href, useNavigate } from "react-router-dom";
 import { ROUTES } from "../../config/routes";
 import { ErrorMessage } from "./ErrorMessage";
 

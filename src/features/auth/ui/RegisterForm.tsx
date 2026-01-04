@@ -16,7 +16,7 @@ import { Label } from "@/shared/ui/kit/label";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { href, useNavigate } from "react-router";
+import { href, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { useAuth } from "../model/authContext";
 import { PassWithToggle } from "./PassInputWithToggle";

@@ -1,5 +1,5 @@
 import { Button } from "@/shared/ui/kit/button";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import AuthLayout from "./ui/AuthLayout";
 import RegisterForm from "./ui/RegisterForm";
 

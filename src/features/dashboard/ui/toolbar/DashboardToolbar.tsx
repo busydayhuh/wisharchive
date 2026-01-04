@@ -1,6 +1,6 @@
 import { ROUTES } from "@/shared/config/routes";
 import { useIsMobile } from "@/shared/hooks/useIsMobile";
-import { useMatch } from "react-router";
+import { useMatch } from "react-router-dom";
 import { useToolbar } from "../../model/store/toolbar/useToolbar";
 import FiltersGroup from "./FiltersGroup";
 import { SortingSelect } from "./SortingSelect";

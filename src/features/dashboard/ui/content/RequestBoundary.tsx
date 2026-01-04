@@ -2,7 +2,7 @@ import { useWishlistDialog } from "@/features/wishlist";
 import { ROUTES } from "@/shared/config/routes";
 import { ErrorMessage } from "@/shared/ui/components/ErrorMessage";
 import type { Models } from "appwrite";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useDashboard } from "../../model/store/dashboard/useDashboard";
 import { useToolbar } from "../../model/store/toolbar/useToolbar";
 import { ContentGrid } from "./ContentGrid";

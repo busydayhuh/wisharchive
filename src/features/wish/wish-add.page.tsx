@@ -6,7 +6,7 @@ import {
 import type { wishFormSchema } from "@/shared/formSchemas";
 import { useCurrentUser } from "@/shared/hooks/user/useCurrentUser";
 import { ErrorMessage } from "@/shared/ui/components/ErrorMessage";
-import { href } from "react-router";
+import { href } from "react-router-dom";
 import type z from "zod";
 import { useAuth } from "../auth";
 import { useRoute } from "../breadcrumbs";

@@ -5,7 +5,7 @@ import type { WishDocumentType } from "@/shared/types";
 import { PriorityBadge } from "@/shared/ui/components/Badges";
 import OwnerAvatar from "@/shared/ui/components/OwnerAvatar";
 import { cn } from "@/shared/utils/css";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { WishGalleryCover } from "./WishGalleryCover";
 
 function WishGalleryCard({ wish }: { wish: WishDocumentType }) {

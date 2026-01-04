@@ -32,7 +32,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/shared/ui/kit/sidebar";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { useAuth } from "../auth";
 
 export function UserMenu() {

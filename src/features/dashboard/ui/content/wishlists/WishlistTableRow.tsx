@@ -10,7 +10,7 @@ import { PRIVACY_ICONS, RoleBadge } from "@/shared/ui/components/Badges";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 import { useMemo } from "react";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { WishlistTiles } from "./WishlistTiles";
 
 type WishlistRowProps = {

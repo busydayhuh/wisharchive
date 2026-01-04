@@ -1,5 +1,5 @@
 import { type Models } from "appwrite";
-import type { Params } from "react-router";
+import type { Params } from "react-router-dom";
 
 export type WishDocumentType = Models.Document & {
   title: string;

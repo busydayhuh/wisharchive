@@ -10,7 +10,7 @@ import {
 } from "@/shared/ui/kit/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useNavigate, useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import type z from "zod";
 import { createRecovery } from "../model/createRecovery";
 import { createRecoverySchema as formSchema } from "../model/schemas";

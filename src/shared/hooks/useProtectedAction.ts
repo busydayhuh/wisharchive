@@ -1,6 +1,6 @@
 /* eslint-disable boundaries/element-types */
 import { useAuth } from "@/features/auth";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../config/routes";
 
 export function useProtectedAction() {

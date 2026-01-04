@@ -1,6 +1,6 @@
 import type { LinkParams } from "@/shared/types";
 import { createContext } from "react";
-import type { Location, Params } from "react-router";
+import type { Location, Params } from "react-router-dom";
 
 export type RouteContext = {
   location: Location;

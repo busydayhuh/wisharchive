@@ -19,7 +19,7 @@ import { Textarea } from "@/shared/ui/kit/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
-import { href, useNavigate } from "react-router";
+import { href, useNavigate } from "react-router-dom";
 import type z from "zod";
 import DeleteButton from "../../../../shared/ui/components/DeleteButton";
 import { useWishMutations } from "../../model/hooks/useWishMutations";

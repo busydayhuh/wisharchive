@@ -2,7 +2,7 @@ import { useAuth } from "@/features/auth";
 import { useRoute } from "@/features/breadcrumbs";
 import { ROUTES } from "@/shared/config/routes";
 import { useMemo } from "react";
-import { matchPath } from "react-router";
+import { matchPath } from "react-router-dom";
 import type { DashboardType } from "../types";
 import { useDashboardType } from "./useDashboardType";
 
