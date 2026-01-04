@@ -174,7 +174,7 @@ export function WishForm({
                       decimalScale={0}
                       allowNegative={false}
                       placeholder="0"
-                      defaultValue={field.value ?? ""}
+                      value={field.value ?? ""}
                       customInput={Input}
                       onValueChange={(values) => {
                         field.onChange(values.floatValue ?? null);
