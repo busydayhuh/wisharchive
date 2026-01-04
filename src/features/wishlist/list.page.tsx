@@ -26,7 +26,7 @@ function WishlistPage() {
       {(safeItem) => (
         <ToolbarProvider
           dashboardType="list"
-          localStorageKey={`list+${listId}}`}
+          localStorageKey={`list+${listId}`}
         >
           <WishlistLayout
             wishlist={safeItem as WishlistDocumentType}
