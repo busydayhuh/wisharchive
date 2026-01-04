@@ -15,11 +15,13 @@ export function RouteContextProvider({
     (path, stateData) => {
       navigate(path, {
         state: {
+          prevLocation: location.pathname,
+          prevParams: params,
           data: stateData,
         },
       });
     },
-    [navigate]
+    [navigate, location, params]
   );
 
   const value = useMemo(
