@@ -19,6 +19,7 @@ function WishlistGalleryCard({ wishlist }: { wishlist: WishlistDocumentType }) {
     userRoles,
     linkParams,
     inBookmarks,
+    owner,
   } = useWishlistcardMeta(wishlist);
 
   const isMobile = useIsMobile();
@@ -63,8 +64,8 @@ function WishlistGalleryCard({ wishlist }: { wishlist: WishlistDocumentType }) {
           {inBookmarks ? (
             <OwnerAvatar
               userId={wishlist.ownerId}
-              userName={wishlist.owner.userName}
-              avatarURL={wishlist.owner.avatarURL}
+              userName={owner?.userName ?? ""}
+              avatarURL={owner?.avatarURL ?? null}
               size="sm"
               className="[&_.owner-name]:hidden"
             />

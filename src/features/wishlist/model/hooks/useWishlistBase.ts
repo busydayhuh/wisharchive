@@ -1,16 +1,18 @@
 import { useAuth } from "@/features/auth";
 import { useLinkParams } from "@/features/breadcrumbs";
 import { useDocumentCollaborators } from "@/features/collaborators";
+import { useUser } from "@/shared/hooks/user/useUser";
 import type { WishlistDocumentType } from "@/shared/types";
 import { useBookmark } from "./useBookmark";
 
 export function useWishlistBase(wishlist: WishlistDocumentType) {
-  const { $id, ownerId, owner, title, bookmarkedBy } = wishlist;
+  const { $id, ownerId, title, bookmarkedBy } = wishlist;
+  const { user: owner } = useUser(ownerId);
 
   const { userId } = useAuth();
   const linkParams = useLinkParams("wishlist", $id, ownerId, {
-    userName: owner.userName,
-    userId: owner.userId,
+    userName: owner?.userName,
+    userId: owner?.userId,
     wlTitle: title,
   });
 
@@ -34,5 +36,6 @@ export function useWishlistBase(wishlist: WishlistDocumentType) {
     collaborators,
     collabsLoading,
     collabsError,
+    owner,
   };
 }
