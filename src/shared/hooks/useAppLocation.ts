@@ -22,7 +22,7 @@ export function useAppLocation() {
     shared: Boolean(useMatch(ROUTES.SHARED)),
     wish: Boolean(useMatch(ROUTES.WISH)),
     edit: Boolean(useMatch(ROUTES.EDIT)),
-    profile: Boolean(useMatch(ROUTES.EDIT)),
+    profile: Boolean(useMatch(ROUTES.PROFILE)),
     dashboard: Boolean(
       matchRoutes(
         [{ path: ROUTES.WISHES }, { path: ROUTES.WISHLISTS }],
