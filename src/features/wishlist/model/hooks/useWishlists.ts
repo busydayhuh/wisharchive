@@ -59,7 +59,11 @@ export function useWishlists(
       ([, , , cursor]) => fetcher(queries!, cursor),
       {
         onSuccess: (data) => {
-          data.flat().forEach((wl) => (wl.wishes ? wl.wishes.reverse() : null));
+          return data
+            .flat()
+            .map((wl) =>
+              wl.wishes ? { ...wl, wishes: [...wl.wishes].reverse() } : wl
+            );
         },
         revalidateAll: true,
         keepPreviousData: true,
