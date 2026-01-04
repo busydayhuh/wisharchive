@@ -75,7 +75,7 @@ function WishImageUpload({
 
     const errorMessages = rejectedFile.errors.map((e) => {
       if (e.code === "file-invalid-type") return "Неверный формат файла";
-      if (e.code === "file-invalid-type") return "Файл слишком тяжелый";
+      if (e.code === "file-too-large") return "Файл слишком тяжелый";
       return e.message;
     });
 
