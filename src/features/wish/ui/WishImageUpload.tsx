@@ -113,7 +113,7 @@ function WishImageUpload({
             <X />
           </Button>
           <div className="rounded-3xl md:w-full w-3xs max-h-[24rem] md:max-h-[40rem] 2xl:max-h-[52rem] overflow-clip">
-            <img src={preview} className="w-full h-full" />
+            <img src={preview} className="w-full h-full" alt="Превью" />
           </div>
         </>
       ) : (

@@ -235,7 +235,7 @@ export function ShopBadge({
         height="16"
         width="16"
         src={`http://www.google.com/s2/favicons?domain=${domain}`}
-        alt=""
+        alt="icon"
         className="bg-details rounded-full"
       />
       <span className="max-w-[16ch] truncate">{domain}</span>

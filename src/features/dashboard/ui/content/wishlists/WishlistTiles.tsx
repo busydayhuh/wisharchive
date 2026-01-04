@@ -30,12 +30,13 @@ export function WishlistTiles({
               return <div className="bg-muted" key={ID.unique()}></div>;
             }
 
-            if (wish?.imageURL) {
+            if (wish.imageURL) {
               return (
                 <img
                   src={wish.imageURL}
                   className="w-full h-full object-cover"
                   key={wish.id + "coverImage"}
+                  alt={wish.title}
                 />
               );
             } else {
@@ -68,6 +69,7 @@ export function WishlistTiles({
                 className="border-0 outline-0 w-full h-full object-cover"
                 style={{ background: getFallbackColor(wish.id) }}
                 key={wish.id + "coverImage"}
+                alt={wish.title}
               />
             )}
 
