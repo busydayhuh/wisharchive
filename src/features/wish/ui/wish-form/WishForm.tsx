@@ -41,7 +41,7 @@ export function WishForm({
 }) {
   const actions = useWishMutations();
 
-  const form = useForm({
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: "onChange",
     defaultValues: {

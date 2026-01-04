@@ -18,11 +18,12 @@ import { Input } from "@/shared/ui/kit/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import type z from "zod";
 import { updateRecoverySchema as formSchema } from "../model/schemas";
 import { updateRecovery } from "../model/updateRecovery";
 
 export function ForgotPassDialog() {
-  const form = useForm({
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",

@@ -11,6 +11,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router";
+import type z from "zod";
 import { createRecovery } from "../model/createRecovery";
 import { createRecoverySchema as formSchema } from "../model/schemas";
 import { PassWithToggle } from "./PassInputWithToggle";
@@ -20,7 +21,7 @@ export function RecoverPassForm() {
   const { userId, secret } = Object.fromEntries(searchParams);
   const navigate = useNavigate();
 
-  const form = useForm({
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       password: "",
