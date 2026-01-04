@@ -1,4 +1,4 @@
-import { useUsers } from "@/shared/hooks/user/useUsers";
+import { useUsers } from "@/features/profile";
 import type { CollaboratorType } from "../types";
 
 // Облегченный хук для дашборда, который не вызывает Team API для каждого вишлиста, а использует дублирующие состав Team поля в вишлисте

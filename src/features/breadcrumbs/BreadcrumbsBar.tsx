@@ -1,5 +1,5 @@
+import { useCurrentUser } from "@/features/profile/";
 import { useAppLocation } from "@/shared/hooks/useAppLocation";
-import { useCurrentUser } from "@/shared/hooks/user/useCurrentUser";
 import { SidebarTrigger } from "@/shared/ui/kit/sidebar";
 import { cn } from "@/shared/utils/css";
 import { OwnerInfoPopover } from "../dashboard";

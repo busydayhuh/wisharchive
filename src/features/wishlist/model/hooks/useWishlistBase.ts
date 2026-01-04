@@ -1,7 +1,7 @@
 import { useAuth } from "@/features/auth";
 import { useLinkParams } from "@/features/breadcrumbs";
 import { useDocumentCollaborators } from "@/features/collaborators";
-import { useUser } from "@/shared/hooks/user/useUser";
+import { useUser } from "@/features/profile";
 import type { WishlistDocumentType } from "@/shared/types";
 import { useBookmark } from "./useBookmark";
 

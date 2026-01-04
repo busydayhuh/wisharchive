@@ -1,4 +1,3 @@
-// eslint-disable-next-line boundaries/element-types
 import { useAuth } from "@/features/auth";
 import { useUser } from "./useUser";
 

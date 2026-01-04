@@ -1,5 +1,5 @@
+import { useUser } from "@/features/profile";
 import { useAppLocation } from "@/shared/hooks/useAppLocation";
-import { useUser } from "@/shared/hooks/user/useUser";
 import { UserAvatar } from "@/shared/ui/components/UserAvatar";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
 import { cn } from "@/shared/utils/css";

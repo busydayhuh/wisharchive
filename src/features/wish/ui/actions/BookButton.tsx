@@ -1,9 +1,9 @@
+import { useProtectedAction } from "@/features/auth";
 import { useQuickActions } from "@/features/dashboard";
 import {
   notifyError,
   notifySuccessExpanded,
 } from "@/shared/entities/errors/notify";
-import { useProtectedAction } from "@/shared/hooks/useProtectedAction";
 import { useConfirmationDialog } from "@/shared/store/confirmation-dialog/useConfirmationDialog";
 import { IconBtnWithTooltip } from "@/shared/ui/components/IconBtnWithTooltip";
 import { Toggle } from "@/shared/ui/kit/toggle";

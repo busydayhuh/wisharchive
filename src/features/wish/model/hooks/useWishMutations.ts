@@ -4,12 +4,11 @@ import {
   useOptimisticMutation,
   type OptimisticUpdater,
 } from "@/shared/hooks/useOptimisticMutation";
-import { useRevalidateSWR } from "@/shared/hooks/useRevalidateSWR";
 import type { WishlistDocumentType } from "@/shared/types";
 import { ID, type Models } from "appwrite";
 import { useCallback } from "react";
 
-type CreateWishProps = {
+type WishCreatePayload = {
   title: string;
   ownerId: string;
   owner: string;
@@ -22,7 +21,7 @@ type CreateWishProps = {
   isPrivate?: boolean;
 };
 
-export type UpdateWishProps = Partial<CreateWishProps> & {
+export type UpdateWishProps = Partial<WishCreatePayload> & {
   bookerId?: string | null;
   bookedBy?: string | null;
   isBooked?: boolean;
@@ -31,10 +30,9 @@ export type UpdateWishProps = Partial<CreateWishProps> & {
 
 export function useWishMutations() {
   const { performMutation } = useOptimisticMutation();
-  const { revalidate } = useRevalidateSWR();
 
   const create = useCallback(
-    async (payload: CreateWishProps) => {
+    async (payload: WishCreatePayload) => {
       const id = ID.unique();
 
       const mockWishForCache = {
@@ -56,13 +54,12 @@ export function useWishMutations() {
           keyword: "wishes",
         });
 
-        //await revalidate("wishes");
         return { ok: true, response: newWish };
       } catch (error) {
         return handleError(error);
       }
     },
-    [revalidate, performMutation]
+    [performMutation]
   );
 
   const update = useCallback(

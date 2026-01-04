@@ -1,8 +1,8 @@
 import { useUpdateSWRCache } from "@/shared/hooks/useUpdateSWRCache";
-import { useCurrentUser } from "@/shared/hooks/user/useCurrentUser";
 import DefaultLoader from "@/shared/ui/components/DefaultLoader";
 import { ErrorMessage } from "@/shared/ui/components/ErrorMessage";
 import { useCallback } from "react";
+import { useCurrentUser } from "./model/useCurrentUser";
 import { ProfilePageLayout } from "./ui/ProfilePageLayout";
 
 export type UpdateUserCache = (

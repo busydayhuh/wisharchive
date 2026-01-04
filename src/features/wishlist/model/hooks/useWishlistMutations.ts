@@ -7,16 +7,15 @@ import {
 } from "@/shared/hooks/useOptimisticMutation";
 import { useRevalidateSWR } from "@/shared/hooks/useRevalidateSWR";
 import { useUpdateSWRCache } from "@/shared/hooks/useUpdateSWRCache";
-import type { UserDocumentType } from "@/shared/types";
 import { ID, Permission, Role, type Models } from "appwrite";
 import { useCallback } from "react";
 
-type createWishlistProps = {
+type WishlistCreatePayload = {
   title: string;
   description?: string;
   isPrivate: boolean;
   ownerId: string;
-  owner?: UserDocumentType;
+  owner?: string;
 };
 
 export function useWishlistMutations() {
@@ -25,7 +24,7 @@ export function useWishlistMutations() {
   const { updateSWRCache } = useUpdateSWRCache();
 
   const create = useCallback(
-    async (payload: createWishlistProps) => {
+    async (payload: WishlistCreatePayload) => {
       const id = ID.unique(); // id для нового вишлиста и его команды
       const permissions = configureWishlistPermissions(payload.isPrivate, id);
 

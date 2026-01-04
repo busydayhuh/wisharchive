@@ -1,10 +1,10 @@
+import { useCurrentUser } from "@/features/profile";
 import { ROUTES } from "@/shared/config/routes";
 import {
   notifyError,
   notifySuccessExpanded,
 } from "@/shared/entities/errors/notify";
 import type { wishFormSchema } from "@/shared/formSchemas";
-import { useCurrentUser } from "@/shared/hooks/user/useCurrentUser";
 import { ErrorMessage } from "@/shared/ui/components/ErrorMessage";
 import { href } from "react-router-dom";
 import type z from "zod";

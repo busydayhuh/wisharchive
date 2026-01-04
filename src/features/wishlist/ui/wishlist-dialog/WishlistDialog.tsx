@@ -1,11 +1,11 @@
 import type { CollaboratorType, Roles } from "@/features/collaborators";
+import { useCurrentUser } from "@/features/profile";
 import {
   notifyError,
   notifySuccessSimple,
 } from "@/shared/entities/errors/notify";
 import { wishlistFormSchema as formSchema } from "@/shared/formSchemas";
-import { useCurrentUser } from "@/shared/hooks/user/useCurrentUser";
-import type { UserDocumentType, WishlistDocumentType } from "@/shared/types";
+import type { WishlistDocumentType } from "@/shared/types";
 import { SubmitBtn } from "@/shared/ui/components/SubmitBtn";
 import { Button } from "@/shared/ui/kit/button";
 import {
@@ -91,7 +91,7 @@ export function WishlistDialog({
       const { ok, response } = await actions.create({
         ...values,
         ownerId: userId,
-        owner: docId as unknown as UserDocumentType,
+        owner: docId,
       });
       if (!ok) {
         notifyError("Не удалось сохранить список");

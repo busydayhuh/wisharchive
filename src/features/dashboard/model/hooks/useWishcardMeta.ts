@@ -1,8 +1,8 @@
 import type { AccessRoles } from "@/features/collaborators";
+import { useUser } from "@/features/profile";
 import { useWishNavigation } from "@/features/wish";
 import { useAppLocation } from "@/shared/hooks/useAppLocation";
 import { useIsMobile } from "@/shared/hooks/useIsMobile";
-import { useUser } from "@/shared/hooks/user/useUser";
 import type {
   LinkParams,
   UserDocumentType,

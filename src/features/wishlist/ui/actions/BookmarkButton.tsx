@@ -1,4 +1,4 @@
-import { useProtectedAction } from "@/shared/hooks/useProtectedAction";
+import { useProtectedAction } from "@/features/auth";
 import { Toggle } from "@/shared/ui/kit/toggle";
 import { cn } from "@/shared/utils/css";
 import { Bookmark } from "lucide-react";

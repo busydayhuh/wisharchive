@@ -1,7 +1,6 @@
-/* eslint-disable boundaries/element-types */
 import { useAuth } from "@/features/auth";
+import { ROUTES } from "@/shared/config/routes";
 import { useNavigate } from "react-router-dom";
-import { ROUTES } from "../config/routes";
 
 export function useProtectedAction() {
   const { isLoggedIn } = useAuth();

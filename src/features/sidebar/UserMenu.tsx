@@ -9,8 +9,8 @@ import {
   SunMoon,
 } from "lucide-react";
 
+import { useUser } from "@/features/profile";
 import { ROUTES } from "@/shared/config/routes";
-import { useUser } from "@/shared/hooks/user/useUser";
 import { useTheme } from "@/shared/store/theme/useTheme";
 import { UserAvatar } from "@/shared/ui/components/UserAvatar";
 import {
