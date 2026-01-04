@@ -112,7 +112,7 @@ function getWishlistQueries(filters: QueryFilters) {
     toolbarFilters.forEach((f) => {
       if ((f.key === "editorsIds" || f.key === "readersIds") && f.value) {
         queries.push(Query.contains(f.key, f.value as string));
-      } else if (f.value) {
+      } else if (f.value !== undefined && f.value !== null) {
         queries.push(Query.equal(f.key, f.value));
       }
     });
