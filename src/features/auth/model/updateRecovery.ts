@@ -11,7 +11,7 @@ export async function updateRecovery(values: z.infer<typeof formSchema>) {
   try {
     await appwriteService.account.createRecovery(
       values.email,
-      "http://localhost:5173/recovery"
+      `${window.location.origin}/recovery`
     );
     notifySuccessSimple("Ссылка отправлена", `на ${values.email}`);
   } catch (error) {

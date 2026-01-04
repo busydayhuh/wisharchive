@@ -69,7 +69,7 @@ const team: TeamApiType = {
       email,
       userId,
       undefined,
-      "http://localhost:5173/accept-invite"
+      `${window.location.origin}/accept-invite`
     ),
   addReader: (teamId, email, userId) =>
     teams.createMembership(
@@ -78,7 +78,7 @@ const team: TeamApiType = {
       email,
       userId,
       undefined,
-      "http://localhost:5173/accept-invite"
+      `${window.location.origin}/accept-invite`
     ),
   getMember: (teamId, membershipId) =>
     teams.getMembership(teamId, membershipId),
