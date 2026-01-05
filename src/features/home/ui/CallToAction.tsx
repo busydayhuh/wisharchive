@@ -16,7 +16,7 @@ export function CallToAction({ text = "Загадать желание" }: { tex
         <Ellipse
           className={cn("rotate-5 group-hover/CAT:rotate-0", ellipseClasses)}
         />
-        <GradientCircle className="-z-100 absolute opacity-0 group-hover/CAT:opacity-100 rounded-[30%] w-[30rem] aspect-video transition-opacity duration-200" />
+        <GradientCircle className="-z-100 absolute opacity-0 md:group-hover/CAT:opacity-100 rounded-[30%] w-[20rem] aspect-video transition-opacity duration-200" />
         <div className="-top-4 right-0 absolute opacity-0 group-hover/CAT:opacity-100 text-lg transition-opacity duration-200">
           ✨
         </div>
