@@ -5,7 +5,7 @@ const items = ["Бронируй подарки", "Делись списками
 
 export function RunningString() {
   return (
-    <div className="max-w-screen overflow-hidden">
+    <div className="lg:mt-30 max-w-screen overflow-hidden">
       <motion.div
         className="flex items-center gap-2 w-max"
         animate={{ x: ["0%", "-33.333%"] }}

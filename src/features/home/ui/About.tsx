@@ -61,7 +61,7 @@ export function About() {
   const { colorScheme } = useTheme();
 
   return (
-    <div className="space-y-10 md:space-y-12 lg:space-y-20 2xl:space-y-30 mx-2 2xl:mx-10 xl:mx-6">
+    <div className="space-y-10 md:space-y-12 lg:space-y-20 2xl:space-y-30 mx-2 2xl:mx-30 xl:mx-16">
       {IMAGES.map((image) => {
         return (
           <motion.div
@@ -101,7 +101,7 @@ export function About() {
                 src={colorScheme === "dark" ? image.dark : image.light}
                 alt={image.header}
                 className={cn(
-                  "rounded-xl object-cover transition-all duration-200",
+                  "rounded-xl object-cover overflow-clip transition-all duration-200",
                   !image.inverted && "justify-self-end",
                   image.size
                 )}
