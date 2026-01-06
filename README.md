@@ -4,6 +4,7 @@
 </a>
 
 <h2>Wish Archive</h2>
+
 ![](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
@@ -45,10 +46,6 @@ WishArchive is designed as a pet project for portfolio purposes and focuses on c
 - **React Hook Form & Zod:** Performant form management combined with schema-based validation for reliable user input handling.
 - **ESLint & Architectural Boundaries:** Enforced code quality and architectural constraints to maintain clear separation of concerns.
 - **Responsive UI Architecture:** Component-driven layout system designed for adaptability across different screen sizes and devices.
-
-Ниже готовый раздел **Local Setup**, оформленный для README и понятный рекрутерам:
-
----
 
 ## 🚀 Getting started
 
