@@ -4,14 +4,14 @@
 </a>
 
 <h2>Wish Archive</h2>
-Веб-приложение для создания и управления списками желаний
-
 ![](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
-![](https://img.shields.io/badge/Vite-6200EE?style=for-the-badge&logo=vite&logoColor=#646CFF)
+![](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![](https://img.shields.io/badge/Appwrite-6200EE?style=for-the-badge&logo=appwrite&logoColor=#FD366E)
+![](https://img.shields.io/badge/Appwrite-FD366E?style=for-the-badge&logo=appwrite&logoColor=white)
 ![](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![](https://img.shields.io/badge/shadcn-6200EE?style=for-the-badge&logo=shadcnui&logoColor=#000000)
+![](https://img.shields.io/badge/shadcn-black?style=for-the-badge&logo=shadcnui&logoColor=white)
+
+<p>Веб-приложение для создания и управления списками желаний</p>
 
 <!-- <img src ="./assets/bg-3.webp" width="95%"> -->
 
@@ -115,10 +115,6 @@ To create an optimized production build:
 npm run build
 npm run preview
 ```
-
-Ниже раздел **Appwrite Setup**, адаптированный под README и ориентированный на понимание архитектуры, а не пошаговый туториал.
-
----
 
 ## 🧩 Appwrite Setup
 
