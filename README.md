@@ -12,7 +12,7 @@
 ![](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![](https://img.shields.io/badge/shadcn-black?style=for-the-badge&logo=shadcnui&logoColor=white)
 
-<p>Веб-приложение для создания и управления списками желаний</p>
+<p>Create wishlists and share them with friends</p>
 
 <!-- <img src ="./assets/bg-3.webp" width="95%"> -->
 
