@@ -18,6 +18,8 @@
 
 </div>
 
+[![Static Badge](https://img.shields.io/badge/lang-ENG-EF4565)](https://github.com/busydayhuh/wisharchive/blob/main/README.md)  [![Static Badge](https://img.shields.io/badge/lang-RU-66A0E3)](https://github.com/busydayhuh/wisharchive/blob/main/README.ru.md)
+
 ## 💡 Overview
 
 **Wish Archive** is a web application for creating and managing personal wishlists with built-in social interaction. It solves a simple but real problem — helping people organize their wishes and avoid duplicate gifts. Users can create multiple wishlists, add and organize items, and share lists with others. Guests can reserve wishes, while the wishlist owner does not see which items have already been reserved, preserving the element of surprise.
