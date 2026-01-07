@@ -3,7 +3,7 @@
 <img src="./public/favicon-96x96.png" width="90" alt="Logo" />
 </a>
 
-<h2>Wish Archive</h2>
+<h2>WISH ARCHIVE</h2>
 
 ![](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
@@ -20,11 +20,19 @@
 
 ## 💡 Overview
 
-WishArchive is a web application for creating and managing personal wishlists with social interaction features. Users can create multiple wishlists, add and organize wishes, and allow others to reserve items to avoid duplicate gifts.
+## 💡 Overview
 
-The application is built as a frontend-focused project without a custom backend, using a Backend-as-a-Service solution for authentication, data storage, and access control. This approach highlights complex client-side logic, including optimistic UI updates, cache synchronization, and permission-aware interactions.
+**Wish Archive** is a web application for creating and managing personal wishlists with built-in social interaction. It solves a simple but real problem — helping people organize their wishes and avoid duplicate gifts. Users can create multiple wishlists, add and organize items, and share lists with others. Guests can reserve wishes, while the wishlist owner does not see which items have already been reserved, preserving the element of surprise.
 
-WishArchive is designed as a pet project for portfolio purposes and focuses on clean architecture, maintainable code, and real-world frontend patterns. Key features include:
+The project is built as a **frontend-focused application** without a custom backend. Authentication, data storage, and access control are handled via a Backend-as-a-Service solution. This approach intentionally shifts part of the business logic to the client side and demonstrates work with:
+
+- optimistic UI updates,
+- cache synchronization and invalidation,
+- data consistency checks,
+- access control and privacy logic.
+
+**WishArchive** is a portfolio pet project with a strong focus on clean architecture, readable code, and frontend practices commonly used in real-world production applications.
+
 
 ## ✨ Features
 
