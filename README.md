@@ -20,8 +20,6 @@
 
 ## 💡 Overview
 
-## 💡 Overview
-
 **Wish Archive** is a web application for creating and managing personal wishlists with built-in social interaction. It solves a simple but real problem — helping people organize their wishes and avoid duplicate gifts. Users can create multiple wishlists, add and organize items, and share lists with others. Guests can reserve wishes, while the wishlist owner does not see which items have already been reserved, preserving the element of surprise.
 
 The project is built as a **frontend-focused application** without a custom backend. Authentication, data storage, and access control are handled via a Backend-as-a-Service solution. This approach intentionally shifts part of the business logic to the client side and demonstrates work with:
