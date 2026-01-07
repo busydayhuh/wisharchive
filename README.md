@@ -14,7 +14,7 @@
 
 <p>Create wishlists and share them with friends</p>
 
-<!-- <img src ="./assets/bg-3.webp" width="95%"> -->
+<img src ="./public/cover-image.png" width="95%" alt="Cover">
 
 </div>
 
