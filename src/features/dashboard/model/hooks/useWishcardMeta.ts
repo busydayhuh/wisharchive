@@ -1,6 +1,6 @@
-import type { AccessRoles } from "@/features/collaborators";
+import type { AccessRoles } from "@/features/collaborators/model";
 import { useUser } from "@/features/profile";
-import { useWishNavigation } from "@/features/wish";
+import { useWishNavigation } from "@/features/wish/model";
 import { useAppLocation } from "@/shared/hooks/useAppLocation";
 import { useIsMobile } from "@/shared/hooks/useIsMobile";
 import type {

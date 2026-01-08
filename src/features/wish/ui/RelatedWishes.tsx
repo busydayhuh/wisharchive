@@ -1,12 +1,12 @@
 import { ContentGrid } from "@/features/dashboard/";
 import { ROUTES } from "@/shared/config/routes";
+import { WishImage } from "@/shared/ui/components/WishImage";
 import { Button } from "@/shared/ui/kit/button";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
 import { ChevronRight } from "lucide-react";
 import { useMemo } from "react";
 import { Link, href } from "react-router-dom";
 import { useWishes } from "../model/hooks/useWishes";
-import { WishImage } from "./WishImage";
 
 export function RelatedWishes({
   userId,

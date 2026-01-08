@@ -2,9 +2,9 @@ import {
   notifyError,
   notifySuccessSimple,
 } from "@/shared/entities/errors/notify";
+import { useWishlistMutations } from "@/shared/hooks/useWishlistMutations";
 import DeleteButton from "@/shared/ui/components/DeleteButton";
 import { FormLabel } from "@/shared/ui/kit/form";
-import { useWishlistMutations } from "../../model/hooks/useWishlistMutations";
 
 type DeleteSectionProps = {
   wishlistId: string;

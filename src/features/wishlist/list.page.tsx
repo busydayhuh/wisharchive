@@ -1,8 +1,9 @@
+import { useAuth } from "@/features/auth";
+import { ToolbarProvider } from "@/features/dashboard/model/index";
 import type { WishlistDocumentType } from "@/shared/types";
 import PageBoundary from "@/shared/ui/components/PageBoundary";
 import { useParams } from "react-router-dom";
-import { useAuth } from "../auth";
-import { ToolbarProvider, useAccess } from "../dashboard";
+import { useAccess } from "../collaborators/model";
 import { useWishlist } from "./model/hooks/useWishlist";
 import { WishlistLayout } from "./ui/WishlistLayout";
 import { WishlistSkeleton } from "./ui/WishlistSkeleton";

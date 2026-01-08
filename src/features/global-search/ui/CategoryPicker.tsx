@@ -1,5 +1,5 @@
 import { ToggleGroup, ToggleGroupItem } from "@/shared/ui/kit/toggle-group";
-import type { Category } from "../GlobalSearch";
+import type { Category } from "../model/types";
 
 export function CategoryPicker({
   category,

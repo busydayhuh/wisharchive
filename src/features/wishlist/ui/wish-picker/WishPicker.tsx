@@ -1,5 +1,5 @@
 import { useAuth } from "@/features/auth";
-import { useWishes } from "@/features/wish";
+import { useWishes } from "@/features/wish/model";
 import {
   notifyError,
   notifySuccessSimple,

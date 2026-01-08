@@ -1,4 +1,4 @@
-import type { AccessRoles } from "@/features/collaborators";
+import type { AccessRoles } from "@/features/collaborators/model";
 import type { WishDocumentType } from "@/shared/types";
 import { memo } from "react";
 import { ArchiveButton } from "../actions/ArchiveButton";

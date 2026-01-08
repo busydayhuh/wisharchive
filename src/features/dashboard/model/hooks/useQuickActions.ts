@@ -1,5 +1,5 @@
 import { useAuth } from "@/features/auth";
-import { useWish, useWishMutations } from "@/features/wish";
+import { useWish, useWishMutations } from "@/features/wish/model";
 import { useUpdateSWRCache } from "@/shared/hooks/useUpdateSWRCache";
 import type { WishlistDocumentType } from "@/shared/types";
 import { useCallback } from "react";

@@ -1,6 +1,6 @@
 import { useAuth } from "@/features/auth";
 import { CreateFAB } from "@/features/create";
-import { WishPickerProvider } from "@/features/wishlist";
+import { WishPickerProvider } from "@/features/wishlist/model";
 import { AnimatePresence, motion } from "motion/react";
 import { type ReactNode } from "react";
 

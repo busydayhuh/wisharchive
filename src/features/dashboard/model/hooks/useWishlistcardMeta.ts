@@ -1,5 +1,8 @@
-import type { AccessRoles, CollaboratorType } from "@/features/collaborators";
-import { useWishlistBase, useWishlistDialog } from "@/features/wishlist";
+import type {
+  AccessRoles,
+  CollaboratorType,
+} from "@/features/collaborators/model";
+import { useWishlistBase, useWishlistDialog } from "@/features/wishlist/model";
 import { useAppLocation } from "@/shared/hooks/useAppLocation";
 import type {
   LinkParams,

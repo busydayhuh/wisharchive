@@ -1,4 +1,4 @@
-import { useWishMutations } from "@/features/wish";
+import { useWishMutations } from "@/features/wish/model";
 import { handleError } from "@/shared/entities/errors/handleError";
 import { type OptimisticUpdater } from "@/shared/hooks/useOptimisticMutation";
 import { useUpdateSWRCache } from "@/shared/hooks/useUpdateSWRCache";

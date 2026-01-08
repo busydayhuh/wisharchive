@@ -2,7 +2,7 @@ import { ItemGroup } from "@/shared/ui/kit/item";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
 import { cn } from "@/shared/utils/css";
 import { Frown, Leaf, Wind } from "lucide-react";
-import type { AnyDocument, Category } from "../GlobalSearch";
+import type { AnyDocument, Category } from "../model/types";
 import { useGlobalSearch } from "../model/useGlobalSearch";
 import { ResultItem } from "./ResultItem";
 import { GlobalSearchSkeletons } from "./Skeletons";

@@ -1,13 +1,13 @@
 import { Button } from "@/shared/ui/kit/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/kit/dialog";
-import { DialogClose } from "@radix-ui/react-dialog";
 import CollaboratorsManager from "./CollaboratorsManager";
 
 export type CollaboratorsDialogProps = {

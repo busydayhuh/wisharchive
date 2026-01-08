@@ -1,4 +1,4 @@
-import { WishImage } from "@/features/wish";
+import { WishImage } from "@/shared/ui/components/WishImage";
 import { Checkbox } from "@/shared/ui/kit/checkbox";
 import { Label } from "@/shared/ui/kit/label";
 import { Skeleton } from "@/shared/ui/kit/skeleton";

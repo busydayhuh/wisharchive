@@ -1,7 +1,8 @@
 import type { WishcardMeta } from "@/features/dashboard/model/hooks/useWishcardMeta";
-import { BookButton, WishImage } from "@/features/wish";
+import { BookButton } from "@/features/wish";
 import type { WishDocumentType } from "@/shared/types";
 import { PRIVACY_ICONS } from "@/shared/ui/components/Badges";
+import { WishImage } from "@/shared/ui/components/WishImage";
 import { cn } from "@/shared/utils/css";
 import { memo } from "react";
 import { Link } from "react-router-dom";

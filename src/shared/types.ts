@@ -1,4 +1,5 @@
 import { type Models } from "appwrite";
+import type { ReactNode } from "react";
 import type { Params } from "react-router-dom";
 
 export type WishDocumentType = Models.Document & {
@@ -62,4 +63,12 @@ export type LinkParams = {
 
 export type PageData = {
   documents: Models.Document[];
+};
+
+export type Action = "delete" | "archive" | "book" | "edit" | "deactivate";
+
+export type ConfirmationTextType = {
+  title: string;
+  description: ReactNode;
+  actionText: string;
 };

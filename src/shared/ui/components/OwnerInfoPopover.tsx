@@ -1,20 +1,16 @@
-import { ROUTES } from "@/shared/config/routes";
-import { useIsMobile } from "@/shared/hooks/useIsMobile";
-import { UserAvatar } from "@/shared/ui/components/UserAvatar";
+import { useState } from "react";
+import { href, Link } from "react-router-dom";
+import { ROUTES } from "../../config/routes";
+import { useIsMobile } from "../../hooks/useIsMobile";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/shared/ui/kit/dialog";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/shared/ui/kit/popover";
-import { useState } from "react";
-import { href, Link } from "react-router-dom";
+} from "../kit/dialog";
+import { Popover, PopoverContent, PopoverTrigger } from "../kit/popover";
+import { UserAvatar } from "./UserAvatar";
 
 export function OwnerInfoPopover({
   avatarURL,

@@ -1,10 +1,10 @@
 import { useUser } from "@/features/profile";
 import { useAppLocation } from "@/shared/hooks/useAppLocation";
+import { OwnerInfoPopover } from "@/shared/ui/components/OwnerInfoPopover";
 import { UserAvatar } from "@/shared/ui/components/UserAvatar";
 import { Skeleton } from "@/shared/ui/kit/skeleton";
 import { cn } from "@/shared/utils/css";
 import { Ghost, Meh } from "lucide-react";
-import { OwnerInfoPopover } from "./OwnerInfoPopover";
 
 function DashboardOwner({
   userId,

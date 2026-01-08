@@ -1,4 +1,4 @@
-import { useWishlistDialog } from "@/features/wishlist";
+import { useWishlistDialog } from "@/features/wishlist/model";
 import { ROUTES } from "@/shared/config/routes";
 import { ErrorMessage } from "@/shared/ui/components/ErrorMessage";
 import type { Models } from "appwrite";

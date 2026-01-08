@@ -1,9 +1,9 @@
-import { useWishlists } from "@/features/wishlist";
+import { useWishlists } from "@/features/wishlist/model";
 import { useInfiniteScroll } from "@/shared/hooks/useInfiniteScroll";
 import { useDashboard } from "../model/store/dashboard/useDashboard";
 import { useToolbar } from "../model/store/toolbar/useToolbar";
-import { wrapDashboardPage } from "../model/wrapDashboardPage";
 import { ContentLayout } from "../ui/content/ContentLayout";
+import { wrapDashboardPage } from "../ui/wrapDashboardPage";
 
 function BookmarksPage() {
   const { dashboardOwnerId } = useDashboard();
@@ -45,4 +45,4 @@ function BookmarksPage() {
   );
 }
 
-export const BookmarksPageWithLayout = wrapDashboardPage(BookmarksPage);
+export const Component = wrapDashboardPage(BookmarksPage);

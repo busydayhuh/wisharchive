@@ -1,5 +1,5 @@
-import { useRoute } from "@/features/breadcrumbs";
 import { ROUTES } from "@/shared/config/routes";
+import { useRoute } from "@/shared/store/route/useRoute";
 import {
   Item,
   ItemContent,
@@ -9,7 +9,7 @@ import {
 } from "@/shared/ui/kit/item";
 import { cn } from "@/shared/utils/css";
 import { href } from "react-router-dom";
-import type { AnyDocument, Category } from "../GlobalSearch";
+import type { AnyDocument, Category } from "../model/types";
 import { Media } from "./Media";
 
 export function ResultItem({

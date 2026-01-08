@@ -1,5 +1,4 @@
 import { useAuth } from "@/features/auth";
-import { useRoute } from "@/features/breadcrumbs";
 import team from "@/shared/api/teams";
 import { ROUTES } from "@/shared/config/routes";
 import { handleError } from "@/shared/entities/errors/handleError";
@@ -7,6 +6,7 @@ import {
   notifyError,
   notifySuccessExpanded,
 } from "@/shared/entities/errors/notify";
+import { useRoute } from "@/shared/store/route/useRoute";
 import { useCallback } from "react";
 import { href } from "react-router-dom";
 

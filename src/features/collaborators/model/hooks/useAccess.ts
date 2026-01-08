@@ -1,12 +1,12 @@
 import { useAuth } from "@/features/auth";
-import type { AccessRoles } from "@/features/collaborators";
-import {
-  resolveVisibility,
-  resolveWishRoles,
-  resolveWishlistRoles,
-} from "@/features/collaborators";
 import type { Models } from "appwrite";
 import { useMemo } from "react";
+import {
+  resolveWishRoles,
+  resolveWishlistRoles,
+} from "../resolveDocumentRoles";
+import { resolveVisibility } from "../resolveVisibility";
+import type { AccessRoles } from "../types";
 
 export function useAccess(type: "wish" | "wishlist", item?: Models.Document) {
   const { userId } = useAuth();

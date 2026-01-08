@@ -1,8 +1,5 @@
 import type { ReactNode } from "react";
-import type {
-  Action,
-  ConfirmationTextType,
-} from "./ConfirmationDialogProvider";
+import type { Action, ConfirmationTextType } from "../../types";
 
 export function getConfirmationText(
   action?: Action,

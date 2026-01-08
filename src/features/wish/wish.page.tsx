@@ -1,13 +1,13 @@
+import type { WishRoles } from "@/features/collaborators/model";
+import { useAccess } from "@/features/collaborators/model";
 import type { WishDocumentType } from "@/shared/types";
 import PageBoundary from "@/shared/ui/components/PageBoundary";
+import { WishImage } from "@/shared/ui/components/WishImage";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../auth";
-import type { WishRoles } from "../collaborators";
-import { useAccess } from "../dashboard";
 import { useWish } from "./model/hooks/useWish";
 import { RelatedWishes } from "./ui/RelatedWishes";
 import { WishInfo } from "./ui/wish-info/WishInfo";
-import { WishImage } from "./ui/WishImage";
 import { WishLayout } from "./ui/WishLayout";
 import { WishPageSkeleton } from "./ui/WishPageSkeleton";
 

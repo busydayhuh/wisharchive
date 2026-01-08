@@ -1,14 +1,14 @@
-import db from "@/shared/api/databases";
-import team from "@/shared/api/teams";
-import { handleError } from "@/shared/entities/errors/handleError";
+import { ID, Permission, Role, type Models } from "appwrite";
+import { useCallback } from "react";
+import db from "../api/databases";
+import team from "../api/teams";
+import { handleError } from "../entities/errors/handleError";
 import {
   useOptimisticMutation,
   type OptimisticUpdater,
-} from "@/shared/hooks/useOptimisticMutation";
-import { useRevalidateSWR } from "@/shared/hooks/useRevalidateSWR";
-import { useUpdateSWRCache } from "@/shared/hooks/useUpdateSWRCache";
-import { ID, Permission, Role, type Models } from "appwrite";
-import { useCallback } from "react";
+} from "./useOptimisticMutation";
+import { useRevalidateSWR } from "./useRevalidateSWR";
+import { useUpdateSWRCache } from "./useUpdateSWRCache";
 
 type WishlistCreatePayload = {
   title: string;

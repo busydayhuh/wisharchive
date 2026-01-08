@@ -1,9 +1,9 @@
 import { UserProvider } from "@/features/auth";
-import { RouteContextProvider } from "@/features/breadcrumbs";
-import { CollaboratorsDialogProvider } from "@/features/collaborators";
-import { WishlistDialogProvider } from "@/features/wishlist";
+import { CollaboratorsDialogProvider } from "@/features/collaborators/model";
+import { WishlistDialogProvider } from "@/features/wishlist/model";
 import { SWRConfigProvider } from "@/shared/store/SWRConfigProvider";
 import { ConfirmationDialogProvider } from "@/shared/store/confirmation-dialog/ConfirmationDialogProvider";
+import { RouteContextProvider } from "@/shared/store/route/RouteProvider";
 import { ThemeProvider } from "@/shared/store/theme/ThemeProvider";
 import { SidebarProvider } from "@/shared/ui/kit/sidebar";
 import { type ReactNode } from "react";

@@ -1,5 +1,5 @@
-import { useRoute } from "@/features/breadcrumbs";
 import { ROUTES } from "@/shared/config/routes";
+import { useRoute } from "@/shared/store/route/useRoute";
 import type { WishlistDocumentType } from "@/shared/types";
 import { ResponsiveSelect } from "@/shared/ui/components/ResponsiveSelect";
 import { Skeleton } from "@/shared/ui/kit/skeleton";

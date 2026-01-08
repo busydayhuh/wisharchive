@@ -2,7 +2,7 @@ import {
   useWishcardMeta,
   type WishcardMeta,
 } from "@/features/dashboard/model/hooks/useWishcardMeta";
-import { BookButton, FormattedPrice, WishImage } from "@/features/wish";
+import { BookButton, FormattedPrice } from "@/features/wish";
 import { WishlistControls } from "@/features/wishlist-controls";
 import "@/shared/assets/custom.css";
 import type { WishDocumentType } from "@/shared/types";
@@ -12,6 +12,7 @@ import {
   ShopBadge,
 } from "@/shared/ui/components/Badges";
 import OwnerAvatar from "@/shared/ui/components/OwnerAvatar";
+import { WishImage } from "@/shared/ui/components/WishImage";
 import { cn } from "@/shared/utils/css";
 import { Link } from "react-router-dom";
 import { QuickActions } from "./QuickActions";

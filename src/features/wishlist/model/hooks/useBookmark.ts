@@ -1,10 +1,10 @@
 import { notifyError } from "@/shared/entities/errors/notify";
 import { type OptimisticUpdater } from "@/shared/hooks/useOptimisticMutation";
 import { useUpdateSWRCache } from "@/shared/hooks/useUpdateSWRCache";
+import { useWishlistMutations } from "@/shared/hooks/useWishlistMutations";
 import type { WishlistDocumentType } from "@/shared/types";
 import { useCallback } from "react";
 import { useWishlist } from "./useWishlist";
-import { useWishlistMutations } from "./useWishlistMutations";
 
 export function useBookmark(
   wishlistId: string,

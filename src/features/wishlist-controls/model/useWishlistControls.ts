@@ -1,5 +1,5 @@
-import type { AccessRoles } from "@/features/collaborators";
-import { useQuickActions } from "@/features/dashboard/";
+import type { AccessRoles } from "@/features/collaborators/model";
+import { useQuickActions } from "@/features/dashboard/model";
 import {
   notifyError,
   notifySuccessExpanded,

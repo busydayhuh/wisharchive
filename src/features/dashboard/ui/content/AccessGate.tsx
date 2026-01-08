@@ -1,5 +1,5 @@
+import { useAccess } from "@/features/collaborators/model";
 import type { Models } from "appwrite";
-import { useAccess } from "../../model/hooks/useAccess";
 import { RolesContext } from "../../model/store/access/Context";
 
 export function AccessGate({

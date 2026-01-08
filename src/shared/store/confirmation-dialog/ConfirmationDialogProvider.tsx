@@ -1,9 +1,8 @@
-import ConfirmationDialog from "@/shared/ui/components/ConfirmationDialog";
 import { useCallback, useState, type ReactNode } from "react";
+import type { Action, ConfirmationTextType } from "../../types";
+import ConfirmationDialog from "../../ui/components/ConfirmationDialog";
 import { ConfirmationDialogContext } from "./Context";
 import { getConfirmationText } from "./getConfirmationText";
-
-export type Action = "delete" | "archive" | "book" | "edit" | "deactivate";
 
 export type OpenConfDialogProps = {
   action?: Action;
@@ -11,12 +10,6 @@ export type OpenConfDialogProps = {
   name?: string;
   isActive?: boolean;
   isOwner?: boolean;
-};
-
-export type ConfirmationTextType = {
-  title: string;
-  description: ReactNode;
-  actionText: string;
 };
 
 type ConfirmationDialogStateType = {

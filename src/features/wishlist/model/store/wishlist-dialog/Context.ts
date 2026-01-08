@@ -1,4 +1,4 @@
-import type { CollaboratorType, Roles } from "@/features/collaborators";
+import type { CollaboratorType, Roles } from "@/features/collaborators/model";
 import type { WishlistDocumentType } from "@/shared/types";
 import { createContext } from "react";
 

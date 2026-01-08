@@ -1,8 +1,6 @@
-import type { CollaboratorType } from "@/features/collaborators";
-import {
-  CollaboratorsGroup,
-  useCollaboratorsDialog,
-} from "@/features/collaborators";
+import { CollaboratorsGroup } from "@/features/collaborators";
+import type { CollaboratorType } from "@/features/collaborators/model";
+import { useCollaboratorsDialog } from "@/features/collaborators/model";
 import { Button } from "@/shared/ui/kit/button";
 import { PlusIcon } from "lucide-react";
 

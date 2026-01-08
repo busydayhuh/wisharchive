@@ -1,7 +1,7 @@
-import { ROUTES } from "@/shared/config/routes";
-import type { LinkParams } from "@/shared/types";
 import { href } from "react-router-dom";
-import { useRoute } from "./useRoute";
+import { ROUTES } from "../config/routes";
+import { useRoute } from "../store/route/useRoute";
+import type { LinkParams } from "../types";
 
 export function useLinkParams(
   type: "wish" | "wishlist",

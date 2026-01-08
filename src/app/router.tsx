@@ -1,11 +1,3 @@
-import {
-  ArchivedPageWithLayout,
-  BookedPageWithLayout,
-  BookmarksPageWithLayout,
-  SharedPageWithLayout,
-  WishesPageWithLayout,
-  WishlistPageWithLayout,
-} from "@/features/dashboard/";
 import { ROUTES } from "@/shared/config/routes.ts";
 import DefaultLoader from "@/shared/ui/components/DefaultLoader.tsx";
 import { NotFound } from "@/shared/ui/components/NotFound.tsx";
@@ -35,18 +27,19 @@ export const router = createBrowserRouter([
     children: [
       {
         path: ROUTES.DASHBOARD,
-        element: <WishesPageWithLayout />,
+        lazy: () => import("@/features/dashboard/pages/dashboard-wishes.page"),
         HydrateFallback: DefaultLoader,
       },
 
       {
         path: ROUTES.WISHES,
-        element: <WishesPageWithLayout />,
+        lazy: () => import("@/features/dashboard/pages/dashboard-wishes.page"),
         HydrateFallback: DefaultLoader,
       },
       {
         path: ROUTES.WISHLISTS,
-        element: <WishlistPageWithLayout />,
+        lazy: () =>
+          import("@/features/dashboard/pages/dashboard-lists.page.tsx"),
         HydrateFallback: DefaultLoader,
       },
 
@@ -55,22 +48,26 @@ export const router = createBrowserRouter([
         children: [
           {
             path: ROUTES.SHARED,
-            element: <SharedPageWithLayout />,
+            lazy: () =>
+              import("@/features/dashboard/pages/dashboard-shared.page.tsx"),
             HydrateFallback: DefaultLoader,
           },
           {
             path: ROUTES.BOOKED,
-            element: <BookedPageWithLayout />,
+            lazy: () =>
+              import("@/features/dashboard/pages/dashboard-booked.page.tsx"),
             HydrateFallback: DefaultLoader,
           },
           {
             path: ROUTES.BOOKMARKS,
-            element: <BookmarksPageWithLayout />,
+            lazy: () =>
+              import("@/features/dashboard/pages/dashboard-bookmarks.page.tsx"),
             HydrateFallback: DefaultLoader,
           },
           {
             path: ROUTES.ARCHIVED,
-            element: <ArchivedPageWithLayout />,
+            lazy: () =>
+              import("@/features/dashboard/pages/dashboard-archived.page.tsx"),
             HydrateFallback: DefaultLoader,
           },
           {

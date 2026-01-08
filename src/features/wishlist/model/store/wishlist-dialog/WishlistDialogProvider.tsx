@@ -1,8 +1,8 @@
-import type { CollaboratorType, Roles } from "@/features/collaborators";
-import WishlistDialog from "@/features/wishlist/ui/wishlist-dialog/WishlistDialog";
+import type { CollaboratorType, Roles } from "@/features/collaborators/model";
 import type { WishlistDocumentType } from "@/shared/types";
 import type { ReactNode } from "react";
 import { useCallback, useState } from "react";
+import WishlistDialog from "../../../ui/wishlist-dialog/WishlistDialog";
 import {
   WishlistDialogContext,
   type WishlistDialogContextType,

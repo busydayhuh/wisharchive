@@ -1,4 +1,4 @@
-import { DashboardLayout } from "../ui/DashboardLayout";
+import { DashboardLayout } from "./DashboardLayout";
 
 export function wrapDashboardPage<P extends object>(
   Component: React.ComponentType<P>

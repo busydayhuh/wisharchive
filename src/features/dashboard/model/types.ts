@@ -1,4 +1,5 @@
-import type { Dispatch, SetStateAction } from "react";
+import type { Action } from "@/shared/types";
+import type { Dispatch, JSX, SetStateAction } from "react";
 
 export type DashboardType =
   | "wishes"
@@ -45,4 +46,13 @@ export type ToolbarContext = {
   setToolbarState: Dispatch<SetStateAction<ToolbarState>>;
   dashboardType: DashboardType;
   localStorageKey: string;
+};
+
+export type MenuItem = {
+  title: string;
+  icon: JSX.Element;
+  action: () => void;
+  actionName: Action;
+  isActive?: boolean;
+  confirmation?: boolean;
 };

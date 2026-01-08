@@ -1,8 +1,8 @@
 import { useCurrentUser } from "@/features/profile/";
 import { useAppLocation } from "@/shared/hooks/useAppLocation";
+import { OwnerInfoPopover } from "@/shared/ui/components/OwnerInfoPopover";
 import { SidebarTrigger } from "@/shared/ui/kit/sidebar";
 import { cn } from "@/shared/utils/css";
-import { OwnerInfoPopover } from "../dashboard";
 import { Breadcrumbs } from "./Breadcrumbs";
 
 export function BreadcrumbsBar({

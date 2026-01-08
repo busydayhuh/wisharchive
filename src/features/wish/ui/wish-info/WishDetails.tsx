@@ -1,4 +1,4 @@
-import type { WishRoles } from "@/features/collaborators";
+import type { WishRoles } from "@/features/collaborators/model";
 import { WishlistControls } from "@/features/wishlist-controls";
 import type { WishDocumentType } from "@/shared/types";
 import { PriorityBadge, ShopBadge } from "@/shared/ui/components/Badges";

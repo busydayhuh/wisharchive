@@ -1,10 +1,5 @@
 import { useDebounce } from "@/shared/hooks/useDebounce";
 import { useIsMobile } from "@/shared/hooks/useIsMobile";
-import type {
-  UserDocumentType,
-  WishDocumentType,
-  WishlistDocumentType,
-} from "@/shared/types";
 import Searchbar from "@/shared/ui/components/Searchbar";
 import { Button } from "@/shared/ui/kit/button";
 import {
@@ -17,14 +12,9 @@ import {
 import { cn } from "@/shared/utils/css";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
+import type { Category } from "./model/types";
 import { CategoryPicker } from "./ui/CategoryPicker";
 import { SearchResults } from "./ui/SearchResults";
-
-export type Category = "wishes" | "wishlists" | "users";
-export type AnyDocument =
-  | WishDocumentType
-  | WishlistDocumentType
-  | UserDocumentType;
 
 export function GlobalSearchDialog() {
   const isMobile = useIsMobile();

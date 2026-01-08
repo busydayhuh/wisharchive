@@ -1,4 +1,4 @@
-import type { Filter, SortState } from "@/features/dashboard/";
+import type { Filter, SortState } from "@/features/dashboard/model";
 import db from "@/shared/api/databases";
 import type { WishDocumentType } from "@/shared/types";
 import { Query, type Models } from "appwrite";

@@ -1,5 +1,5 @@
 import { useProtectedAction } from "@/features/auth";
-import { useQuickActions } from "@/features/dashboard";
+import { useQuickActions } from "@/features/dashboard/model";
 import {
   notifyError,
   notifySuccessExpanded,

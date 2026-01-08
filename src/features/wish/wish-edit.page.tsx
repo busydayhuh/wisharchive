@@ -4,11 +4,11 @@ import {
   notifySuccessExpanded,
 } from "@/shared/entities/errors/notify";
 import type { wishFormSchema } from "@/shared/formSchemas";
+import { useRoute } from "@/shared/store/route/useRoute";
 import { ErrorMessage } from "@/shared/ui/components/ErrorMessage";
 import { href, useParams } from "react-router-dom";
 import type z from "zod";
 import { useAuth } from "../auth";
-import { useRoute } from "../breadcrumbs";
 import { useWish } from "./model/hooks/useWish";
 import { useWishMutations } from "./model/hooks/useWishMutations";
 import { normalizeWishData } from "./model/normalizeWishData";

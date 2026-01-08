@@ -1,9 +1,9 @@
-import { useWishes } from "@/features/wish";
+import { useWishes } from "@/features/wish/model";
 import { useInfiniteScroll } from "@/shared/hooks/useInfiniteScroll";
 import { useDashboard } from "../model/store/dashboard/useDashboard";
 import { useToolbar } from "../model/store/toolbar/useToolbar";
-import { wrapDashboardPage } from "../model/wrapDashboardPage";
 import { ContentLayout } from "../ui/content/ContentLayout";
+import { wrapDashboardPage } from "../ui/wrapDashboardPage";
 
 function WishesPage() {
   const { dashboardOwnerId } = useDashboard();
@@ -39,4 +39,4 @@ function WishesPage() {
   );
 }
 
-export const WishesPageWithLayout = wrapDashboardPage(WishesPage);
+export const Component = wrapDashboardPage(WishesPage);

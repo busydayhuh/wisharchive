@@ -1,4 +1,4 @@
-import type { AccessRoles } from "@/features/collaborators";
+import type { AccessRoles } from "@/features/collaborators/model";
 import { ROUTES } from "@/shared/config/routes";
 import { useIsMobile } from "@/shared/hooks/useIsMobile";
 import type { WishDocumentType, WishlistDocumentType } from "@/shared/types";

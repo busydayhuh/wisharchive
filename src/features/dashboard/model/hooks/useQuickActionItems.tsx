@@ -3,7 +3,7 @@ import {
   notifySuccessExpanded,
 } from "@/shared/entities/errors/notify";
 import { Archive, ArchiveRestore, Edit2, Trash2 } from "lucide-react";
-import type { MenuItem } from "../../ui/content/wishes/QuickActions";
+import type { MenuItem } from "../types";
 import { useQuickActions } from "./useQuickActions";
 
 export function useQuickActionItems({

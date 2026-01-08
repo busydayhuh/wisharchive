@@ -1,5 +1,6 @@
-import { ContentLayout, useToolbar } from "@/features/dashboard";
-import { useWishes } from "@/features/wish";
+import { ContentLayout } from "@/features/dashboard";
+import { useToolbar } from "@/features/dashboard/model";
+import { useWishes } from "@/features/wish/model";
 import { useInfiniteScroll } from "@/shared/hooks/useInfiniteScroll";
 
 export function WishlistContent({ wishlistId }: { wishlistId: string }) {

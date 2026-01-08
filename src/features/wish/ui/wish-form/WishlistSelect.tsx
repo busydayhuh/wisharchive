@@ -1,4 +1,4 @@
-import { useWishlistOptions } from "@/features/wishlist-controls";
+import { useWishlistOptions } from "@/features/wishlist-controls/model";
 import type { WishlistDocumentType } from "@/shared/types";
 import { ResponsiveSelect } from "@/shared/ui/components/ResponsiveSelect";
 
@@ -18,7 +18,9 @@ export function WishlistSelect({
     <ResponsiveSelect
       options={options}
       onSelect={(value) => {
-        const selectedList = wishlists?.find((wl) => wl.$id === value);
+        const selectedList = wishlists?.find(
+          (wl: WishlistDocumentType) => wl.$id === value
+        );
         onSelect(value, selectedList ?? null);
       }}
       renderSelected={(selected) => (

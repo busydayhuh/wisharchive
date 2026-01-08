@@ -1,10 +1,11 @@
-import type { CollaboratorType, Roles } from "@/features/collaborators";
+import type { CollaboratorType, Roles } from "@/features/collaborators/model";
 import { useCurrentUser } from "@/features/profile";
 import {
   notifyError,
   notifySuccessSimple,
 } from "@/shared/entities/errors/notify";
 import { wishlistFormSchema as formSchema } from "@/shared/formSchemas";
+import { useWishlistMutations } from "@/shared/hooks/useWishlistMutations";
 import type { WishlistDocumentType } from "@/shared/types";
 import { SubmitBtn } from "@/shared/ui/components/SubmitBtn";
 import { Button } from "@/shared/ui/kit/button";
@@ -21,7 +22,6 @@ import { Form } from "@/shared/ui/kit/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useWishlistMutations } from "../../model/hooks/useWishlistMutations";
 import { Collaborators } from "../Collaborators";
 import { DeleteSection } from "./DeleteSection";
 import { WishlistFormFields } from "./WishlistFormFields";

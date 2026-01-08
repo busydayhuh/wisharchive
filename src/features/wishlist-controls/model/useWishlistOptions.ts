@@ -1,5 +1,6 @@
 import { useAuth } from "@/features/auth";
-import { useCollabWishlists } from "@/features/dashboard";
+import { useCollabWishlists } from "@/features/dashboard/model";
+import type { WishlistDocumentType } from "@/shared/types";
 import { PRIVACY_ICONS } from "@/shared/ui/components/Badges";
 import { type Option } from "@/shared/ui/components/ResponsiveSelect";
 import { useMemo } from "react";
@@ -28,7 +29,7 @@ export function useWishlistOptions(selectedValue: string | null) {
         label: "без списка",
         icon: PRIVACY_ICONS.none,
       },
-      ...(wishlists ?? []).map((wl) => ({
+      ...(wishlists ?? []).map((wl: WishlistDocumentType) => ({
         value: wl.$id,
         label: wl.title,
         icon:

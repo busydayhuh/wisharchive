@@ -1,6 +1,4 @@
-import { useQuickActionItems } from "@/features/dashboard/model/hooks/useQuickActionItems";
 import { useIsMobile } from "@/shared/hooks/useIsMobile";
-import { type Action } from "@/shared/store/confirmation-dialog/ConfirmationDialogProvider";
 import { useConfirmationDialog } from "@/shared/store/confirmation-dialog/useConfirmationDialog";
 import { IconBtnWithTooltip } from "@/shared/ui/components/IconBtnWithTooltip";
 import { Button } from "@/shared/ui/kit/button";
@@ -14,7 +12,8 @@ import {
 import { cn } from "@/shared/utils/css";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Ellipsis } from "lucide-react";
-import { type JSX } from "react";
+import { useQuickActionItems } from "../../../model/hooks/useQuickActionItems";
+import type { MenuItem } from "../../../model/types";
 
 const dropdownTriggerVariants = cva(
   "inline-flex justify-center items-center border-0 rounded-sm size-9 text-foreground text-sm transition duration-300 cursor-pointer shrink-0",
@@ -30,14 +29,7 @@ const dropdownTriggerVariants = cva(
   }
 );
 type DropdownTriggerVariants = VariantProps<typeof dropdownTriggerVariants>;
-export type MenuItem = {
-  title: string;
-  icon: JSX.Element;
-  action: () => void;
-  actionName: Action;
-  isActive?: boolean;
-  confirmation?: boolean;
-};
+
 type QuickActionsProps = {
   wishId: string;
   title: string;

@@ -1,8 +1,8 @@
 import type {
   Page,
   QueryFilters as WishlistFilters,
-} from "@/features/wishlist";
-import { useWishlists } from "@/features/wishlist";
+} from "@/features/wishlist/model";
+import { useWishlists } from "@/features/wishlist/model";
 import team from "@/shared/api/teams";
 import type { Models } from "appwrite";
 import useSWR from "swr";

@@ -3,7 +3,7 @@ import db from "@/shared/api/databases";
 import { Query } from "appwrite";
 import stableStringify from "fast-json-stable-stringify";
 import useSWR from "swr";
-import type { Category } from "../GlobalSearch";
+import type { Category } from "../model/types";
 
 type GlobalSearchParams = {
   category: Category;

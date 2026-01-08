@@ -1,5 +1,6 @@
 import type { PathParams } from "@/shared/config/routes";
 import { useIsMobile } from "@/shared/hooks/useIsMobile";
+import { useRoute } from "@/shared/store/route/useRoute";
 import {
   Breadcrumb,
   BreadcrumbEllipsis,
@@ -12,7 +13,6 @@ import {
 import { href, Link, matchPath } from "react-router-dom";
 import { Fragment } from "react/jsx-runtime";
 import { breadcrumbMap, type Crumb } from "./model/breadcrumbMap";
-import { useRoute } from "./model/useRoute";
 
 type BreadcrumbKey = keyof typeof breadcrumbMap;
 

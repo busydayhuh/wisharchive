@@ -1,4 +1,4 @@
-import { useWishlist } from "@/features/wishlist";
+import { useWishlist } from "@/features/wishlist/model";
 import { ErrorMessage } from "@/shared/ui/components/ErrorMessage";
 import { Card } from "@/shared/ui/kit/card";
 import { Loader2 } from "lucide-react";

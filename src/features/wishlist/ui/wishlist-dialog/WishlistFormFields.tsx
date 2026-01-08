@@ -1,4 +1,4 @@
-import type { Roles } from "@/features/collaborators";
+import type { Roles } from "@/features/collaborators/model";
 import { wishlistFormSchema as formSchema } from "@/shared/formSchemas";
 import {
   FormControl,

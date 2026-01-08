@@ -3,8 +3,8 @@ import { useMemo } from "react";
 import { useCollabWishlists } from "../model/hooks/useCollabWishlists";
 import { useDashboard } from "../model/store/dashboard/useDashboard";
 import { useToolbar } from "../model/store/toolbar/useToolbar";
-import { wrapDashboardPage } from "../model/wrapDashboardPage";
 import { ContentLayout } from "../ui/content/ContentLayout";
+import { wrapDashboardPage } from "../ui/wrapDashboardPage";
 
 function SharedPage() {
   const { searchString, toolbarState } = useToolbar();
@@ -53,4 +53,4 @@ function SharedPage() {
   );
 }
 
-export const SharedPageWithLayout = wrapDashboardPage(SharedPage);
+export const Component = wrapDashboardPage(SharedPage);

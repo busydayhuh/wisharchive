@@ -1,6 +1,6 @@
-import { useLinkParams } from "@/features/breadcrumbs/";
 import { useUser } from "@/features/profile";
 import { ROUTES } from "@/shared/config/routes";
+import { useLinkParams } from "@/shared/hooks/useLinkParams";
 import type { WishDocumentType } from "@/shared/types";
 import { href, useNavigate } from "react-router-dom";
 

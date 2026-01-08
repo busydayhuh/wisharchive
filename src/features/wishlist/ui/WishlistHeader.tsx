@@ -1,4 +1,4 @@
-import type { Roles } from "@/features/collaborators";
+import type { Roles } from "@/features/collaborators/model";
 import { useIsMobile } from "@/shared/hooks/useIsMobile";
 import type { WishlistDocumentType } from "@/shared/types";
 import ShareOnSocials from "@/shared/ui/components/ShareOnSocials";
