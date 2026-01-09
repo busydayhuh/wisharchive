@@ -39,6 +39,7 @@ export function ContentLayout({
     >
       {(safeItems) => (
         <ContentGrid
+          key={viewMode}
           viewMode={viewMode}
           className={cn(isLoading && "opacity-60")}
         >

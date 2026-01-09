@@ -1,6 +1,6 @@
 import { cn } from "@/shared/utils/css";
 import { motion } from "motion/react";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 export function ItemAnimation({
   type,
@@ -11,14 +11,23 @@ export function ItemAnimation({
   viewMode: "gallery" | "table";
   children: React.ReactNode;
 }) {
+  const isViewSwitching = useRef(false);
+
+  useEffect(() => {
+    isViewSwitching.current = true;
+    requestAnimationFrame(() => {
+      isViewSwitching.current = false;
+    });
+  }, [viewMode]);
+
   return (
     <motion.div
       className={cn(type === "wish" && "group-card-wrapper")}
-      layout
-      initial={viewMode === "gallery" && { opacity: 0, y: 10 }}
-      animate={viewMode === "gallery" && { opacity: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.8, y: -10 }}
-      transition={{ duration: 0.3 }}
+      layout={!isViewSwitching.current}
+      initial={{ opacity: 0, scale: 0.96 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.96 }}
+      transition={{ duration: 0.18 }}
     >
       {children}
     </motion.div>

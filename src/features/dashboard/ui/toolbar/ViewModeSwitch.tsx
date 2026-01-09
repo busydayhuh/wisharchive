@@ -1,4 +1,6 @@
-import { ToggleGroup, ToggleGroupItem } from "@/shared/ui/kit/toggle-group";
+import { Button } from "@/shared/ui/kit/button";
+import { ButtonGroup } from "@/shared/ui/kit/button-group";
+import { cn } from "@/shared/utils/css";
 import { LayoutDashboard, LayoutList } from "lucide-react";
 
 export type ViewModeSwitchType = {
@@ -12,22 +14,34 @@ function ViewModeSwitch({
   className,
 }: ViewModeSwitchType & React.ComponentProps<"div">) {
   const toggleStyles =
-    "cursor-pointer rounded-sm first:rounded-l-sm last:rounded-r-sm text-muted-foreground data-[state=on]:bg-primary data-[state=on]:text-background hover:bg-accent w-9 aspect-square";
+    "cursor-pointer rounded-sm first:rounded-l-sm last:rounded-r-sm text-muted-foreground hover:bg-muted/80 bg-muted";
+  const activeState = "bg-primary text-background hover:bg-primary";
 
   return (
-    <ToggleGroup
-      type="single"
-      value={viewMode}
-      onValueChange={setViewMode}
-      className={className}
-    >
-      <ToggleGroupItem value="gallery" className={toggleStyles}>
+    <ButtonGroup aria-label="View mode" orientation="horizontal">
+      <Button
+        size="icon"
+        className={cn(
+          toggleStyles,
+          viewMode === "gallery" && activeState,
+          className
+        )}
+        onClick={() => setViewMode("gallery")}
+      >
         <LayoutDashboard />
-      </ToggleGroupItem>
-      <ToggleGroupItem value="table" className={toggleStyles}>
+      </Button>
+      <Button
+        size="icon"
+        className={cn(
+          toggleStyles,
+          viewMode === "table" && activeState,
+          className
+        )}
+        onClick={() => setViewMode("table")}
+      >
         <LayoutList />
-      </ToggleGroupItem>
-    </ToggleGroup>
+      </Button>
+    </ButtonGroup>
   );
 }
 

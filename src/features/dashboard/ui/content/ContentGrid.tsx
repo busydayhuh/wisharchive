@@ -24,6 +24,8 @@ export function ContentGrid({
 
   if (viewMode === "table")
     return (
-      <div className={cn("flex flex-col gap-1 md:gap-2 -mt-2")}>{children}</div>
+      <div className={cn("gap-1 md:gap-2 grid grid-cols-1 -mt-2")}>
+        {children}
+      </div>
     );
 }
