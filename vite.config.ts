@@ -17,6 +17,7 @@ export default defineConfig({
       filename: "stats.html",
     }) as PluginOption,
   ],
+  base: "/wisharchive",
   build: {
     outDir: "dist",
     sourcemap: false,
