@@ -279,7 +279,7 @@ function SidebarTrigger({
       {...props}
     >
       {isMobile ? (
-        <Menu className="size-4 text-muted-foreground" />
+        <Menu className="size-5 text-muted-foreground" />
       ) : (
         <div className="flex justify-center items-center bg-sidebar-accent rounded-full size-5 text-sidebar-accent-foreground">
           {state === "collapsed" ? (

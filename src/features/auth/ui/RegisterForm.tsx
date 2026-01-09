@@ -73,7 +73,12 @@ function RegisterForm() {
                 Email<span className="text-destructive">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder="example@gmail.com" {...field} id="email" />
+                <Input
+                  placeholder="example@gmail.com"
+                  {...field}
+                  id="email"
+                  autoComplete="true"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -88,7 +93,7 @@ function RegisterForm() {
                 Никнейм<span className="text-destructive">*</span>
               </FormLabel>
               <FormControl>
-                <Input {...field} id="nickname" />
+                <Input {...field} id="nickname" autoComplete="off" />
               </FormControl>
               <FormDescription>
                 Короткое имя, по которому друзья смогут найти ваш аккаунт
@@ -106,7 +111,12 @@ function RegisterForm() {
                 Полное имя<span className="text-destructive">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder="Василиса Премудрая" {...field} id="name" />
+                <Input
+                  placeholder="Василиса Премудрая"
+                  {...field}
+                  id="name"
+                  autoComplete="true"
+                />
               </FormControl>
               <FormDescription>
                 Можно изменить в настройках аккаунта позже

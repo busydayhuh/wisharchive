@@ -17,6 +17,7 @@ export function PassWithToggle(props: PassWithToggleProps) {
         placeholder="**************"
         type={passVisible ? "text" : "password"}
         {...props}
+        autoComplete="current-password"
       />
       <Button
         type="button"

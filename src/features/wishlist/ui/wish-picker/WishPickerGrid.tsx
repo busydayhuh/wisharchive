@@ -6,7 +6,7 @@ import type { WishPickerContentProps } from "./types";
 
 export function WishPickerGrid({ wishes, onPickWish }: WishPickerContentProps) {
   return (
-    <div className="w-full h-[calc(100%-3rem)] overflow-scroll">
+    <div className="w-full h-[calc(100%-3rem)] overflow-y-scroll">
       <div className="gap-2.5 grid grid-cols-5">
         {wishes.map((wish) => (
           <div className="relative px-1 py-1" key={wish.$id}>

@@ -24,7 +24,7 @@ export const breadcrumbMap: Record<string, Crumb> = {
     parents: [ROUTES.WISHLISTS, ROUTES.SHARED, ROUTES.BOOKMARKS],
   },
   [ROUTES.EDIT]: {
-    label: "Редактировать",
+    label: "Редактировать желание",
     parents: [ROUTES.WISH, ROUTES.WISHES, ROUTES.WISHLIST, ROUTES.ARCHIVED],
   },
   [ROUTES.BOOKMARKS]: {

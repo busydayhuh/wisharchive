@@ -21,7 +21,7 @@ export function BreadcrumbsBar({
   return (
     <div
       className={cn(
-        "flex items-center gap-2.5 md:mt-2 px-1 md:px-0 py-0.5 border-b-1 md:border-b-0",
+        "flex items-center gap-2.5 md:mt-2 px-1 md:px-0 py-0.5 pb-1 border-b-1 md:border-b-0",
         !hasBreadcrumbs && "justify-between"
       )}
     >
@@ -33,7 +33,7 @@ export function BreadcrumbsBar({
       {hasBreadcrumbs && <Breadcrumbs />}
       {isMobile && user && !hasBreadcrumbs && (
         <OwnerInfoPopover
-          size="sm"
+          size="md"
           id={user.userId}
           name={user.userName}
           avatarURL={user.avatarURL ?? undefined}

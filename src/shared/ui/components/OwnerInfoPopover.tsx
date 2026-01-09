@@ -22,7 +22,7 @@ export function OwnerInfoPopover({
   name: string;
   id: string;
   email: string;
-  size?: "sm" | "lg";
+  size?: "sm" | "lg" | "md";
 }) {
   const isMobile = useIsMobile();
   const trigger = (

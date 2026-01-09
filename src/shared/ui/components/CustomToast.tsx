@@ -34,11 +34,17 @@ function CustomToast(props: ToastProps) {
       )}
     >
       <div className="rounded-sm size-12 overflow-hidden shrink-0 grow-0">
-        <img
-          src={icon}
-          className="bg-muted w-full h-full object-cover"
-          alt="Image"
-        />
+        {icon ? (
+          <img
+            src={icon}
+            className="bg-muted w-full h-full object-cover"
+            alt="Image"
+          />
+        ) : (
+          <div className="flex justify-center items-center bg-muted size-12">
+            ✨
+          </div>
+        )}
       </div>
       <div className="flex flex-col w-[60%]">
         <p className="font-semibold text-sm md:text-base line-clamp-1">

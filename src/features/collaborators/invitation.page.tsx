@@ -2,25 +2,20 @@ import { useWishlist } from "@/features/wishlist/model";
 import { ErrorMessage } from "@/shared/ui/components/ErrorMessage";
 import { Card } from "@/shared/ui/kit/card";
 import { Loader2 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useAcceptInvite } from "./model/hooks/useAcceptInvite";
-import { useMembership } from "./model/hooks/useMembership";
 import { InvitationCard } from "./ui/InvitationCard";
 
 function InvitationPage() {
   const [searchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
 
-  const { membership } = useMembership(params.teamId, params.membershipId);
   const { wishlist, isLoading, error } = useWishlist(params.teamId);
 
   const [loading, setLoading] = useState(false);
   const wlImageURL = wishlist?.wishes?.at(-1)?.imageURL || undefined;
-  const roleName = useMemo(
-    () => (membership?.roles.includes("editors") ? "редактора" : "читателя"),
-    [membership]
-  );
+
   const acceptInvite = useAcceptInvite();
 
   if (isLoading)
@@ -37,7 +32,6 @@ function InvitationPage() {
       <div className="fixed inset-0 place-content-center grid">
         <InvitationCard
           params={params}
-          roleName={roleName}
           wlImageURL={wlImageURL}
           wlTitle={wishlist.title}
           wlOwnerId={wishlist.ownerId}

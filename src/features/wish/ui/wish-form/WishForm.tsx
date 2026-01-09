@@ -131,7 +131,7 @@ export function WishForm({
           name="priority"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="priority">Приоритет</FormLabel>
+              <FormLabel htmlFor={undefined}>Приоритет</FormLabel>
               <PrioritySelect
                 setPriority={(value: number) => field.onChange(String(value))}
                 priority={Number(field.value)}
@@ -168,6 +168,7 @@ export function WishForm({
                 <FormItem>
                   <FormControl>
                     <NumericFormat
+                      id="price"
                       getInputRef={field.ref}
                       className="focus-visible:border-0 focus-visible:ring-0 text-sm md:text-base"
                       thousandSeparator=" "
@@ -209,7 +210,7 @@ export function WishForm({
             name="wishlistId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="mb-1" htmlFor="wishlistId">
+                <FormLabel className="mb-1" htmlFor={undefined}>
                   Выберите вишлист
                 </FormLabel>
                 <WishlistSelect

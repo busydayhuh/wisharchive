@@ -69,6 +69,7 @@ function LoginForm() {
                     placeholder="example@gmail.com"
                     {...field}
                     id="email"
+                    autoComplete="true"
                   />
                 </FormControl>
                 <FormMessage />

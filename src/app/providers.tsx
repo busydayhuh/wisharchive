@@ -14,7 +14,7 @@ function Providers(props: { children: ReactNode }) {
       <ThemeProvider>
         <UserProvider>
           <RouteContextProvider>
-            <SidebarProvider defaultOpen={false}>
+            <SidebarProvider defaultOpen={true}>
               <ConfirmationDialogProvider>
                 <CollaboratorsDialogProvider>
                   <WishlistDialogProvider>

@@ -20,7 +20,6 @@ type InvitationCardProps = {
   params: {
     [k: string]: string;
   };
-  roleName: string;
   wlImageURL?: string;
   wlTitle: string;
   wlOwnerId: string;
@@ -30,7 +29,6 @@ type InvitationCardProps = {
 
 export function InvitationCard({
   params,
-  roleName,
   wlImageURL,
   wlTitle,
   wlOwnerId,
@@ -53,8 +51,7 @@ export function InvitationCard({
         </p>
         <p>
           Нажимая кнопку ниже, ты подтверждаешь своё участие в команде соавторов
-          списка <strong>«{params.teamName}»</strong> в роли{" "}
-          <strong>{roleName}</strong>.
+          списка <strong>«{params.teamName}»</strong>.
         </p>
         <Item variant="muted">
           <ItemMedia variant="image">

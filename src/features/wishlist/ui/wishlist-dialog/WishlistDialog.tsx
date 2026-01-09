@@ -1,11 +1,14 @@
 import type { CollaboratorType, Roles } from "@/features/collaborators/model";
 import { useCurrentUser } from "@/features/profile";
+import { ROUTES } from "@/shared/config/routes";
 import {
   notifyError,
+  notifySuccessExpanded,
   notifySuccessSimple,
 } from "@/shared/entities/errors/notify";
 import { wishlistFormSchema as formSchema } from "@/shared/formSchemas";
 import { useWishlistMutations } from "@/shared/hooks/useWishlistMutations";
+import { useRoute } from "@/shared/store/route/useRoute";
 import type { WishlistDocumentType } from "@/shared/types";
 import { SubmitBtn } from "@/shared/ui/components/SubmitBtn";
 import { Button } from "@/shared/ui/kit/button";
@@ -21,6 +24,7 @@ import {
 import { Form } from "@/shared/ui/kit/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { href } from "react-router";
 import { z } from "zod";
 import { Collaborators } from "../Collaborators";
 import { DeleteSection } from "./DeleteSection";
@@ -66,6 +70,7 @@ export function WishlistDialog({
   const actions = useWishlistMutations();
   const { user } = useCurrentUser();
   const showCollabs = wishlist && collaborators && roles?.isWishlistOwner;
+  const { navigateWithState } = useRoute();
 
   async function onSaveChanges(values: z.infer<typeof formSchema>) {
     if (!user) return;
@@ -97,7 +102,20 @@ export function WishlistDialog({
         notifyError("Не удалось сохранить список");
         return;
       }
-      notifySuccessSimple("Список создан", response!.title);
+      notifySuccessExpanded("Список создан", response!.title, undefined, {
+        label: "К списку",
+        onClick: () =>
+          navigateWithState(
+            href(ROUTES.WISHLIST, {
+              userId: response!.ownerId,
+              listId: response!.$id,
+            }),
+            {
+              userId: response!.ownerId,
+              wlTitle: response!.title,
+            }
+          ),
+      });
       setIsOpen(false);
     }
   }
