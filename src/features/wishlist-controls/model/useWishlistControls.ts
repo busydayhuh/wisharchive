@@ -57,7 +57,7 @@ export default function useWishlistControls(
       }
       notifySuccessExpanded(
         "Перемещено в",
-        newWl?.title ?? "без списка",
+        newWl?.title ?? "Без списка",
         imageURL ?? undefined
       );
     },

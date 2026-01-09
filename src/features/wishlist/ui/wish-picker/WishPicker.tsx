@@ -10,6 +10,7 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -100,6 +101,9 @@ export default function WishPicker({
       <DialogContent className="flex flex-col gap-6 min-w-[calc(100%-10rem)] h-[calc(100%-6rem)]">
         <DialogHeader>
           <DialogTitle>Перенести желания в этот список</DialogTitle>
+          <DialogDescription className="sr-only">
+            Перенести желания в этот список
+          </DialogDescription>
         </DialogHeader>
         <WishPickerBoundary
           wishlistId={wishlistId}

@@ -19,7 +19,7 @@ export function WishesSkeleton({
     return (
       <div className="relative items-center gap-2 grid grid-cols-[3fr_1fr] md:grid-cols-[22rem_1fr_1fr_0.5fr] lg:grid-cols-[28rem_1fr_1fr_1fr_0.5fr] 2xl:grid-cols-[54rem_1fr_1fr_1fr_0.5fr] xl:grid-cols-[40rem_1fr_1fr_1fr_0.5fr] md:px-1 py-1 md:py-2 w-full">
         <div className="flex items-center">
-          <Skeleton className="rounded-md md:rounded-xl w-24 md:w-32 lg:w-40 aspect-square"></Skeleton>
+          <Skeleton className="rounded-md md:rounded-xl size-24 md:size-32 lg:size-40"></Skeleton>
           <div className="flex flex-col gap-1 px-4 lg:px-8">
             <Skeleton className="w-42 h-6"></Skeleton>
             <Skeleton className="w-20 h-6"></Skeleton>

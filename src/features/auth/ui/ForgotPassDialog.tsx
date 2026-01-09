@@ -2,6 +2,7 @@ import { Button } from "@/shared/ui/kit/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -45,6 +46,9 @@ export function ForgotPassDialog() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Восстановление пароля</DialogTitle>
+          <DialogDescription className="sr-only">
+            Восстановление пароля
+          </DialogDescription>
         </DialogHeader>
         <p>
           Введите свой email, чтобы получить ссылку на восстановление пароля:

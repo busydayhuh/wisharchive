@@ -93,7 +93,7 @@ export function PersonalInfoForm({
             name="sex"
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor="sex">Ваш пол</FormLabel>
+                <FormLabel htmlFor={undefined}>Ваш пол</FormLabel>
                 <FormControl>
                   <SexSelect
                     value={field.value ?? "none"}
@@ -112,7 +112,7 @@ export function PersonalInfoForm({
             name="birthDate"
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor="birthDate">Дата рождения</FormLabel>
+                <FormLabel htmlFor={undefined}>Дата рождения</FormLabel>
                 <FormControl>
                   <DatePicker
                     date={field.value ? new Date(field.value) : undefined}

@@ -23,31 +23,32 @@ export function WishlistTiles({
   if (variant === "gallery")
     return (
       <div className="relative rounded-xl md:rounded-3xl overflow-hidden">
-        <div className="invisible absolute inset-0 pointer-events-none cover-overlay"></div>
-        <div className="gap-0.5 grid grid-cols-[1.5fr_1fr] grid-rows-2 *:first:row-span-2 aspect-[4/3] transition">
-          {coverImages.map((wish) => {
-            if (!wish) {
-              return <div className="bg-muted" key={ID.unique()}></div>;
-            }
+        <div className="relative pb-[75%] w-full">
+          <div className="absolute inset-0 gap-0.5 grid grid-cols-[1.5fr_1fr] grid-rows-2 *:first:row-span-2 transition">
+            {coverImages.map((wish) => {
+              if (!wish) {
+                return <div className="bg-muted" key={ID.unique()}></div>;
+              }
 
-            if (wish.imageURL) {
-              return (
-                <img
-                  src={wish.imageURL}
-                  className="w-full h-full object-cover"
-                  key={wish.id + "coverImage"}
-                  alt={wish.title}
-                />
-              );
-            } else {
-              return (
-                <div
-                  style={{ background: getFallbackColor(wish.id) }}
-                  key={wish.id + "coverImage"}
-                ></div>
-              );
-            }
-          })}
+              if (wish.imageURL) {
+                return (
+                  <img
+                    src={wish.imageURL}
+                    className="w-full h-full object-cover"
+                    key={wish.id + "coverImage"}
+                    alt={wish.title}
+                  />
+                );
+              } else {
+                return (
+                  <div
+                    style={{ background: getFallbackColor(wish.id) }}
+                    key={wish.id + "coverImage"}
+                  ></div>
+                );
+              }
+            })}
+          </div>
         </div>
       </div>
     );

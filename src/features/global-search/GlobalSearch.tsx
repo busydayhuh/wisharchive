@@ -5,6 +5,7 @@ import { Button } from "@/shared/ui/kit/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -70,6 +71,9 @@ export function GlobalSearchDialog() {
           <DialogTitle className="text-lg lg:text-2xl">
             Поиск по категориям
           </DialogTitle>
+          <DialogDescription className="sr-only">
+            Поиск по категориям
+          </DialogDescription>
         </DialogHeader>
         <CategoryPicker category={category} setCategory={setCategory} />
         <Searchbar

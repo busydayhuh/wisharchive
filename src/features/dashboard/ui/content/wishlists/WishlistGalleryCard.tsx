@@ -43,7 +43,7 @@ function WishlistGalleryCard({ wishlist }: { wishlist: WishlistDocumentType }) {
         )}
 
         {/* Стопка картинок */}
-        <Link {...linkParams} className="relative">
+        <Link {...linkParams} className="block relative">
           <WishlistTiles wishes={wishlist.wishes} />
           {wishlist.isPrivate && (
             <div className="top-3 left-3 absolute flex justify-center items-center bg-pink-bg shadow-xs rounded-full size-7 overflow-clip text-foreground">

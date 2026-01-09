@@ -31,13 +31,13 @@ export function ResultItem({
     if (category === "wishes")
       navigateWithState(
         href(ROUTES.WISH, { userId: item.ownerId, wishId: item.$id }),
-        { wishTitle: item.title }
+        { wishTitle: item.title, userId: item.ownerId }
       );
 
     if (category === "wishlists")
       navigateWithState(
         href(ROUTES.WISHLIST, { userId: item.ownerId, listId: item.$id }),
-        { wlTitle: item.title }
+        { wlTitle: item.title, userId: item.ownerId }
       );
 
     if (category === "users")

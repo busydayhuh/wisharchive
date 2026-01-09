@@ -5,6 +5,7 @@ import { useIsMobile } from "../../hooks/useIsMobile";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -86,6 +87,7 @@ export function OwnerInfoPopover({
         <DialogContent>
           <DialogHeader className="sr-only">
             <DialogTitle>Об аккаунте</DialogTitle>
+            <DialogDescription>Об аккаунте</DialogDescription>
           </DialogHeader>
           {content}
         </DialogContent>

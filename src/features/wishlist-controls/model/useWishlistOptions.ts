@@ -26,7 +26,7 @@ export function useWishlistOptions(selectedValue: string | null) {
     () => [
       {
         value: "none",
-        label: "без списка",
+        label: "Без списка",
         icon: PRIVACY_ICONS.none,
       },
       ...(wishlists ?? []).map((wl: WishlistDocumentType) => ({
@@ -48,7 +48,7 @@ export function useWishlistOptions(selectedValue: string | null) {
     () =>
       options.find((o) => o.value === optionValue) ?? {
         value: "none",
-        label: "без списка",
+        label: "Без списка",
         icon: PRIVACY_ICONS.none,
       },
     [optionValue, options]

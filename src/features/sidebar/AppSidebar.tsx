@@ -88,7 +88,7 @@ export const AppSidebar = memo(function AppSidebar() {
                     tooltip={name}
                     asChild
                     isActive={!!matchPath(currentPath, href)}
-                    className="h-12"
+                    className="h-12 md:h-auto"
                   >
                     <NavLink to={href}>
                       {icon}

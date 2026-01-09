@@ -3,6 +3,7 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -26,6 +27,9 @@ export function Policy({
           <DialogTitle className="mt-2 md:mt-0">
             Политика конфиденциальности
           </DialogTitle>
+          <DialogDescription className="sr-only">
+            Политика конфиденциальности
+          </DialogDescription>
         </DialogHeader>
         <p>
           Этот сервис создан в качестве пет-проекта. Мы бережно относимся к

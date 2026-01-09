@@ -146,7 +146,7 @@ export function CreateFAB() {
         >
           <motion.div
             animate={{ scale: open ? 1.05 : 1 }}
-            className="blur-lg size-14 gradient-btn"
+            className="fab-shadow blur-lg [@supports(-webkit-backdrop-filter:blur(1px))]:blur-none rounded-full size-14 gradient-btn"
           />
         </motion.div>
       </motion.button>

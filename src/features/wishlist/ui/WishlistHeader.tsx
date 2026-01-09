@@ -62,6 +62,7 @@ export function WishlistHeader({
               variant="gallery"
               isFavorite={isFavorite}
               onPressed={toggleBookmark}
+              className="bg-secondary"
             />
           </div>
         </div>
