@@ -59,7 +59,7 @@ function DashboardOwner({
           name={user.userName}
           id={user.userId}
           avatarURL={user.avatarURL ?? undefined}
-          className="p-0.5 border-1 border-muted/90"
+          className="p-0.5 border-1 border-muted/90 shrink-0"
           size="xl"
         />
         <div className="flex flex-col md:items-center gap-1 md:gap-2">
@@ -71,7 +71,7 @@ function DashboardOwner({
             @{user.userId}
           </p>
 
-          <p className="text-muted-foreground text-xs md:text-sm truncate leading-tight">
+          <p className="w-full text-muted-foreground text-xs md:text-sm leading-tight">
             {user.bio}
           </p>
         </div>
