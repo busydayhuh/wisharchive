@@ -1,0 +1,1 @@
+import{z as e}from"./schemas-DolQb7Cl.js";const r=e.object({password:e.string().min(8,"Пароль должен содержать не менее 8 символов"),confirmPassword:e.string()}).refine(s=>s.password===s.confirmPassword,{path:["confirmPassword"],message:"Пароли не совпадают"}),a=e.object({email:e.email("Неверный email")});export{r as c,a as u};
