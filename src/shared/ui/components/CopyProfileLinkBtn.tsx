@@ -16,7 +16,9 @@ export function CopyProfileLinkBtn({
   return (
     <Button
       variant={variant}
-      onClick={() => copyLink(`${window.location.origin}/${userId}`)}
+      onClick={() =>
+        copyLink(`${window.location.origin}/wisharchive/#/${userId}`)
+      }
       className="w-fit"
       size={size || "default"}
     >

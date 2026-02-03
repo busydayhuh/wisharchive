@@ -3,16 +3,14 @@ import { ErrorMessage } from "@/shared/ui/components/ErrorMessage";
 import { Card } from "@/shared/ui/kit/card";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { useAcceptInvite } from "./model/hooks/useAcceptInvite";
 import { InvitationCard } from "./ui/InvitationCard";
 
 function InvitationPage() {
-  const [searchParams] = useSearchParams();
-  const params = Object.fromEntries(searchParams);
-
+  const params = Object.fromEntries(
+    new URLSearchParams(window.location.search),
+  );
   const { wishlist, isLoading, error } = useWishlist(params.teamId);
-
   const [loading, setLoading] = useState(false);
   const wlImageURL = wishlist?.wishes?.at(-1)?.imageURL || undefined;
 

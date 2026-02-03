@@ -5,48 +5,48 @@ type TeamApiType = {
   create: (
     name: string,
     teamId: string,
-    roles?: string[]
+    roles?: string[],
   ) => Promise<Models.Team<Models.Preferences>>;
   updateName: (
     teamId: string,
-    newName: string
+    newName: string,
   ) => Promise<Models.Team<Models.Preferences>>;
   get: (teamId: string) => Promise<Models.Team<Models.Preferences>>;
   list: (
     queries?: string[],
-    search?: string
+    search?: string,
   ) => Promise<Models.TeamList<Models.Preferences>>;
   delete: (teamId: string) => Promise<unknown>;
 
   addEditor: (
     teamId: string,
     email?: string,
-    userId?: string
+    userId?: string,
   ) => Promise<Models.Membership>;
   addReader: (
     teamId: string,
     email?: string,
-    userId?: string
+    userId?: string,
   ) => Promise<Models.Membership>;
   getMember: (
     teamId: string,
-    membershipId: string
+    membershipId: string,
   ) => Promise<Models.Membership>;
   listMembers: (
     teamId: string,
     queries?: string[],
-    search?: string
+    search?: string,
   ) => Promise<Models.MembershipList>;
   changeMemberRole: (
     teamId: string,
     membershipId: string,
-    roles: string[]
+    roles: string[],
   ) => Promise<Models.Membership>;
   acceptInvite: (
     teamId: string,
     membershipId: string,
     userId: string,
-    secret: string
+    secret: string,
   ) => Promise<Models.Membership>;
   deleteMembership: (teamId: string, membershipId: string) => Promise<unknown>;
 };
@@ -69,7 +69,7 @@ const team: TeamApiType = {
       email,
       userId,
       undefined,
-      `${window.location.origin}/accept-invite`
+      `${window.location.origin}/wisharchive/#/accept-invite`,
     ),
   addReader: (teamId, email, userId) =>
     teams.createMembership(
@@ -78,7 +78,7 @@ const team: TeamApiType = {
       email,
       userId,
       undefined,
-      `${window.location.origin}/accept-invite`
+      `${window.location.origin}/wisharchive/#/accept-invite`,
     ),
   getMember: (teamId, membershipId) =>
     teams.getMembership(teamId, membershipId),

@@ -21,7 +21,7 @@ export function useAcceptInvite() {
       },
       setLoading: (loading: boolean) => void,
       wishlistOwnerId: string,
-      wlImageURL?: string
+      wlImageURL?: string,
     ) => {
       try {
         setLoading(true);
@@ -30,23 +30,29 @@ export function useAcceptInvite() {
           params.teamId!,
           params.membershipId!,
           params.userId!,
-          params.secret!
+          params.secret!,
         );
 
         if (!isLoggedIn) await initSession();
+
+        window.history.replaceState(
+          null,
+          "",
+          `${window.location.origin}/wisharchive/#`,
+        );
 
         navigateWithState(
           href(ROUTES.WISHLIST, {
             userId: wishlistOwnerId,
             listId: params.teamId!,
           }),
-          { wlTitle: params.teamName }
+          { wlTitle: params.teamName },
         );
 
         notifySuccessExpanded(
           "Приглашение принято",
           params.teamName,
-          wlImageURL
+          wlImageURL,
         );
       } catch (error) {
         const { errorMessage } = handleError(error);
@@ -56,7 +62,7 @@ export function useAcceptInvite() {
         setLoading(false);
       }
     },
-    [initSession, isLoggedIn, navigateWithState]
+    [initSession, isLoggedIn, navigateWithState],
   );
 
   return onAcceptInvite;
