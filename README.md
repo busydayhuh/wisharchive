@@ -18,7 +18,7 @@
 
 </div>
 
-[![Static Badge](https://img.shields.io/badge/lang-ENG-EF4565)](https://github.com/busydayhuh/wisharchive/blob/main/README.md)  [![Static Badge](https://img.shields.io/badge/lang-RU-66A0E3)](https://github.com/busydayhuh/wisharchive/blob/main/README.ru.md)
+[![Static Badge](https://img.shields.io/badge/lang-ENG-EF4565)](https://github.com/busydayhuh/wisharchive/blob/main/README.md) [![Static Badge](https://img.shields.io/badge/lang-RU-66A0E3)](https://github.com/busydayhuh/wisharchive/blob/main/README.ru.md)
 
 ## 💡 Overview
 
@@ -31,8 +31,7 @@ The project is built as a **frontend-focused application** without a custom back
 - data consistency checks,
 - access control and privacy logic.
 
-**WishArchive** is a portfolio pet project with a strong focus on clean architecture, readable code, and frontend practices commonly used in real-world production applications.
-
+**Wish archive** is a portfolio pet project with a strong focus on clean architecture, readable code, and frontend practices commonly used in real-world production applications.
 
 ## ✨ Features
 
@@ -147,18 +146,15 @@ The application relies on multiple collections to model users, wishlists, and wi
 #### Collections
 
 - **Users**
-
   - Stores public user profile data (e.g. name, age).
   - Linked to Appwrite account IDs.
 
 - **Wishlists**
-
   - Represents user-created lists.
   - Supports public and private access modes.
   - Ownership and access permissions are enforced at the document level.
 
 - **Wishes**
-
   - Individual wish items.
   - Each wish references a wishlist ID.
   - Supports cross-user interactions via reservations.

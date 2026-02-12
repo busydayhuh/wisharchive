@@ -6,7 +6,7 @@ import RegisterForm from "./ui/RegisterForm";
 function SignupPage() {
   return (
     <AuthLayout
-      title="Регистрация в Wisharchive"
+      title="Регистрация в Wish archive"
       description="Создайте аккаунт и сохраняйте свои желания"
       form={<RegisterForm />}
       footerText={

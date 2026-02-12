@@ -6,7 +6,7 @@ import LoginForm from "./ui/LoginForm";
 function LoginPage() {
   return (
     <AuthLayout
-      title="Вход в Wisharchive"
+      title="Вход в Wish archive"
       description={
         <>
           <p>Войдите в аккаунт, чтобы сохранить свои желания ✨</p>

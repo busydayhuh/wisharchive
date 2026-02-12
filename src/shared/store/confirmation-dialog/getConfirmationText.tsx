@@ -5,21 +5,20 @@ export function getConfirmationText(
   action?: Action,
   name?: ReactNode,
   isActive?: boolean,
-  isOwner?: boolean
+  isOwner?: boolean,
 ) {
   if (!action) return { title: "", description: "", actionText: "" };
 
   const map: Partial<Record<Action, ConfirmationTextType>> = {
     book: {
       title: isActive ? "Отменить бронь?" : "Забронировать желание?",
-      description: isActive ? (
-        <p>Вы уверены, что хотите отменить бронирование желания?</p>
-      ) : (
-        <p>
-          Вы уверены, что хотите забронировать это желание? Автор желания не
-          узнает, кто его забронировал.
-        </p>
-      ),
+      description:
+        isActive ?
+          <p>Вы уверены, что хотите отменить бронирование желания?</p>
+        : <p>
+            Вы уверены, что хотите забронировать это желание? Автор желания не
+            узнает, кто его забронировал.
+          </p>,
       actionText: isActive ? "Отменить бронь" : "Забронировать",
     },
 
@@ -48,17 +47,16 @@ export function getConfirmationText(
 
     archive: {
       title: isActive ? "Вернуть из архива?" : "Переместить желание в архив?",
-      description: isActive ? (
-        <p>
-          Вернуть желание <strong>{name}</strong> в список актуальных?
-        </p>
-      ) : (
-        <p>
-          Вы сможете найти <strong>{name}</strong> позже в разделе «Архив
-          желаний». Если желание забронировано,{" "}
-          <strong>бронь будет отменена</strong>.
-        </p>
-      ),
+      description:
+        isActive ?
+          <p>
+            Вернуть желание <strong>{name}</strong> в список актуальных?
+          </p>
+        : <p>
+            Вы сможете найти <strong>{name}</strong> позже в разделе «Архив
+            желаний». Если желание забронировано,{" "}
+            <strong>бронь будет отменена</strong>.
+          </p>,
       actionText: isActive ? "Вернуть" : "Переместить",
     },
 
@@ -67,7 +65,7 @@ export function getConfirmationText(
       description: (
         <p>
           Ваш аккаунт будет заблокирован и вы будете перенаправлены на страницу
-          входа в Wisharchive. Вы уверены, что хотите продолжить?
+          входа в Wish archive. Вы уверены, что хотите продолжить?
         </p>
       ),
       actionText: "Удалить аккаунт",
